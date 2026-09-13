@@ -1,0 +1,69 @@
+{
+  "manifest_version": "3.0.0",
+  "project": "aws-network-performance-capstone",
+  "manifest_category": "calibrated_synthetic_reference_model",
+  "timestamp_utc": "2026-09-07T04:15:00Z",
+  "provenance": {
+    "generator": "scripts/generate_reference_dataset.py",
+    "generator_version": "3.0.0",
+    "deterministic": true,
+    "random_seeds": {
+      "tc01": 41001,
+      "tc02": 41002,
+      "tc03": 41003,
+      "tc04": 41004
+    },
+    "calibration_scope": "Declared illustrative targets for pipeline verification; not fitted to AWS telemetry",
+    "empirical": false
+  },
+  "region": "ap-southeast-2",
+  "region_name": "Asia Pacific (Sydney) reference topology",
+  "data_integrity_notice": "Deterministic synthetic observations for offline methodology verification; not AWS measurements.",
+  "assumed_reference_environment": {
+    "instance_type": "c6i.large",
+    "vcpu_count": 2,
+    "memory_gib": 4,
+    "hypervisor": "AWS Nitro System",
+    "nic": "AWS Elastic Network Adapter (ENA)",
+    "ena_driver_expected": "amzn_ena_2.10.0g",
+    "maximum_network_allowance_gbps": 12.5
+  },
+  "model_parameters": {
+    "distribution": "independent truncated Gaussian within each run; run offsets explicitly encoded in generator",
+    "tc01_rtt_us": {
+      "peering_mean": 173,
+      "peering_sd": 14,
+      "tgw_mean": 809,
+      "tgw_sd": 72
+    },
+    "tc02": {
+      "mtu1500_gbps": 3.2,
+      "mtu9001_gbps": 4.85,
+      "softirq_percent": [
+        68.0,
+        22.1
+      ]
+    },
+    "tc02a_placement_latency_us": {
+      "cluster_placement_group": 92.4,
+      "same_az_non_placement": 173.4,
+      "cross_az_reference": 985.0
+    },
+    "tc03_rtt_us": {
+      "peering_mean": 174,
+      "privatelink_mean": 510
+    },
+    "tc04": {
+      "iptables_softirq": 84.6,
+      "xdp_softirq": 4.22,
+      "offered_load_pps": 5000000
+    }
+  },
+  "hardware_verification_commands": [
+    "ethtool -i eth0",
+    "ethtool -S eth0",
+    "uname -r",
+    "ip -details link show dev eth0",
+    "bpftool net show dev eth0"
+  ]
+}

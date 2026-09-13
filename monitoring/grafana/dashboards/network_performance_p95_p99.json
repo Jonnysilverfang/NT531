@@ -1,0 +1,244 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 2, "w": 24, "x": 0, "y": 0 },
+      "id": 999,
+      "title": "WATERMARK NGUỒN DỮ LIỆU MODE A",
+      "type": "text",
+      "options": {
+        "mode": "markdown",
+        "content": "### ⚠️ MODE A — DETERMINISTIC SYNTHETIC REFERENCE, NOT AWS TELEMETRY\n> Dữ liệu do `generate_reference_dataset.py` tạo từ seed/tham số công khai, được phân tích qua `results/summary_statistics.json`. Dashboard kiểm chứng pipeline và không chứng minh hiệu năng AWS production."
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 2 },
+      "id": 100,
+      "title": "TRỤ CỘT 1: LỚP ĐƯỜNG ĐI & ĐỊNH TUYẾN LIÊN VPC (LỚP 3) - PHÂN VỊ P50 / P95 / P99",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 16, "x": 0, "y": 1 },
+      "id": 1,
+      "title": "Độ Trễ Phân Vị RTT (P50, P95, P99) - Peering vs Transit Gateway vs PrivateLink",
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "showPoints": "auto"
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "VPC Peering P99" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "Transit Gateway P99" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "PrivateLink P99" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "purple", "mode": "fixed" } }]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "aws_network_rtt_latency_milliseconds",
+          "legendFormat": "{{architecture}} {{percentile}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 1 },
+      "id": 2,
+      "title": "Độ Trễ Đuôi P99 (SLA Impact)",
+      "type": "bargauge",
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 2,
+          "unit": "ms",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 1.0 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "aws_network_rtt_p99_milliseconds",
+          "legendFormat": "{{architecture}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 },
+      "id": 101,
+      "title": "TRỤ CỘT 2: LỚP VỊ TRÍ VẬT LÝ TRUNG TÂM DỮ LIỆU (LỚP 2) - SAME-AZ VS CROSS-AZ VS CLUSTER PLACEMENT GROUP",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 10 },
+      "id": 3,
+      "title": "So Sánh Khoảng Cách Vật Lý & Gom Rack (Cluster Placement Group)",
+      "type": "bargauge",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "µs",
+          "min": 0,
+          "max": 1500,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null },
+              { "color": "green", "value": 200 },
+              { "color": "orange", "value": 1000 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "aws_physical_latency_microseconds",
+          "legendFormat": "{{placement_type}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 10 },
+      "id": 4,
+      "title": "Độ Trễ Tham Chiếu Cluster Placement Group (Mode A)",
+      "type": "stat",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "µs",
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 200 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "aws_placement_group_rtt_microseconds",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 },
+      "id": 102,
+      "title": "TRỤ CỘT 3: LỚP NHÂN HỆ ĐIỀU HÀNH & ĐỘT PHÁ eBPF/XDP KERNEL-BYPASS (LỚP 5)",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
+      "id": 5,
+      "title": "Tải CPU SoftIRQ % (Linux iptables vs eBPF/XDP Native Hook)",
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 30
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Linux iptables SoftIRQ" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }]
+          },
+          {
+            "matcher": { "id": "byName", "options": "eBPF XDP SoftIRQ" },
+            "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "node_cpu_softirq_percent",
+          "legendFormat": "{{mechanism}} SoftIRQ",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+      "id": 6,
+      "title": "Năng Lực Xử Lý Gói Tin/Giây (Packets Per Second - PPS)",
+      "type": "stat",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "yellow", "value": null },
+              { "color": "green", "value": 5000000 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(ebpf_xdp_packets_total[10s])",
+          "legendFormat": "XDP Processed PPS",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["aws", "network-performance", "ebpf", "p95", "p99", "placement-group", "cncf"],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": ["1s", "5s", "10s"]
+  },
+  "timezone": "browser",
+  "title": "AWS Network Performance Lab - Tri-Layer (Lớp 2, 3, 5) & CNCF Dashboard",
+  "uid": "aws-net-perf-trilayer"
+}

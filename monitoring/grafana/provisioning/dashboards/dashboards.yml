@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'AWS Network Performance Lab'
+    orgId: 1
+    folder: 'AWS Performance'
+    type: file
+    disableDeletion: true
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards

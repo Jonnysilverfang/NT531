@@ -1,0 +1,448 @@
+{
+  "test_case": "TC-02",
+  "data_source": "deterministic_synthetic_reference",
+  "name": "Jumbo Frames MTU 1500 vs MTU 9001",
+  "runs": [
+    {
+      "run_id": 1,
+      "mtu_1500_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 3.226,
+          "cpu_softirq_percent": 67.09,
+          "packets_per_second": 261418,
+          "retransmits": 1
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 3.129,
+          "cpu_softirq_percent": 68.06,
+          "packets_per_second": 260465,
+          "retransmits": 4
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 3.214,
+          "cpu_softirq_percent": 69.02,
+          "packets_per_second": 259445,
+          "retransmits": 0
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 3.203,
+          "cpu_softirq_percent": 67.18,
+          "packets_per_second": 256502,
+          "retransmits": 3
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 3.281,
+          "cpu_softirq_percent": 68.93,
+          "packets_per_second": 263972,
+          "retransmits": 0
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 3.158,
+          "cpu_softirq_percent": 68.08,
+          "packets_per_second": 259284,
+          "retransmits": 1
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 3.237,
+          "cpu_softirq_percent": 68.8,
+          "packets_per_second": 262493,
+          "retransmits": 3
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 3.268,
+          "cpu_softirq_percent": 68.54,
+          "packets_per_second": 260724,
+          "retransmits": 4
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 3.292,
+          "cpu_softirq_percent": 67.95,
+          "packets_per_second": 261706,
+          "retransmits": 0
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 3.206,
+          "cpu_softirq_percent": 67.88,
+          "packets_per_second": 261414,
+          "retransmits": 1
+        }
+      ],
+      "mtu_9001_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 4.799,
+          "cpu_softirq_percent": 21.62,
+          "packets_per_second": 67143,
+          "retransmits": 0
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 4.873,
+          "cpu_softirq_percent": 22.13,
+          "packets_per_second": 67085,
+          "retransmits": 1
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 4.83,
+          "cpu_softirq_percent": 22.49,
+          "packets_per_second": 67228,
+          "retransmits": 0
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 4.836,
+          "cpu_softirq_percent": 20.87,
+          "packets_per_second": 67598,
+          "retransmits": 1
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 4.856,
+          "cpu_softirq_percent": 21.94,
+          "packets_per_second": 66421,
+          "retransmits": 0
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 4.87,
+          "cpu_softirq_percent": 22.26,
+          "packets_per_second": 67151,
+          "retransmits": 1
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 4.857,
+          "cpu_softirq_percent": 21.81,
+          "packets_per_second": 67990,
+          "retransmits": 0
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 4.856,
+          "cpu_softirq_percent": 21.69,
+          "packets_per_second": 67535,
+          "retransmits": 1
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 4.848,
+          "cpu_softirq_percent": 21.8,
+          "packets_per_second": 67029,
+          "retransmits": 1
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 4.864,
+          "cpu_softirq_percent": 22.46,
+          "packets_per_second": 66946,
+          "retransmits": 0
+        }
+      ]
+    },
+    {
+      "run_id": 2,
+      "mtu_1500_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 3.203,
+          "cpu_softirq_percent": 69.05,
+          "packets_per_second": 264909,
+          "retransmits": 3
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 3.188,
+          "cpu_softirq_percent": 68.93,
+          "packets_per_second": 258502,
+          "retransmits": 3
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 3.265,
+          "cpu_softirq_percent": 68.55,
+          "packets_per_second": 261109,
+          "retransmits": 2
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 3.149,
+          "cpu_softirq_percent": 67.61,
+          "packets_per_second": 259049,
+          "retransmits": 1
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 3.166,
+          "cpu_softirq_percent": 67.46,
+          "packets_per_second": 262195,
+          "retransmits": 3
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 3.293,
+          "cpu_softirq_percent": 68.55,
+          "packets_per_second": 259162,
+          "retransmits": 3
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 3.161,
+          "cpu_softirq_percent": 69.28,
+          "packets_per_second": 258916,
+          "retransmits": 4
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 3.197,
+          "cpu_softirq_percent": 67.25,
+          "packets_per_second": 262297,
+          "retransmits": 3
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 3.148,
+          "cpu_softirq_percent": 67.95,
+          "packets_per_second": 263078,
+          "retransmits": 0
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 3.192,
+          "cpu_softirq_percent": 68.58,
+          "packets_per_second": 263708,
+          "retransmits": 3
+        }
+      ],
+      "mtu_9001_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 4.869,
+          "cpu_softirq_percent": 20.77,
+          "packets_per_second": 66714,
+          "retransmits": 0
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 4.93,
+          "cpu_softirq_percent": 21.54,
+          "packets_per_second": 65205,
+          "retransmits": 0
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 4.881,
+          "cpu_softirq_percent": 21.85,
+          "packets_per_second": 67708,
+          "retransmits": 0
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 4.867,
+          "cpu_softirq_percent": 22.62,
+          "packets_per_second": 66985,
+          "retransmits": 1
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 4.867,
+          "cpu_softirq_percent": 22.93,
+          "packets_per_second": 68041,
+          "retransmits": 1
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 4.842,
+          "cpu_softirq_percent": 21.56,
+          "packets_per_second": 66636,
+          "retransmits": 1
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 4.794,
+          "cpu_softirq_percent": 22.34,
+          "packets_per_second": 67803,
+          "retransmits": 1
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 4.733,
+          "cpu_softirq_percent": 22.94,
+          "packets_per_second": 67582,
+          "retransmits": 0
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 4.869,
+          "cpu_softirq_percent": 21.02,
+          "packets_per_second": 67986,
+          "retransmits": 0
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 4.93,
+          "cpu_softirq_percent": 21.54,
+          "packets_per_second": 66846,
+          "retransmits": 1
+        }
+      ]
+    },
+    {
+      "run_id": 3,
+      "mtu_1500_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 3.205,
+          "cpu_softirq_percent": 68.76,
+          "packets_per_second": 264750,
+          "retransmits": 3
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 3.257,
+          "cpu_softirq_percent": 65.9,
+          "packets_per_second": 258308,
+          "retransmits": 2
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 3.21,
+          "cpu_softirq_percent": 67.48,
+          "packets_per_second": 259474,
+          "retransmits": 2
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 3.228,
+          "cpu_softirq_percent": 68.76,
+          "packets_per_second": 261704,
+          "retransmits": 0
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 3.268,
+          "cpu_softirq_percent": 68.79,
+          "packets_per_second": 263419,
+          "retransmits": 0
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 3.281,
+          "cpu_softirq_percent": 69.56,
+          "packets_per_second": 267775,
+          "retransmits": 1
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 3.284,
+          "cpu_softirq_percent": 67.25,
+          "packets_per_second": 262870,
+          "retransmits": 2
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 3.135,
+          "cpu_softirq_percent": 69.66,
+          "packets_per_second": 265731,
+          "retransmits": 3
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 3.184,
+          "cpu_softirq_percent": 67.5,
+          "packets_per_second": 265522,
+          "retransmits": 1
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 3.231,
+          "cpu_softirq_percent": 69.11,
+          "packets_per_second": 263941,
+          "retransmits": 4
+        }
+      ],
+      "mtu_9001_seconds": [
+        {
+          "second": 1,
+          "throughput_gbps": 4.8,
+          "cpu_softirq_percent": 21.9,
+          "packets_per_second": 67046,
+          "retransmits": 1
+        },
+        {
+          "second": 2,
+          "throughput_gbps": 4.856,
+          "cpu_softirq_percent": 22.11,
+          "packets_per_second": 66947,
+          "retransmits": 1
+        },
+        {
+          "second": 3,
+          "throughput_gbps": 4.89,
+          "cpu_softirq_percent": 22.15,
+          "packets_per_second": 67002,
+          "retransmits": 0
+        },
+        {
+          "second": 4,
+          "throughput_gbps": 4.772,
+          "cpu_softirq_percent": 22.46,
+          "packets_per_second": 67907,
+          "retransmits": 1
+        },
+        {
+          "second": 5,
+          "throughput_gbps": 4.857,
+          "cpu_softirq_percent": 22.28,
+          "packets_per_second": 67290,
+          "retransmits": 1
+        },
+        {
+          "second": 6,
+          "throughput_gbps": 4.851,
+          "cpu_softirq_percent": 21.46,
+          "packets_per_second": 66210,
+          "retransmits": 1
+        },
+        {
+          "second": 7,
+          "throughput_gbps": 4.899,
+          "cpu_softirq_percent": 22.2,
+          "packets_per_second": 68090,
+          "retransmits": 0
+        },
+        {
+          "second": 8,
+          "throughput_gbps": 4.901,
+          "cpu_softirq_percent": 22.27,
+          "packets_per_second": 66598,
+          "retransmits": 1
+        },
+        {
+          "second": 9,
+          "throughput_gbps": 4.804,
+          "cpu_softirq_percent": 21.49,
+          "packets_per_second": 67231,
+          "retransmits": 1
+        },
+        {
+          "second": 10,
+          "throughput_gbps": 4.866,
+          "cpu_softirq_percent": 21.97,
+          "packets_per_second": 66587,
+          "retransmits": 1
+        }
+      ]
+    }
+  ]
+}

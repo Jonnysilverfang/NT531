@@ -1,0 +1,654 @@
+{
+  "metadata": {
+    "generator": "analyze_results.py (Scientific Hierarchical Engine)",
+    "data_mode": "CALIBRATED_SYNTHETIC_REFERENCE_BENCHMARK",
+    "dataset_version": "3.0.0",
+    "statistical_unit": "independent_run",
+    "integrity_verification": {
+      "manifest_found": true,
+      "files_expected": 5,
+      "files_verified": 5,
+      "required_files": [
+        "environment_manifest.json",
+        "tc01_peering_tgw_samples.csv",
+        "tc02_jumbo_frames_samples.json",
+        "tc03_privatelink_samples.json",
+        "tc04_xdp_iptables_samples.json"
+      ],
+      "mismatches": [],
+      "status": "passed"
+    },
+    "semantic_validation": {
+      "status": "passed",
+      "data_mode": "calibrated_synthetic_reference_model",
+      "dataset_version": "3.0.0",
+      "tc02a_placement_latency_us": {
+        "cluster_placement_group": 92.4,
+        "same_az_non_placement": 173.4,
+        "cross_az_reference": 985.0
+      },
+      "tc01_observations": 6000,
+      "tc02_intervals": 60,
+      "tc03_rtt_observations": 3000,
+      "tc04_intervals": 180,
+      "independent_runs": 3
+    },
+    "bootstrap_parameters": {
+      "method": "hierarchical_percentile",
+      "resamples": 10000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    },
+    "softirq_measurement": {
+      "formula": "100.0 * (softirq_after - softirq_before) / (total_jiffies_after - total_jiffies_before)",
+      "telemetry_sources": [
+        "/proc/stat (cpu softirq column 7 and total jiffies sum)",
+        "/proc/softirqs (NET_RX + NET_TX)"
+      ],
+      "sampling_window": "Synchronized strictly with load generator window on DUT (T1 to T6)"
+    },
+    "statistical_framework": {
+      "primary_effects": "run_aware_paired_hierarchical_bootstrap for TC01-TC04 (independent_run N=3)",
+      "exploratory_tests": "pooled_welch_t_test",
+      "pseudoreplication_mitigation": "Run-level paired analysis and two-level hierarchical resampling"
+    }
+  },
+  "tc01_peering_tgw": {
+    "statistical_unit": "independent_run (N=3)",
+    "observation_count": 6000,
+    "run_level_results": [
+      {
+        "run_id": 1,
+        "peering_p99_ms": 0.19996299999999997,
+        "tgw_p99_ms": 0.9647033,
+        "delta_p99_ms": 0.7647403
+      },
+      {
+        "run_id": 2,
+        "peering_p99_ms": 0.20353439999999998,
+        "tgw_p99_ms": 0.9733674999999999,
+        "delta_p99_ms": 0.7698330999999999
+      },
+      {
+        "run_id": 3,
+        "peering_p99_ms": 0.2060514,
+        "tgw_p99_ms": 0.9878960999999999,
+        "delta_p99_ms": 0.7818447
+      }
+    ],
+    "hierarchical_p99_effect": {
+      "effect_name": "tgw_minus_peering_p99",
+      "statistic": "p99",
+      "unit": "ms",
+      "estimate": 0.7728181187566666,
+      "ci_95": [
+        0.7565574666666666,
+        0.7918417999999999
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 0.19996299999999997,
+          "condition_b": 0.9647033,
+          "delta_b_minus_a": 0.7647403
+        },
+        {
+          "run_id": 2,
+          "condition_a": 0.20353439999999998,
+          "condition_b": 0.9733674999999999,
+          "delta_b_minus_a": 0.7698330999999999
+        },
+        {
+          "run_id": 3,
+          "condition_a": 0.2060514,
+          "condition_b": 0.9878960999999999,
+          "delta_b_minus_a": 0.7818447
+        }
+      ],
+      "estimate_delta_ms": 0.7728181187566666,
+      "ci_95_ms": [
+        0.7565574666666666,
+        0.7918417999999999
+      ]
+    },
+    "peering": {
+      "n": 3000,
+      "mean": 0.17258367333333335,
+      "variance": 0.00019427615382456374,
+      "std_dev": 0.013938298096416354,
+      "sem": 0.00025447734268795177,
+      "ci_95": [
+        0.17208489774166497,
+        0.17308244892500174
+      ],
+      "p50": 0.172575,
+      "p90": 0.19040100000000001,
+      "p95": 0.195481,
+      "p99": 0.20400079999999998
+    },
+    "transit_gateway": {
+      "n": 3000,
+      "mean": 0.80985139,
+      "variance": 0.005156892096466722,
+      "std_dev": 0.07181150392845649,
+      "sem": 0.0013110926863328823,
+      "ci_95": [
+        0.8072816483347875,
+        0.8124211316652123
+      ],
+      "p50": 0.809635,
+      "p90": 0.899253,
+      "p95": 0.9248364999999997,
+      "p99": 0.9749574999999997
+    },
+    "welch_t_test": {
+      "t_stat": -477.1536412828381,
+      "df": 3224.643056007075,
+      "p_value_info": {
+        "p_value": null,
+        "formatted": "< 1e-300",
+        "numeric_underflow": true
+      },
+      "cohens_d": -12.320054041804399,
+      "diff": -0.6372677166666666,
+      "interpretation": "exploratory_only_pooled_observations"
+    }
+  },
+  "tc02a_placement_reference": {
+    "data_mode": "synthetic_static_reference",
+    "latency_us": {
+      "cluster_placement_group": 92.4,
+      "same_az_non_placement": 173.4,
+      "cross_az_reference": 985.0
+    },
+    "empirical": false
+  },
+  "tc02_jumbo_frames": {
+    "statistical_unit": "independent_run (N=3)",
+    "mtu_1500": {
+      "softirq": {
+        "n": 30,
+        "mean": 68.25033333333333,
+        "variance": 0.749437816091953,
+        "std_dev": 0.8657007659069923,
+        "sem": 0.15805461251225297,
+        "ci_95": [
+          67.94054629280932,
+          68.56012037385734
+        ],
+        "p50": 68.545,
+        "p90": 69.127,
+        "p95": 69.434,
+        "p99": 69.631
+      },
+      "throughput_gbps": {
+        "n": 30,
+        "mean": 3.2153,
+        "variance": 0.002435872413793103,
+        "std_dev": 0.049354558186585996,
+        "sem": 0.009010868278164805,
+        "ci_95": [
+          3.197638698174797,
+          3.232961301825203
+        ],
+        "p50": 3.208,
+        "p90": 3.2813000000000003,
+        "p95": 3.2883999999999998,
+        "p99": 3.29271
+      },
+      "pps": {
+        "n": 30,
+        "mean": 261794.73333333334,
+        "variance": 6813791.71954023,
+        "std_dev": 2610.324064084808,
+        "sem": 476.5777907659367,
+        "ci_95": [
+          260860.6408634321,
+          262728.8258032346
+        ],
+        "p50": 261705.0,
+        "p90": 264970.3,
+        "p95": 265636.94999999995,
+        "p99": 267182.24
+      }
+    },
+    "mtu_9001": {
+      "softirq": {
+        "n": 30,
+        "mean": 21.949,
+        "variance": 0.290223103448276,
+        "std_dev": 0.538723587239575,
+        "sem": 0.09835702033040583,
+        "ci_95": [
+          21.756220240152405,
+          22.141779759847598
+        ],
+        "p50": 21.955,
+        "p90": 22.503,
+        "p95": 22.7905,
+        "p99": 22.9371
+      },
+      "throughput_gbps": {
+        "n": 30,
+        "mean": 4.852233333333333,
+        "variance": 0.0018583229885057442,
+        "std_dev": 0.04310827053484916,
+        "sem": 0.007870457395657393,
+        "ci_95": [
+          4.836807236837845,
+          4.867659429828822
+        ],
+        "p50": 4.857,
+        "p90": 4.8992,
+        "p95": 4.91695,
+        "p99": 4.93
+      },
+      "pps": {
+        "n": 30,
+        "mean": 67151.33333333333,
+        "variance": 396161.2643678161,
+        "std_dev": 629.413428811156,
+        "sem": 114.9146443188474,
+        "ci_95": [
+          66926.10063046838,
+          67376.56603619827
+        ],
+        "p50": 67114.0,
+        "p90": 67986.40000000001,
+        "p95": 68018.05,
+        "p99": 68075.79000000001
+      }
+    },
+    "welch_softirq": {
+      "t_stat": 248.7186004342617,
+      "df": 48.5316700194696,
+      "p_value_info": {
+        "p_value": 4.939428049332891e-77,
+        "formatted": "4.93942805e-77",
+        "numeric_underflow": false
+      },
+      "cohens_d": 64.21886649159416,
+      "diff": 46.30133333333333,
+      "interpretation": "exploratory_only_pooled_observations"
+    },
+    "hierarchical_softirq_effect": {
+      "effect_name": "mtu9001_minus_mtu1500_softirq",
+      "statistic": "mean",
+      "unit": "percentage_points",
+      "estimate": -46.2988195,
+      "ci_95": [
+        -46.666333333333334,
+        -45.925000000000004
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 68.15299999999999,
+          "condition_b": 21.907,
+          "delta_b_minus_a": -46.245999999999995
+        },
+        {
+          "run_id": 2,
+          "condition_a": 68.321,
+          "condition_b": 21.911,
+          "delta_b_minus_a": -46.41
+        },
+        {
+          "run_id": 3,
+          "condition_a": 68.277,
+          "condition_b": 22.029,
+          "delta_b_minus_a": -46.248000000000005
+        }
+      ]
+    },
+    "hierarchical_throughput_effect": {
+      "effect_name": "mtu9001_minus_mtu1500_throughput",
+      "statistic": "mean",
+      "unit": "Gbps",
+      "estimate": 1.63713153,
+      "ci_95": [
+        1.6087666666666667,
+        1.6691333333333336
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 3.2214,
+          "condition_b": 4.8489,
+          "delta_b_minus_a": 1.6275000000000004
+        },
+        {
+          "run_id": 2,
+          "condition_a": 3.1962,
+          "condition_b": 4.8582,
+          "delta_b_minus_a": 1.662
+        },
+        {
+          "run_id": 3,
+          "condition_a": 3.2283,
+          "condition_b": 4.849600000000001,
+          "delta_b_minus_a": 1.6213000000000006
+        }
+      ]
+    }
+  },
+  "tc03_privatelink": {
+    "statistical_unit": "independent_run (N=3)",
+    "privatelink": {
+      "rtt": {
+        "n": 1500,
+        "mean": 0.5107400533333334,
+        "variance": 0.0016871732612379808,
+        "std_dev": 0.04107521468279844,
+        "sem": 0.001060557482722485,
+        "ci_95": [
+          0.5086613606671974,
+          0.5128187459994694
+        ],
+        "p50": 0.51022,
+        "p90": 0.5615450000000001,
+        "p95": 0.581135,
+        "p99": 0.6044660000000001
+      }
+    },
+    "peering": {
+      "rtt": {
+        "n": 1500,
+        "mean": 0.17416247333333335,
+        "variance": 0.00020278432830148988,
+        "std_dev": 0.014240236244581404,
+        "sem": 0.0003676813188088202,
+        "ci_95": [
+          0.17344181794846805,
+          0.17488312871819864
+        ],
+        "p50": 0.174255,
+        "p90": 0.192101,
+        "p95": 0.1974305,
+        "p99": 0.20988499999999996
+      }
+    },
+    "welch_rtt": {
+      "t_stat": 299.85050435340406,
+      "df": 1854.203612037965,
+      "p_value_info": {
+        "p_value": null,
+        "formatted": "< 1e-300",
+        "numeric_underflow": true
+      },
+      "cohens_d": 10.948992340910694,
+      "diff": 0.33657758000000004,
+      "interpretation": "exploratory_only_pooled_observations"
+    },
+    "hierarchical_p99_effect": {
+      "effect_name": "privatelink_minus_peering_p99",
+      "statistic": "p99",
+      "unit": "ms",
+      "estimate": 0.3946417012233333,
+      "ci_95": [
+        0.386153,
+        0.4053605
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 0.20603049999999998,
+          "condition_b": 0.5962976,
+          "delta_b_minus_a": 0.3902671
+        },
+        {
+          "run_id": 2,
+          "condition_a": 0.21638359999999998,
+          "condition_b": 0.6132017,
+          "delta_b_minus_a": 0.39681809999999995
+        },
+        {
+          "run_id": 3,
+          "condition_a": 0.20850079999999996,
+          "condition_b": 0.6031430999999999,
+          "delta_b_minus_a": 0.3946423
+        }
+      ]
+    },
+    "cidr_conflict_resolved": true
+  },
+  "tc04_ebpf_xdp": {
+    "statistical_unit": "independent_run (N=3)",
+    "iptables": {
+      "softirq": {
+        "n": 90,
+        "mean": 84.57111111111111,
+        "variance": 1.1859088639201008,
+        "std_dev": 1.0889944278645785,
+        "sem": 0.11479009170946673,
+        "ci_95": [
+          84.34612253136055,
+          84.79609969086167
+        ],
+        "p50": 84.56,
+        "p90": 86.083,
+        "p95": 86.3595,
+        "p99": 86.8532
+      },
+      "pps_drop": {
+        "n": 90,
+        "mean": 1148534.7444444445,
+        "variance": 1157494884.6418228,
+        "std_dev": 34021.97649522765,
+        "sem": 3586.23120752107,
+        "ci_95": [
+          1141505.7312777033,
+          1155563.7576111858
+        ],
+        "p50": 1144526.5,
+        "p90": 1186866.5000000002,
+        "p95": 1205365.1,
+        "p99": 1230345.92
+      },
+      "interval_p99_latency_ms": {
+        "n": 90,
+        "mean": 14.505255555555555,
+        "variance": 1.8982892485642944,
+        "std_dev": 1.3777841806916984,
+        "sem": 0.14523120450449173,
+        "ci_95": [
+          14.220602394726752,
+          14.789908716384359
+        ],
+        "p50": 14.5765,
+        "p90": 16.064700000000002,
+        "p95": 16.518949999999997,
+        "p99": 17.85644
+      }
+    },
+    "xdp_native": {
+      "softirq": {
+        "n": 90,
+        "mean": 4.230333333333333,
+        "variance": 0.08052011235955057,
+        "std_dev": 0.28376066034521163,
+        "sem": 0.029910999901476335,
+        "ci_95": [
+          4.17170777352644,
+          4.288958893140227
+        ],
+        "p50": 4.215,
+        "p90": 4.631,
+        "p95": 4.656499999999999,
+        "p99": 4.7455
+      },
+      "pps_drop": {
+        "n": 90,
+        "mean": 4953502.888888889,
+        "variance": 508897846.0099875,
+        "std_dev": 22558.764283754273,
+        "sem": 2377.902544517349,
+        "ci_95": [
+          4948842.199901635,
+          4958163.577876143
+        ],
+        "p50": 4956129.0,
+        "p90": 4981614.0,
+        "p95": 4989841.55,
+        "p99": 4995154.47
+      },
+      "interval_p99_latency_ms": {
+        "n": 90,
+        "mean": 0.34696666666666665,
+        "variance": 0.0007905269662921348,
+        "std_dev": 0.028116311392004014,
+        "sem": 0.0029637194467090665,
+        "ci_95": [
+          0.3411577765511169,
+          0.3527755567822164
+        ],
+        "p50": 0.348,
+        "p90": 0.38530000000000003,
+        "p95": 0.39355,
+        "p99": 0.40266
+      }
+    },
+    "welch_softirq": {
+      "t_stat": 677.2778417012776,
+      "df": 101.03027454952893,
+      "p_value_info": {
+        "p_value": 1.4316791329416278e-186,
+        "formatted": "1.43167913e-186",
+        "numeric_underflow": false
+      },
+      "cohens_d": 100.96261957989323,
+      "diff": 80.34077777777777,
+      "interpretation": "exploratory_only_pooled_observations"
+    },
+    "welch_probe_latency": {
+      "t_stat": 97.46763311695877,
+      "df": 89.07412662517228,
+      "p_value_info": {
+        "p_value": 2.6762001463258164e-92,
+        "formatted": "2.67620015e-92",
+        "numeric_underflow": false
+      },
+      "cohens_d": 14.529616883701967,
+      "diff": 14.158288888888888,
+      "interpretation": "exploratory_only_pooled_observations"
+    },
+    "hierarchical_softirq_effect": {
+      "effect_name": "xdp_minus_iptables_softirq",
+      "statistic": "mean",
+      "unit": "percentage_points",
+      "estimate": -80.34272007777778,
+      "ci_95": [
+        -80.65611111111112,
+        -79.97955555555556
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 84.22800000000001,
+          "condition_b": 4.2043333333333335,
+          "delta_b_minus_a": -80.02366666666667
+        },
+        {
+          "run_id": 2,
+          "condition_a": 84.79899999999999,
+          "condition_b": 4.245333333333333,
+          "delta_b_minus_a": -80.55366666666666
+        },
+        {
+          "run_id": 3,
+          "condition_a": 84.68633333333334,
+          "condition_b": 4.241333333333333,
+          "delta_b_minus_a": -80.44500000000001
+        }
+      ]
+    },
+    "hierarchical_drop_rate_effect": {
+      "effect_name": "xdp_minus_iptables_drop_rate",
+      "statistic": "mean",
+      "unit": "packets_per_second",
+      "estimate": 3805212.7770511108,
+      "ci_95": [
+        3789820.5222222223,
+        3819391.488888889
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 1154274.9333333333,
+          "condition_b": 4944172.3,
+          "delta_b_minus_a": 3789897.366666666
+        },
+        {
+          "run_id": 2,
+          "condition_a": 1147400.7333333334,
+          "condition_b": 4955763.9,
+          "delta_b_minus_a": 3808363.166666667
+        },
+        {
+          "run_id": 3,
+          "condition_a": 1143928.5666666667,
+          "condition_b": 4960572.466666667,
+          "delta_b_minus_a": 3816643.9000000004
+        }
+      ]
+    },
+    "hierarchical_probe_latency_effect": {
+      "effect_name": "xdp_minus_iptables_interval_p99",
+      "statistic": "mean",
+      "unit": "ms",
+      "estimate": -14.156114236666667,
+      "ci_95": [
+        -14.478022222222222,
+        -13.820077777777778
+      ],
+      "method": "hierarchical_bootstrap",
+      "resamples": 10000,
+      "statistical_unit": "independent_run",
+      "independent_runs": 3,
+      "run_level_results": [
+        {
+          "run_id": 1,
+          "condition_a": 14.283,
+          "condition_b": 0.3405666666666667,
+          "delta_b_minus_a": -13.942433333333334
+        },
+        {
+          "run_id": 2,
+          "condition_a": 14.6547,
+          "condition_b": 0.34836666666666666,
+          "delta_b_minus_a": -14.306333333333333
+        },
+        {
+          "run_id": 3,
+          "condition_a": 14.578066666666667,
+          "condition_b": 0.35196666666666665,
+          "delta_b_minus_a": -14.2261
+        }
+      ]
+    }
+  }
+}

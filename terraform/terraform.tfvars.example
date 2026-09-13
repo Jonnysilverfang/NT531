@@ -1,0 +1,4 @@
+aws_region    = "ap-southeast-2"
+project_name  = "network-performance-capstone"
+instance_type = "c6i.large"
+key_name      = "my-sydney-keypair"

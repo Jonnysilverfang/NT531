@@ -15,12 +15,11 @@
 
 **Solutions** (pick one):
 
-**Option A: Metadata-aware analysis** (minimal infra change)
+**Option A: Metadata-aware constrained claim** (minimal infra change)
 - Keep B1/B2 separate
 - Log `host_id` and `path` in manifest
-- Analyze with host as blocking factor
-- Report: "path effect conditional on host assignment"
-- Limitation: cannot claim pure routing effect
+- Report: "observed path-configuration association conditional on host assignment"
+- Limitation: a fixed host/path pairing cannot estimate or remove the host effect
 
 **Option B: Dual-path single target** (requires routing change)
 - Deploy B3 in new subnet with both peering + TGW routes
@@ -38,12 +37,12 @@ Run N: randomized
 - Risky for fail-closed protocol
 - Runner complexity high
 
-**Recommendation**: **Option A** for pilot (N=3), consider Option B if route effect is primary RQ.
+**Recommendation**: **Option A** only for tooling pilot (N=3). Use Option B or a balanced Option C before making a causal route claim.
 
 **Action**:
-- [ ] Add `host_id` field to TC-01 manifest
-- [ ] Update `tc01_routing.sh` to log target instance ID
-- [ ] Document in protocol: "host is blocking factor"
+- [x] Record target instance identity and path in each run manifest
+- [x] Analyzer exposes the host/path confounding and restricts the allowed claim
+- [ ] Implement same-backend dual path or balanced host-path crossover for causal RQ1
 
 ---
 
@@ -75,11 +74,11 @@ MTU 9001
 - ENA queue depth
 
 **Actions**:
-- [ ] Refactor `tc02_mtu.sh` to loop `mtu × streams`
-- [ ] Update `experiment.yaml`: `parallel_streams: [1, 4, 8]`
-- [ ] Randomize cell order within run
-- [ ] Separate output dirs: `tc02/mtu_1500_p1/`, `tc02/mtu_1500_p4/`, etc.
-- [ ] Analyzer: report interaction effect if P1/P4/P8 trends differ
+- [x] Refactor `tc02_mtu.sh` to loop `mtu × streams`
+- [x] Update `experiment.yaml`: `parallel_streams: [1, 4, 8]`
+- [x] Randomize cell order within run
+- [x] Separate output dirs for all six cells
+- [x] Analyzer reports paired effects separately for P1/P4/P8
 
 ---
 
@@ -127,17 +126,17 @@ saturated = (
 ```
 
 **Enhancement**:
-- [ ] After each stage, check saturation in `tc04_packet_processing.sh`
-- [ ] If saturated: log threshold, stop increasing load
-- [ ] Report achieved load vs target load
-- [ ] Do NOT label stage with target PPS if actual < target
-- [ ] Example: `load_target=1000000 load_achieved=850000 saturated=true`
+- [x] After each stage, check saturation in `tc04_packet_processing.sh`
+- [x] If saturated: log threshold and stop increasing load per condition
+- [x] Report achieved load from iperf3 sender packets/duration versus target load
+- [x] Keep target and achieved PPS as separate fields
+- [x] Schema example: `load_target_pps=1000000 achieved_load_pps=850000 saturated=true`
 
 **Actions**:
-- [ ] Add `check_saturation()` function to `lib/metrics.sh`
-- [ ] Parse legitimate probe output for loss/P99
-- [ ] Parse `/proc/stat` for sustained CPU > 90%
-- [ ] Write `tc04/saturation_events.jsonl`
+- [x] Add fail-closed `check_saturation()` using `evaluate_saturation.py`
+- [x] Parse legitimate probe output for loss/P99
+- [x] Calculate CPU busy percentage from before/after `/proc/stat` deltas
+- [x] Write `tc04/saturation_events.jsonl`
 
 ---
 
@@ -177,13 +176,13 @@ results/mode_b/
 ```
 
 **Actions**:
-- [ ] Create `scripts/analyze_mode_b.py`
-- [ ] Load all runs from experiment dir
-- [ ] Validate checksum per run
-- [ ] Compute run-level paired deltas
-- [ ] Hierarchical bootstrap (run → observation)
-- [ ] Detect saturation point from TC-04 events
-- [ ] Output `results/mode_b/<exp_id>/summary.json`
+- [x] Create `scripts/analyze_mode_b.py` with `analyze_tc01()` … `analyze_tc04()`
+- [x] Load all runs and reject incomplete run/cell coverage
+- [x] Validate checksum coverage and digest per run
+- [x] Compute paired run-level deltas
+- [x] Use honestly labeled paired run-level bootstrap for Mode B summary artifacts
+- [x] Detect per-run TC-04 saturation with right-censoring semantics
+- [x] Output `results/mode_b/<exp_id>/mode_b_summary.json`
 
 ---
 
@@ -364,11 +363,11 @@ Tools: Python (matplotlib/seaborn) or Grafana snapshots.
 ## MILESTONE GATES
 
 ### M1: Methodology Ready
-- [ ] TC-01 host tracking
-- [ ] TC-02 2D matrix
+- [x] TC-01 host tracking and constrained claim
+- [x] TC-02 2D matrix
 - [ ] TC-03 split F/P
-- [ ] TC-04 saturation auto-detect
-- [ ] Mode B analyzer scaffold
+- [x] TC-04 saturation auto-detect using CPU deltas and achieved PPS
+- [x] Mode B analyzer for TC-01..TC-04 with incomplete-data gates
 
 ### M2: AWS Ready
 - [ ] Terraform deploy PASS

@@ -2,6 +2,7 @@
 """Offline quality gate: không gọi AWS, không deploy, không nạp XDP."""
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -15,7 +16,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def run(command):
     print("+", " ".join(map(str, command)))
-    subprocess.run(command, cwd=ROOT, check=True)
+    environment = os.environ.copy()
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    subprocess.run(command, cwd=ROOT, check=True, env=environment)
+
+
+def validate_python_syntax():
+    scripts = [
+        path for parent in (ROOT / "scripts", ROOT / "monitoring", ROOT / "tests")
+        for path in sorted(parent.rglob("*.py"))
+    ]
+    for path in scripts:
+        compile(path.read_text(encoding="utf-8"), str(path), "exec")
+    print(f"PASS Python syntax: {len(scripts)} files")
 
 
 def validate_markdown():
@@ -47,15 +60,16 @@ def validate_shell_syntax():
     if not bash:
         raise SystemExit("FAIL: bash unavailable; shell syntax cannot be certified")
     scripts = [
-        "scripts/benchmark_runner.sh", "scripts/dut_server_setup.sh",
-        "scripts/collect_ena_metrics.sh", "scripts/cleanup_resources.sh",
-        "ebpf/ebpf_loader.sh",
+        str(path.relative_to(ROOT))
+        for parent in (ROOT / "scripts", ROOT / "ebpf")
+        for path in sorted(parent.rglob("*.sh"))
     ]
     run([bash, "-n", *scripts])
     print(f"PASS bash syntax: {len(scripts)} scripts")
 
 
 def main():
+    validate_python_syntax()
     run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py", "-v"])
 
     dashboard = ROOT / "monitoring/grafana/dashboards/network_performance_p95_p99.json"

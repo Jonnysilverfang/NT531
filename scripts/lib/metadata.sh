@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 collect_environment_manifest() {
-    python3 "${SCRIPT_DIR}/collect_environment_manifest.py" \
+    "${PYTHON_BIN}" "${SCRIPT_DIR}/collect_environment_manifest.py" \
         --output "${RUN_DIR}/environment.json" \
         --interface "${INTERFACE}" \
         --region "${AWS_REGION}" \

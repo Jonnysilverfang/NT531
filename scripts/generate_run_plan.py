@@ -64,7 +64,7 @@ def build_plan(config_path: Path, profile: str | None, experiment_id: str) -> di
         "saturation_preregistration": config["tc04"]["saturation"],
         "notes": [
             "This is a deterministic schedule, not AWS measurement evidence.",
-            "TC01 target host identity must be persisted and treated as a blocking factor.",
+            "TC01 target identity must be persisted; a fixed host/path pairing remains a confounder, not an estimable block effect.",
             "TC03 overlapping-CIDR proof is a separate functional testcase and is not in this performance schedule.",
         ],
         "runs": runs,

@@ -22,7 +22,7 @@ run_tc02() {
         tcp_throughput "${TARGET_PEERING_IP}" "${streams}" "${output_dir}/iperf3.json"
         run_on_dut snapshot_counters "${output_dir}/after.json"
         bash "${SCRIPT_DIR}/collect_ena_metrics.sh" "${output_dir}/ena_after.txt" "${INTERFACE}"
-        python3 "${SCRIPT_DIR}/calculate_softirq_delta.py" \
+        "${PYTHON_BIN}" "${SCRIPT_DIR}/calculate_softirq_delta.py" \
             --before "${output_dir}/before.json" --after "${output_dir}/after.json" \
             --condition "${cell}" --run-id "${RUN_ID}" --output-json "${output_dir}/softirq_delta.json"
         cooldown_pause

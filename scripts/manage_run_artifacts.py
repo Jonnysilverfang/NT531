@@ -74,8 +74,8 @@ def init_run(args: argparse.Namespace) -> None:
     root = Path(__file__).resolve().parents[1]
     manifest = {
         "schema_version": 1,
-        "data_mode": "empirical_aws",
-        "empirical": True,
+        "data_mode": args.data_mode,
+        "empirical": args.data_mode == "empirical_aws",
         "experiment_id": args.experiment_id,
         "run_id": args.run_id,
         "block_id": f"block-{args.run_id:03d}",
@@ -87,6 +87,7 @@ def init_run(args: argparse.Namespace) -> None:
         "seed": args.seed,
         "git_commit": git_commit(root),
         "condition_schedule": {},
+        "target_assignments": {},
         "exclusions": [],
     }
     write_json_atomic(run_dir / "manifest.json", manifest)
@@ -102,6 +103,22 @@ def record_schedule(args: argparse.Namespace) -> None:
     data["condition_schedule"][args.testcase] = {
         "seed": args.seed,
         "order": args.conditions,
+    }
+    write_json_atomic(path, data)
+
+
+def record_target(args: argparse.Namespace) -> None:
+    path = args.run_dir / "manifest.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("status") != "collecting":
+        raise ValueError("cannot modify a finalized run")
+    testcase = data.setdefault("target_assignments", {}).setdefault(args.testcase, {})
+    if args.condition in testcase:
+        raise ValueError(f"target assignment already recorded for {args.testcase}/{args.condition}")
+    testcase[args.condition] = {
+        "target_id": args.target_id,
+        "target_address": args.target_address,
+        "path": args.path,
     }
     write_json_atomic(path, data)
 
@@ -157,7 +174,11 @@ def verify(args: argparse.Namespace) -> None:
     if mismatches:
         raise ValueError(f"checksum mismatch: {mismatches}")
     manifest = json.loads((args.run_dir / "manifest.json").read_text(encoding="utf-8"))
-    if manifest.get("data_mode") != "empirical_aws" or manifest.get("empirical") is not True:
+    valid_discriminators = {
+        ("empirical_aws", True),
+        ("local_emulation", False),
+    }
+    if (manifest.get("data_mode"), manifest.get("empirical")) not in valid_discriminators:
         raise ValueError("Mode B run manifest has an invalid evidence discriminator")
     if manifest.get("status") != "finalized":
         raise ValueError("Mode B run has not been finalized")
@@ -175,6 +196,7 @@ def parser() -> argparse.ArgumentParser:
     init.add_argument("--region", required=True)
     init.add_argument("--profile", required=True)
     init.add_argument("--seed", type=int, required=True)
+    init.add_argument("--data-mode", choices=("empirical_aws", "local_emulation"), default="empirical_aws")
     init.set_defaults(func=init_run)
 
     record = sub.add_parser("record-schedule")
@@ -183,6 +205,15 @@ def parser() -> argparse.ArgumentParser:
     record.add_argument("--seed", type=int, required=True)
     record.add_argument("conditions", nargs="+")
     record.set_defaults(func=record_schedule)
+
+    target = sub.add_parser("record-target")
+    target.add_argument("--run-dir", type=Path, required=True)
+    target.add_argument("--testcase", choices=("tc01", "tc03"), required=True)
+    target.add_argument("--condition", required=True)
+    target.add_argument("--target-id", required=True)
+    target.add_argument("--target-address", required=True)
+    target.add_argument("--path", required=True)
+    target.set_defaults(func=record_target)
 
     seal = sub.add_parser("finalize")
     seal.add_argument("--run-dir", type=Path, required=True)

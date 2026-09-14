@@ -23,6 +23,7 @@ analysis = load_module("capstone_analysis", "scripts/analyze_results.py")
 softirq = load_module("capstone_softirq", "scripts/calculate_softirq_delta.py")
 exporter = load_module("capstone_exporter", "monitoring/mock_metrics_exporter.py")
 generator = load_module("capstone_generator", "scripts/generate_reference_dataset.py")
+evaluator = load_module("capstone_saturation", "scripts/evaluate_saturation.py")
 
 
 def hcl_resource_block(text, resource_type, name):
@@ -141,12 +142,12 @@ class SoftirqDeltaTests(unittest.TestCase):
             "host": "dut-a", "instance_id": "i-abc", "interface": "eth0",
             "mac_address": "00:11:22:33:44:55", "timestamp_monotonic_ns": 1_000_000_000,
             "timestamp_utc": "2026-01-01T00:00:00Z",
-            "cpu_stat": {"total_jiffies": 1000, "softirq": 100},
+            "cpu_stat": {"total_jiffies": 1000, "idle": 400, "iowait": 50, "softirq": 100},
             "softirqs": {"net_rx": 1000, "net_tx": 500},
         }
         after = copy.deepcopy(before)
         after.update(timestamp_monotonic_ns=11_000_000_000, timestamp_utc="2026-01-01T00:00:10Z")
-        after["cpu_stat"] = {"total_jiffies": 2000, "softirq": 150}
+        after["cpu_stat"] = {"total_jiffies": 2000, "idle": 500, "iowait": 70, "softirq": 150}
         after["softirqs"] = {"net_rx": 3000, "net_tx": 800}
         return before, after
 
@@ -162,6 +163,7 @@ class SoftirqDeltaTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["delta_total_jiffies"], 1000)
         self.assertEqual(result["metrics"]["delta_softirq_jiffies"], 50)
         self.assertEqual(result["metrics"]["softirq_percent"], 5.0)
+        self.assertEqual(result["metrics"]["cpu_total_percent"], 88.0)
         self.assertEqual(result["duration_sec"], 10.0)
 
     def test_identity_mismatch_fails(self):
@@ -217,6 +219,44 @@ class StatisticalTests(unittest.TestCase):
     def test_welch_is_machine_labeled_exploratory(self):
         result = analysis.welch_t_test([1.0, 2.0, 3.0], [2.0, 3.0, 5.0])
         self.assertEqual(result["interpretation"], "exploratory_only_pooled_observations")
+
+
+class SaturationEvaluationTests(unittest.TestCase):
+    def test_delta_cpu_threshold_and_achieved_pps_are_used(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            probe = root / "probe.txt"
+            probe.write_text(
+                "Summary latency in usec\n"
+                "percentile 50.000 = 100\n"
+                "percentile 95.000 = 4000\n"
+                "percentile 99.000 = 6000\n"
+                "#[Packets lost] = 2.500%\n",
+                encoding="utf-8",
+            )
+            cpu = root / "cpu.json"
+            cpu.write_text(json.dumps({"metrics": {
+                "cpu_total_percent": 95.0, "softirq_percent": 30.0,
+            }}), encoding="utf-8")
+            load = root / "load.json"
+            load.write_text(json.dumps({"end": {"sum_sent": {
+                "packets": 8500000, "seconds": 10.0, "bits_per_second": 8.16e9,
+            }}}), encoding="utf-8")
+            result = evaluator.evaluate(probe, cpu, load, 1.0, 5.0, 90.0)
+            self.assertTrue(result["saturated"])
+            self.assertEqual(result["achieved_load_pps"], 850000.0)
+            self.assertEqual(result["p99_ms"], 6.0)
+            self.assertEqual(
+                result["violations"],
+                ["legitimate_loss_pct", "legitimate_p99_ms", "cpu_total_percent"],
+            )
+
+    def test_missing_cpu_delta_fails_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "cpu.json"
+            path.write_text(json.dumps({"metrics": {"softirq_percent": 1}}), encoding="utf-8")
+            with self.assertRaises(evaluator.MetricError):
+                evaluator.parse_cpu_delta(path)
 
 
 class ExporterSchemaTests(unittest.TestCase):
@@ -276,12 +316,23 @@ class DocumentationConsistencyTests(unittest.TestCase):
 
 class ArchitectureContractTests(unittest.TestCase):
     def test_runner_requires_explicit_remote_or_local_mode(self):
-        text = (ROOT / "scripts/benchmark_runner.sh").read_text(encoding="utf-8")
-        self.assertIn('EXECUTION_MODE="${EXECUTION_MODE:-aws-remote}"', text)
-        self.assertIn("aws ssm get-command-invocation", text)
-        self.assertIn("ResponseCode", text)
-        self.assertIn("___DUT_SNAPSHOT_JSON_BEGIN___", text)
-        self.assertNotIn('elif [ -f "${DUT_CONTROLLER}" ]', text)
+        runner = (ROOT / "scripts/benchmark_runner.sh").read_text(encoding="utf-8")
+        ssm = (ROOT / "scripts/lib/ssm.sh").read_text(encoding="utf-8")
+        self.assertIn('EXECUTION_MODE="${EXECUTION_MODE:-aws-remote}"', runner)
+        self.assertIn('source "${SCRIPT_DIR}/lib/ssm.sh"', runner)
+        self.assertIn("aws ssm get-command-invocation", ssm)
+        self.assertIn("ResponseCode", ssm)
+        self.assertIn("___DUT_SNAPSHOT_JSON_BEGIN___", ssm)
+        self.assertNotIn('elif [ -f "${DUT_CONTROLLER}" ]', runner + ssm)
+
+    def test_saturation_threshold_names_propagate_from_config(self):
+        loader = (ROOT / "scripts/load_experiment_config.py").read_text(encoding="utf-8")
+        metrics = (ROOT / "scripts/lib/metrics.sh").read_text(encoding="utf-8")
+        for name in ("SATURATION_LOSS_PCT", "SATURATION_P99_MS", "SATURATION_CPU_PCT"):
+            self.assertIn(f'"{name}"', loader)
+            self.assertIn(name, metrics)
+        for stale in ("SATURATION_PACKET_LOSS_PERCENT", "SATURATION_PROBE_P99_MS", "SATURATION_CPU_PERCENT"):
+            self.assertNotIn(stale, loader)
 
     def test_xdp_native_verification_is_fail_fast(self):
         text = (ROOT / "scripts/dut_server_setup.sh").read_text(encoding="utf-8")

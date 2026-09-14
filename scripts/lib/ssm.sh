@@ -28,7 +28,7 @@ run_on_dut() {
             --region "${AWS_REGION}" --command-id "${cmd_id}" \
             --instance-id "${DUT_INSTANCE_ID}" 2>/dev/null); then
             printf '%s\n' "${invocation_json}" > "${RUN_DIR}/commands/${cmd_id}_invocation.json"
-            status=$(printf '%s' "${invocation_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("Status", "Unknown"))')
+            status=$(printf '%s' "${invocation_json}" | "${PYTHON_BIN}" -c 'import json,sys; print(json.load(sys.stdin).get("Status", "Unknown"))')
             case "${status}" in
                 Success|Cancelled|TimedOut|Failed|Cancelling) break ;;
             esac
@@ -36,16 +36,16 @@ run_on_dut() {
         sleep 1
     done
     [ -n "${invocation_json:-}" ] || die "No SSM invocation result for ${cmd_id}"
-    stdout_content=$(printf '%s' "${invocation_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("StandardOutputContent", ""))')
-    stderr_content=$(printf '%s' "${invocation_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("StandardErrorContent", ""))')
-    response_code=$(printf '%s' "${invocation_json}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("ResponseCode", -1))')
+    stdout_content=$(printf '%s' "${invocation_json}" | "${PYTHON_BIN}" -c 'import json,sys; print(json.load(sys.stdin).get("StandardOutputContent", ""))')
+    stderr_content=$(printf '%s' "${invocation_json}" | "${PYTHON_BIN}" -c 'import json,sys; print(json.load(sys.stdin).get("StandardErrorContent", ""))')
+    response_code=$(printf '%s' "${invocation_json}" | "${PYTHON_BIN}" -c 'import json,sys; print(json.load(sys.stdin).get("ResponseCode", -1))')
     printf '%s\n' "${stdout_content}" > "${RUN_DIR}/commands/${cmd_id}_stdout.log"
     printf '%s\n' "${stderr_content}" > "${RUN_DIR}/commands/${cmd_id}_stderr.log"
     [ "${status}" = "Success" ] && [ "${response_code}" -eq 0 ] || \
         die "SSM action ${action} failed: status=${status}, ResponseCode=${response_code}"
 
     if [ "${action}" = "snapshot_counters" ] && [ -n "${target_local_file}" ]; then
-        printf '%s' "${stdout_content}" | python3 -c '
+        printf '%s' "${stdout_content}" | "${PYTHON_BIN}" -c '
 import re, sys
 match = re.search(r"___DUT_SNAPSHOT_JSON_BEGIN___(.*?)___DUT_SNAPSHOT_JSON_END___", sys.stdin.read(), re.S)
 if not match:

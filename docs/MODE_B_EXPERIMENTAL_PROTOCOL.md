@@ -38,7 +38,7 @@ Saturation của TC-04 là **mức offered load nhỏ nhất** mà ít nhất m�
 - `validation` và `pilot`: N=3 để bắt lỗi công cụ/dữ liệu; không dùng làm kết luận cuối.
 - `final`: N≥10; ưu tiên 20–30 nếu ngân sách cho phép.
 - Mỗi run là một block. Condition order dùng seed lưu trong run manifest.
-- TC-01 hiện có hai target host. Host identity/assignment phải được lưu và xử lý như blocking factor; không tuyên bố “route là biến duy nhất” nếu chưa hoán đổi host-path hoặc dùng cùng target.
+- TC-01 hiện có hai target host. Host identity/assignment phải được lưu như một confounder; fixed host/path pairing không đủ để ước lượng block effect. Không tuyên bố “route là biến duy nhất” nếu chưa hoán đổi host-path cân bằng hoặc dùng cùng target.
 - TC-02 randomize toàn bộ 6 cell MTU × streams. TC-04 giữ load stages tăng dần nhưng randomize iptables/XDP trong từng stage.
 
 Schedule có thể review offline bằng:
@@ -92,6 +92,10 @@ Mỗi endpoint Mode B phải báo:
 - 95% run-aware bootstrap CI và effect size;
 - P50/P95/P99 mô tả; pooled-observation tests chỉ được ghi exploratory;
 - practical impact, cost snapshot date và giới hạn hiệu lực.
+
+Với artifact hiện tại, `sockperf` lưu summary P50/P95/P99 theo run chứ chưa lưu toàn bộ observations bên trong run. Vì vậy `scripts/analyze_mode_b.py` đăng ký phương pháp chính là **paired run-level bootstrap**. Thuật ngữ **hierarchical bootstrap** chỉ được dùng cho pipeline Mode A có cả hai tầng `run → observation`; Mode B chỉ được đổi sang thuật ngữ đó sau khi raw within-run observations được thu và tầng observation được resample thật sự.
+
+TC-01 dùng hai backend khác nhau trong topology hiện tại. Target identity bắt buộc xuất hiện trong manifest; analyzer chỉ cho phép claim về **path configuration conditional on host assignment**. Muốn nhận diện causal route effect phải chuyển sang cùng backend hoặc crossover host-path cân bằng.
 
 Repo chỉ chuyển trạng thái từ methodology prototype sang empirical study sau khi: AWS preflight PASS, N final đạt cấu hình, mọi run checksum PASS, không thiếu design cell, analyzer Mode B tái lập summary/graphs và evidence review xác nhận không có environment drift ngoài biến đã đăng ký.
 

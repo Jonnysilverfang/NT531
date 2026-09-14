@@ -4,7 +4,7 @@ calculate_softirq_delta.py - Mô-đun tính toán và xác thực SoftIRQ Delta 
 Mục tiêu:
  - Đọc hai tệp snapshot (before và after) thu thập từ DUT trong cùng một workload window
  - Xác minh tính toàn vẹn: cùng host/instance_id, monotonic duration > 0, total_jiffies > 0
- - Tính toán chính xác SoftIRQ %:
+ - Tính toán chính xác SoftIRQ % và tổng CPU busy %:
      Delta_SoftIRQ = SoftIRQ_after - SoftIRQ_before
      Delta_Total = Total_Jiffies_after - Total_Jiffies_before
      SoftIRQ% = 100.0 * (Delta_SoftIRQ / Delta_Total)
@@ -54,15 +54,27 @@ def compute_delta(before_path, after_path, condition="unknown", run_id=1):
     total_a = stat_a.get("total_jiffies", 0)
     softirq_b = stat_b.get("softirq", 0)
     softirq_a = stat_a.get("softirq", 0)
+    idle_b = stat_b.get("idle", 0)
+    idle_a = stat_a.get("idle", 0)
+    iowait_b = stat_b.get("iowait", 0)
+    iowait_a = stat_a.get("iowait", 0)
 
     delta_total = total_a - total_b
     delta_softirq = softirq_a - softirq_b
+    delta_idle = idle_a - idle_b
+    delta_iowait = iowait_a - iowait_b
 
     if delta_total <= 0:
         raise ValueError("delta_total_jiffies phải > 0")
     if delta_softirq < 0:
         raise ValueError("Bộ đếm softirq bị giảm giữa hai snapshot")
+    if delta_idle < 0 or delta_iowait < 0:
+        raise ValueError("Bộ đếm idle/iowait bị giảm giữa hai snapshot")
+    delta_busy = delta_total - delta_idle - delta_iowait
+    if delta_busy < 0 or delta_busy > delta_total:
+        raise ValueError("Delta CPU busy nằm ngoài cửa sổ total jiffies")
     softirq_percent = 100.0 * float(delta_softirq) / float(delta_total)
+    cpu_total_percent = 100.0 * float(delta_busy) / float(delta_total)
 
     # 4. Trích xuất chỉ số ngắt mạng từ /proc/softirqs
     si_b = b.get("softirqs", {})
@@ -83,8 +95,12 @@ def compute_delta(before_path, after_path, condition="unknown", run_id=1):
         "timestamp_utc_after": a.get("timestamp_utc"),
         "metrics": {
             "delta_total_jiffies": delta_total,
+            "delta_idle_jiffies": delta_idle,
+            "delta_iowait_jiffies": delta_iowait,
+            "delta_busy_jiffies": delta_busy,
             "delta_softirq_jiffies": delta_softirq,
             "softirq_percent": round(softirq_percent, 4),
+            "cpu_total_percent": round(cpu_total_percent, 4),
             "delta_net_rx_interrupts": delta_net_rx,
             "delta_net_tx_interrupts": delta_net_tx,
             "net_rx_irq_per_sec": round(delta_net_rx / duration_sec, 2) if duration_sec > 0 else 0

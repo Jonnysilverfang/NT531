@@ -35,9 +35,9 @@ Ba mô hình kết nối liên VPC cốt lõi trên AWS hiện nay:
    - *Nhược điểm*: Chỉ hỗ trợ giao thức tầng 4 TCP/TLS (thông qua Network Load Balancer), phát sinh độ trễ xử lý qua proxy/NLB, tính phí theo giờ và phí dữ liệu $0.01/GB.
 
 Bên cạnh đó, các cơ chế tối ưu hóa cấp thấp của phần cứng ảo hóa **AWS Nitro System**:
-- **Enhanced Networking Adapter (ENA)**: Băng thông tới 12.5 Gbps - 100 Gbps, hàng đợi đa luồng phần cứng.
-- **Jumbo Frames (MTU 9001 vs MTU 1500)**: Tăng kích thước gói tin (MSS 8961 bytes), giảm thiểu 74.3% số lượng ngắt CPU SoftIRQ và số gói tin/giây (PPS).
-- **Cluster Placement Groups**: Gom các máy chủ vào cùng một phân vùng mạng có băng thông lưỡng phân cao (high-bisection-bandwidth network fabric) trong một Availability Zone để đạt độ trễ cực thấp (< 100 - 200 microsecond).
+- **Enhanced Networking Adapter (ENA)**: Cung cấp enhanced networking và các hàng đợi đa luồng; giới hạn thực tế phụ thuộc instance type, kích thước gói và allowance của ENA.
+- **Jumbo Frames (MTU 9001 vs MTU 1500)**: Có thể giảm số packet cần xử lý cho cùng lượng payload. Mức giảm SoftIRQ/PPS là giả thuyết cần đo ở Mode B, không phải thuộc tính cố định của AWS.
+- **Cluster Placement Groups**: Có thể giảm biến thiên placement cho workload cần thông lượng cao/độ trễ thấp trong một Availability Zone; repo chưa có phép đo AWS để định lượng mức cải thiện.
 
 ---
 
@@ -50,7 +50,7 @@ Bên cạnh đó, các cơ chế tối ưu hóa cấp thấp của phần cứng
 2. **Về mặt nguyên mẫu đo kiểm**:
    - Thực hiện 4 kịch bản kiểm thử; phiên pilot gồm **$N = 3$ independent runs** đối chứng, protocol mở rộng hoàn chỉnh dự kiến 10–30 randomized runs.
    - Trích xuất dữ liệu thô, phân tích biểu đồ phân vị độ trễ (Latency CDF), và đánh giá tải CPU ngắt mềm SoftIRQ.
-   - Đánh giá khả năng phòng thủ của eBPF/XDP Native Hook so với Linux iptables truyền thống tại Ingress của máy chủ đích (DUT) dưới bão UDP 5 Mpps.
+   - Đánh giá ngưỡng bão hòa của eBPF/XDP Native Hook so với Linux iptables tại Ingress DUT theo các mức offered load đã đăng ký trong `experiment.yaml`; phải báo cả target PPS và achieved PPS.
 3. **Về mặt ứng dụng & Kinh tế**:
    - Đánh giá tương quan Chi phí / Hiệu năng (Cost-to-Performance Ratio: Gbps per Dollar).
    - Đưa ra bản hướng dẫn kỹ thuật kiến trúc mạng (Design Decision Framework) áp dụng cho doanh nghiệp và các bài toán thi tuyển chứng chỉ cao cấp AWS ANS-C01 & DOP-C02.
@@ -70,22 +70,22 @@ AWS Region: Sydney (ap-southeast-2) - Giảm thiểu tối đa Confounder (Cùng
 |   - EC2 Client 1 (c6i.large / ENA)  |                |   - EC2 Target B1 (Peering Target)  |
 |     [c6i.large, no Placement Group] |                |     [c6i.large, no Placement Group] |
 |     [Private IP: 10.1.1.10]         |                |     [Private IP: 10.2.1.10]         |
+|                                     |                | Subnet B2 (ap-southeast-2a)         |
 |                                     |                |   - EC2 Target B2 (TGW Target)      |
-|                                     |                |     [c6i.large, no Placement Group] |
-| Subnet A2 (ap-southeast-2b)         |                |     [Private IP: 10.2.1.20]         |
-|   - Subnet dự phòng Cross-AZ        |                | Subnet B2 (ap-southeast-2b)         |
-|                                     |                |   - Subnet dự phòng Cross-AZ        |
+| Subnet A2 (ap-southeast-2b)         |                |     [c6i.large, no Placement Group] |
+|   - Subnet dự phòng Cross-AZ        |                |     [Private IP: 10.2.2.10]         |
+|                                     |                |                                     |
 +-------------------------------------+                +-------------------------------------+
         |                 |                                      |                 |
         |                 |====== [ĐƯỜNG 1: VPC PEERING] =======|                 |
         |                 |       - Direct Line-rate             |                 |
-        |                 |       - P99 < 0.23 ms                |                 |
-        |                 |       - $0 Data transfer (Same AZ)   |                 |
+        |                 |       - Mode B latency: pending      |                 |
+        |                 |       - Cost snapshot: pending       |                 |
         |                 |                                      |                 |
         |                 \------- [ĐƯỜNG 2: TRANSIT GATEWAY] --/                 |
         |                          - Hub-and-Spoke Centralized                     |
         |                          - TGW Route Tables                              |
-        |                          - Overhead độ trễ ~0.84 ms tại P99              |
+        |                          - Mode B latency/cost: pending                  |
         |                                                                          |
         v                                                                          |
   +-----------------------------------------------------------------------------+  |
@@ -106,7 +106,7 @@ AWS Region: Sydney (ap-southeast-2) - Giảm thiểu tối đa Confounder (Cùng
 
 ## 4. Ma Trận Kịch Bản Thực Nghiệm & Phương Pháp Đa Phiên (3 Pilot Runs)
 
-Phiên pilot đối chứng gồm **$N = 3$ Independent Runs**, áp dụng **phân tích chênh lệch theo run (Run-level Paired Deltas)** và **Hierarchical Bootstrap (10,000 resamples)**, tập trung vào các phân vị đuôi **P95 và P99** (quyết định SLA doanh nghiệp) cùng với **P50** (trung vị).
+Bộ tham chiếu tổng hợp Mode A gồm **$N = 3$ Independent Runs**, áp dụng **Run-level Paired Deltas** và **Hierarchical Bootstrap hai tầng (10,000 resamples)** trên observations được sinh có kiểm soát. Analyzer Mode B dùng **paired run-level bootstrap** trên các summary của từng run; repo không tuyên bố hierarchical bootstrap cho Mode B khi chưa thu raw observations bên trong run.
 
 | Mã Kịch Bản | Trụ Cột Đề Tài | Bài Toán Kỹ Thuật Nghiệp Vụ | Kiến Trúc So Sánh | Công Cụ Đo | Chỉ Số Trọng Tâm (Single Source of Truth) |
 | :---: | :---: | :--- | :--- | :---: | :--- |
@@ -115,6 +115,8 @@ Phiên pilot đối chứng gồm **$N = 3$ Independent Runs**, áp dụng **ph�
 | **TC-02B** | **Lớp 2 (Vật lý)** | **Đồng bộ Cơ sở Dữ liệu & Big Data ETL** (*Mode A Reference Benchmark*). | **MTU 1500 (Standard)** vs **MTU 9001 (Jumbo Frames)** | `iperf3 -P 4` | **Giảm 46.30 điểm % CPU SoftIRQ** (CI run-aware: [-46.67, -45.93])<br>Throughput tăng 1.637 Gbps (CI: [1.609, 1.669]). |
 | **TC-03** | **Lớp 3 (Định tuyến)** | **Tích hợp Đối tác B2B Trùng Dải IP (Zero-Trust SaaS Integration)**. | **AWS PrivateLink** vs **VPC Peering** | `sockperf`, `iperf3` | **P99 = 0.604 ms**; $\Delta$P99 run-aware: +0.395 ms (CI: [0.386, 0.405])<br>Giải quyết xung đột CIDR trong mô hình Chế độ A. |
 | **TC-04** | **Lớp 5 (Nhân & CNCF)** | **Chống Bão Hòa UDP Flood & eBPF Kernel-Bypass tại Ingress DUT**. | **Linux iptables** vs **eBPF/XDP Native Hook** | `iperf3 -u`, `bpftool` | **Giảm 80.34 điểm % CPU SoftIRQ** (CI run-aware: [-80.66, -79.98])<br>Drop-rate tăng 3.805M PPS; interval-P99 giảm 14.156 ms. |
+
+> Các số trong bảng là **Mode A synthetic reference**, không phải AWS observation. Riêng TC-01 hiện đổi đồng thời path và backend host; vì vậy claim hợp lệ chỉ là “cấu hình đường đi TGW quan sát được có latency cao hơn trong môi trường này”, không phải “TGW gây thêm latency”. Mode B lưu target identity cho từng run và fail-closed nếu metadata bị thiếu.
 
 ---
 
@@ -183,3 +185,15 @@ python3 scripts/analyze_results.py \
   --bootstrap-resamples 10000 \
   --random-seed 42
 ```
+
+Mode B dùng analyzer và schema riêng sau khi đã có run AWS được niêm phong checksum:
+
+```bash
+python3 scripts/analyze_mode_b.py \
+  --experiment-dir results/mode_b/<experiment_id> \
+  --output-json results/mode_b/<experiment_id>/mode_b_summary.json \
+  --bootstrap-resamples 10000 \
+  --random-seed 42
+```
+
+Analyzer từ chối dataset thiếu run/cell, checksum sai, TC-03 không cùng backend hoặc TC-04 thiếu chuỗi load hợp lệ. Chưa có `mode_b_summary.json` từ AWS thật trong repo.

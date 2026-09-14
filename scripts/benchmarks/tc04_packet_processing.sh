@@ -48,14 +48,17 @@ run_tc04() {
         wait "${flood_pid}"
         run_on_dut snapshot_counters "${output_dir}/after.json"
         
-        python3 "${SCRIPT_DIR}/calculate_softirq_delta.py" \
+        "${PYTHON_BIN}" "${SCRIPT_DIR}/calculate_softirq_delta.py" \
             --before "${output_dir}/before.json" --after "${output_dir}/after.json" \
             --condition "${condition}_load_${load}" --run-id "${RUN_ID}" \
             --output-json "${output_dir}/softirq_delta.json"
         
         local sat_result
-        sat_result=$(check_saturation "${output_dir}/legitimate_probe.txt" "${output_dir}/after.json")
-        echo "{\"run_id\":${RUN_ID},\"load_target\":${load},\"condition\":\"${condition}\",\"saturation\":${sat_result}}" >> "${saturation_file}"
+        sat_result=$(check_saturation \
+            "${output_dir}/legitimate_probe.txt" \
+            "${output_dir}/softirq_delta.json" \
+            "${output_dir}/load_iperf3.json")
+        echo "{\"run_id\":${RUN_ID},\"load_target_pps\":${load},\"condition\":\"${condition}\",\"saturation\":${sat_result}}" >> "${saturation_file}"
         
         local is_saturated
         is_saturated=$(echo "${sat_result}" | grep -o '"saturated":[^,}]*' | cut -d: -f2)

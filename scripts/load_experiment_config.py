@@ -130,9 +130,9 @@ def emit_shell(data: dict[str, Any]) -> None:
         "WARMUP_SECONDS": timing["warmup_seconds"],
         "MEASUREMENT_SECONDS": timing["measurement_seconds"],
         "COOLDOWN_SECONDS": timing["cooldown_seconds"],
-        "SATURATION_PACKET_LOSS_PERCENT": data["tc04"]["saturation"]["packet_loss_percent_gt"],
-        "SATURATION_PROBE_P99_MS": data["tc04"]["saturation"]["probe_p99_ms_gt"],
-        "SATURATION_CPU_PERCENT": data["tc04"]["saturation"]["cpu_percent_gt"],
+        "SATURATION_LOSS_PCT": data["tc04"]["saturation"]["packet_loss_percent_gt"],
+        "SATURATION_P99_MS": data["tc04"]["saturation"]["probe_p99_ms_gt"],
+        "SATURATION_CPU_PCT": data["tc04"]["saturation"]["cpu_percent_gt"],
         "UDP_PAYLOAD_BYTES": data["tc04"]["udp_payload_bytes"],
     }
     for name, value in scalar_values.items():

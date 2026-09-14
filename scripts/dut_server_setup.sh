@@ -225,13 +225,19 @@ def read_stat():
             for line in f:
                 if line.startswith("cpu "):
                     parts = [int(x) for x in line.split()[1:]]
+                    parts += [0] * (10 - len(parts))
                     # Format /proc/stat: user, nice, system, idle, iowait, irq, softirq, steal, guest, guest_nice
-                    total = sum(parts)
+                    # guest/guest_nice are already included in user/nice and must not be double-counted.
+                    total = sum(parts[:8])
                     return {
                         "user": parts[0],
+                        "nice": parts[1],
                         "system": parts[2],
                         "idle": parts[3],
-                        "softirq": parts[6] if len(parts) > 6 else parts[5],
+                        "iowait": parts[4],
+                        "irq": parts[5],
+                        "softirq": parts[6],
+                        "steal": parts[7],
                         "total_jiffies": total
                     }
     except Exception as e:

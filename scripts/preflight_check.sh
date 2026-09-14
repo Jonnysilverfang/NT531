@@ -10,6 +10,9 @@ SCOPE="offline"
 DUT_INSTANCE_ID="${DUT_INSTANCE_ID:-}"
 AWS_REGION="${AWS_REGION:-ap-southeast-2}"
 INTERFACE="${INTERFACE:-eth0}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+export PYTHONUTF8="${PYTHONUTF8:-1}"
+export PYTHONDONTWRITEBYTECODE="${PYTHONDONTWRITEBYTECODE:-1}"
 
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -35,15 +38,15 @@ check_command() {
     if command -v "$1" >/dev/null 2>&1; then pass "command:$1"; else fail "command:$1"; fi
 }
 
-check_command python3
+check_command "${PYTHON_BIN}"
 if [ -n "${PROFILE}" ]; then
-    if python3 "${SCRIPT_DIR}/load_experiment_config.py" --config "${CONFIG_FILE}" --profile "${PROFILE}" >/dev/null; then
+    if "${PYTHON_BIN}" "${SCRIPT_DIR}/load_experiment_config.py" --config "${CONFIG_FILE}" --profile "${PROFILE}" >/dev/null; then
         pass "experiment-config"
     else
         fail "experiment-config"
     fi
 else
-    if python3 "${SCRIPT_DIR}/load_experiment_config.py" --config "${CONFIG_FILE}" >/dev/null; then
+    if "${PYTHON_BIN}" "${SCRIPT_DIR}/load_experiment_config.py" --config "${CONFIG_FILE}" >/dev/null; then
         pass "experiment-config"
     else
         fail "experiment-config"

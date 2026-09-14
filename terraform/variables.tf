@@ -16,6 +16,16 @@ variable "instance_type" {
   default     = "c6i.large"
 }
 
+variable "benchmark_ami_id" {
+  description = "AMI đã bake và pin đủ sockperf/iperf3/clang/bpftool cho toàn bộ experiment"
+  type        = string
+
+  validation {
+    condition     = can(regex("^ami-[0-9a-f]+$", var.benchmark_ami_id))
+    error_message = "benchmark_ami_id phải là một AMI ID đã pin, ví dụ ami-0123456789abcdef0."
+  }
+}
+
 variable "key_name" {
   description = "SSH Key Pair name (để trống nếu dùng SSM)"
   type        = string

@@ -1,4 +1,4 @@
-# ĐỀ TÀI CHUYÊN NGÀNH: MÔ HÌNH THAM CHIẾU HIỆU CHUẨN & NGUYÊN MẪU KIẾN TRÚC MẠNG ĐA TẦNG TRÊN AWS KẾT HỢP eBPF/XDP
+# ĐÁNH GIÁ THỰC NGHIỆM KIẾN TRÚC MẠNG AWS VÀ XỬ LÝ GÓI TIN LINUX
 
 > **English Title:** Calibrated Reference Benchmark & Architecture Prototype: High-Throughput Cloud Networking and Linux Kernel-Bypass using eBPF/XDP on AWS Nitro ENA Architecture (Methodology Prototype – Not Yet an Empirical AWS Measurement)  
 > **Region Triển Khai:** AWS Sydney (`ap-southeast-2`)  
@@ -11,10 +11,11 @@
 > **THÔNG CÁO MINH BẠCH HỌC THUẬT & KIỂM CHỨNG TÁI LẬP (DATA PROVENANCE & REPRODUCIBILITY):**  
 > - **Chế độ A (Calibrated Synthetic Reference Model)**: Nhằm phục vụ thẩm định học thuật với chi phí $0.00, toàn bộ số liệu đối chứng là dữ liệu tổng hợp có tham số tham chiếu từ kiến trúc AWS Nitro/ENA và mô hình Sydney (`ap-southeast-2`). Việc “calibrated” không chứng minh số liệu đại diện cho phân phối thực tế của AWS; báo cáo không tuyên bố đây là phép đo production.
 > - **Giảm Pseudoreplication**: Đơn vị phân tích độc lập là **Independent Run ($N = 3$)**. Hiệu ứng chính của cả TC-01 đến TC-04 được tính bằng chênh lệch ghép cặp từng run kết hợp **Hierarchical Bootstrap (10,000 resamples)** hai tầng (lấy mẫu lại run, sau đó observation). Các kiểm định Welch gộp chỉ mang tính thăm dò (exploratory only); $N=3$ vẫn là giới hạn về lực thống kê và khả năng khái quát.
-> - **Kiểm tra toàn vẹn tự động**: Pipeline [`analyze_results.py`](file:///e:/repo/lab-aws/network-performance-capstone/scripts/analyze_results.py) đối chiếu trực tiếp mã băm SHA256 của 5/5 tệp thô trong [`results/raw/`](file:///e:/repo/lab-aws/network-performance-capstone/results/raw/) với [`checksums.sha256`](file:///e:/repo/lab-aws/network-performance-capstone/results/raw/checksums.sha256).
+> - **Kiểm tra toàn vẹn tự động**: Pipeline [`analyze_results.py`](scripts/analyze_results.py) đối chiếu trực tiếp mã băm SHA256 của 5/5 tệp thô trong [`results/raw/`](results/raw/) với [`checksums.sha256`](results/raw/checksums.sha256).
 > - **Quality Gate ngoại tuyến**: `python scripts/run_quality_gate.py` chạy positive/negative tests cho checksum, SoftIRQ delta, numeric underflow, hierarchical bootstrap, exporter schema và các contract SSM/XDP; quality gate không gọi AWS, không deploy và không nạp XDP.
 > - **Ma trận bằng chứng**: [`docs/ACADEMIC_EVIDENCE_MATRIX.md`](docs/ACADEMIC_EVIDENCE_MATRIX.md) ánh xạ từng tuyên bố tới mã nguồn, automated gate, giới hạn và bằng chứng Chế độ B còn cần thiết.
 > - **Nghiệm thu chung cuộc Mode A**: [`docs/FINAL_MODE_A_READINESS_AUDIT.md`](docs/FINAL_MODE_A_READINESS_AUDIT.md) chấm 9,62/10 cho methodology prototype, không phải chứng nhận benchmark AWS empirical.
+> - **Giao thức Mode B đã đăng ký trước**: [`docs/MODE_B_EXPERIMENTAL_PROTOCOL.md`](docs/MODE_B_EXPERIMENTAL_PROTOCOL.md) khóa 4 RQ, ma trận đo, saturation rule, randomization, metadata và fail-closed preflight. Chưa có run AWS nào được xác nhận trong repo.
 
 ---
 
@@ -120,7 +121,7 @@ Phiên pilot đối chứng gồm **$N = 3$ Independent Runs**, áp dụng **ph�
 ## 5. Cấu Trúc Thư Mục Dự Án
 
 ```
-e:\repo\lab-aws\network-performance-capstone/
+NT531/
 ├── 📄 README.md                                   <-- Đề cương tổng quan, ma trận kiểm thử 4 kịch bản
 ├── 📄 STRUCTURE.md                                <-- Bảng mục lục tra cứu nhanh & sơ đồ dự án
 ├── 📁 docs/

@@ -3,7 +3,7 @@
 Dưới đây là cấu trúc chi tiết toàn bộ tài liệu, mã nguồn và kịch bản của methodology prototype đánh giá hiệu năng mạng trên AWS:
 
 ```
-e:\repo\lab-aws\network-performance-capstone/
+NT531/
 ├── 📄 README.md                                   <-- Đề cương tổng quan, ma trận kiểm thử 4 kịch bản
 ├── 📄 STRUCTURE.md                                <-- Bảng mục lục tra cứu nhanh & sơ đồ dự án
 ├── 📁 docs/
@@ -58,21 +58,21 @@ e:\repo\lab-aws\network-performance-capstone/
 
 | Biểu tượng & Tên File | Mục đích sử dụng chính | Đối tượng phù hợp |
 | :--- | :--- | :--- |
-| [📄 **README.md**](file:///e:/repo/lab-aws/network-performance-capstone/README.md) | Tổng quan đề tài, ý nghĩa thực tiễn, topo mạng và ma trận 4 kịch bản trọng tâm. | Mọi người đọc đầu tiên |
-| [🏛️ **CNCF_ECOSYSTEM_AND_TRI_LAYER_FOCUS.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/CNCF_ECOSYSTEM_AND_TRI_LAYER_FOCUS.md) | Phân tích Tam Giác Kiến Trúc (Lớp 2, 3, 5), đối chiếu Cilium CNI và hướng dẫn bật Grafana. | Định hình chiến lược đề tài |
-| [⚡ **EBPF_XDP_NITRO_DEEP_DIVE.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/EBPF_XDP_NITRO_DEEP_DIVE.md) | Nghiên cứu công nghệ Kernel-Bypass eBPF/XDP (Lớp 5), triệt tiêu SoftIRQ và conntrack limits. | Đột phá học thuật & Chuyên gia |
-| [📘 **THEORY_AND_METRICS.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/THEORY_AND_METRICS.md) | Nền tảng ảo hóa phần cứng Nitro, ENA allowance registers, Jumbo Frames MTU 9001. | Nghiên cứu kiến trúc sâu |
-| [📐 **MATHEMATICAL_AND_KERNEL_FOUNDATIONS.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/MATHEMATICAL_AND_KERNEL_FOUNDATIONS.md) | Giải tích toán học: BDP, công thức Mathis, TCP CUBIC vs BBR, thống kê Run-level & Bootstrap. | Luận văn & Báo cáo kỹ thuật |
-| [🖥️ **AWS_CONSOLE_SYDNEY_GUIDE.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/AWS_CONSOLE_SYDNEY_GUIDE.md) | Hướng dẫn thao tác đồ họa trên AWS Console Region Sydney (`ap-southeast-2`) click-by-click. | Thực hành trực quan bằng tay |
-| [📊 **PERFORMANCE_ANALYSIS_REPORT.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/PERFORMANCE_ANALYSIS_REPORT.md) | Báo cáo Chế độ A (Calibrated Synthetic Reference), số liệu P50/P95/P99, Threats to Validity. | Nghiệm thu & Bảo vệ đề tài |
-| [🧾 **ACADEMIC_EVIDENCE_MATRIX.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/ACADEMIC_EVIDENCE_MATRIX.md) | Truy nguyên từng tuyên bố tới artifact, automated gate, giới hạn và bằng chứng Chế độ B còn thiếu. | Phản biện & kiểm toán độc lập |
-| [✅ **FINAL_MODE_A_READINESS_AUDIT.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/FINAL_MODE_A_READINESS_AUDIT.md) | Kết luận và bảng điểm nghiệm thu có phạm vi cho Methodology Prototype. | Hội đồng bảo vệ |
-| [🔍 **OBSERVABILITY_AND_TROUBLESHOOTING_RUNBOOK.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/OBSERVABILITY_AND_TROUBLESHOOTING_RUNBOOK.md) | Custom Flow Logs v5, câu lệnh Athena SQL và quy trình xử lý sự cố mạng khi bị bóp nghẽn. | Quản trị vận hành (SRE/DevOps) |
-| [🎯 **AWS_EXAM_MASTERY_DEEP_DIVE.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/AWS_EXAM_MASTERY_DEEP_DIVE.md) | 10 bài toán thực tế và bẫy thi cử cốt lõi từ ANS-C01 & DOP-C02 có lời giải chi tiết. | Ôn luyện thi chứng chỉ AWS |
-| [🎓 **CAPSTONE_THESIS_AND_SLIDES_TEMPLATE.md**](file:///e:/repo/lab-aws/network-performance-capstone/docs/CAPSTONE_THESIS_AND_SLIDES_TEMPLATE.md) | Khung cấu trúc Khóa luận tốt nghiệp chuẩn 5 chương, 12 slides và 7 câu hỏi phản biện. | Trình bày trước Hội đồng |
-| [📁 **monitoring/**](file:///e:/repo/lab-aws/network-performance-capstone/monitoring/) | Trọn bộ Docker Compose Prometheus + Grafana Dashboard trực quan hóa P50/P95/P99. | Trực quan hóa CNCF ($0) |
-| [📁 **ebpf/**](file:///e:/repo/lab-aws/network-performance-capstone/ebpf/) | Trọn bộ mã nguồn C eBPF, Makefile, script quản lý nạp driver XDP và monitor thời gian thực. | Lập trình nhân Linux & DevOps |
-| [📁 **terraform/**](file:///e:/repo/lab-aws/network-performance-capstone/terraform/) | Toàn bộ mã nguồn tự động hóa hạ tầng (chỉ triển khai khi có nhu cầu). | Tự động hóa IaC |
-| [📁 **scripts/**](file:///e:/repo/lab-aws/network-performance-capstone/scripts/) | Bộ script chạy đo tự động, điều khiển DUT từ xa qua SSM, phân tích thống kê và cleanup. | Tự động hóa đo kiểm |
-| [📁 **tests/**](file:///e:/repo/lab-aws/network-performance-capstone/tests/) | Kiểm thử hồi quy positive/negative và quality gate hoàn toàn ngoại tuyến. | QA & tái lập |
-| [📁 **results/**](file:///e:/repo/lab-aws/network-performance-capstone/results/) | Dữ liệu gốc (raw JSON/CSV), manifest phần cứng, mã băm SHA256 và tóm tắt thống kê. | Tái lập & Kiểm thử khoa học |
+| [📄 **README.md**](README.md) | Tổng quan đề tài, ý nghĩa thực tiễn, topo mạng và ma trận 4 kịch bản trọng tâm. | Mọi người đọc đầu tiên |
+| [🏛️ **CNCF_ECOSYSTEM_AND_TRI_LAYER_FOCUS.md**](docs/CNCF_ECOSYSTEM_AND_TRI_LAYER_FOCUS.md) | Phân tích Tam Giác Kiến Trúc (Lớp 2, 3, 5), đối chiếu Cilium CNI và hướng dẫn bật Grafana. | Định hình chiến lược đề tài |
+| [⚡ **EBPF_XDP_NITRO_DEEP_DIVE.md**](docs/EBPF_XDP_NITRO_DEEP_DIVE.md) | Nghiên cứu công nghệ Kernel-Bypass eBPF/XDP (Lớp 5), triệt tiêu SoftIRQ và conntrack limits. | Đột phá học thuật & Chuyên gia |
+| [📘 **THEORY_AND_METRICS.md**](docs/THEORY_AND_METRICS.md) | Nền tảng ảo hóa phần cứng Nitro, ENA allowance registers, Jumbo Frames MTU 9001. | Nghiên cứu kiến trúc sâu |
+| [📐 **MATHEMATICAL_AND_KERNEL_FOUNDATIONS.md**](docs/MATHEMATICAL_AND_KERNEL_FOUNDATIONS.md) | Giải tích toán học: BDP, công thức Mathis, TCP CUBIC vs BBR, thống kê Run-level & Bootstrap. | Luận văn & Báo cáo kỹ thuật |
+| [🖥️ **AWS_CONSOLE_SYDNEY_GUIDE.md**](docs/AWS_CONSOLE_SYDNEY_GUIDE.md) | Hướng dẫn thao tác đồ họa trên AWS Console Region Sydney (`ap-southeast-2`) click-by-click. | Thực hành trực quan bằng tay |
+| [📊 **PERFORMANCE_ANALYSIS_REPORT.md**](docs/PERFORMANCE_ANALYSIS_REPORT.md) | Báo cáo Chế độ A (Calibrated Synthetic Reference), số liệu P50/P95/P99, Threats to Validity. | Nghiệm thu & Bảo vệ đề tài |
+| [🧾 **ACADEMIC_EVIDENCE_MATRIX.md**](docs/ACADEMIC_EVIDENCE_MATRIX.md) | Truy nguyên từng tuyên bố tới artifact, automated gate, giới hạn và bằng chứng Chế độ B còn thiếu. | Phản biện & kiểm toán độc lập |
+| [✅ **FINAL_MODE_A_READINESS_AUDIT.md**](docs/FINAL_MODE_A_READINESS_AUDIT.md) | Kết luận và bảng điểm nghiệm thu có phạm vi cho Methodology Prototype. | Hội đồng bảo vệ |
+| [🔍 **OBSERVABILITY_AND_TROUBLESHOOTING_RUNBOOK.md**](docs/OBSERVABILITY_AND_TROUBLESHOOTING_RUNBOOK.md) | Custom Flow Logs v5, câu lệnh Athena SQL và quy trình xử lý sự cố mạng khi bị bóp nghẽn. | Quản trị vận hành (SRE/DevOps) |
+| [🎯 **AWS_EXAM_MASTERY_DEEP_DIVE.md**](docs/AWS_EXAM_MASTERY_DEEP_DIVE.md) | 10 bài toán thực tế và bẫy thi cử cốt lõi từ ANS-C01 & DOP-C02 có lời giải chi tiết. | Ôn luyện thi chứng chỉ AWS |
+| [🎓 **CAPSTONE_THESIS_AND_SLIDES_TEMPLATE.md**](docs/CAPSTONE_THESIS_AND_SLIDES_TEMPLATE.md) | Khung cấu trúc Khóa luận tốt nghiệp chuẩn 5 chương, 12 slides và 7 câu hỏi phản biện. | Trình bày trước Hội đồng |
+| [📁 **monitoring/**](monitoring/) | Trọn bộ Docker Compose Prometheus + Grafana Dashboard trực quan hóa P50/P95/P99. | Trực quan hóa CNCF ($0) |
+| [📁 **ebpf/**](ebpf/) | Trọn bộ mã nguồn C eBPF, Makefile, script quản lý nạp driver XDP và monitor thời gian thực. | Lập trình nhân Linux & DevOps |
+| [📁 **terraform/**](terraform/) | Toàn bộ mã nguồn tự động hóa hạ tầng (chỉ triển khai khi có nhu cầu). | Tự động hóa IaC |
+| [📁 **scripts/**](scripts/) | Bộ script chạy đo tự động, điều khiển DUT từ xa qua SSM, phân tích thống kê và cleanup. | Tự động hóa đo kiểm |
+| [📁 **tests/**](tests/) | Kiểm thử hồi quy positive/negative và quality gate hoàn toàn ngoại tuyến. | QA & tái lập |
+| [📁 **results/**](results/) | Dữ liệu gốc (raw JSON/CSV), manifest phần cứng, mã băm SHA256 và tóm tắt thống kê. | Tái lập & Kiểm thử khoa học |

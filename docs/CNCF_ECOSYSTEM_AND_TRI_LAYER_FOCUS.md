@@ -68,7 +68,7 @@ docker compose up -d
 ### 3.2. Truy Cập Dashboard Trực Quan
 - Mở trình duyệt truy cập: `http://localhost:3000`
 - Đăng nhập: Tài khoản `admin` / Mật khẩu `admin`.
-- Dashboard mẫu [**`network_performance_p95_p99.json`**](file:///e:/repo/lab-aws/network-performance-capstone/monitoring/grafana/dashboards/network_performance_p95_p99.json) đã được nạp tự động, hiển thị 3 hàng chuyên dụng (3 Rows) tương ứng đúng với 3 trụ cột kỹ thuật:
+- Dashboard mẫu [**`network_performance_p95_p99.json`**](../monitoring/grafana/dashboards/network_performance_p95_p99.json) đã được nạp tự động, hiển thị 3 hàng chuyên dụng (3 Rows) tương ứng đúng với 3 trụ cột kỹ thuật:
   - **Hàng 1**: Biểu đồ thời gian thực phân vị **P50, P95, P99** của Peering, Transit Gateway và PrivateLink (Trụ cột 2).
   - **Hàng 2**: Biểu đồ đo đạc vi mô độ trễ vật lý và phân vùng băng thông cao của Cluster Placement Group (Trụ cột 1).
   - **Hàng 3**: Biểu đồ đo đạc tỷ lệ CPU SoftIRQ % và năng lực xử lý PPS của eBPF/XDP Kernel-Bypass (Trụ cột 3).
@@ -78,7 +78,7 @@ docker compose up -d
 ## 4. VAI TRÒ CỦA CILIUM CNI (CNCF GRADUATED PROJECT) TRONG ĐỀ TÀI
 
 **Cilium** là dự án tốt nghiệp hàng đầu của CNCF, sử dụng eBPF để thay thế hoàn toàn `iptables` và `kube-proxy` trong môi trường Kubernetes (AWS EKS):
-1. **Liên kết học thuật**: Chương trình mã nguồn C [**`xdp_packet_filter.c`**](file:///e:/repo/lab-aws/network-performance-capstone/ebpf/xdp_packet_filter.c) trong đồ án này chứng minh nguyên lý vận hành cấp thấp (low-level mechanics) của việc đánh giá và loại bỏ gói tin ngay tại tầng driver ENA trước khi cấp phát `sk_buff`.
+1. **Liên kết học thuật**: Chương trình mã nguồn C [**`xdp_packet_filter.c`**](../ebpf/xdp_packet_filter.c) trong đồ án này chứng minh nguyên lý vận hành cấp thấp (low-level mechanics) của việc đánh giá và loại bỏ gói tin ngay tại tầng driver ENA trước khi cấp phát `sk_buff`.
 2. **Khuyến nghị kiến trúc & Đối chiếu thực tế**: 
    - Chương trình XDP độc lập trong đề tài xác lập **cận trên lý thuyết (upper-bound benchmark)** của hiệu năng lọc gói tại tầng nhân.
    - Trong môi trường thực tế của Cilium CNI trên AWS EKS, Cilium bổ sung thêm các thành phần định tuyến Pod-to-Pod, eBGP/Geneve tunneling, Sockops BPF (tăng tốc giao tiếp socket giữa các container cùng node), và kiểm soát Network Policy. Mặc dù có thêm phụ tải của container orchestrator, Cilium vẫn bảo toàn ưu thế vượt trội về việc giảm ngắt CPU và hạn chế độ trễ đuôi P99 so với kiến trúc iptables truyền thống của kube-proxy.

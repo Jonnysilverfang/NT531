@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "experiment": {
+    "name": "nt531-aws-network-performance",
+    "region": "ap-southeast-2",
+    "active_profile": "validation",
+    "profiles": {
+      "validation": 3,
+      "pilot": 3,
+      "final": 10
+    },
+    "random_seed": 42,
+    "results_root": "results/mode_b",
+    "interface": "eth0",
+    "timing": {
+      "warmup_seconds": 10,
+      "measurement_seconds": 30,
+      "cooldown_seconds": 15
+    }
+  },
+  "tc01": {
+    "enabled": true,
+    "conditions": ["peering", "tgw"]
+  },
+  "tc02": {
+    "enabled": true,
+    "mtu": [1500, 9001],
+    "parallel_streams": [1, 4, 8]
+  },
+  "tc03": {
+    "enabled": true,
+    "conditions": ["direct", "privatelink"]
+  },
+  "tc04": {
+    "enabled": true,
+    "conditions": ["iptables", "xdp"],
+    "udp_payload_bytes": 1200,
+    "load_pps": [100000, 250000, 500000, 750000, 1000000, 1500000],
+    "saturation": {
+      "packet_loss_percent_gt": 1.0,
+      "probe_p99_ms_gt": 5.0,
+      "cpu_percent_gt": 90.0
+    }
+  }
+}

@@ -6,8 +6,8 @@
 
 set -euo pipefail
 
-INTERFACE="eth0"
 OUTPUT_FILE="${1:-/tmp/ena_metrics_$(date +%s).txt}"
+INTERFACE="${2:-eth0}"
 
 echo "=================================================================="
 echo " AWS NITRO ENA DRIVER HARDWARE METRICS"

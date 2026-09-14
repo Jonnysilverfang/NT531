@@ -22,16 +22,6 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-data "aws_ami" "al2023" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*-x86_64"]
-  }
-}
-
 # ==============================================================================
 # IAM ROLE & INSTANCE PROFILE CHO AWS SYSTEMS MANAGER (SSM SESSION MANAGER)
 # ==============================================================================
@@ -109,6 +99,12 @@ resource "aws_route_table" "rt_a" {
   route {
     cidr_block         = "10.2.2.0/24"
     transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+  }
+
+  # Direct baseline tới đúng backend Shared Services dùng trong TC-03.
+  route {
+    cidr_block                = "10.3.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_shared.id
   }
 
   tags = { Name = "${var.project_name}-rt-a" }
@@ -201,6 +197,22 @@ resource "aws_subnet" "subnet_shared1" {
   tags = { Name = "${var.project_name}-subnet-shared-az-a" }
 }
 
+resource "aws_route_table" "rt_shared" {
+  vpc_id = aws_vpc.vpc_shared.id
+
+  route {
+    cidr_block                = "10.1.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_shared.id
+  }
+
+  tags = { Name = "${var.project_name}-rt-shared" }
+}
+
+resource "aws_route_table_association" "rta_shared1" {
+  subnet_id      = aws_subnet.subnet_shared1.id
+  route_table_id = aws_route_table.rt_shared.id
+}
+
 # ==============================================================================
 # 4. PATH 1: VPC PEERING (VPC A <-> VPC B)
 # ==============================================================================
@@ -209,6 +221,15 @@ resource "aws_vpc_peering_connection" "peer_a_b" {
   peer_vpc_id = aws_vpc.vpc_b.id
   auto_accept = true
   tags        = { Name = "${var.project_name}-peering-a-to-b" }
+}
+
+# Direct performance baseline tới cùng EC2 backend mà PrivateLink/NLB sử dụng.
+# Overlapping-CIDR validation là testcase functional riêng, không dùng peering này.
+resource "aws_vpc_peering_connection" "peer_a_shared" {
+  vpc_id      = aws_vpc.vpc_a.id
+  peer_vpc_id = aws_vpc.vpc_shared.id
+  auto_accept = true
+  tags        = { Name = "${var.project_name}-peering-a-to-shared-direct-baseline" }
 }
 
 # ==============================================================================
@@ -234,7 +255,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach_a" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach_b" {
   transit_gateway_id = aws_ec2_transit_gateway.tgw.id
   vpc_id             = aws_vpc.vpc_b.id
-  subnet_ids         = [aws_subnet.subnet_b1.id, aws_subnet.subnet_b2.id]
+  # AWS TGW cho phép đúng một attachment subnet trong mỗi AZ; B1 và B2 đều ở AZ-a.
+  subnet_ids = [aws_subnet.subnet_b2.id]
   tags               = { Name = "${var.project_name}-tgw-attach-vpc-b" }
 }
 
@@ -277,6 +299,36 @@ resource "aws_lb_target_group_attachment" "tga_iperf3" {
   target_group_arn = aws_lb_target_group.tg_iperf3.arn
   target_id        = aws_instance.ec2_server_shared.id
   port             = 5201
+}
+
+resource "aws_lb_target_group" "tg_sockperf" {
+  name        = "${var.project_name}-tg-sockperf"
+  port        = 5202
+  protocol    = "TCP"
+  vpc_id      = aws_vpc.vpc_shared.id
+  target_type = "instance"
+
+  health_check {
+    protocol = "TCP"
+    port     = "5202"
+  }
+}
+
+resource "aws_lb_listener" "listener_sockperf" {
+  load_balancer_arn = aws_lb.nlb_privatelink.arn
+  port              = 5202
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg_sockperf.arn
+  }
+}
+
+resource "aws_lb_target_group_attachment" "tga_sockperf" {
+  target_group_arn = aws_lb_target_group.tg_sockperf.arn
+  target_id        = aws_instance.ec2_server_shared.id
+  port             = 5202
 }
 
 resource "aws_vpc_endpoint_service" "privatelink_svc" {
@@ -513,17 +565,27 @@ resource "aws_vpc_endpoint" "ec2messages_endpoint_shared" {
 # 9. USER DATA SCRIPT (PROVISIONING BENCHMARK TOOLS)
 # ==============================================================================
 locals {
+  dut_setup_b64       = base64encode(file("${path.module}/../scripts/dut_server_setup.sh"))
+  ebpf_loader_b64     = base64encode(file("${path.module}/../ebpf/ebpf_loader.sh"))
+  ebpf_source_b64     = base64encode(file("${path.module}/../ebpf/xdp_packet_filter.c"))
+  ebpf_makefile_b64   = base64encode(file("${path.module}/../ebpf/Makefile"))
   user_data = <<-EOF
               #!/bin/bash
               set -e
               echo "[*] Bắt đầu khởi tạo EC2 Benchmark Instance..."
-              # Thử cập nhật và cài đặt package (truy cập mirror qua S3 Gateway Endpoint không cần NAT)
-              for i in {1..5}; do
-                dnf update -y && dnf install -y iperf3 ethtool git gcc make bmon jq sysstat && break || sleep 5
+              # AMI phải được bake/pin trước; không cập nhật package giữa các run.
+              for required in iperf3 sockperf ethtool jq clang bpftool; do
+                command -v "$required" >/dev/null || { echo "Missing baked tool: $required" >&2; exit 1; }
               done
-              # Khởi chạy iperf3 server daemon trên cả port 5201 và port 5202 (probe)
+              mkdir -p /opt/capstone/scripts /opt/capstone/ebpf
+              echo '${local.dut_setup_b64}' | base64 -d > /opt/capstone/scripts/dut_server_setup.sh
+              echo '${local.ebpf_loader_b64}' | base64 -d > /opt/capstone/ebpf/ebpf_loader.sh
+              echo '${local.ebpf_source_b64}' | base64 -d > /opt/capstone/ebpf/xdp_packet_filter.c
+              echo '${local.ebpf_makefile_b64}' | base64 -d > /opt/capstone/ebpf/Makefile
+              chmod 0755 /opt/capstone/scripts/dut_server_setup.sh /opt/capstone/ebpf/ebpf_loader.sh
+              # Khởi chạy iperf3 throughput/flood và sockperf legitimate-latency probe.
               iperf3 -s -p 5201 -D || true
-              iperf3 -s -p 5202 -D || true
+              sockperf server -i 0.0.0.0 --port 5202 --daemonize || true
               echo "[✓] EC2 Benchmark daemons đã sẵn sàng."
               EOF
 }
@@ -538,9 +600,10 @@ locals {
 
 # Client A trong VPC A (AZ-a, Baseline không Placement Group)
 resource "aws_instance" "ec2_client_a" {
-  ami                         = data.aws_ami.al2023.id
+  ami                         = var.benchmark_ami_id
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.subnet_a1.id
+  private_ip                  = "10.1.1.10"
   vpc_security_group_ids      = [aws_security_group.sg_lab.id]
   iam_instance_profile        = aws_iam_instance_profile.ssm_profile.name
   associate_public_ip_address = true
@@ -551,9 +614,10 @@ resource "aws_instance" "ec2_client_a" {
 
 # Target Server 1 trong VPC B (AZ-a, Baseline không Placement Group, Path: Peering)
 resource "aws_instance" "ec2_server_b1" {
-  ami                    = data.aws_ami.al2023.id
+  ami                    = var.benchmark_ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet_b1.id
+  private_ip             = "10.2.1.10"
   vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
   key_name               = var.key_name != "" ? var.key_name : null
@@ -563,9 +627,10 @@ resource "aws_instance" "ec2_server_b1" {
 
 # Target Server 2 trong VPC B (AZ-a, Baseline không Placement Group, Path: Transit Gateway)
 resource "aws_instance" "ec2_server_b2" {
-  ami                    = data.aws_ami.al2023.id
+  ami                    = var.benchmark_ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet_b2.id
+  private_ip             = "10.2.2.10"
   vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
   key_name               = var.key_name != "" ? var.key_name : null
@@ -576,7 +641,7 @@ resource "aws_instance" "ec2_server_b2" {
 # 10.2. Cặp đối chứng đo TC-02 (Physical Topology: Cluster Placement Group vs Intra-AZ):
 # Client & Server gắn cùng Cluster Placement Group trong AZ-a
 resource "aws_instance" "ec2_client_a_pg" {
-  ami                    = data.aws_ami.al2023.id
+  ami                    = var.benchmark_ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet_a1.id
   vpc_security_group_ids = [aws_security_group.sg_lab.id]
@@ -588,7 +653,7 @@ resource "aws_instance" "ec2_client_a_pg" {
 }
 
 resource "aws_instance" "ec2_server_b1_pg" {
-  ami                    = data.aws_ami.al2023.id
+  ami                    = var.benchmark_ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet_b1.id
   vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
@@ -601,9 +666,10 @@ resource "aws_instance" "ec2_server_b1_pg" {
 
 # 10.3. Target Server in VPC Shared (Behind NLB & PrivateLink)
 resource "aws_instance" "ec2_server_shared" {
-  ami                    = data.aws_ami.al2023.id
+  ami                    = var.benchmark_ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.subnet_shared1.id
+  private_ip             = "10.3.1.10"
   vpc_security_group_ids = [aws_security_group.sg_lab_shared.id]
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
   key_name               = var.key_name != "" ? var.key_name : null

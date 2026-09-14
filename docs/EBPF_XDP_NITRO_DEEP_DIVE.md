@@ -103,7 +103,7 @@ Trong các hệ thống Cloud truyền thống chạy trên Linux (kể cả Ama
 
 ## 4. Dữ Liệu Đo Đạc Đối Chứng (Calibrated Reference Summary)
 
-Dưới đây là bảng kết quả đối chứng trích xuất từ nguồn dữ liệu chuẩn [`results/summary_statistics.json`](file:///e:/repo/lab-aws/network-performance-capstone/results/summary_statistics.json) khi đẩy lưu lượng UDP flood 5 triệu gói tin nhỏ (Packet size = 64 bytes) tới máy chủ đích DUT `c6i.large` tại AWS Sydney (`ap-southeast-2`):
+Dưới đây là bảng kết quả đối chứng Chế độ A trích xuất từ [`results/summary_statistics.json`](../results/summary_statistics.json); đây không phải phép đo UDP flood đã chạy trên AWS:
 
 | Chỉ số Hiệu năng Đo Đạc | Tường Lửa Linux iptables (`-j DROP`) | Giải Pháp eBPF / XDP Native (`XDP_DROP`) | Mức Độ Cải Thiện & Ý Nghĩa Thống Kê |
 | :--- | :---: | :---: | :---: |

@@ -1,7 +1,7 @@
 # ĐỀ CƯƠNG KHÓA LUẬN TỐT NGHIỆP & KỊCH BẢN BẢO VỆ ĐỀ TÀI
 ## CHUYÊN NGÀNH: MẠNG MÁY TÍNH & HỆ THỐNG ĐIỆN TOÁN ĐÁM MÂY (CLOUD COMPUTING)
 
-Tài liệu này cung cấp khung cấu trúc chuẩn của một cuốn **Khóa luận tốt nghiệp Đại học / Luận văn Thạc sĩ** hoặc **Báo cáo Chuyên ngành Doanh nghiệp**, kèm theo **kịch bản trình chiếu Slide bảo vệ (Slide Deck & Defense Script)** chi tiết từ 15 đến 20 phút trước hội đồng phản biện, đồng bộ 100% với nguồn dữ liệu thống kê duy nhất [`results/summary_statistics.json`](file:///e:/repo/lab-aws/network-performance-capstone/results/summary_statistics.json).
+Tài liệu này cung cấp khung cấu trúc chuẩn của một cuốn **Khóa luận tốt nghiệp Đại học / Luận văn Thạc sĩ** hoặc **Báo cáo Chuyên ngành Doanh nghiệp**, kèm theo **kịch bản trình chiếu Slide bảo vệ (Slide Deck & Defense Script)** chi tiết từ 15 đến 20 phút trước hội đồng phản biện, đồng bộ với nguồn dữ liệu Mode A [`results/summary_statistics.json`](../results/summary_statistics.json).
 
 ---
 

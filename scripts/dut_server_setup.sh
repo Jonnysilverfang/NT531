@@ -34,6 +34,9 @@ stop_daemon_process() {
 
 case "${ACTION}" in
     start_daemons)
+        if [ ! -s /tmp/nt531_original_mtu ]; then
+            ip link show dev "${INTERFACE}" | awk '/mtu/ {print $5; exit}' > /tmp/nt531_original_mtu
+        fi
         echo "[*] DUT: Đang dọn dẹp các daemon cũ..."
         stop_daemon_process "iperf3 -s"
         stop_daemon_process "sockperf server"
@@ -56,6 +59,31 @@ case "${ACTION}" in
             echo "[!] LỖI: Không thể khởi chạy đầy đủ daemon trên DUT!" >&2
             exit 1
         fi
+        ;;
+
+    set_mtu_1500|set_mtu_9001)
+        requested_mtu="${ACTION#set_mtu_}"
+        if [ ! -s /tmp/nt531_original_mtu ]; then
+            ip link show dev "${INTERFACE}" | awk '/mtu/ {print $5; exit}' > /tmp/nt531_original_mtu
+        fi
+        sudo ip link set dev "${INTERFACE}" mtu "${requested_mtu}"
+        actual_mtu=$(ip link show dev "${INTERFACE}" | awk '/mtu/ {print $5; exit}')
+        [ "${actual_mtu}" = "${requested_mtu}" ] || {
+            echo "[!] Không thể xác minh MTU ${requested_mtu} trên DUT." >&2
+            exit 1
+        }
+        echo "[✓] DUT MTU=${actual_mtu}"
+        ;;
+
+    restore_original_mtu)
+        [ -s /tmp/nt531_original_mtu ] || {
+            echo "[!] Không có snapshot MTU gốc của DUT." >&2
+            exit 1
+        }
+        original_mtu=$(tr -cd '0-9' < /tmp/nt531_original_mtu)
+        [ -n "${original_mtu}" ] || { echo "[!] Snapshot MTU gốc không hợp lệ." >&2; exit 1; }
+        sudo ip link set dev "${INTERFACE}" mtu "${original_mtu}"
+        echo "[✓] DUT đã khôi phục MTU ${original_mtu}."
         ;;
 
     apply_iptables_drop)
@@ -159,12 +187,10 @@ case "${ACTION}" in
             echo "    [!] Cảnh báo: Loader thông báo không có hook XDP cần gỡ." >&2
         fi
 
-        # Khôi phục MTU 9001
-        if sudo ip link set dev "${INTERFACE}" mtu 9001 2>/dev/null; then
-            echo "[✓] DUT: eBPF/XDP Native Hook đã gỡ, MTU 9001 đã khôi phục."
-        else
-            echo "[!] Cảnh báo có cấu trúc: XDP đã gỡ nhưng không thể khôi phục MTU 9001." >&2
-            exit 1
+        if [ -s /tmp/nt531_original_mtu ]; then
+            original_mtu=$(tr -cd '0-9' < /tmp/nt531_original_mtu)
+            sudo ip link set dev "${INTERFACE}" mtu "${original_mtu}"
+            echo "[✓] DUT: XDP đã gỡ, MTU ${original_mtu} đã khôi phục."
         fi
         ;;
 
@@ -172,7 +198,7 @@ case "${ACTION}" in
         # Snapshot SoftIRQ và CPU jiffies.
         # Xuất ra file $OUTFILE và ĐỒNG THỜI in ra stdout có kèm marker để SSM get-command-invocation đọc được.
         python3 - "${OUTFILE}" "${INTERFACE}" <<'EOF'
-import json, time, os, socket, sys
+import json, time, os, socket, subprocess, sys
 from datetime import datetime, timezone
 
 outfile = sys.argv[1] if len(sys.argv) > 1 else "/tmp/dut_counters.json"
@@ -227,6 +253,14 @@ def get_mac(iface):
     except Exception:
         return "unknown"
 
+def capture(*argv):
+    try:
+        result = subprocess.run(argv, capture_output=True, text=True, timeout=10)
+        return {"argv": list(argv), "returncode": result.returncode,
+                "stdout": result.stdout.strip(), "stderr": result.stderr.strip()}
+    except Exception as exc:
+        return {"argv": list(argv), "returncode": None, "stdout": "", "stderr": str(exc)}
+
 data = {
     "host": socket.gethostname(),
     "instance_id": get_instance_id(),
@@ -235,7 +269,10 @@ data = {
     "timestamp_monotonic_ns": time.monotonic_ns(),
     "timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z"),
     "softirqs": read_softirqs(),
-    "cpu_stat": read_stat()
+    "cpu_stat": read_stat(),
+    "ena_stats": capture("ethtool", "-S", interface),
+    "iptables_counters": capture("iptables", "-nvx", "-L", "INPUT"),
+    "xdp_stats_map": capture("bpftool", "map", "dump", "name", "xdp_stats_map")
 }
 
 json_str = json.dumps(data, indent=2)
@@ -270,7 +307,7 @@ EOF
         ;;
 
     *)
-        echo "Sử dụng: $0 {start_daemons|apply_iptables_drop|remove_iptables_drop|apply_xdp_native|remove_xdp_native|snapshot_counters|status} [interface] [outfile]"
+        echo "Sử dụng: $0 {start_daemons|set_mtu_1500|set_mtu_9001|restore_original_mtu|apply_iptables_drop|remove_iptables_drop|apply_xdp_native|remove_xdp_native|snapshot_counters|status} [interface] [outfile]"
         exit 1
         ;;
 esac

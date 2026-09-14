@@ -5,14 +5,14 @@
 > **THÔNG CÁO MINH BẠCH HỌC THUẬT & CHẾ ĐỘ DỮ LIỆU (ACADEMIC TRANSPARENCY & DATA PROVENANCE NOTICE):**  
 > 1. **Chế độ dữ liệu (Data Mode - Chế độ A)**: Toàn bộ số liệu trong báo cáo này được tính toán trên **Bộ Dữ liệu Tham chiếu Tổng hợp được Hiệu chuẩn (Calibrated Synthetic Reference Model - Methodology Prototype)**, được xây dựng dựa trên đặc tả kỹ thuật kiến trúc AWS Nitro Card, driver ENA Linux kernel 6.1+, và các mô hình độ trễ mạng Sydney (`ap-southeast-2`). Bộ dữ liệu này được thiết kế nhằm **kiểm chứng pipeline đo lường tự động, mô hình toán thống kê và hệ thống dashboard giám sát** mà không phát sinh chi phí hạ tầng AWS không cần thiết ($0.00). **Đây là nguyên mẫu phương pháp luận, không phải là kết quả đo lường production trực tiếp trên AWS.**
 > 2. **Giảm Pseudoreplication**: Đơn vị phân tích độc lập là **independent run ($N = 3$)**. Hiệu ứng chính của cả TC-01 đến TC-04 dùng **Run-level Paired Deltas** và **Hierarchical Bootstrap (10,000 resamples)** hai tầng. Welch gộp chỉ là exploratory; $N=3$ vẫn giới hạn lực thống kê và không cho phép tuyên bố khái quát như một nghiên cứu production đa môi trường.
-> 3. **Kiểm tra tính toàn vẹn tự động (Automated Checksum Verification)**: Mã nguồn [`analyze_results.py`](file:///e:/repo/lab-aws/network-performance-capstone/scripts/analyze_results.py) tự động đối chiếu mã băm SHA256 của toàn bộ 5 tệp tin thô bắt buộc trong [`results/raw/`](file:///e:/repo/lab-aws/network-performance-capstone/results/raw/) với [`checksums.sha256`](file:///e:/repo/lab-aws/network-performance-capstone/results/raw/checksums.sha256). Mọi trường hợp thiếu file hoặc sai lệch đều bị dừng ngay lập tức (fail-fast).
+> 3. **Kiểm tra tính toàn vẹn tự động (Automated Checksum Verification)**: Mã nguồn [`analyze_results.py`](../scripts/analyze_results.py) tự động đối chiếu mã băm SHA256 của toàn bộ 5 tệp tin thô bắt buộc trong [`results/raw/`](../results/raw/) với [`checksums.sha256`](../results/raw/checksums.sha256). Mọi trường hợp thiếu file hoặc sai lệch đều bị dừng ngay lập tức (fail-fast).
 > 4. **Tránh hiểu lầm số học**: Giá trị $p$-value quá nhỏ do kích thước mẫu lớn được định dạng chuẩn xác là $p < 1 \times 10^{-300}$ (kèm cờ `numeric_underflow: true`), không bao giờ biểu diễn $p = 0.0$.
 
 ---
 
 ## 1. TỔNG HỢP KẾT QUẢ 4 KỊCH BẢN ĐỐI CHỨNG (3 KIẾN TRÚC DOANH NGHIỆP + 1 TỐI ƯU NHÂN LINUX)
 
-Bảng số liệu dưới đây được trích xuất tự động từ nguồn dữ liệu duy nhất [`results/summary_statistics.json`](file:///e:/repo/lab-aws/network-performance-capstone/results/summary_statistics.json):
+Bảng số liệu dưới đây được trích xuất tự động từ nguồn dữ liệu Mode A [`results/summary_statistics.json`](../results/summary_statistics.json):
 
 | Kịch Bản | Phân Loại | Bài Toán Kỹ Thuật | Mô Hình So Sánh | P50 (ms) | **P95 (ms)** | **P99 (ms)** | Tải CPU SoftIRQ / Throughput | Kiểm Định Thống Kê & Effect Size |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: |

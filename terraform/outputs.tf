@@ -8,14 +8,39 @@ output "client_a1_private_ip" {
   value       = aws_instance.ec2_client_a.private_ip
 }
 
+output "client_a1_instance_id" {
+  description = "Instance ID của benchmark client"
+  value       = aws_instance.ec2_client_a.id
+}
+
 output "server_b1_peering_ip" {
   description = "Private IP của Server B1 (Cùng AZ-a, định tuyến qua VPC Peering: 10.2.1.0/24)"
   value       = aws_instance.ec2_server_b1.private_ip
 }
 
+output "server_b1_instance_id" {
+  description = "Instance ID của DUT B1"
+  value       = aws_instance.ec2_server_b1.id
+}
+
 output "server_b2_tgw_ip" {
   description = "Private IP của Server B2 (Định tuyến qua AWS Transit Gateway: 10.2.2.0/24)"
   value       = aws_instance.ec2_server_b2.private_ip
+}
+
+output "server_b2_instance_id" {
+  description = "Instance ID của target TGW B2"
+  value       = aws_instance.ec2_server_b2.id
+}
+
+output "shared_server_direct_ip" {
+  description = "Direct-path IP tới cùng backend dùng bởi PrivateLink"
+  value       = aws_instance.ec2_server_shared.private_ip
+}
+
+output "shared_server_instance_id" {
+  description = "Instance ID của backend Shared Services"
+  value       = aws_instance.ec2_server_shared.id
 }
 
 output "privatelink_endpoint_dns" {

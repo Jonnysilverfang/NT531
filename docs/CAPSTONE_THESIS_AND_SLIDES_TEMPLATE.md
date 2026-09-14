@@ -44,7 +44,7 @@ CHƯƠNG 2: CƠ SỞ LÝ THUYẾT & NỀN TẢNG CÔNG NGHỆ
   2.7. Cơ sở lý thuyết Thống kê: Pseudoreplication, Run-level Analysis, và Hierarchical Bootstrap
 
 CHƯƠNG 3: THIẾT KẾ NGUYÊN MẪU KIẾN TRÚC VÀ PHƯƠNG PHÁP ĐO
-  3.1. Thiết kế topo mạng thực nghiệm tại Region Sydney (ap-southeast-2)
+  3.1. Thiết kế topo mạng thực nghiệm tại Region N. Virginia (us-east-1)
   3.2. Quy hoạch dải địa chỉ IP (CIDR Blocks) và phân bổ Subnet
   3.3. Xây dựng mã nguồn tự động hóa hạ tầng (Infrastructure as Code) bằng Terraform
   3.4. Lập trình chương trình eBPF/XDP lọc gói tin ở cấp độ driver ENA (BTF Maps, Direct Packet Access)
@@ -106,9 +106,9 @@ PHỤ LỤC: MÃ NGUỒN TERRAFORM, MÃ NGUỒN eBPF/C VÀ PIPELINE KIỂM THỬ
   + Hierarchical Bootstrap (10,000 resamples): Lấy mẫu ngẫu nhiên lại các Run, sau đó lấy mẫu lại các gói tin/interval để xây dựng khoảng tin cậy 95% không phụ thuộc phân phối chuẩn.
   + Định dạng p-value chuẩn xác: Sử dụng p < 1e-300 thay vì hiển thị p = 0.0 do underflow số học.
 
-[SLIDE 5: NGUYÊN MẪU KIẾN TRÚC MẠNG TẠI SYDNEY (ap-southeast-2)]
+[SLIDE 5: NGUYÊN MẪU KIẾN TRÚC MẠNG TẠI N. VIRGINIA (us-east-1)]
 - Topo 3 VPC: VPC A (Client), VPC B (Target Server B1 và Server B2), VPC Shared (PrivateLink Endpoint).
-- Khử Confounding: Cả Server B1 (Peering target) và B2 (TGW target) đều đặt cùng AZ-a (ap-southeast-2a), cùng instance c6i.large, không gắn Placement Group.
+- Khử Confounding: Cả Server B1 (Peering target) và B2 (TGW target) đều đặt cùng AZ-a (us-east-1a), cùng instance c6i.large, không gắn Placement Group.
 - Quản trị tự động không phụ thuộc SSH: Điều khiển DUT từ xa thông qua AWS Systems Manager Run Command (run_on_dut).
 
 [SLIDE 6: MA TRẬN 4 KỊCH BẢN ĐỐI CHỨNG THAM CHIẾU]
@@ -145,7 +145,7 @@ PHỤ LỤC: MÃ NGUỒN TERRAFORM, MÃ NGUỒN eBPF/C VÀ PIPELINE KIỂM THỬ
 - Cơ chế: Loại bỏ gói rác tại RX ring của driver ENA trước khi nhân Linux cấp phát sk_buff.
 
 [SLIDE 10: PHÂN TÍCH HIỆU QUẢ KINH TẾ (COST-TO-PERFORMANCE)]
-- So sánh bài toán chi phí truyền tải 50 TB dữ liệu hàng tháng (Sydney):
+- So sánh bài toán chi phí truyền tải 50 TB dữ liệu hàng tháng (N. Virginia):
   + VPC Peering (Same AZ): $0.00 / tháng (Chi phí tối ưu nhất).
   + AWS PrivateLink: $500.00 / tháng ($0.01/GB chi phí xử lý dữ liệu qua NLB).
   + AWS Transit Gateway: $1,000.00 / tháng ($0.02/GB chi phí xử lý dữ liệu qua TGW).
@@ -188,7 +188,7 @@ PHỤ LỤC: MÃ NGUỒN TERRAFORM, MÃ NGUỒN eBPF/C VÀ PIPELINE KIỂM THỬ
 
 ### Câu 2: “Dữ liệu này có thực sự được đo trên AWS hay là dữ liệu Synthetic?”
 - **Chiến lược trả lời chuẩn mực**:
-  > *"Kính thưa Hội đồng, bộ số liệu hiện tại là **Chế độ A - Calibrated Synthetic Reference Model**. Các tham số tham chiếu kiến trúc Nitro/ENA và mô hình Sydney, nhưng không chứng minh phân phối hiệu năng thực tế của AWS.  
+  > *"Kính thưa Hội đồng, bộ số liệu hiện tại là **Chế độ A - Calibrated Synthetic Reference Model**. Các tham số tham chiếu kiến trúc Nitro/ENA và mô hình N. Virginia, nhưng không chứng minh phân phối hiệu năng thực tế của AWS.
   > Mục đích của bộ dữ liệu này là để **kiểm chứng pipeline đo lường tự động, mô hình toán thống kê và hệ thống dashboard giám sát** mà không làm phát sinh chi phí AWS trong giai đoạn thẩm định ($0.00). Nhóm không trình bày số liệu này như là đo lường production trực tiếp. Toàn bộ mã nguồn tự động hóa hạ tầng (Terraform), script thu thập telemetry và pipeline phân tích đã sẵn sàng để chuyển sang Chế độ B (Empirical AWS Benchmark) ngay khi có hạ tầng trực tiếp."*
 
 ### Câu 3: “Làm sao chứng minh chương trình eBPF/XDP thực sự chạy trên Native Mode của driver ENA mà không phải Generic/SKB Mode?”

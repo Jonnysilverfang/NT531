@@ -49,3 +49,10 @@ check_saturation() {
         --p99-threshold-ms "${p99_threshold}" \
         --cpu-threshold "${cpu_threshold}"
 }
+
+icmp_probe() {
+    local target="$1"
+    local output="$2"
+    local duration="${3:-${MEASUREMENT_SECONDS}}"
+    ping -n -q -i 0.1 -w "${duration}" "${target}" > "${output}"
+}

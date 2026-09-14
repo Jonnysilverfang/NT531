@@ -126,6 +126,7 @@ case "${ACTION}" in
         echo "[*] DUT: Tiến hành xác thực chuyên sâu XDP Native Mode..."
         local_details=$(ip -details link show dev "${INTERFACE}")
         echo "${local_details}" > /tmp/xdp_ip_link_details.txt
+        ethtool -i "${INTERFACE}" | tee /tmp/xdp_ena_driver.txt
 
         # 1. Kiểm tra có chuỗi xdp
         if ! echo "${local_details}" | grep -qi "xdp"; then
@@ -163,6 +164,17 @@ case "${ACTION}" in
         fi
         echo "    -> bpftool net show: Xác nhận XDP program đang hook tại dev ${INTERFACE}."
 
+        local prog_list
+        if ! prog_list=$(sudo bpftool prog show 2>/tmp/xdp_bpftool_prog.stderr); then
+            echo "[!] LỖI: Không truy vấn được XDP program ID/tag." >&2
+            exit 1
+        fi
+        echo "${prog_list}" > /tmp/xdp_bpftool_prog.txt
+        if ! echo "${prog_list}" | grep -qi 'type xdp'; then
+            echo "[!] LỖI: bpftool prog không tìm thấy type xdp." >&2
+            exit 1
+        fi
+
         local map_list
         if ! map_list=$(sudo bpftool map show 2>/tmp/xdp_bpftool_map.stderr); then
             echo "[!] LỖI: Không truy vấn được danh sách BPF map." >&2
@@ -176,6 +188,13 @@ case "${ACTION}" in
         done
         echo "    -> BPF Maps: Tìm thấy xdp_config_map và xdp_stats_map."
 
+        echo "___XDP_NATIVE_EVIDENCE_BEGIN___"
+        cat /tmp/xdp_ena_driver.txt
+        cat /tmp/xdp_ip_link_details.txt
+        cat /tmp/xdp_bpftool_net.txt
+        grep -i 'type xdp' /tmp/xdp_bpftool_prog.txt
+        printf '%s\n' "${map_list}" | grep -E 'xdp_(config|stats)_map'
+        echo "___XDP_NATIVE_EVIDENCE_END___"
         echo "[✓] DUT: eBPF/XDP Native Hook đã gắn và XÁC THỰC THÀNH CÔNG trên ${INTERFACE} (Driver mode)."
         ;;
 

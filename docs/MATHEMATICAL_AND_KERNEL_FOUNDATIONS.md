@@ -20,7 +20,7 @@ $$\text{BDP (Bytes)} = \frac{\text{Bandwidth (bps)} \times \text{RTT (sec)}}{8}$
    $$\text{BDP} = \frac{10^{10} \times 0.00018}{8} = 225,000\text{ Bytes} \approx 220\text{ KB}$$
    - *Nhận xét*: BDP nhỏ (chỉ 220 KB), một socket TCP tiêu chuẩn với cửa sổ mặc định của Linux (`net.ipv4.tcp_wmem`) có thể dễ dàng lấp đầy đường ống này và đạt 10 Gbps ngay trong vài chu kỳ RTT.
 
-2. **Trường hợp 2: Hai EC2 liên vùng (Inter-Region: Sydney `ap-southeast-2` tới US-East `us-east-1`)**
+2. **Trường hợp 2: Hai EC2 liên vùng (Inter-Region: N. Virginia `us-east-1` tới US-East `us-east-1`)**
    - Băng thông $BW = 10\text{ Gbps}$
    - Độ trễ vòng $RTT = 160\text{ ms} = 0.16\text{ s}$
    $$\text{BDP} = \frac{10^{10} \times 0.16}{8} = 200,000,000\text{ Bytes} \approx 190.7\text{ MB}$$

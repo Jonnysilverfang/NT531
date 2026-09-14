@@ -144,11 +144,19 @@ class SoftirqDeltaTests(unittest.TestCase):
             "timestamp_utc": "2026-01-01T00:00:00Z",
             "cpu_stat": {"total_jiffies": 1000, "idle": 400, "iowait": 50, "softirq": 100},
             "softirqs": {"net_rx": 1000, "net_tx": 500},
+            "ena_stats": {
+                "returncode": 0,
+                "stdout": "queue_0_rx_cnt: 10000\nqueue_0_tx_cnt: 2000",
+            },
         }
         after = copy.deepcopy(before)
         after.update(timestamp_monotonic_ns=11_000_000_000, timestamp_utc="2026-01-01T00:00:10Z")
         after["cpu_stat"] = {"total_jiffies": 2000, "idle": 500, "iowait": 70, "softirq": 150}
         after["softirqs"] = {"net_rx": 3000, "net_tx": 800}
+        after["ena_stats"] = {
+            "returncode": 0,
+            "stdout": "queue_0_rx_cnt: 1010000\nqueue_0_tx_cnt: 12000",
+        }
         return before, after
 
     def compute(self, before, after):
@@ -165,6 +173,7 @@ class SoftirqDeltaTests(unittest.TestCase):
         self.assertEqual(result["metrics"]["softirq_percent"], 5.0)
         self.assertEqual(result["metrics"]["cpu_total_percent"], 88.0)
         self.assertEqual(result["duration_sec"], 10.0)
+        self.assertEqual(result["metrics"]["ena_rx_pps"], 100000.0)
 
     def test_identity_mismatch_fails(self):
         before, after = self.snapshots()
@@ -237,6 +246,7 @@ class SaturationEvaluationTests(unittest.TestCase):
             cpu = root / "cpu.json"
             cpu.write_text(json.dumps({"metrics": {
                 "cpu_total_percent": 95.0, "softirq_percent": 30.0,
+                "ena_rx_pps": 820000.0,
             }}), encoding="utf-8")
             load = root / "load.json"
             load.write_text(json.dumps({"end": {"sum_sent": {
@@ -245,6 +255,7 @@ class SaturationEvaluationTests(unittest.TestCase):
             result = evaluator.evaluate(probe, cpu, load, 1.0, 5.0, 90.0)
             self.assertTrue(result["saturated"])
             self.assertEqual(result["achieved_load_pps"], 850000.0)
+            self.assertEqual(result["dut_ena_rx_pps"], 820000.0)
             self.assertEqual(result["p99_ms"], 6.0)
             self.assertEqual(
                 result["violations"],
@@ -315,10 +326,11 @@ class DocumentationConsistencyTests(unittest.TestCase):
 
 
 class ArchitectureContractTests(unittest.TestCase):
-    def test_runner_requires_explicit_remote_or_local_mode(self):
+    def test_runner_is_ssm_only_and_rejects_local_mode(self):
         runner = (ROOT / "scripts/benchmark_runner.sh").read_text(encoding="utf-8")
         ssm = (ROOT / "scripts/lib/ssm.sh").read_text(encoding="utf-8")
-        self.assertIn('EXECUTION_MODE="${EXECUTION_MODE:-aws-remote}"', runner)
+        self.assertNotIn('EXECUTION_MODE=', runner)
+        self.assertNotIn('--local-emulation', runner)
         self.assertIn('source "${SCRIPT_DIR}/lib/ssm.sh"', runner)
         self.assertIn("aws ssm get-command-invocation", ssm)
         self.assertIn("ResponseCode", ssm)
@@ -354,30 +366,30 @@ class ArchitectureContractTests(unittest.TestCase):
                          "IP_OFFSET | IP_MF", "bpf_htons(TARGET_BENCHMARK_PORT)"):
             self.assertIn(required, text)
 
-    def test_terraform_tc01_controls_and_private_endpoints(self):
+    def test_terraform_three_node_ssm_only_contract(self):
         text = (ROOT / "terraform/main.tf").read_text(encoding="utf-8")
-        subnet_b1 = hcl_resource_block(text, "aws_subnet", "subnet_b1")
-        subnet_b2 = hcl_resource_block(text, "aws_subnet", "subnet_b2")
-        self.assertIn('availability_zone = "${var.aws_region}a"', subnet_b1)
-        self.assertIn('availability_zone = "${var.aws_region}a"', subnet_b2)
-        for server in ("ec2_server_b1", "ec2_server_b2"):
+        for subnet in ("a_client", "b_peering", "b_tgw", "a_tgw_attachment", "b_tgw_attachment"):
+            block = hcl_resource_block(text, "aws_subnet", subnet)
+            self.assertIn("availability_zone", block)
+        self.assertIn('cidr_block        = "10.1.255.0/28"', text)
+        self.assertIn('cidr_block        = "10.2.255.0/28"', text)
+        for server in ("server_b1", "server_b2"):
             block = hcl_resource_block(text, "aws_instance", server)
             self.assertIn("instance_type", block)
             self.assertNotIn("placement_group", block)
-        for suffix in ("b", "shared"):
-            for service in ("ssm", "ssmmessages", "ec2messages"):
-                block = hcl_resource_block(text, "aws_vpc_endpoint", f"{service}_endpoint_{suffix}")
-                self.assertIn(f'.{service}"', block)
-                self.assertIn('private_dns_enabled = true', block)
-        shared_sg = hcl_resource_block(text, "aws_security_group", "sg_vpc_endpoints_shared")
-        self.assertIn("from_port   = 443", shared_sg)
-        self.assertIn("to_port     = 443", shared_sg)
+        self.assertEqual(text.count('resource "aws_instance"'), 3)
+        self.assertNotIn('from_port   = 22', text)
+        self.assertNotIn("privatelink", text.lower())
+        client_policy = hcl_resource_block(text, "aws_iam_role_policy", "client_dut_control")
+        self.assertIn('"ssm:SendCommand"', client_policy)
+        self.assertIn('"ssm:GetCommandInvocation"', client_policy)
+        self.assertIn("AWS-RunShellScript", client_policy)
 
     def test_mode_a_titles_are_explicit(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         report = (ROOT / "docs/PERFORMANCE_ANALYSIS_REPORT.md").read_text(encoding="utf-8")
         slides = (ROOT / "docs/CAPSTONE_THESIS_AND_SLIDES_TEMPLATE.md").read_text(encoding="utf-8")
-        self.assertIn("Not Yet an Empirical AWS Measurement", readme)
+        self.assertIn("no AWS resources have been applied and no empirical results exist yet", readme)
         self.assertIn("CALIBRATED REFERENCE BENCHMARK REPORT – METHODOLOGY PROTOTYPE", report)
         self.assertIn("Methodology Prototype", slides)
         self.assertNotIn("CHƯƠNG 4: KẾT QUẢ THỰC NGHIỆM", slides)

@@ -68,12 +68,12 @@ def init_run(args: argparse.Namespace) -> None:
     if run_dir.exists() and any(run_dir.iterdir()):
         raise ValueError(f"refusing to overwrite non-empty run directory: {run_dir}")
     run_dir.mkdir(parents=True, exist_ok=True)
-    for tc in ("tc01", "tc02", "tc03", "tc04"):
+    for tc in ("tc01", "tc02", "tc03"):
         (run_dir / tc).mkdir()
     shutil.copyfile(args.config, run_dir / "experiment.yaml")
     root = Path(__file__).resolve().parents[1]
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "data_mode": args.data_mode,
         "empirical": args.data_mode == "empirical_aws",
         "experiment_id": args.experiment_id,
@@ -128,7 +128,7 @@ def finalize(args: argparse.Namespace) -> None:
     data = json.loads(manifest_path.read_text(encoding="utf-8"))
     if data.get("status") != "collecting":
         raise ValueError("run is not in collecting state")
-    expected = {"tc01", "tc02", "tc03", "tc04"}
+    expected = {"tc01", "tc02", "tc03"}
     if set(data.get("condition_schedule", {})) != expected:
         missing = sorted(expected - set(data.get("condition_schedule", {})))
         raise ValueError(f"cannot finalize: missing condition schedules {missing}")
@@ -201,7 +201,7 @@ def parser() -> argparse.ArgumentParser:
 
     record = sub.add_parser("record-schedule")
     record.add_argument("--run-dir", type=Path, required=True)
-    record.add_argument("--testcase", choices=("tc01", "tc02", "tc03", "tc04"), required=True)
+    record.add_argument("--testcase", choices=("tc01", "tc02", "tc03"), required=True)
     record.add_argument("--seed", type=int, required=True)
     record.add_argument("conditions", nargs="+")
     record.set_defaults(func=record_schedule)

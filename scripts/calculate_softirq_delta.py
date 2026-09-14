@@ -15,6 +15,7 @@ import sys
 import os
 import json
 import argparse
+import re
 
 def parse_snapshot(file_path):
     if not os.path.exists(file_path):
@@ -22,6 +23,29 @@ def parse_snapshot(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data
+
+
+def parse_ena_packet_counters(snapshot):
+    capture = snapshot.get("ena_stats")
+    if not isinstance(capture, dict) or capture.get("returncode") != 0:
+        raise ValueError("Snapshot thiếu ethtool -S thành công")
+    counters = {}
+    for line in str(capture.get("stdout", "")).splitlines():
+        match = re.match(r"\s*([^:]+):\s*([0-9]+)\s*$", line)
+        if match:
+            counters[match.group(1).strip()] = int(match.group(2))
+
+    def total(direction):
+        queue_pattern = re.compile(rf"^queue_[0-9]+_{direction}_cnt$")
+        queue_values = [value for key, value in counters.items() if queue_pattern.match(key)]
+        if queue_values:
+            return sum(queue_values)
+        for fallback in (f"{direction}_packets", f"{direction}_cnt"):
+            if fallback in counters:
+                return counters[fallback]
+        raise ValueError(f"Không tìm thấy ENA {direction} packet counter trong ethtool -S")
+
+    return {"rx_packets": total("rx"), "tx_packets": total("tx")}
 
 def compute_delta(before_path, after_path, condition="unknown", run_id=1):
     b = parse_snapshot(before_path)
@@ -84,6 +108,13 @@ def compute_delta(before_path, after_path, condition="unknown", run_id=1):
     if delta_net_rx < 0 or delta_net_tx < 0:
         raise ValueError("Bộ đếm NET_RX/NET_TX bị giảm giữa hai snapshot")
 
+    ena_b = parse_ena_packet_counters(b)
+    ena_a = parse_ena_packet_counters(a)
+    delta_rx_packets = ena_a["rx_packets"] - ena_b["rx_packets"]
+    delta_tx_packets = ena_a["tx_packets"] - ena_b["tx_packets"]
+    if delta_rx_packets < 0 or delta_tx_packets < 0:
+        raise ValueError("Bộ đếm ENA RX/TX packet bị giảm giữa hai snapshot")
+
     result = {
         "condition": condition,
         "run_id": run_id,
@@ -103,7 +134,11 @@ def compute_delta(before_path, after_path, condition="unknown", run_id=1):
             "cpu_total_percent": round(cpu_total_percent, 4),
             "delta_net_rx_interrupts": delta_net_rx,
             "delta_net_tx_interrupts": delta_net_tx,
-            "net_rx_irq_per_sec": round(delta_net_rx / duration_sec, 2) if duration_sec > 0 else 0
+            "net_rx_softirq_events_per_sec": round(delta_net_rx / duration_sec, 2),
+            "delta_ena_rx_packets": delta_rx_packets,
+            "delta_ena_tx_packets": delta_tx_packets,
+            "ena_rx_pps": round(delta_rx_packets / duration_sec, 2),
+            "ena_tx_pps": round(delta_tx_packets / duration_sec, 2)
         }
     }
     return result

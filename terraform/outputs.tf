@@ -1,68 +1,48 @@
-output "client_a1_public_ip" {
-  description = "Public IP của EC2 Client A1 để kết nối"
-  value       = aws_instance.ec2_client_a.public_ip
+output "inventory" {
+  description = "Authoritative inventory consumed by preflight and the SSM controller"
+  value = {
+    account_id        = data.aws_caller_identity.current.account_id
+    region            = var.aws_region
+    availability_zone = var.availability_zone
+    ami_id            = nonsensitive(local.benchmark_ami_id)
+    instance_type     = var.instance_type
+    artifact_bucket   = aws_s3_bucket.artifacts.id
+    kms_key_arn       = aws_kms_key.experiment.arn
+    client = {
+      instance_id = aws_instance.client.id
+      private_ip  = aws_instance.client.private_ip
+    }
+    server_b1 = {
+      instance_id = aws_instance.server_b1.id
+      private_ip  = aws_instance.server_b1.private_ip
+      path        = "peering"
+    }
+    server_b2 = {
+      instance_id = aws_instance.server_b2.id
+      private_ip  = aws_instance.server_b2.private_ip
+      path        = "tgw"
+    }
+    vpc_a_id                 = aws_vpc.a.id
+    vpc_b_id                 = aws_vpc.b.id
+    peering_connection_id    = aws_vpc_peering_connection.a_b.id
+    transit_gateway_id       = aws_ec2_transit_gateway.experiment.id
+    transit_gateway_rt_id    = aws_ec2_transit_gateway_route_table.experiment.id
+    client_route_table_id    = aws_route_table.a_client.id
+    peering_route_table_id   = aws_route_table.b_peering.id
+    tgw_route_table_id       = aws_route_table.b_tgw.id
+    server_security_group_id = aws_security_group.servers.id
+    flow_log_group           = aws_cloudwatch_log_group.flow_logs.name
+  }
 }
 
-output "client_a1_private_ip" {
-  description = "Private IP của EC2 Client A1"
-  value       = aws_instance.ec2_client_a.private_ip
-}
-
-output "client_a1_instance_id" {
-  description = "Instance ID của benchmark client"
-  value       = aws_instance.ec2_client_a.id
-}
-
-output "server_b1_peering_ip" {
-  description = "Private IP của Server B1 (Cùng AZ-a, định tuyến qua VPC Peering: 10.2.1.0/24)"
-  value       = aws_instance.ec2_server_b1.private_ip
-}
-
-output "server_b1_instance_id" {
-  description = "Instance ID của DUT B1"
-  value       = aws_instance.ec2_server_b1.id
-}
-
-output "server_b2_tgw_ip" {
-  description = "Private IP của Server B2 (Định tuyến qua AWS Transit Gateway: 10.2.2.0/24)"
-  value       = aws_instance.ec2_server_b2.private_ip
-}
-
-output "server_b2_instance_id" {
-  description = "Instance ID của target TGW B2"
-  value       = aws_instance.ec2_server_b2.id
-}
-
-output "shared_server_direct_ip" {
-  description = "Direct-path IP tới cùng backend dùng bởi PrivateLink"
-  value       = aws_instance.ec2_server_shared.private_ip
-}
-
-output "shared_server_instance_id" {
-  description = "Instance ID của backend Shared Services"
-  value       = aws_instance.ec2_server_shared.id
-}
-
-output "privatelink_endpoint_dns" {
-  description = "DNS Name của Interface VPC Endpoint trong VPC A"
-  value       = aws_vpc_endpoint.interface_endpoint_a.dns_entry[0].dns_name
-}
-
-data "aws_network_interface" "privatelink_eni" {
-  id = tolist(aws_vpc_endpoint.interface_endpoint_a.network_interface_ids)[0]
-}
-
-output "privatelink_endpoint_ip" {
-  description = "Địa chỉ Private IP thực tế của PrivateLink Interface Endpoint ENI"
-  value       = data.aws_network_interface.privatelink_eni.private_ip
-}
-
-output "transit_gateway_id" {
-  description = "ID của AWS Transit Gateway"
-  value       = aws_ec2_transit_gateway.tgw.id
-}
-
-output "peering_connection_id" {
-  description = "ID của VPC Peering Connection"
-  value       = aws_vpc_peering_connection.peer_a_b.id
+output "estimated_billable_components" {
+  description = "Cost review list; prices are intentionally not hard-coded"
+  value = [
+    "3 x c6i.large EC2",
+    "3 x public IPv4 address",
+    "1 x Transit Gateway plus 2 VPC attachments and data processing",
+    "3 x 20 GiB gp3 EBS",
+    "CloudWatch detailed monitoring and encrypted flow-log ingestion/storage",
+    "S3 artifact storage and KMS API usage"
+  ]
 }

@@ -1,9 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "experiment": {
     "name": "nt531-aws-network-performance",
-    "region": "ap-southeast-2",
-    "active_profile": "validation",
+    "region": "us-east-1",
+    "availability_zone": "us-east-1a",
+    "active_profile": "pilot",
     "profiles": {
       "validation": 3,
       "pilot": 3,
@@ -28,10 +29,6 @@
     "parallel_streams": [1, 4, 8]
   },
   "tc03": {
-    "enabled": true,
-    "conditions": ["direct", "privatelink"]
-  },
-  "tc04": {
     "enabled": true,
     "conditions": ["iptables", "xdp"],
     "udp_payload_bytes": 1200,

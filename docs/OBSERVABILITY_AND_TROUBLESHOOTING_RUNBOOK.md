@@ -60,7 +60,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS vpc_flow_logs_perf (
 PARTITIONED BY (region string, year string, month string, day string)
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ' '
-LOCATION 's3://your-vpc-flow-logs-bucket/AWSLogs/your-account-id/vpcflowlogs/ap-southeast-2/';
+LOCATION 's3://your-vpc-flow-logs-bucket/AWSLogs/your-account-id/vpcflowlogs/us-east-1/';
 ```
 
 ### 2.2. Các Câu Lệnh SQL Athena Phục Vụ Điều Tra Thực Tế
@@ -122,7 +122,7 @@ GROUP BY srcaddr, dstaddr, traffic_path, flow_direction;
 #!/usr/bin/env bash
 # /opt/scripts/push_ena_metrics_cw.sh
 INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
-REGION="ap-southeast-2"
+REGION="us-east-1"
 
 # Đọc các chỉ số allowance từ ethtool
 BW_IN=$(ethtool -S eth0 | awk '/bw_in_allowance_exceeded/ {print $2}')
@@ -144,7 +144,7 @@ aws cloudwatch put-metric-data --namespace "AWS/EC2/NetworkPerformance" \
 Tạo báo động ngay khi có bất kỳ gói tin nào bị bóp nghẽn trong 5 phút:
 ```bash
 aws cloudwatch put-metric-alarm \
-  --alarm-name "Alarm-EC2-Network-Throttling-Sydney" \
+  --alarm-name "Alarm-EC2-Network-Throttling-N. Virginia" \
   --alarm-description "Canh bao khi EC2 bi bop nghen bang thong hoac PPS tai Nitro Card" \
   --metric-name "BwOutAllowanceExceeded" \
   --namespace "AWS/EC2/NetworkPerformance" \
@@ -153,7 +153,7 @@ aws cloudwatch put-metric-alarm \
   --threshold 1 \
   --comparison-operator "GreaterThanOrEqualToThreshold" \
   --evaluation-periods 1 \
-  --region ap-southeast-2
+  --region us-east-1
 ```
 
 ---
@@ -205,5 +205,5 @@ Khi ứng dụng gặp hiện tượng chậm đường truyền, timeout kết 
      aws ec2 modify-transit-gateway-vpc-attachment \
        --transit-gateway-attachment-id tgw-attach-xxxxxx \
        --options ApplianceModeSupport=enable \
-       --region ap-southeast-2
+       --region us-east-1
      ```

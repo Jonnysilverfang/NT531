@@ -8,11 +8,6 @@ run_on_dut() {
         *) die "DUT action is not allowlisted: ${action}" ;;
     esac
 
-    if [ "${EXECUTION_MODE}" = "local-emulation" ]; then
-        bash "${SCRIPT_DIR}/dut_server_setup.sh" "${action}" "${INTERFACE}" "${target_local_file}"
-        return
-    fi
-
     local cmd_id invocation_json status response_code stdout_content stderr_content
     cmd_id=$(aws ssm send-command \
         --region "${AWS_REGION}" \

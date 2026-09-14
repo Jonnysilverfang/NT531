@@ -51,7 +51,7 @@ def load_and_validate(path: Path, profile_override: str | None = None) -> dict[s
         raise ConfigError(f"experiment.yaml must be UTF-8 JSON-compatible YAML: {exc}") from exc
 
     require(isinstance(data, dict), "config root must be an object")
-    require(data.get("schema_version") == 1, "schema_version must be 1")
+    require(data.get("schema_version") == 2, "schema_version must be 2")
     experiment = data.get("experiment")
     require(isinstance(experiment, dict), "experiment must be an object")
 
@@ -69,8 +69,10 @@ def load_and_validate(path: Path, profile_override: str | None = None) -> dict[s
 
     require(isinstance(experiment.get("name"), str) and experiment["name"].strip(),
             "experiment.name is required")
-    require(experiment.get("region") == "ap-southeast-2",
-            "this protocol is controlled for ap-southeast-2")
+    require(experiment.get("region") == "us-east-1",
+            "this protocol is controlled for us-east-1")
+    require(experiment.get("availability_zone") == "us-east-1a",
+            "this protocol is controlled for us-east-1a")
     positive_int(experiment.get("random_seed"), "experiment.random_seed")
     require(experiment.get("results_root") == "results/mode_b",
             "experiment.results_root must keep Mode B separate at results/mode_b")
@@ -84,30 +86,32 @@ def load_and_validate(path: Path, profile_override: str | None = None) -> dict[s
     require(timing["measurement_seconds"] >= 30,
             "measurement_seconds must be at least 30 for Mode B")
 
-    for tc in ("tc01", "tc02", "tc03", "tc04"):
+    require(set(data) == {"schema_version", "experiment", "tc01", "tc02", "tc03"},
+            "active experiment contract must contain exactly tc01, tc02, and tc03")
+    for tc in ("tc01", "tc02", "tc03"):
         require(isinstance(data.get(tc), dict), f"{tc} must be an object")
         require(isinstance(data[tc].get("enabled"), bool), f"{tc}.enabled must be boolean")
 
     exact_conditions(data["tc01"], ["peering", "tgw"], "tc01")
-    exact_conditions(data["tc03"], ["direct", "privatelink"], "tc03")
-    exact_conditions(data["tc04"], ["iptables", "xdp"], "tc04")
+    exact_conditions(data["tc03"], ["iptables", "xdp"], "tc03")
 
     require(data["tc02"].get("mtu") == [1500, 9001], "tc02.mtu must be [1500, 9001]")
     streams = data["tc02"].get("parallel_streams")
     require(streams == [1, 4, 8], "tc02.parallel_streams must be [1, 4, 8]")
 
-    loads = data["tc04"].get("load_pps")
-    require(isinstance(loads, list) and loads, "tc04.load_pps must be a non-empty list")
+    loads = data["tc03"].get("load_pps")
+    require(isinstance(loads, list) and loads, "tc03.load_pps must be a non-empty list")
     require(all(isinstance(v, int) and not isinstance(v, bool) and v > 0 for v in loads),
-            "tc04.load_pps values must be positive integers")
-    require(loads == sorted(set(loads)), "tc04.load_pps must be strictly increasing and unique")
-    payload = positive_int(data["tc04"].get("udp_payload_bytes"), "tc04.udp_payload_bytes")
-    require(payload <= 1472, "tc04.udp_payload_bytes must fit MTU 1500 without fragmentation")
+            "tc03.load_pps values must be positive integers")
+    require(loads == sorted(set(loads)), "tc03.load_pps must be strictly increasing and unique")
+    require(loads[0] == 100000, "tc03.load_pps must start at 100000 PPS")
+    payload = positive_int(data["tc03"].get("udp_payload_bytes"), "tc03.udp_payload_bytes")
+    require(payload <= 1472, "tc03.udp_payload_bytes must fit MTU 1500 without fragmentation")
 
-    saturation = data["tc04"].get("saturation")
-    require(isinstance(saturation, dict), "tc04.saturation must be an object")
+    saturation = data["tc03"].get("saturation")
+    require(isinstance(saturation, dict), "tc03.saturation must be an object")
     for key in ("packet_loss_percent_gt", "probe_p99_ms_gt", "cpu_percent_gt"):
-        number_gt_zero(saturation.get(key), f"tc04.saturation.{key}")
+        number_gt_zero(saturation.get(key), f"tc03.saturation.{key}")
     require(saturation["cpu_percent_gt"] <= 100, "cpu threshold cannot exceed 100 percent")
     return data
 
@@ -122,6 +126,7 @@ def emit_shell(data: dict[str, Any]) -> None:
     scalar_values = {
         "EXPERIMENT_NAME": exp["name"],
         "AWS_REGION": exp["region"],
+        "AVAILABILITY_ZONE": exp["availability_zone"],
         "EXPERIMENT_PROFILE": exp["selected_profile"],
         "NUM_RUNS": exp["independent_runs"],
         "RANDOM_SEED": exp["random_seed"],
@@ -130,21 +135,20 @@ def emit_shell(data: dict[str, Any]) -> None:
         "WARMUP_SECONDS": timing["warmup_seconds"],
         "MEASUREMENT_SECONDS": timing["measurement_seconds"],
         "COOLDOWN_SECONDS": timing["cooldown_seconds"],
-        "SATURATION_LOSS_PCT": data["tc04"]["saturation"]["packet_loss_percent_gt"],
-        "SATURATION_P99_MS": data["tc04"]["saturation"]["probe_p99_ms_gt"],
-        "SATURATION_CPU_PCT": data["tc04"]["saturation"]["cpu_percent_gt"],
-        "UDP_PAYLOAD_BYTES": data["tc04"]["udp_payload_bytes"],
+        "SATURATION_LOSS_PCT": data["tc03"]["saturation"]["packet_loss_percent_gt"],
+        "SATURATION_P99_MS": data["tc03"]["saturation"]["probe_p99_ms_gt"],
+        "SATURATION_CPU_PCT": data["tc03"]["saturation"]["cpu_percent_gt"],
+        "UDP_PAYLOAD_BYTES": data["tc03"]["udp_payload_bytes"],
     }
     for name, value in scalar_values.items():
         print(f"{name}={shlex.quote(str(value))}")
-    for tc in ("tc01", "tc02", "tc03", "tc04"):
+    for tc in ("tc01", "tc02", "tc03"):
         print(f"{tc.upper()}_ENABLED={'true' if data[tc]['enabled'] else 'false'}")
     print(f"TC01_CONDITIONS={shell_array(data['tc01']['conditions'])}")
     print(f"TC02_MTUS={shell_array(data['tc02']['mtu'])}")
     print(f"TC02_STREAMS={shell_array(data['tc02']['parallel_streams'])}")
     print(f"TC03_CONDITIONS={shell_array(data['tc03']['conditions'])}")
-    print(f"TC04_CONDITIONS={shell_array(data['tc04']['conditions'])}")
-    print(f"TC04_LOAD_PPS={shell_array(data['tc04']['load_pps'])}")
+    print(f"TC03_LOAD_PPS={shell_array(data['tc03']['load_pps'])}")
 
 
 def main() -> int:

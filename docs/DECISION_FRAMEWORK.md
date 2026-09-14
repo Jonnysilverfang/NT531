@@ -1,4 +1,4 @@
-﻿# DECISION FRAMEWORK: AWS NETWORK ARCHITECTURE SELECTION
+# DECISION FRAMEWORK: AWS NETWORK ARCHITECTURE SELECTION
 
 > **Purpose**: Quantitative rules for choosing network architecture based on Mode B experimental results.  
 > **Status**: Template for Mode B data. Placeholders marked `[PLACEHOLDER]` require empirical measurements.
@@ -205,7 +205,7 @@ START
 
 ## 7. LIMITATIONS
 
-- Single region (ap-southeast-2)
+- Single region (us-east-1)
 - Single instance type (c5n.large or similar)
 - Single kernel family (Amazon Linux 2023, kernel 6.1)
 - N = [PLACEHOLDER] runs (statistical power limited)

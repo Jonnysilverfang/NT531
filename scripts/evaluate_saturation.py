@@ -110,11 +110,14 @@ def parse_cpu_delta(path: Path) -> dict[str, float]:
     try:
         cpu_pct = float(metrics["cpu_total_percent"])
         softirq_pct = float(metrics["softirq_percent"])
+        ena_rx_pps = float(metrics["ena_rx_pps"])
     except (KeyError, TypeError, ValueError) as exc:
         raise MetricError(f"CPU delta percentages are invalid: {path}") from exc
     if not (0 <= cpu_pct <= 100 and 0 <= softirq_pct <= 100):
         raise MetricError(f"CPU delta percentages are outside [0,100]: {path}")
-    return {"cpu_pct": cpu_pct, "softirq_pct": softirq_pct}
+    if ena_rx_pps < 0:
+        raise MetricError(f"ENA RX PPS is negative: {path}")
+    return {"cpu_pct": cpu_pct, "softirq_pct": softirq_pct, "dut_ena_rx_pps": ena_rx_pps}
 
 
 def evaluate(

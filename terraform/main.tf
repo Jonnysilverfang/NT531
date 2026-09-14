@@ -1,678 +1,613 @@
 terraform {
-  required_version = ">= 1.3.0"
+  required_version = ">= 1.6.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-  default_tags {
-    tags = {
-      Project   = var.project_name
-      ManagedBy = "Terraform"
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
     }
   }
 }
 
-data "aws_availability_zones" "available" {
-  state = "available"
+provider "aws" {
+  region              = var.aws_region
+  allowed_account_ids = [var.allowed_account_id]
+  default_tags {
+    tags = {
+      Project     = var.project_name
+      ManagedBy   = "Terraform"
+      Environment = "performance-experiment"
+      DataMode    = "mode-b"
+    }
+  }
 }
 
-# ==============================================================================
-# IAM ROLE & INSTANCE PROFILE CHO AWS SYSTEMS MANAGER (SSM SESSION MANAGER)
-# ==============================================================================
-resource "aws_iam_role" "ssm_role" {
-  name = "${var.project_name}-ssm-role"
+data "aws_caller_identity" "current" {}
 
-  assume_role_policy = jsonencode({
+data "aws_ssm_parameter" "al2023_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+}
+
+locals {
+  benchmark_ami_id = coalesce(var.benchmark_ami_id, data.aws_ssm_parameter.al2023_ami.value)
+  bootstrap_b64    = base64encode(file("${path.module}/../scripts/bootstrap_al2023.sh"))
+  user_data        = <<-EOF
+    #!/bin/bash
+    set -euo pipefail
+    echo '${local.bootstrap_b64}' | base64 -d > /tmp/bootstrap_al2023.sh
+    chmod 0700 /tmp/bootstrap_al2023.sh
+    /tmp/bootstrap_al2023.sh
+    rm -f /tmp/bootstrap_al2023.sh
+  EOF
+}
+
+# -----------------------------------------------------------------------------
+# Encrypted evidence storage and network flow logs
+# -----------------------------------------------------------------------------
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
+resource "aws_kms_key" "experiment" {
+  description             = "NT531 experiment artifacts, flow logs, and EBS"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com"
+        Sid       = "AccountAdministration"
+        Effect    = "Allow"
+        Principal = { AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root" }
+        Action    = "kms:*"
+        Resource  = "*"
+      },
+      {
+        Sid       = "CloudWatchLogsUse"
+        Effect    = "Allow"
+        Principal = { Service = "logs.${var.aws_region}.amazonaws.com" }
+        Action = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+        ]
+        Resource = "*"
+        Condition = {
+          ArnEquals = {
+            "kms:EncryptionContext:aws:logs:arn" = "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:/nt531/${var.project_name}/flow-logs"
+          }
         }
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_policy_attach" {
-  role       = aws_iam_role.ssm_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+resource "aws_kms_alias" "experiment" {
+  name          = "alias/${var.project_name}-experiment"
+  target_key_id = aws_kms_key.experiment.key_id
 }
 
-resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "${var.project_name}-ssm-profile"
-  role = aws_iam_role.ssm_role.name
+resource "aws_s3_bucket" "artifacts" {
+  bucket        = "${var.project_name}-${data.aws_caller_identity.current.account_id}-${random_id.suffix.hex}"
+  force_destroy = false
 }
 
-# ==============================================================================
-# 1. VPC A: CLIENT / NGUỒN BENCHMARK (10.1.0.0/16)
-# ==============================================================================
-resource "aws_vpc" "vpc_a" {
+resource "aws_s3_bucket_public_access_block" "artifacts" {
+  bucket                  = aws_s3_bucket.artifacts.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  versioning_configuration { status = "Enabled" }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.experiment.arn
+      sse_algorithm     = "aws:kms"
+    }
+    bucket_key_enabled = true
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  rule {
+    id     = "expire-noncurrent"
+    status = "Enabled"
+    filter {}
+    noncurrent_version_expiration { noncurrent_days = 30 }
+  }
+}
+
+resource "aws_cloudwatch_log_group" "flow_logs" {
+  name              = "/nt531/${var.project_name}/flow-logs"
+  retention_in_days = var.flow_log_retention_days
+  kms_key_id        = aws_kms_key.experiment.arn
+}
+
+resource "aws_iam_role" "flow_logs" {
+  name = "${var.project_name}-flow-logs"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "vpc-flow-logs.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "flow_logs" {
+  name = "publish-encrypted-flow-logs"
+  role = aws_iam_role.flow_logs.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["logs:CreateLogStream", "logs:PutLogEvents", "logs:DescribeLogGroups", "logs:DescribeLogStreams"]
+      Resource = "${aws_cloudwatch_log_group.flow_logs.arn}:*"
+    }]
+  })
+}
+
+# -----------------------------------------------------------------------------
+# VPC A and VPC B. Workloads and TGW attachment ENIs stay in us-east-1a.
+# -----------------------------------------------------------------------------
+resource "aws_vpc" "a" {
   cidr_block           = "10.1.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-  tags = { Name = "${var.project_name}-vpc-a" }
+  tags                 = { Name = "${var.project_name}-vpc-a" }
 }
 
-resource "aws_subnet" "subnet_a1" {
-  vpc_id            = aws_vpc.vpc_a.id
-  cidr_block        = "10.1.1.0/24"
-  availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-subnet-a1-az-a" }
-}
-
-resource "aws_subnet" "subnet_a2" {
-  vpc_id            = aws_vpc.vpc_a.id
-  cidr_block        = "10.1.2.0/24"
-  availability_zone = "${var.aws_region}b"
-  tags = { Name = "${var.project_name}-subnet-a2-az-b" }
-}
-
-resource "aws_internet_gateway" "igw_a" {
-  vpc_id = aws_vpc.vpc_a.id
-  tags   = { Name = "${var.project_name}-igw-a" }
-}
-
-resource "aws_route_table" "rt_a" {
-  vpc_id = aws_vpc.vpc_a.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw_a.id
-  }
-
-  # Đường định tuyến 1: Tới Subnet B1 (10.2.1.0/24) qua VPC Peering
-  route {
-    cidr_block                = "10.2.1.0/24"
-    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_b.id
-  }
-
-  # Đường định tuyến 2: Tới Subnet B2 (10.2.2.0/24) qua AWS Transit Gateway
-  route {
-    cidr_block         = "10.2.2.0/24"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  }
-
-  # Direct baseline tới đúng backend Shared Services dùng trong TC-03.
-  route {
-    cidr_block                = "10.3.0.0/16"
-    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_shared.id
-  }
-
-  tags = { Name = "${var.project_name}-rt-a" }
-}
-
-resource "aws_route_table_association" "rta_a1" {
-  subnet_id      = aws_subnet.subnet_a1.id
-  route_table_id = aws_route_table.rt_a.id
-}
-
-resource "aws_route_table_association" "rta_a2" {
-  subnet_id      = aws_subnet.subnet_a2.id
-  route_table_id = aws_route_table.rt_a.id
-}
-
-# ==============================================================================
-# 2. VPC B: TARGET SERVER / SPOKE (10.2.0.0/16)
-# ==============================================================================
-resource "aws_vpc" "vpc_b" {
+resource "aws_vpc" "b" {
   cidr_block           = "10.2.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-  tags = { Name = "${var.project_name}-vpc-b" }
+  tags                 = { Name = "${var.project_name}-vpc-b" }
 }
 
-# Subnet B1 dành riêng cho đo đạc VPC Peering (AZ-a)
-resource "aws_subnet" "subnet_b1" {
-  vpc_id            = aws_vpc.vpc_b.id
-  cidr_block        = "10.2.1.0/24"
-  availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-subnet-b1-peering-az-a" }
+resource "aws_subnet" "a_client" {
+  vpc_id                  = aws_vpc.a.id
+  cidr_block              = "10.1.1.0/24"
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true
+  tags                    = { Name = "${var.project_name}-a-client" }
 }
 
-# Subnet B2 dành riêng cho đo đạc Transit Gateway (AZ-a - Cùng AZ với Subnet B1 để triệt tiêu Confounding)
-resource "aws_subnet" "subnet_b2" {
-  vpc_id            = aws_vpc.vpc_b.id
-  cidr_block        = "10.2.2.0/24"
-  availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-subnet-b2-tgw-az-a" }
+resource "aws_subnet" "b_peering" {
+  vpc_id                  = aws_vpc.b.id
+  cidr_block              = "10.2.1.0/24"
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true
+  tags                    = { Name = "${var.project_name}-b-peering" }
 }
 
-# Route Table B1: Hồi đáp traffic về VPC A qua VPC Peering
-resource "aws_route_table" "rt_b_peering" {
-  vpc_id = aws_vpc.vpc_b.id
+resource "aws_subnet" "b_tgw" {
+  vpc_id                  = aws_vpc.b.id
+  cidr_block              = "10.2.2.0/24"
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true
+  tags                    = { Name = "${var.project_name}-b-tgw" }
+}
 
+resource "aws_subnet" "a_tgw_attachment" {
+  vpc_id            = aws_vpc.a.id
+  cidr_block        = "10.1.255.0/28"
+  availability_zone = var.availability_zone
+  tags              = { Name = "${var.project_name}-a-tgw-attachment" }
+}
+
+resource "aws_subnet" "b_tgw_attachment" {
+  vpc_id            = aws_vpc.b.id
+  cidr_block        = "10.2.255.0/28"
+  availability_zone = var.availability_zone
+  tags              = { Name = "${var.project_name}-b-tgw-attachment" }
+}
+
+resource "aws_internet_gateway" "a" {
+  vpc_id = aws_vpc.a.id
+  tags   = { Name = "${var.project_name}-igw-a" }
+}
+
+resource "aws_internet_gateway" "b" {
+  vpc_id = aws_vpc.b.id
+  tags   = { Name = "${var.project_name}-igw-b" }
+}
+
+resource "aws_vpc_peering_connection" "a_b" {
+  vpc_id      = aws_vpc.a.id
+  peer_vpc_id = aws_vpc.b.id
+  auto_accept = true
+  tags        = { Name = "${var.project_name}-peering-a-b" }
+}
+
+resource "aws_ec2_transit_gateway" "experiment" {
+  description                     = "Dedicated two-spoke NT531 performance experiment"
+  amazon_side_asn                 = 64512
+  auto_accept_shared_attachments  = "disable"
+  default_route_table_association = "disable"
+  default_route_table_propagation = "disable"
+  dns_support                     = "enable"
+  tags                            = { Name = "${var.project_name}-tgw", Segmentation = "flat-two-spoke-only" }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "a" {
+  transit_gateway_id = aws_ec2_transit_gateway.experiment.id
+  vpc_id             = aws_vpc.a.id
+  subnet_ids         = [aws_subnet.a_tgw_attachment.id]
+  tags               = { Name = "${var.project_name}-attach-a" }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "b" {
+  transit_gateway_id = aws_ec2_transit_gateway.experiment.id
+  vpc_id             = aws_vpc.b.id
+  subnet_ids         = [aws_subnet.b_tgw_attachment.id]
+  tags               = { Name = "${var.project_name}-attach-b" }
+}
+
+resource "aws_ec2_transit_gateway_route_table" "experiment" {
+  transit_gateway_id = aws_ec2_transit_gateway.experiment.id
+  tags               = { Name = "${var.project_name}-tgw-rt-flat-two-spoke" }
+}
+
+resource "aws_ec2_transit_gateway_route_table_association" "a" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.a.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.experiment.id
+}
+
+resource "aws_ec2_transit_gateway_route_table_association" "b" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.b.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.experiment.id
+}
+
+resource "aws_ec2_transit_gateway_route" "to_a" {
+  destination_cidr_block         = aws_vpc.a.cidr_block
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.a.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.experiment.id
+}
+
+resource "aws_ec2_transit_gateway_route" "to_b" {
+  destination_cidr_block         = aws_vpc.b.cidr_block
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.b.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.experiment.id
+}
+
+resource "aws_route_table" "a_client" {
+  vpc_id = aws_vpc.a.id
   route {
-    cidr_block                = "10.1.0.0/16"
-    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_b.id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.a.id
   }
+  route {
+    cidr_block                = "10.2.1.0/24"
+    vpc_peering_connection_id = aws_vpc_peering_connection.a_b.id
+  }
+  route {
+    cidr_block         = "10.2.2.0/24"
+    transit_gateway_id = aws_ec2_transit_gateway.experiment.id
+  }
+  tags = { Name = "${var.project_name}-rt-a-client" }
+}
 
+resource "aws_route_table" "b_peering" {
+  vpc_id = aws_vpc.b.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.b.id
+  }
+  route {
+    cidr_block                = aws_vpc.a.cidr_block
+    vpc_peering_connection_id = aws_vpc_peering_connection.a_b.id
+  }
   tags = { Name = "${var.project_name}-rt-b-peering" }
 }
 
-# Route Table B2: Hồi đáp traffic về VPC A qua Transit Gateway
-resource "aws_route_table" "rt_b_tgw" {
-  vpc_id = aws_vpc.vpc_b.id
-
+resource "aws_route_table" "b_tgw" {
+  vpc_id = aws_vpc.b.id
   route {
-    cidr_block         = "10.1.0.0/16"
-    transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.b.id
   }
-
+  route {
+    cidr_block         = aws_vpc.a.cidr_block
+    transit_gateway_id = aws_ec2_transit_gateway.experiment.id
+  }
   tags = { Name = "${var.project_name}-rt-b-tgw" }
 }
 
-resource "aws_route_table_association" "rta_b1" {
-  subnet_id      = aws_subnet.subnet_b1.id
-  route_table_id = aws_route_table.rt_b_peering.id
-}
-
-resource "aws_route_table_association" "rta_b2" {
-  subnet_id      = aws_subnet.subnet_b2.id
-  route_table_id = aws_route_table.rt_b_tgw.id
-}
-
-# ==============================================================================
-# 3. VPC SHARED SERVICES (10.3.0.0/16) - PRIVATELINK PROVIDER
-# ==============================================================================
-resource "aws_vpc" "vpc_shared" {
-  cidr_block           = "10.3.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-  tags = { Name = "${var.project_name}-vpc-shared" }
-}
-
-resource "aws_subnet" "subnet_shared1" {
-  vpc_id            = aws_vpc.vpc_shared.id
-  cidr_block        = "10.3.1.0/24"
-  availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-subnet-shared-az-a" }
-}
-
-resource "aws_route_table" "rt_shared" {
-  vpc_id = aws_vpc.vpc_shared.id
-
+resource "aws_route_table" "a_tgw_attachment" {
+  vpc_id = aws_vpc.a.id
   route {
-    cidr_block                = "10.1.0.0/16"
-    vpc_peering_connection_id = aws_vpc_peering_connection.peer_a_shared.id
+    cidr_block         = aws_vpc.b.cidr_block
+    transit_gateway_id = aws_ec2_transit_gateway.experiment.id
   }
-
-  tags = { Name = "${var.project_name}-rt-shared" }
+  tags = { Name = "${var.project_name}-rt-a-tgw-attachment" }
 }
 
-resource "aws_route_table_association" "rta_shared1" {
-  subnet_id      = aws_subnet.subnet_shared1.id
-  route_table_id = aws_route_table.rt_shared.id
-}
-
-# ==============================================================================
-# 4. PATH 1: VPC PEERING (VPC A <-> VPC B)
-# ==============================================================================
-resource "aws_vpc_peering_connection" "peer_a_b" {
-  vpc_id      = aws_vpc.vpc_a.id
-  peer_vpc_id = aws_vpc.vpc_b.id
-  auto_accept = true
-  tags        = { Name = "${var.project_name}-peering-a-to-b" }
-}
-
-# Direct performance baseline tới cùng EC2 backend mà PrivateLink/NLB sử dụng.
-# Overlapping-CIDR validation là testcase functional riêng, không dùng peering này.
-resource "aws_vpc_peering_connection" "peer_a_shared" {
-  vpc_id      = aws_vpc.vpc_a.id
-  peer_vpc_id = aws_vpc.vpc_shared.id
-  auto_accept = true
-  tags        = { Name = "${var.project_name}-peering-a-to-shared-direct-baseline" }
-}
-
-# ==============================================================================
-# 5. PATH 2: AWS TRANSIT GATEWAY (TGW)
-# ==============================================================================
-resource "aws_ec2_transit_gateway" "tgw" {
-  description                     = "TGW Performance Lab Benchmark (Up to 100 Gbps burst)"
-  amazon_side_asn                 = 64512
-  auto_accept_shared_attachments = "enable"
-  default_route_table_association = "enable"
-  default_route_table_propagation = "enable"
-  dns_support                     = "enable"
-  tags                            = { Name = "${var.project_name}-tgw" }
-}
-
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach_a" {
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  vpc_id             = aws_vpc.vpc_a.id
-  subnet_ids         = [aws_subnet.subnet_a1.id, aws_subnet.subnet_a2.id]
-  tags               = { Name = "${var.project_name}-tgw-attach-vpc-a" }
-}
-
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_attach_b" {
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  vpc_id             = aws_vpc.vpc_b.id
-  # AWS TGW cho phép đúng một attachment subnet trong mỗi AZ; B1 và B2 đều ở AZ-a.
-  subnet_ids = [aws_subnet.subnet_b2.id]
-  tags               = { Name = "${var.project_name}-tgw-attach-vpc-b" }
-}
-
-# ==============================================================================
-# 6. PATH 3: AWS PRIVATELINK (NLB + ENDPOINT SERVICE + INTERFACE ENDPOINT)
-# ==============================================================================
-resource "aws_lb" "nlb_privatelink" {
-  name               = "${var.project_name}-nlb"
-  internal           = true
-  load_balancer_type = "network"
-  subnets            = [aws_subnet.subnet_shared1.id]
-  tags               = { Name = "${var.project_name}-nlb-privatelink" }
-}
-
-resource "aws_lb_target_group" "tg_iperf3" {
-  name        = "${var.project_name}-tg-iperf3"
-  port        = 5201
-  protocol    = "TCP"
-  vpc_id      = aws_vpc.vpc_shared.id
-  target_type = "instance"
-
-  health_check {
-    protocol = "TCP"
-    port     = "5201"
+resource "aws_route_table" "b_tgw_attachment" {
+  vpc_id = aws_vpc.b.id
+  route {
+    cidr_block         = aws_vpc.a.cidr_block
+    transit_gateway_id = aws_ec2_transit_gateway.experiment.id
   }
+  tags = { Name = "${var.project_name}-rt-b-tgw-attachment" }
 }
 
-resource "aws_lb_listener" "listener_iperf3" {
-  load_balancer_arn = aws_lb.nlb_privatelink.arn
-  port              = 5201
-  protocol          = "TCP"
+resource "aws_route_table_association" "a_client" {
+  subnet_id      = aws_subnet.a_client.id
+  route_table_id = aws_route_table.a_client.id
+}
+resource "aws_route_table_association" "b_peering" {
+  subnet_id      = aws_subnet.b_peering.id
+  route_table_id = aws_route_table.b_peering.id
+}
+resource "aws_route_table_association" "b_tgw" {
+  subnet_id      = aws_subnet.b_tgw.id
+  route_table_id = aws_route_table.b_tgw.id
+}
+resource "aws_route_table_association" "a_tgw_attachment" {
+  subnet_id      = aws_subnet.a_tgw_attachment.id
+  route_table_id = aws_route_table.a_tgw_attachment.id
+}
+resource "aws_route_table_association" "b_tgw_attachment" {
+  subnet_id      = aws_subnet.b_tgw_attachment.id
+  route_table_id = aws_route_table.b_tgw_attachment.id
+}
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.tg_iperf3.arn
+# -----------------------------------------------------------------------------
+# Least-privilege network policy: no SSH ingress, benchmark ports from client only.
+# -----------------------------------------------------------------------------
+resource "aws_security_group" "client" {
+  name        = "${var.project_name}-client"
+  description = "No inbound administration; SSM agent uses outbound TLS"
+  vpc_id      = aws_vpc.a.id
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = { Name = "${var.project_name}-client" }
 }
 
-resource "aws_lb_target_group_attachment" "tga_iperf3" {
-  target_group_arn = aws_lb_target_group.tg_iperf3.arn
-  target_id        = aws_instance.ec2_server_shared.id
-  port             = 5201
-}
-
-resource "aws_lb_target_group" "tg_sockperf" {
-  name        = "${var.project_name}-tg-sockperf"
-  port        = 5202
-  protocol    = "TCP"
-  vpc_id      = aws_vpc.vpc_shared.id
-  target_type = "instance"
-
-  health_check {
-    protocol = "TCP"
-    port     = "5202"
-  }
-}
-
-resource "aws_lb_listener" "listener_sockperf" {
-  load_balancer_arn = aws_lb.nlb_privatelink.arn
-  port              = 5202
-  protocol          = "TCP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.tg_sockperf.arn
-  }
-}
-
-resource "aws_lb_target_group_attachment" "tga_sockperf" {
-  target_group_arn = aws_lb_target_group.tg_sockperf.arn
-  target_id        = aws_instance.ec2_server_shared.id
-  port             = 5202
-}
-
-resource "aws_vpc_endpoint_service" "privatelink_svc" {
-  acceptance_required        = false
-  network_load_balancer_arns = [aws_lb.nlb_privatelink.arn]
-  tags                       = { Name = "${var.project_name}-endpoint-service" }
-}
-
-resource "aws_vpc_endpoint" "interface_endpoint_a" {
-  vpc_id              = aws_vpc.vpc_a.id
-  service_name        = aws_vpc_endpoint_service.privatelink_svc.service_name
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_a1.id]
-  security_group_ids  = [aws_security_group.sg_lab.id]
-  private_dns_enabled = false
-  tags                = { Name = "${var.project_name}-privatelink-endpoint-a" }
-}
-
-# ==============================================================================
-# 7. CLUSTER PLACEMENT GROUP (SAME-AZ HIGH-BISECTION BANDWIDTH)
-# ==============================================================================
-resource "aws_placement_group" "cluster_pg" {
-  name     = "${var.project_name}-cluster-pg"
-  strategy = "cluster"
-  tags     = { Name = "${var.project_name}-cluster-pg" }
-}
-
-# ==============================================================================
-# 8. SECURITY GROUPS (ENTERPRISE HARDENED)
-# ==============================================================================
-resource "aws_security_group" "sg_lab" {
-  name        = "${var.project_name}-sg"
-  description = "Allow all lab benchmarking traffic"
-  vpc_id      = aws_vpc.vpc_a.id
-
+resource "aws_security_group" "servers" {
+  name        = "${var.project_name}-servers"
+  description = "Only registered benchmark traffic from VPC A client subnet"
+  vpc_id      = aws_vpc.b.id
   ingress {
-    description = "SSH Access restricted to admin CIDR"
-    from_port   = 22
-    to_port     = 22
+    description = "iperf3 TCP"
+    from_port   = 5201
+    to_port     = 5201
     protocol    = "tcp"
-    cidr_blocks = [var.admin_cidr]
+    cidr_blocks = [aws_subnet.a_client.cidr_block]
   }
-
   ingress {
-    description = "Internal Lab Traffic (TCP/UDP/ICMP)"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/8"]
+    description = "iperf3 UDP"
+    from_port   = 5201
+    to_port     = 5201
+    protocol    = "udp"
+    cidr_blocks = [aws_subnet.a_client.cidr_block]
   }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "sg_lab_b" {
-  name        = "${var.project_name}-sg-b"
-  description = "Allow internal traffic in VPC B"
-  vpc_id      = aws_vpc.vpc_b.id
-
   ingress {
-    description = "Internal Lab Traffic (TCP/UDP/ICMP)"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "sg_lab_shared" {
-  name        = "${var.project_name}-sg-shared"
-  description = "Allow internal traffic in VPC Shared"
-  vpc_id      = aws_vpc.vpc_shared.id
-
-  ingress {
-    description = "Internal Lab Traffic (TCP/UDP/ICMP)"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-# ==============================================================================
-# 8.1. VPC ENDPOINTS (SSM & S3 GATEWAY) CHO CÁC PRIVATE SUBNET KHÔNG CÓ NAT
-# ==============================================================================
-# Security Group cho VPC Interface Endpoints (HTTPS port 443)
-resource "aws_security_group" "sg_vpc_endpoints" {
-  name        = "${var.project_name}-sg-vpc-endpoints"
-  description = "Allow TLS 443 for SSM and Service Endpoints"
-  vpc_id      = aws_vpc.vpc_b.id
-
-  ingress {
-    description = "TLS from VPC B"
-    from_port   = 443
-    to_port     = 443
+    description = "sockperf TCP"
+    from_port   = 5202
+    to_port     = 5202
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc_b.cidr_block]
+    cidr_blocks = [aws_subnet.a_client.cidr_block]
   }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = { Name = "${var.project_name}-sg-endpoints-vpc-b" }
-}
-
-# S3 Gateway Endpoint cho VPC B (để dnf/yum tải package từ Amazon Linux repository mà không cần NAT)
-resource "aws_vpc_endpoint" "s3_endpoint_b" {
-  vpc_id            = aws_vpc.vpc_b.id
-  service_name      = "com.amazonaws.${var.aws_region}.s3"
-  vpc_endpoint_type = "Gateway"
-  route_table_ids   = [aws_route_table.rt_b_peering.id, aws_route_table.rt_b_tgw.id]
-  tags              = { Name = "${var.project_name}-vpce-s3-b" }
-}
-
-# SSM Interface Endpoints cho VPC B (quản trị an toàn qua Session Manager)
-resource "aws_vpc_endpoint" "ssm_endpoint_b" {
-  vpc_id              = aws_vpc.vpc_b.id
-  service_name        = "com.amazonaws.${var.aws_region}.ssm"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_b1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ssm-b" }
-}
-
-resource "aws_vpc_endpoint" "ssmmessages_endpoint_b" {
-  vpc_id              = aws_vpc.vpc_b.id
-  service_name        = "com.amazonaws.${var.aws_region}.ssmmessages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_b1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ssmmessages-b" }
-}
-
-resource "aws_vpc_endpoint" "ec2messages_endpoint_b" {
-  vpc_id              = aws_vpc.vpc_b.id
-  service_name        = "com.amazonaws.${var.aws_region}.ec2messages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_b1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ec2messages-b" }
-}
-
-# S3 Gateway Endpoint cho VPC Shared
-resource "aws_vpc_endpoint" "s3_endpoint_shared" {
-  vpc_id            = aws_vpc.vpc_shared.id
-  service_name      = "com.amazonaws.${var.aws_region}.s3"
-  vpc_endpoint_type = "Gateway"
-  route_table_ids   = [aws_route_table.rt_shared.id]
-  tags              = { Name = "${var.project_name}-vpce-s3-shared" }
-}
-
-# Security Group cho VPC Interface Endpoints trong VPC Shared
-resource "aws_security_group" "sg_vpc_endpoints_shared" {
-  name        = "${var.project_name}-sg-vpc-endpoints-shared"
-  description = "Allow TLS 443 for SSM Endpoints in VPC Shared"
-  vpc_id      = aws_vpc.vpc_shared.id
-
   ingress {
-    description = "TLS from VPC Shared"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc_shared.cidr_block]
+    description = "path and loss probes"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [aws_subnet.a_client.cidr_block]
   }
-
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = { Name = "${var.project_name}-sg-endpoints-vpc-shared" }
+  tags = { Name = "${var.project_name}-servers" }
 }
 
-# SSM Interface Endpoints cho VPC Shared (quản trị an toàn qua Session Manager)
-resource "aws_vpc_endpoint" "ssm_endpoint_shared" {
-  vpc_id              = aws_vpc.vpc_shared.id
-  service_name        = "com.amazonaws.${var.aws_region}.ssm"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_shared1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints_shared.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ssm-shared" }
+# -----------------------------------------------------------------------------
+# Split instance roles. Only the client can invoke the allowlisted SSM document.
+# -----------------------------------------------------------------------------
+resource "aws_iam_role" "client" {
+  name = "${var.project_name}-client"
+  assume_role_policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = [{ Effect = "Allow", Principal = { Service = "ec2.amazonaws.com" }, Action = "sts:AssumeRole" }]
+  })
 }
 
-resource "aws_vpc_endpoint" "ssmmessages_endpoint_shared" {
-  vpc_id              = aws_vpc.vpc_shared.id
-  service_name        = "com.amazonaws.${var.aws_region}.ssmmessages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_shared1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints_shared.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ssmmessages-shared" }
+resource "aws_iam_role" "server" {
+  name = "${var.project_name}-server"
+  assume_role_policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = [{ Effect = "Allow", Principal = { Service = "ec2.amazonaws.com" }, Action = "sts:AssumeRole" }]
+  })
 }
 
-resource "aws_vpc_endpoint" "ec2messages_endpoint_shared" {
-  vpc_id              = aws_vpc.vpc_shared.id
-  service_name        = "com.amazonaws.${var.aws_region}.ec2messages"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.subnet_shared1.id]
-  security_group_ids  = [aws_security_group.sg_vpc_endpoints_shared.id]
-  private_dns_enabled = true
-  tags                = { Name = "${var.project_name}-vpce-ec2messages-shared" }
+resource "aws_iam_role_policy_attachment" "client_ssm_core" {
+  role       = aws_iam_role.client.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+resource "aws_iam_role_policy_attachment" "server_ssm_core" {
+  role       = aws_iam_role.server.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-# ==============================================================================
-# 9. USER DATA SCRIPT (PROVISIONING BENCHMARK TOOLS)
-# ==============================================================================
-locals {
-  dut_setup_b64       = base64encode(file("${path.module}/../scripts/dut_server_setup.sh"))
-  ebpf_loader_b64     = base64encode(file("${path.module}/../ebpf/ebpf_loader.sh"))
-  ebpf_source_b64     = base64encode(file("${path.module}/../ebpf/xdp_packet_filter.c"))
-  ebpf_makefile_b64   = base64encode(file("${path.module}/../ebpf/Makefile"))
-  user_data = <<-EOF
-              #!/bin/bash
-              set -e
-              echo "[*] Bắt đầu khởi tạo EC2 Benchmark Instance..."
-              # AMI phải được bake/pin trước; không cập nhật package giữa các run.
-              for required in iperf3 sockperf ethtool jq clang bpftool; do
-                command -v "$required" >/dev/null || { echo "Missing baked tool: $required" >&2; exit 1; }
-              done
-              mkdir -p /opt/capstone/scripts /opt/capstone/ebpf
-              echo '${local.dut_setup_b64}' | base64 -d > /opt/capstone/scripts/dut_server_setup.sh
-              echo '${local.ebpf_loader_b64}' | base64 -d > /opt/capstone/ebpf/ebpf_loader.sh
-              echo '${local.ebpf_source_b64}' | base64 -d > /opt/capstone/ebpf/xdp_packet_filter.c
-              echo '${local.ebpf_makefile_b64}' | base64 -d > /opt/capstone/ebpf/Makefile
-              chmod 0755 /opt/capstone/scripts/dut_server_setup.sh /opt/capstone/ebpf/ebpf_loader.sh
-              # Khởi chạy iperf3 throughput/flood và sockperf legitimate-latency probe.
-              iperf3 -s -p 5201 -D || true
-              sockperf server -i 0.0.0.0 --port 5202 --daemonize || true
-              echo "[✓] EC2 Benchmark daemons đã sẵn sàng."
-              EOF
+resource "aws_iam_instance_profile" "client" {
+  name = "${var.project_name}-client"
+  role = aws_iam_role.client.name
+}
+resource "aws_iam_instance_profile" "server" {
+  name = "${var.project_name}-server"
+  role = aws_iam_role.server.name
 }
 
-# ==============================================================================
-# 10. EC2 BENCHMARK INSTANCES (CHUẨN HÓA ĐỐI CHỨNG KHÔNG CONFOUNDING)
-# ==============================================================================
-# 10.1. Cặp đối chứng đo TC-01 (Routing: VPC Peering vs Transit Gateway):
-#       - Cả hai target đều nằm tại AZ-a (ap-southeast-2a)
-#       - Cùng instance type c6i.large, cùng Security Group, KHÔNG dùng Placement Group
-#       - BIẾN DUY NHẤT THAY ĐỔI: ĐƯỜNG ĐỊNH TUYẾN (PEERING VS TGW)
+resource "aws_iam_role_policy" "artifact_access_client" {
+  name = "experiment-artifact-read-write"
+  role = aws_iam_role.client.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      { Effect = "Allow", Action = ["s3:ListBucket"], Resource = aws_s3_bucket.artifacts.arn },
+      { Effect = "Allow", Action = ["s3:GetObject", "s3:PutObject"], Resource = "${aws_s3_bucket.artifacts.arn}/*" },
+      { Effect = "Allow", Action = ["kms:Decrypt", "kms:Encrypt", "kms:GenerateDataKey"], Resource = aws_kms_key.experiment.arn }
+    ]
+  })
+}
 
-# Client A trong VPC A (AZ-a, Baseline không Placement Group)
-resource "aws_instance" "ec2_client_a" {
-  ami                         = var.benchmark_ami_id
+resource "aws_iam_role_policy" "artifact_access_server" {
+  name = "experiment-bundle-read"
+  role = aws_iam_role.server.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      { Effect = "Allow", Action = ["s3:ListBucket"], Resource = aws_s3_bucket.artifacts.arn },
+      { Effect = "Allow", Action = ["s3:GetObject"], Resource = "${aws_s3_bucket.artifacts.arn}/bundles/*" },
+      { Effect = "Allow", Action = ["kms:Decrypt"], Resource = aws_kms_key.experiment.arn }
+    ]
+  })
+}
+
+# -----------------------------------------------------------------------------
+# Three identical AL2023/c6i.large benchmark instances.
+# -----------------------------------------------------------------------------
+resource "aws_instance" "client" {
+  ami                         = local.benchmark_ami_id
   instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.subnet_a1.id
+  subnet_id                   = aws_subnet.a_client.id
   private_ip                  = "10.1.1.10"
-  vpc_security_group_ids      = [aws_security_group.sg_lab.id]
-  iam_instance_profile        = aws_iam_instance_profile.ssm_profile.name
   associate_public_ip_address = true
-  key_name                    = var.key_name != "" ? var.key_name : null
+  vpc_security_group_ids      = [aws_security_group.client.id]
+  iam_instance_profile        = aws_iam_instance_profile.client.name
   user_data                   = local.user_data
-  tags                        = { Name = "${var.project_name}-client-a1-baseline" }
+  user_data_replace_on_change = true
+  monitoring                  = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+  root_block_device {
+    encrypted             = true
+    kms_key_id            = aws_kms_key.experiment.arn
+    volume_type           = "gp3"
+    volume_size           = 20
+    delete_on_termination = true
+  }
+  tags = { Name = "${var.project_name}-client-a", Role = "benchmark-client" }
 }
 
-# Target Server 1 trong VPC B (AZ-a, Baseline không Placement Group, Path: Peering)
-resource "aws_instance" "ec2_server_b1" {
-  ami                    = var.benchmark_ami_id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.subnet_b1.id
-  private_ip             = "10.2.1.10"
-  vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
-  key_name               = var.key_name != "" ? var.key_name : null
-  user_data              = local.user_data
-  tags                   = { Name = "${var.project_name}-server-b1-peering-az-a" }
+resource "aws_instance" "server_b1" {
+  ami                         = local.benchmark_ami_id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.b_peering.id
+  private_ip                  = "10.2.1.10"
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.servers.id]
+  iam_instance_profile        = aws_iam_instance_profile.server.name
+  user_data                   = local.user_data
+  user_data_replace_on_change = true
+  monitoring                  = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+  root_block_device {
+    encrypted             = true
+    kms_key_id            = aws_kms_key.experiment.arn
+    volume_type           = "gp3"
+    volume_size           = 20
+    delete_on_termination = true
+  }
+  tags = { Name = "${var.project_name}-server-b1-peering", Role = "benchmark-dut", Path = "peering" }
 }
 
-# Target Server 2 trong VPC B (AZ-a, Baseline không Placement Group, Path: Transit Gateway)
-resource "aws_instance" "ec2_server_b2" {
-  ami                    = var.benchmark_ami_id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.subnet_b2.id
-  private_ip             = "10.2.2.10"
-  vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
-  key_name               = var.key_name != "" ? var.key_name : null
-  user_data              = local.user_data
-  tags                   = { Name = "${var.project_name}-server-b2-tgw-az-a" }
+resource "aws_instance" "server_b2" {
+  ami                         = local.benchmark_ami_id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.b_tgw.id
+  private_ip                  = "10.2.2.10"
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.servers.id]
+  iam_instance_profile        = aws_iam_instance_profile.server.name
+  user_data                   = local.user_data
+  user_data_replace_on_change = true
+  monitoring                  = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+  root_block_device {
+    encrypted             = true
+    kms_key_id            = aws_kms_key.experiment.arn
+    volume_type           = "gp3"
+    volume_size           = 20
+    delete_on_termination = true
+  }
+  tags = { Name = "${var.project_name}-server-b2-tgw", Role = "benchmark-target", Path = "tgw" }
 }
 
-# 10.2. Cặp đối chứng đo TC-02 (Physical Topology: Cluster Placement Group vs Intra-AZ):
-# Client & Server gắn cùng Cluster Placement Group trong AZ-a
-resource "aws_instance" "ec2_client_a_pg" {
-  ami                    = var.benchmark_ami_id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.subnet_a1.id
-  vpc_security_group_ids = [aws_security_group.sg_lab.id]
-  placement_group        = aws_placement_group.cluster_pg.id
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
-  key_name               = var.key_name != "" ? var.key_name : null
-  user_data              = local.user_data
-  tags                   = { Name = "${var.project_name}-client-a-pg" }
+resource "aws_iam_role_policy" "client_dut_control" {
+  name = "ssm-control-experiment-duts"
+  role = aws_iam_role.client.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "ssm:SendCommand"
+        Resource = [
+          "arn:aws:ssm:${var.aws_region}::document/AWS-RunShellScript",
+          aws_instance.server_b1.arn,
+          aws_instance.server_b2.arn
+        ]
+      },
+      { Effect = "Allow", Action = ["ssm:GetCommandInvocation", "ssm:ListCommandInvocations", "ssm:DescribeInstanceInformation"], Resource = "*" }
+    ]
+  })
 }
 
-resource "aws_instance" "ec2_server_b1_pg" {
-  ami                    = var.benchmark_ami_id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.subnet_b1.id
-  vpc_security_group_ids = [aws_security_group.sg_lab_b.id]
-  placement_group        = aws_placement_group.cluster_pg.id
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
-  key_name               = var.key_name != "" ? var.key_name : null
-  user_data              = local.user_data
-  tags                   = { Name = "${var.project_name}-server-b1-pg" }
+resource "aws_flow_log" "vpc_a" {
+  iam_role_arn         = aws_iam_role.flow_logs.arn
+  log_destination      = aws_cloudwatch_log_group.flow_logs.arn
+  log_destination_type = "cloud-watch-logs"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.a.id
 }
 
-# 10.3. Target Server in VPC Shared (Behind NLB & PrivateLink)
-resource "aws_instance" "ec2_server_shared" {
-  ami                    = var.benchmark_ami_id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.subnet_shared1.id
-  private_ip             = "10.3.1.10"
-  vpc_security_group_ids = [aws_security_group.sg_lab_shared.id]
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
-  key_name               = var.key_name != "" ? var.key_name : null
-  user_data              = local.user_data
-  tags                   = { Name = "${var.project_name}-server-shared" }
+resource "aws_flow_log" "vpc_b" {
+  iam_role_arn         = aws_iam_role.flow_logs.arn
+  log_destination      = aws_cloudwatch_log_group.flow_logs.arn
+  log_destination_type = "cloud-watch-logs"
+  traffic_type         = "ALL"
+  vpc_id               = aws_vpc.b.id
+}
+
+resource "aws_flow_log" "tgw" {
+  iam_role_arn         = aws_iam_role.flow_logs.arn
+  log_destination      = aws_cloudwatch_log_group.flow_logs.arn
+  log_destination_type = "cloud-watch-logs"
+  traffic_type         = "ALL"
+  transit_gateway_id   = aws_ec2_transit_gateway.experiment.id
 }

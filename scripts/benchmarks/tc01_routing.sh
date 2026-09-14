@@ -16,6 +16,7 @@ run_tc01() {
         mkdir -p "${output_dir}"
         latency_warmup "${target}"
         latency_probe "${target}" "${output_dir}/latency.txt"
+        icmp_probe "${target}" "${output_dir}/ping.txt"
         cooldown_pause
     done
 }

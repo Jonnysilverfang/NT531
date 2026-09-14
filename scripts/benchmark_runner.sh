@@ -9,7 +9,6 @@ PROFILE=""
 PLAN_ONLY=false
 EXECUTE=false
 EXPERIMENT_ID="experiment_$(date -u +%Y%m%dT%H%M%SZ)"
-EXECUTION_MODE="${EXECUTION_MODE:-aws-remote}"
 DUT_INSTANCE_ID="${DUT_INSTANCE_ID:-}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 export PYTHONUTF8="${PYTHONUTF8:-1}"
@@ -19,29 +18,34 @@ export PYTHONDONTWRITEBYTECODE="${PYTHONDONTWRITEBYTECODE:-1}"
 # from `terraform output` or explicit environment variables; there are no fake defaults.
 TARGET_PEERING_IP="${TARGET_PEERING_IP:-}"
 TARGET_TGW_IP="${TARGET_TGW_IP:-}"
-DIRECT_TARGET_IP="${DIRECT_TARGET_IP:-}"
-PRIVATELINK_ENDPOINT_IP="${PRIVATELINK_ENDPOINT_IP:-}"
 TARGET_PEERING_INSTANCE_ID="${TARGET_PEERING_INSTANCE_ID:-}"
 TARGET_TGW_INSTANCE_ID="${TARGET_TGW_INSTANCE_ID:-}"
-DIRECT_TARGET_INSTANCE_ID="${DIRECT_TARGET_INSTANCE_ID:-}"
+CLIENT_INSTANCE_ID="${CLIENT_INSTANCE_ID:-}"
+INSTANCE_TYPE="${INSTANCE_TYPE:-}"
+AMI_ID="${AMI_ID:-}"
+ALLOWED_ACCOUNT_ID="${ALLOWED_ACCOUNT_ID:-}"
+CLIENT_ROUTE_TABLE_ID="${CLIENT_ROUTE_TABLE_ID:-}"
+PEERING_ROUTE_TABLE_ID="${PEERING_ROUTE_TABLE_ID:-}"
+TGW_ROUTE_TABLE_ID="${TGW_ROUTE_TABLE_ID:-}"
+PEERING_CONNECTION_ID="${PEERING_CONNECTION_ID:-}"
+TRANSIT_GATEWAY_ID="${TRANSIT_GATEWAY_ID:-}"
+SERVER_SECURITY_GROUP_ID="${SERVER_SECURITY_GROUP_ID:-}"
 
 usage() {
     cat <<'EOF'
 Usage:
   scripts/benchmark_runner.sh --plan-only [--profile validation|pilot|final]
-  scripts/benchmark_runner.sh --execute --execution-mode aws-remote [options]
+  scripts/benchmark_runner.sh --execute [options]
 
 Options:
   --config PATH
   --profile validation|pilot|final
   --experiment-id ID
-  --execution-mode aws-remote|local-emulation
   --plan-only                 Generate deterministic schedule; never call AWS or mutate networking.
-  --execute                   Run preflight and the configured Mode B experiment.
+  --execute                   Run AWS preflight and the configured empirical experiment from EC2.
 
-AWS execution requires DUT_INSTANCE_ID, target IPs, and target instance IDs from
-the deployed inventory. TC-01 records both host assignments; TC-03 requires the
-direct and PrivateLink paths to resolve to DIRECT_TARGET_INSTANCE_ID.
+Execution requires client/DUT identity and target inventory from Terraform. The
+runner refuses local-emulation so workstation traffic cannot become Mode B evidence.
 EOF
 }
 
@@ -50,9 +54,6 @@ while [ "$#" -gt 0 ]; do
         --config) CONFIG_FILE="$2"; shift 2 ;;
         --profile) PROFILE="$2"; shift 2 ;;
         --experiment-id) EXPERIMENT_ID="$2"; shift 2 ;;
-        --execution-mode) EXECUTION_MODE="$2"; shift 2 ;;
-        --execution-mode=*) EXECUTION_MODE="${1#*=}"; shift ;;
-        --local-emulation) EXECUTION_MODE=local-emulation; shift ;;
         --plan-only) PLAN_ONLY=true; shift ;;
         --execute) EXECUTE=true; shift ;;
         --help|-h) usage; exit 0 ;;
@@ -86,44 +87,42 @@ config_shell=$("${PYTHON_BIN}" "${SCRIPT_DIR}/load_experiment_config.py" \
     --config "${CONFIG_FILE}" "${profile_args[@]}" --format shell)
 eval "${config_shell}"
 
-case "${EXECUTION_MODE}" in
-    aws-remote) ;;
-    local-emulation)
-        echo "LOCAL EMULATION mutates the selected local interface and is never empirical AWS evidence." >&2
-        ;;
-    *) echo "Invalid execution mode: ${EXECUTION_MODE}" >&2; exit 2 ;;
-esac
-
 source "${SCRIPT_DIR}/lib/common.sh"
 source "${SCRIPT_DIR}/lib/ssm.sh"
 source "${SCRIPT_DIR}/lib/metrics.sh"
 source "${SCRIPT_DIR}/lib/metadata.sh"
 source "${SCRIPT_DIR}/benchmarks/tc01_routing.sh"
 source "${SCRIPT_DIR}/benchmarks/tc02_mtu.sh"
-source "${SCRIPT_DIR}/benchmarks/tc03_privatelink.sh"
-source "${SCRIPT_DIR}/benchmarks/tc04_packet_processing.sh"
+source "${SCRIPT_DIR}/benchmarks/tc03_packet_processing.sh"
 
 for required in "${PYTHON_BIN}" ip iperf3 sockperf ethtool; do require_command "${required}"; done
-if [ "${EXECUTION_MODE}" = aws-remote ]; then
-    require_command aws
-    require_command jq
-    [ -n "${DUT_INSTANCE_ID}" ] || die "DUT_INSTANCE_ID is required"
-    for name in TARGET_PEERING_INSTANCE_ID TARGET_TGW_INSTANCE_ID DIRECT_TARGET_INSTANCE_ID; do
-        [ -n "${!name}" ] || die "${name} must come from the deployed Terraform inventory"
-    done
-    [ "${DUT_INSTANCE_ID}" = "${TARGET_PEERING_INSTANCE_ID}" ] || \
-        die "DUT_INSTANCE_ID must match TARGET_PEERING_INSTANCE_ID for TC-02/TC-04 evidence"
-else
-    TARGET_PEERING_INSTANCE_ID="${TARGET_PEERING_INSTANCE_ID:-local-peering-target}"
-    TARGET_TGW_INSTANCE_ID="${TARGET_TGW_INSTANCE_ID:-local-tgw-target}"
-    DIRECT_TARGET_INSTANCE_ID="${DIRECT_TARGET_INSTANCE_ID:-local-shared-target}"
-fi
-for name in TARGET_PEERING_IP TARGET_TGW_IP DIRECT_TARGET_IP PRIVATELINK_ENDPOINT_IP; do
+require_command aws
+require_command jq
+[ -n "${DUT_INSTANCE_ID}" ] || die "DUT_INSTANCE_ID is required"
+for name in CLIENT_INSTANCE_ID TARGET_PEERING_INSTANCE_ID TARGET_TGW_INSTANCE_ID INSTANCE_TYPE AMI_ID \
+    ALLOWED_ACCOUNT_ID CLIENT_ROUTE_TABLE_ID PEERING_ROUTE_TABLE_ID TGW_ROUTE_TABLE_ID \
+    PEERING_CONNECTION_ID TRANSIT_GATEWAY_ID SERVER_SECURITY_GROUP_ID; do
+    [ -n "${!name}" ] || die "${name} must come from the deployed Terraform inventory"
+done
+[ "${DUT_INSTANCE_ID}" = "${TARGET_PEERING_INSTANCE_ID}" ] || \
+    die "DUT_INSTANCE_ID must match TARGET_PEERING_INSTANCE_ID for TC-02/TC-03 evidence"
+for name in TARGET_PEERING_IP TARGET_TGW_IP; do
     [ -n "${!name}" ] || die "${name} must come from the deployed Terraform inventory"
 done
 
-"${SCRIPT_DIR}/preflight_check.sh" --scope "$([ "${EXECUTION_MODE}" = aws-remote ] && printf aws || printf offline)" \
-    --config "${CONFIG_FILE}" "${profile_args[@]}" --dut-instance-id "${DUT_INSTANCE_ID}" --interface "${INTERFACE}"
+"${SCRIPT_DIR}/preflight_check.sh" --scope aws --config "${CONFIG_FILE}" "${profile_args[@]}" \
+    --client-instance-id "${CLIENT_INSTANCE_ID}" \
+    --peering-instance-id "${TARGET_PEERING_INSTANCE_ID}" \
+    --tgw-instance-id "${TARGET_TGW_INSTANCE_ID}" \
+    --peering-ip "${TARGET_PEERING_IP}" --tgw-ip "${TARGET_TGW_IP}" --interface "${INTERFACE}" \
+    --account-id "${ALLOWED_ACCOUNT_ID}" --expected-ami-id "${AMI_ID}" \
+    --expected-instance-type "${INSTANCE_TYPE}" \
+    --client-route-table-id "${CLIENT_ROUTE_TABLE_ID}" \
+    --peering-route-table-id "${PEERING_ROUTE_TABLE_ID}" \
+    --tgw-route-table-id "${TGW_ROUTE_TABLE_ID}" \
+    --peering-connection-id "${PEERING_CONNECTION_ID}" \
+    --transit-gateway-id "${TRANSIT_GATEWAY_ID}" \
+    --server-security-group-id "${SERVER_SECURITY_GROUP_ID}"
 
 ORIGINAL_MTU=$(ip link show dev "${INTERFACE}" | awk '/mtu/ {print $5; exit}')
 EXPERIMENT_DIR="${PROJECT_ROOT}/${RESULTS_ROOT_REL}/${EXPERIMENT_ID}"
@@ -150,7 +149,7 @@ for RUN_ID in $(seq 1 "${NUM_RUNS}"); do
         --run-dir "${RUN_DIR}" --config "${CONFIG_FILE}" \
         --experiment-id "${EXPERIMENT_ID}" --run-id "${RUN_ID}" \
         --region "${AWS_REGION}" --profile "${EXPERIMENT_PROFILE}" --seed "${RUN_SEED}" \
-        --data-mode "$([ "${EXECUTION_MODE}" = aws-remote ] && printf empirical_aws || printf local_emulation)"
+        --data-mode empirical_aws
     "${PYTHON_BIN}" "${SCRIPT_DIR}/manage_run_artifacts.py" record-target \
         --run-dir "${RUN_DIR}" --testcase tc01 --condition peering \
         --target-id "${TARGET_PEERING_INSTANCE_ID}" --target-address "${TARGET_PEERING_IP}" --path peering
@@ -158,18 +157,14 @@ for RUN_ID in $(seq 1 "${NUM_RUNS}"); do
         --run-dir "${RUN_DIR}" --testcase tc01 --condition tgw \
         --target-id "${TARGET_TGW_INSTANCE_ID}" --target-address "${TARGET_TGW_IP}" --path tgw
     "${PYTHON_BIN}" "${SCRIPT_DIR}/manage_run_artifacts.py" record-target \
-        --run-dir "${RUN_DIR}" --testcase tc03 --condition direct \
-        --target-id "${DIRECT_TARGET_INSTANCE_ID}" --target-address "${DIRECT_TARGET_IP}" --path direct
-    "${PYTHON_BIN}" "${SCRIPT_DIR}/manage_run_artifacts.py" record-target \
-        --run-dir "${RUN_DIR}" --testcase tc03 --condition privatelink \
-        --target-id "${DIRECT_TARGET_INSTANCE_ID}" --target-address "${PRIVATELINK_ENDPOINT_IP}" --path privatelink
+        --run-dir "${RUN_DIR}" --testcase tc03 --condition dut \
+        --target-id "${TARGET_PEERING_INSTANCE_ID}" --target-address "${TARGET_PEERING_IP}" --path peering
     collect_environment_manifest
     run_on_dut start_daemons ""
 
     if [ "${TC01_ENABLED}" = true ]; then run_tc01; else record_disabled_schedule tc01 "$((RUN_SEED + 101))"; fi
     if [ "${TC02_ENABLED}" = true ]; then run_tc02; else record_disabled_schedule tc02 "$((RUN_SEED + 202))"; fi
     if [ "${TC03_ENABLED}" = true ]; then run_tc03; else record_disabled_schedule tc03 "$((RUN_SEED + 303))"; fi
-    if [ "${TC04_ENABLED}" = true ]; then run_tc04; else record_disabled_schedule tc04 "$((RUN_SEED + 404))"; fi
 
     "${PYTHON_BIN}" "${SCRIPT_DIR}/manage_run_artifacts.py" finalize --run-dir "${RUN_DIR}"
     "${PYTHON_BIN}" "${SCRIPT_DIR}/manage_run_artifacts.py" verify --run-dir "${RUN_DIR}"

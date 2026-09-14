@@ -14,7 +14,7 @@ from pathlib import Path
 from load_experiment_config import load_and_validate
 
 
-TC_SEED_OFFSETS = {"tc01": 101, "tc02": 202, "tc03": 303, "tc04": 404}
+TC_SEED_OFFSETS = {"tc01": 101, "tc02": 202, "tc03": 303}
 
 
 def shuffled(values, seed: int):
@@ -34,10 +34,10 @@ def build_plan(config_path: Path, profile: str | None, experiment_id: str) -> di
             {"mtu": mtu, "parallel_streams": streams}
             for mtu, streams in product(config["tc02"]["mtu"], config["tc02"]["parallel_streams"])
         ]
-        tc04_stages = []
-        for stage, load in enumerate(config["tc04"]["load_pps"], 1):
-            order = shuffled(config["tc04"]["conditions"], seeds["tc04"] + stage)
-            tc04_stages.append({"stage": stage, "offered_load_pps": load, "condition_order": order})
+        tc03_stages = []
+        for stage, load in enumerate(config["tc03"]["load_pps"], 1):
+            order = shuffled(config["tc03"]["conditions"], seeds["tc03"] + stage)
+            tc03_stages.append({"stage": stage, "offered_load_pps": load, "condition_order": order})
         runs.append({
             "run_id": run_id,
             "block_id": f"block-{run_id:03d}",
@@ -45,13 +45,12 @@ def build_plan(config_path: Path, profile: str | None, experiment_id: str) -> di
             "schedule": {
                 "tc01": shuffled(config["tc01"]["conditions"], seeds["tc01"]),
                 "tc02": shuffled(tc02_cells, seeds["tc02"]),
-                "tc03_performance": shuffled(config["tc03"]["conditions"], seeds["tc03"]),
-                "tc04": tc04_stages,
+                "tc03": tc03_stages,
             },
         })
     raw_config = config_path.read_bytes()
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "data_mode": "mode_b_plan_only",
         "aws_verified": False,
         "empirical": False,
@@ -61,11 +60,11 @@ def build_plan(config_path: Path, profile: str | None, experiment_id: str) -> di
         "profile": exp["selected_profile"],
         "independent_runs": exp["independent_runs"],
         "timing": exp["timing"],
-        "saturation_preregistration": config["tc04"]["saturation"],
+        "saturation_preregistration": config["tc03"]["saturation"],
         "notes": [
             "This is a deterministic schedule, not AWS measurement evidence.",
             "TC01 target identity must be persisted; a fixed host/path pairing remains a confounder, not an estimable block effect.",
-            "TC03 overlapping-CIDR proof is a separate functional testcase and is not in this performance schedule.",
+            "TC03 requires positive evidence of XDP native/driver mode; generic XDP invalidates the run.",
         ],
         "runs": runs,
     }

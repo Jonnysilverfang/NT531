@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfplan
+terraform/crash.log
+terraform/crash.*.log
+
+# Controller scratch archives are reproducible from their retained evidence.
+results/mode_b/controller/*/runtime.tar.gz
+results/mode_b/controller/*.tar.gz

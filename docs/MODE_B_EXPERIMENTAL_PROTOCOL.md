@@ -1,111 +1,93 @@
-# GIAO THỨC THỰC NGHIỆM MODE B TRÊN AWS
+# Preregistered Mode B Experimental Protocol
 
-> Trạng thái: **preregistered protocol — chưa có dữ liệu đo AWS trong repo**. Tài liệu này định nghĩa điều phải làm và điều kiện được phép kết luận; nó không biến dữ liệu Mode A thành bằng chứng empirical.
+> Version 2, Region `us-east-1`, AZ `us-east-1a`. Status: implementation validated; AWS execution pending. No numeric outcome is preregistered or implied.
 
-## 1. Phạm vi và Research Questions
+## Research questions and estimands
 
-Tên đề tài: **Đánh giá thực nghiệm ảnh hưởng của kiến trúc mạng và cơ chế xử lý gói tin Linux đến hiệu năng mạng trên AWS**.
+### TC01 — routing path
 
-English: **Experimental Evaluation of AWS Network Architecture and Linux Packet Processing Performance**.
+- Comparison: VPC Peering (`10.2.1.10`) versus Transit Gateway (`10.2.2.10`).
+- Tools: `sockperf ping-pong --tcp --full-rtt` and Linux `ping`.
+- Metrics: per-run RTT P50/P95/P99, ping jitter/mdev, and packet loss.
+- Primary effect: paired per-run P99 delta, TGW minus Peering, with a run-level bootstrap confidence interval.
+- Limitation: two target hosts are required for deterministic symmetric route tables. Host and path change together; the result cannot identify a pure TGW causal effect.
 
-| RQ | Biến độc lập | Primary endpoint | Chỉ số bổ sung | Testcase |
-|---|---|---|---|---|
-| RQ1: Peering và TGW ảnh hưởng thế nào đến tail latency? | Path = Peering/TGW | Paired delta P99 RTT theo independent run | P50, P95, jitter, loss, CPU, NET_RX | TC-01 |
-| RQ2: MTU 1500/9001 ảnh hưởng thế nào khi số TCP stream tăng? | MTU × streams = `{1500,9001}` × `{1,4,8}` | Throughput và SoftIRQ theo từng mức stream | PPS, CPU, retransmit, ENA counters | TC-02 |
-| RQ3: PrivateLink đổi bao nhiêu hiệu năng để lấy service isolation? | Direct/PrivateLink tới **cùng backend** | Paired delta P99 RTT | Throughput, CPU, chi phí | TC-03P |
-| RQ4: XDP duy trì legitimate service tốt hơn iptables tới ngưỡng tải nào? | Filter × offered-load stage | Saturation point theo legitimate-flow SLO | achieved TX/RX PPS, filter drop, CPU, SoftIRQ, P50/P95/P99 | TC-04 |
+### TC02 — MTU × streams
 
-Overlapping CIDR là **TC-03F functional architecture validation** riêng. Nó chứng minh khả năng kết nối/cô lập, không được gộp vào ước lượng hiệu năng TC-03P.
+- Fixed path/DUT: client to server-b1 through VPC Peering.
+- Factorial cells: MTU `{1500, 9001}` × parallel TCP streams `{1, 4, 8}`.
+- Tools: `iperf3`, `ethtool -S`, `/proc/stat`, `/proc/softirqs`.
+- Metrics: received throughput, retransmits, ENA RX/TX packets per second, DUT total CPU, and DUT SoftIRQ CPU.
+- Primary effects: paired per-run MTU 9001 minus 1500 deltas within each stream count.
 
-## 2. Giả thuyết và quy tắc quyết định đăng ký trước
+### TC03 — packet-processing saturation
 
-- H1: TGW có paired P99 RTT cao hơn Peering trong cùng block/run.
-- H2: MTU 9001 giảm packet-processing overhead; hiệu ứng phải báo cáo riêng cho P1, P4 và P8, không gộp các mức stream.
-- H3: PrivateLink có overhead P99/throughput so với direct path tới cùng EC2 backend; khuyến nghị phải cân cùng isolation và chi phí.
-- H4: XDP có saturation point cao hơn iptables khi bảo vệ cùng UDP port trên cùng DUT.
+- Fixed path/DUT: client to server-b1 through VPC Peering, MTU 1500.
+- Conditions: UDP/5201 `iptables INPUT DROP` versus XDP_DROP attached in native/driver mode to ENA.
+- Offered-load stages: 100k, 250k, 500k, 750k, 1M, and 1.5M target PPS.
+- Concurrent legitimate-flow probe: TCP sockperf on port 5202.
+- Metrics: target PPS, iperf sender-achieved PPS, DUT ENA RX PPS, total CPU, SoftIRQ CPU, legitimate-flow P50/P95/P99, and loss.
 
-Saturation của TC-04 là **mức offered load nhỏ nhất** mà ít nhất một điều kiện dưới đây vi phạm trong toàn cửa sổ đo:
+The first stage violating any registered SLO is the saturation point:
 
-- loss của **legitimate probe** lớn hơn `1%`; hoặc
-- P99 của legitimate probe lớn hơn `5 ms`; hoặc
-- CPU tổng lớn hơn `90%` sustained.
+- legitimate-flow loss greater than 1%; or
+- legitimate-flow P99 greater than 5 ms; or
+- DUT total CPU greater than 90%.
 
-`filter_drop_pps` của attack traffic không phải packet loss và không được thay cho legitimate-flow loss. Nếu một stage không đạt offered load, phải báo achieved load; không được gắn nhãn stage bằng target PPS rồi coi đó là PPS thực tế.
+Maximum sustainable PPS is the largest achieved stage strictly before the first violation. If the first 100k stage violates an SLO, maximum sustainable PPS is censored below 100k and recorded as null, not zero. If no stage violates an SLO, the value is right-censored above the largest measured stage.
 
-## 3. Experimental unit, replication và randomization
+Every XDP stage must contain positive evidence from `ethtool -i`, `ip -details link`, `bpftool net`, and `bpftool prog` including an XDP program ID/tag. `xdpgeneric` or missing evidence invalidates the run.
 
-- Đơn vị độc lập là **run**, không phải packet/interval.
-- `validation` và `pilot`: N=3 để bắt lỗi công cụ/dữ liệu; không dùng làm kết luận cuối.
-- `final`: N≥10; ưu tiên 20–30 nếu ngân sách cho phép.
-- Mỗi run là một block. Condition order dùng seed lưu trong run manifest.
-- TC-01 hiện có hai target host. Host identity/assignment phải được lưu như một confounder; fixed host/path pairing không đủ để ước lượng block effect. Không tuyên bố “route là biến duy nhất” nếu chưa hoán đổi host-path cân bằng hoặc dùng cùng target.
-- TC-02 randomize toàn bộ 6 cell MTU × streams. TC-04 giữ load stages tăng dần nhưng randomize iptables/XDP trong từng stage.
+## Run design
 
-Schedule có thể review offline bằng:
+- Pilot: 3 independent runs.
+- Final: 10 independent runs, allowed only after explicit pilot acceptance.
+- Warmup: 10 s; measurement: 30 s; cooldown: 15 s.
+- TC01 condition order and all six TC02 cells are randomized within each run.
+- TC03 load stages increase monotonically for safety and saturation detection; iptables/XDP order is randomized within each stage.
+- Early stop is allowed only after the first registered saturation violation for that condition. The analyzer requires a complete prefix of configured load stages.
 
-```bash
-bash scripts/benchmark_runner.sh --plan-only --profile final --experiment-id review-final
-```
+The independent statistical unit is one run. The primary inference is paired run-level bootstrap with 10,000 resamples. Observations within a run are not presented as independent replicates.
 
-File plan ghi `aws_verified=false`, `empirical=false` và không gọi AWS.
+## Environment controls
 
-## 4. Lifecycle mỗi phép đo
+- Account must equal the Terraform allowlist.
+- All three instances: same resolved AL2023 AMI, `c6i.large`, `us-east-1a`, ENA.
+- CPU count, kernel, AMI, driver/version, offloads, congestion control, IRQ information, tool versions, instance IDs, MACs, routes, and configuration hash are recorded.
+- VPC CIDRs do not overlap: `10.1.0.0/16` and `10.2.0.0/16`.
+- Dedicated TGW attachment subnets: `10.1.255.0/28` and `10.2.255.0/28`.
+- Explicit TGW route table: flat connectivity only between the two experiment VPC attachments.
+- No SSH. SSM is the sole control plane.
+
+## Preflight acceptance
+
+Preflight runs on the EC2 client and must verify:
+
+1. caller account and client IMDS identity;
+2. Region, AZ, AMI, type, state, and identity of all instances;
+3. SSM Online state for all instances;
+4. active symmetric Peering/TGW routes and exact server security-group ports;
+5. bootstrap markers, tools, daemons, ICMP/TCP reachability;
+6. DF jumbo-frame probes at MTU 9001 over both paths;
+7. ENA on client/DUT and a load/unload native-XDP capability test.
+
+Any failure stops collection.
+
+## Artifact and analysis contract
 
 ```text
-Prepare → Warmup 10s → Snapshot Before → Measurement 30s → Snapshot After → Cooldown 15s
+results/mode_b/<experiment_id>/
+  run_001..run_N/
+    manifest.json
+    environment.json
+    experiment.yaml
+    commands/
+    tc01/ tc02/ tc03/
+    checksums.sha256
+  summary/mode_b_summary.json
+  graphs/
 ```
 
-Thời lượng lấy từ [`experiment.yaml`](../experiment.yaml). Mode B từ chối measurement dưới 30 giây. Không đổi instance type, AMI, kernel, offload, congestion control hoặc experiment config giữa các run, trừ khi đó là biến độc lập đã đăng ký.
+Run directories are immutable and may not be overwritten. The analyzer accepts only `data_mode=empirical_aws`, `empirical=true`, finalized manifests, complete cells, identical config snapshots, valid target identities, native-XDP evidence, and full checksum coverage.
 
-## 5. Metadata và raw evidence bắt buộc
-
-Mỗi run nằm dưới `results/mode_b/<experiment_id>/run_NNN/` và phải có:
-
-- `experiment.yaml`, `manifest.json`, `environment.json`;
-- Region/AZ, instance ID/type, AMI, kernel, ENA driver/version, CPU/RAM;
-- interface/MTU, congestion control, IRQ affinity, GRO/GSO/TSO;
-- tool versions, Git commit, seed, order, block ID và host/path identity;
-- raw command output, SSM invocation stdout/stderr, before/after SoftIRQ, ENA, iptables và XDP-map evidence;
-- `checksums.sha256` tạo **sau cùng**.
-
-`manage_run_artifacts.py finalize` niêm phong run; `verify` từ chối digest sai, entry trùng, đường dẫn tuyệt đối/`..`, symlink và raw artifact không được khai báo.
-
-## 6. Preflight và fail-closed policy
-
-Offline scope chỉ kiểm config/source/Terraform format và phải ghi `aws_verified=false`. AWS scope phải được gọi rõ:
-
-```bash
-bash scripts/preflight_check.sh --scope aws \
-  --profile pilot --dut-instance-id i-0123456789abcdef0
-```
-
-Runner không chạy ngầm: bắt buộc chọn `--plan-only` hoặc `--execute`. Khi chạy AWS, target IP và instance ID phải lấy từ `terraform output`; repo không cung cấp endpoint IP giả. Bất kỳ preflight check bắt buộc nào fail thì **không benchmark**.
-
-## 7. Phân tích và điều kiện được phép kết luận
-
-Mode A tiếp tục dùng `scripts/analyze_results.py` và bộ checksum hiện hữu. Mode B là schema run-tree riêng; không được đưa run live vào parser Mode A.
-
-Mỗi endpoint Mode B phải báo:
-
-- N independent runs và missing/excluded runs;
-- observed paired run-level estimate;
-- 95% run-aware bootstrap CI và effect size;
-- P50/P95/P99 mô tả; pooled-observation tests chỉ được ghi exploratory;
-- practical impact, cost snapshot date và giới hạn hiệu lực.
-
-Với artifact hiện tại, `sockperf` lưu summary P50/P95/P99 theo run chứ chưa lưu toàn bộ observations bên trong run. Vì vậy `scripts/analyze_mode_b.py` đăng ký phương pháp chính là **paired run-level bootstrap**. Thuật ngữ **hierarchical bootstrap** chỉ được dùng cho pipeline Mode A có cả hai tầng `run → observation`; Mode B chỉ được đổi sang thuật ngữ đó sau khi raw within-run observations được thu và tầng observation được resample thật sự.
-
-TC-01 dùng hai backend khác nhau trong topology hiện tại. Target identity bắt buộc xuất hiện trong manifest; analyzer chỉ cho phép claim về **path configuration conditional on host assignment**. Muốn nhận diện causal route effect phải chuyển sang cùng backend hoặc crossover host-path cân bằng.
-
-Repo chỉ chuyển trạng thái từ methodology prototype sang empirical study sau khi: AWS preflight PASS, N final đạt cấu hình, mọi run checksum PASS, không thiếu design cell, analyzer Mode B tái lập summary/graphs và evidence review xác nhận không có environment drift ngoài biến đã đăng ký.
-
-## 8. Threats to validity đăng ký trước
-
-- Một Region và một họ kernel/AMI;
-- số instance type hạn chế;
-- shared-cloud/noisy-neighbor và host placement;
-- không có DPDK, multi-Region hoặc nhiều congestion-control algorithms;
-- offered load có thể khác achieved load;
-- N=10–30 giới hạn khả năng khái quát.
-
-Những giới hạn này phải xuất hiện trong báo cáo cuối, kể cả khi kết quả thuận lợi.
+Final execution also produces `results/final_summary.json` and the four registered PNGs. Synthetic Mode A/local traffic can never satisfy this contract.

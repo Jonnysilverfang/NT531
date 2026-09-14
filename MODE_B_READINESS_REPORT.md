@@ -1,37 +1,37 @@
-# Báo cáo readiness Mode B
+# Mode B Readiness Report
 
-## Kết luận hiện tại
+Updated: 2026-09-14.
 
-**OFFLINE FRAMEWORK GATE: PASS sau khi chạy quality gate. AWS EXECUTION: CHƯA XÁC MINH.**
+## Outcome
 
-Repo có framework thu thập và phân tích Mode B, nhưng chưa có bằng chứng `terraform apply`, AWS preflight, pilot hay final run trong checkout. Vì vậy không được gọi trạng thái hiện tại là “AWS ready” hoặc “empirical study complete”.
+The local implementation has passed Python/unit and Terraform syntax/graph checks, but AWS execution is blocked before apply. There are no empirical results.
 
-## Các điểm đã khóa trong mã nguồn
+## Completed
 
-- TC-04 tính tổng CPU busy và SoftIRQ từ delta hai snapshot `/proc/stat` trong cùng measurement window.
-- Saturation evaluator fail-closed khi thiếu probe, CPU delta hoặc iperf3 sender summary.
-- Target PPS và achieved PPS là hai trường riêng; achieved PPS lấy từ số packet/thời lượng sender thực tế.
-- Analyzer Mode B có bốn nhánh `analyze_tc01()` đến `analyze_tc04()` và một schema `mode_b_summary.json` thống nhất.
-- Analyzer từ chối checksum sai, thiếu run/cell, config drift, TC-03 khác backend và chuỗi TC-04 không phải prefix hợp lệ đến saturation.
-- Mode B dùng `paired_run_level_bootstrap`. Repo không gọi đây là hierarchical bootstrap vì artifact Mode B hiện chỉ có summary theo run.
-- TC-01 ghi host/path assignment. Với topology hai backend hiện tại, claim bị giới hạn ở association có điều kiện theo host assignment.
-- Local emulation được gắn `empirical=false`; analyzer empirical không chấp nhận nó.
+- [x] Pre-change implementation audit.
+- [x] Active contract reduced to TC01/TC02/TC03.
+- [x] Region/AZ pinned to `us-east-1` / `us-east-1a`.
+- [x] Terraform reduced to two VPCs, Peering, TGW, three identical instances, dedicated TGW attachment subnets, split client/DUT IAM, no SSH, encrypted artifacts/flow logs.
+- [x] Client-only benchmark origin and SSM controller implemented.
+- [x] Preflight expanded for account/identity/SSM/routes/ports/MTU/ENA/native-XDP.
+- [x] Analyzer includes TC01 jitter/loss, TC02 ENA PPS/retransmits, TC03 maximum sustainable PPS and per-stage native-XDP evidence.
+- [x] Terraform 1.16.2 installed; `fmt`, `init`, `validate`, and read-only `plan` pass.
+- [x] Offline unit suite: 36/36 pass at this checkpoint.
 
-## Gate còn mở
+## Blocking gates
 
-- [ ] Quyết định thiết kế causal cho TC-01: cùng backend hoặc crossover host-path cân bằng.
-- [ ] Tách TC-03F functional validation khỏi TC-03P performance nếu phần overlapping CIDR được đưa vào báo cáo.
-- [ ] `terraform validate` và plan-only phải PASS trong môi trường có Terraform/Bash phù hợp.
-- [ ] AWS preflight phải PASS trên inventory thật.
-- [ ] Pilot N=3 phải hoàn tất, checksum và completeness gate PASS.
-- [ ] Final N≥10 phải hoàn tất trước kết luận empirical.
-- [ ] Báo cáo/biểu đồ Mode B phải được sinh lại từ artifact đã niêm phong.
+- [ ] Confirm flat two-spoke TGW connectivity intent (or provide a different segmentation model).
+- [ ] Authenticate Terraform/controller with an assumed role or IAM Identity Center session. Current discovered principal is IAM user `kien1`; apply is refused.
+- [ ] Review the 56-create Terraform plan and billable resources.
 
-## Lệnh kiểm tra offline
+## Not executed
 
-```bash
-uv run --no-cache --python 3.12 python scripts/run_quality_gate.py
-bash scripts/benchmark_runner.sh --plan-only --profile final --experiment-id review-final
-```
+- [ ] `terraform apply`.
+- [ ] AWS preflight PASS.
+- [ ] Pilot N=3 and explicit acceptance.
+- [ ] Final N=10.
+- [ ] `results/final_summary.json` from real AWS data.
+- [ ] Four final PNG graphs.
+- [ ] Evidence-backed final findings and recommendations.
 
-Hai lệnh này không deploy AWS. Không chạy `terraform apply` hoặc `--execute` trong phạm vi audit offline.
+Current verdict: **implementation ready for gated deployment, empirical study incomplete**.

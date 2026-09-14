@@ -57,7 +57,7 @@ Tài liệu này đúc kết 10 bài toán kiến trúc mạng kinh điển, th�
 
 ### Bài Toán 4: Tối Ưu Chi Phí Truyền Hàng Chục Terabyte Dữ Liệu (VPC Peering vs TGW vs PrivateLink)
 
-- **Đề bài thực tế**: Một ứng dụng Data Lake cần truyền tải 50 Terabyte (50,000 GB) dữ liệu mỗi tháng từ VPC nguồn sang VPC đích trong cùng Region Sydney. Kiến trúc sư cần lựa chọn giải pháp có chi phí thấp nhất và độ trễ thấp nhất.
+- **Đề bài thực tế**: Một ứng dụng Data Lake cần truyền tải 50 Terabyte (50,000 GB) dữ liệu mỗi tháng từ VPC nguồn sang VPC đích trong cùng Region N. Virginia. Kiến trúc sư cần lựa chọn giải pháp có chi phí thấp nhất và độ trễ thấp nhất.
 - **Phân tích so sánh chi phí dữ liệu**:
   1. **Phương án Transit Gateway**:
      - Phí xử lý dữ liệu: $50,000\text{ GB} \times \$0.02/\text{GB} = \mathbf{\$1,000 / \text{tháng}}$ (Chưa kể phí attachment $0.05/giờ).

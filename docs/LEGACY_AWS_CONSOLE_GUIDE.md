@@ -1,17 +1,20 @@
 # HƯỚNG DẪN TRIỂN KHAI CHI TIẾT TRÊN GIAO DIỆN AWS CONSOLE
-## REGION: SYDNEY (`ap-southeast-2`)
 
-Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-click) trên giao diện đồ họa **AWS Management Console** tại Region **Sydney (`ap-southeast-2`)** để thiết lập toàn bộ môi trường thực nghiệm đánh giá hiệu năng mạng đa kiến trúc.
+> **Legacy Mode A architecture guide — not an active Mode B deployment procedure.** It contains the former PrivateLink/placement-group design. Use Terraform plus `scripts/aws_controller.ps1` for the registered three-test experiment.
+
+## REGION: N. VIRGINIA (`us-east-1`)
+
+Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-click) trên giao diện đồ họa **AWS Management Console** tại Region **N. Virginia (`us-east-1`)** để thiết lập toàn bộ môi trường thực nghiệm đánh giá hiệu năng mạng đa kiến trúc.
 
 ---
 
-## BƯỚC 1: XÁC THỰC VÀ CHUYỂN VÙNG VỀ SYDNEY
+## BƯỚC 1: XÁC THỰC VÀ CHUYỂN VÙNG VỀ N. VIRGINIA
 
 1. Đăng nhập vào **AWS Management Console**.
 2. Nhìn lên thanh điều hướng trên cùng (top navigation bar), góc bên phải cạnh tên tài khoản của bạn:
    - Nhấp vào menu đổ xuống chọn **Region**.
-   - Tìm và chọn **Asia Pacific (Sydney) `ap-southeast-2`**.
-   - *Kiểm tra*: Đảm bảo thanh địa chỉ hiển thị mã vùng `ap-southeast-2` trên URL (ví dụ: `https://ap-southeast-2.console.aws.amazon.com/...`).
+   - Tìm và chọn **Asia Pacific (N. Virginia) `us-east-1`**.
+   - *Kiểm tra*: Đảm bảo thanh địa chỉ hiển thị mã vùng `us-east-1` trên URL (ví dụ: `https://us-east-1.console.aws.amazon.com/...`).
 
 ---
 
@@ -34,11 +37,11 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
 2. Trường **VPC ID**: Chọn `VPC-A-Client` từ danh sách đổ xuống.
 3. **Cấu hình Subnet 1 (AZ-a)**:
    - **Subnet name**: Nhập `Subnet-A1-AZ-a`.
-   - **Availability Zone**: Chọn **ap-southeast-2a**.
+   - **Availability Zone**: Chọn **us-east-1a**.
    - **IPv4 subnet CIDR block**: Nhập `10.1.1.0/24`.
 4. Nhấp nút **Add new subnet** phía dưới để thêm Subnet 2:
    - **Subnet name**: Nhập `Subnet-A2-AZ-b`.
-   - **Availability Zone**: Chọn **ap-southeast-2b**.
+   - **Availability Zone**: Chọn **us-east-1b**.
    - **IPv4 subnet CIDR block**: Nhập `10.1.2.0/24`.
 5. Nhấp nút màu cam **Create subnet**.
 
@@ -56,11 +59,11 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
    - **VPC ID**: Chọn `VPC-B-Target`.
    - **Subnet 1**:
      - **Subnet name**: `Subnet-B1-AZ-a`.
-     - **Availability Zone**: **ap-southeast-2a**.
+     - **Availability Zone**: **us-east-1a**.
      - **IPv4 subnet CIDR block**: `10.2.1.0/24`.
    - Nhấp **Add new subnet**:
      - **Subnet name**: `Subnet-B2-AZ-b`.
-     - **Availability Zone**: **ap-southeast-2b**.
+     - **Availability Zone**: **us-east-1b**.
      - **IPv4 subnet CIDR block**: `10.2.2.0/24`.
 2. Nhấp nút màu cam **Create subnet**.
 
@@ -75,7 +78,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
 3. Tạo 1 Subnet cho VPC Shared:
    - **VPC ID**: Chọn `VPC-Shared-Provider`.
    - **Subnet name**: `Subnet-Shared-AZ-a`.
-   - **Availability Zone**: **ap-southeast-2a**.
+   - **Availability Zone**: **us-east-1a**.
    - **IPv4 CIDR block**: `10.3.1.0/24`.
 4. Nhấp **Create subnet**.
 
@@ -106,7 +109,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
    - **VPC ID (Requester)**: Chọn `VPC-A-Client`.
    - **Select another VPC to peer with**:
      - **Account**: Chọn radio button **My account**.
-     - **Region**: Chọn radio button **This region (ap-southeast-2)**.
+     - **Region**: Chọn radio button **This region (us-east-1)**.
    - **VPC ID (Accepter)**: Chọn `VPC-B-Target`.
 3. Nhấp nút màu cam **Create peering connection**.
 4. Chấp nhận kết nối Peering:
@@ -168,7 +171,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
    - **Scheme**: Chọn radio button **Internal** (cực kỳ quan trọng!).
    - **IP address type**: **IPv4**.
    - **VPC**: Chọn `VPC-Shared-Provider`.
-   - **Mappings**: Tích chọn Availability Zone **ap-southeast-2a** và chọn subnet `Subnet-Shared-AZ-a`.
+   - **Mappings**: Tích chọn Availability Zone **us-east-1a** và chọn subnet `Subnet-Shared-AZ-a`.
 4. **Listeners and routing**:
    - **Protocol**: Chọn **TCP**, **Port**: `5201` (Cổng mặc định của iperf3).
    - Tạo Target Group: Nhấp liên kết **Create target group**:
@@ -187,7 +190,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
    - **Load balancer type**: Chọn **Network**.
    - **Available load balancers**: Chọn `NLB-PrivateLink-Benchmark`.
    - **Require acceptance for endpoint**: Bỏ tích (Uncheck để tự động chấp thuận kết nối).
-3. Nhấp **Create**. Sau khi tạo xong, sao chép giá trị **Service name** (dạng `com.amazonaws.vpce.ap-southeast-2.vpce-svc-xxxxxxxxxxxxxxxxx`).
+3. Nhấp **Create**. Sau khi tạo xong, sao chép giá trị **Service name** (dạng `com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxxxxxxxxxxx`).
 
 ### 6.3. Tạo Interface VPC Endpoint trong VPC A
 1. Tại menu bên trái của VPC Console, chọn **Endpoints** -> Nhấp **Create endpoint**:
@@ -195,7 +198,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
    - **Service category**: Chọn radio button **Other endpoint services**.
    - **Service name**: Dán chuỗi Service name vừa sao chép ở trên vào -> Nhấp nút **Verify service**. (Hiện dòng chữ màu xanh lá cây xác thực thành công).
    - **VPC**: Chọn `VPC-A-Client`.
-   - **Subnets**: Chọn Availability Zone **ap-southeast-2a** và subnet `Subnet-A1-AZ-a`.
+   - **Subnets**: Chọn Availability Zone **us-east-1a** và subnet `Subnet-A1-AZ-a`.
    - **Security groups**: Chọn security group cho phép port 5201 inbound.
 2. Nhấp nút màu cam **Create endpoint**. Lúc này endpoint sẽ nhận được một địa chỉ IP nội bộ thuộc dải `10.1.1.0/24`.
 
@@ -204,7 +207,7 @@ Tài liệu này hướng dẫn chi tiết từng cú nhấp chuột (click-by-c
 ## BƯỚC 7: TẠO CLUSTER PLACEMENT GROUP & KHỞI TẠO EC2 INSTANCES
 
 ### 7.1. Tạo Cluster Placement Group
-1. Vào dịch vụ **EC2 Console** tại Sydney (`ap-southeast-2`).
+1. Vào dịch vụ **EC2 Console** tại N. Virginia (`us-east-1`).
 2. Tại menu bên trái, cuộn xuống mục **Network & Security** -> Chọn **Placement Groups**.
 3. Nhấp nút màu cam **Create placement group**:
    - **Name**: `PG-Cluster-LowLatency`.

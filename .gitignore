@@ -11,3 +11,14 @@ terraform/crash.*.log
 # Controller scratch archives are reproducible from their retained evidence.
 results/mode_b/controller/*/runtime.tar.gz
 results/mode_b/controller/*.tar.gz
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+*.pem
+.env
+.env.*
+crash.log
+tmp/

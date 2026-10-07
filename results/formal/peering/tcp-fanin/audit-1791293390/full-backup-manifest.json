@@ -1,0 +1,30 @@
+[
+  {
+    "node": "a",
+    "folder": "results\\formal\\peering\\tcp-fanin\\A\\peering-tcp-fanin-a-1791293390-RyXrAo",
+    "files": 47,
+    "archive_sha256": "4c3412d32d1090a9d920c362bec2c9e214822a26609e7bf51af44f92ded1359c",
+    "archive_bytes": 35842
+  },
+  {
+    "node": "b",
+    "folder": "results\\formal\\peering\\tcp-fanin\\B\\peering-tcp-fanin-b-1791293390-MsjotI",
+    "files": 5,
+    "archive_sha256": "b3c875a262c9f4270f31e8fdb80d67b22714197b3af10cdb788dd0f2fc5e7814",
+    "archive_bytes": 13044
+  },
+  {
+    "node": "c",
+    "folder": "results\\formal\\peering\\tcp-fanin\\C\\peering-tcp-fanin-c-1791293390-P5LLrh",
+    "files": 47,
+    "archive_sha256": "3dac5e730770825840086f3f45942431ac0d82f6dd8df2a94cf0c6560259bf53",
+    "archive_bytes": 36363
+  },
+  {
+    "node": "d",
+    "folder": "results\\formal\\peering\\tcp-fanin\\D\\peering-tcp-fanin-d-1791293390-DcwPRL",
+    "files": 47,
+    "archive_sha256": "482f888f02a1fc5570a95fec2da30caee59807b4a5409e8a09debda9de7c5ea0",
+    "archive_bytes": 35650
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "docx": "docs/13-chuong-ket-qua.docx",
+  "sha256": "10fabe9fb2125a603cc4067ce947e6675dca4f454e11ac02f3b214146fd44cfd",
+  "renderer": "Microsoft Word 16.0",
+  "pages": 19,
+  "all_pages_visually_inspected": true,
+  "charts": 4,
+  "checked_utc": "2026-10-06T15:35:38.057771+00:00",
+  "fallback_reason": "render_docx.py unavailable because LibreOffice soffice.exe not installed; Word PDF export plus pdf2image used",
+  "architecture_diagrams": 3,
+  "editable_equations": 18,
+  "original_15_page_body_preserved": true,
+  "added_sections": [
+    "Beginner concepts",
+    "Bounded comparative conclusions",
+    "Proposed completion plan through 2026-10-26"
+  ]
+}

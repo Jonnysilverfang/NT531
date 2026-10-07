@@ -1,0 +1,86 @@
+[
+  {
+    "address": "aws_route.a_to_b",
+    "table": "rtb-0eb842ec2e5c1d6e8",
+    "cidr": "10.20.0.0/16",
+    "from": "pcx-0d52503115f5644b6",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.b_to_a",
+    "table": "rtb-0930c358cc8dcfe25",
+    "cidr": "10.10.0.0/16",
+    "from": "pcx-0d52503115f5644b6",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"a_c\"]",
+    "table": "rtb-0eb842ec2e5c1d6e8",
+    "cidr": "10.30.0.0/16",
+    "from": "pcx-0ca632e04a3aaffe3",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"a_d\"]",
+    "table": "rtb-0eb842ec2e5c1d6e8",
+    "cidr": "10.40.0.0/16",
+    "from": "pcx-0e62a059e8fb327ba",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"b_c\"]",
+    "table": "rtb-0930c358cc8dcfe25",
+    "cidr": "10.30.0.0/16",
+    "from": "pcx-02c1dcc715c555d3f",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"b_d\"]",
+    "table": "rtb-0930c358cc8dcfe25",
+    "cidr": "10.40.0.0/16",
+    "from": "pcx-0e8e16d12ab06dd36",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"c_a\"]",
+    "table": "rtb-045ff335d6160bffa",
+    "cidr": "10.10.0.0/16",
+    "from": "pcx-0ca632e04a3aaffe3",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"c_b\"]",
+    "table": "rtb-045ff335d6160bffa",
+    "cidr": "10.20.0.0/16",
+    "from": "pcx-02c1dcc715c555d3f",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"d_a\"]",
+    "table": "rtb-07bb4237be663c475",
+    "cidr": "10.10.0.0/16",
+    "from": "pcx-0e62a059e8fb327ba",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.cross[\"d_b\"]",
+    "table": "rtb-07bb4237be663c475",
+    "cidr": "10.20.0.0/16",
+    "from": "pcx-0e8e16d12ab06dd36",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.extra_to_peer[\"c\"]",
+    "table": "rtb-045ff335d6160bffa",
+    "cidr": "10.40.0.0/16",
+    "from": "pcx-0a24d4789cb038b1c",
+    "to": "tgw-0082ff0dfd6e325c9"
+  },
+  {
+    "address": "aws_route.extra_to_peer[\"d\"]",
+    "table": "rtb-07bb4237be663c475",
+    "cidr": "10.30.0.0/16",
+    "from": "pcx-0a24d4789cb038b1c",
+    "to": "tgw-0082ff0dfd6e325c9"
+  }
+]

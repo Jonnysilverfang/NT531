@@ -1,0 +1,10 @@
+Sun Oct  4 05:28:35 UTC 2026
+ip-10-10-10-212.ec2.internal
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 02:ff:f9:a4:77:bb brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-08c2866aa52fb3c11
+    altname device-number-0.0
+iperf 3.19.1 (cJSON 1.7.15)
+Linux ip-10-10-10-212.ec2.internal 6.18.51-120.163.amzn2023.x86_64 #2 SMP PREEMPT_DYNAMIC Fri Sep 25 01:45:40 UTC 2026 x86_64
+Optional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads

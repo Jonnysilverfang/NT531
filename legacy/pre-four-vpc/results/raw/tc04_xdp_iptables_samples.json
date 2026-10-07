@@ -1,0 +1,1292 @@
+{
+  "test_case": "TC-04",
+  "data_source": "deterministic_synthetic_reference",
+  "name": "XDP native-hook methodology model vs iptables under UDP load",
+  "roles": {
+    "dut_receiver": "synthetic DUT ingress UDP:5201 and TCP probe:5202",
+    "load_generator": "synthetic 5 Mpps offered load"
+  },
+  "runs": [
+    {
+      "run_id": 1,
+      "iptables_series": [
+        {
+          "second": 1,
+          "softirq_percent": 84.67,
+          "pps_dropped": 1169743,
+          "probe_tcp_p50_ms": 1.832,
+          "probe_tcp_p99_ms": 13.358
+        },
+        {
+          "second": 2,
+          "softirq_percent": 83.83,
+          "pps_dropped": 1142653,
+          "probe_tcp_p50_ms": 2.159,
+          "probe_tcp_p99_ms": 12.085
+        },
+        {
+          "second": 3,
+          "softirq_percent": 84.82,
+          "pps_dropped": 1120631,
+          "probe_tcp_p50_ms": 1.93,
+          "probe_tcp_p99_ms": 13.766
+        },
+        {
+          "second": 4,
+          "softirq_percent": 83.27,
+          "pps_dropped": 1185715,
+          "probe_tcp_p50_ms": 1.518,
+          "probe_tcp_p99_ms": 15.279
+        },
+        {
+          "second": 5,
+          "softirq_percent": 82.82,
+          "pps_dropped": 1135035,
+          "probe_tcp_p50_ms": 1.784,
+          "probe_tcp_p99_ms": 13.226
+        },
+        {
+          "second": 6,
+          "softirq_percent": 82.92,
+          "pps_dropped": 1147919,
+          "probe_tcp_p50_ms": 1.702,
+          "probe_tcp_p99_ms": 14.176
+        },
+        {
+          "second": 7,
+          "softirq_percent": 81.65,
+          "pps_dropped": 1148219,
+          "probe_tcp_p50_ms": 1.901,
+          "probe_tcp_p99_ms": 17.231
+        },
+        {
+          "second": 8,
+          "softirq_percent": 82.97,
+          "pps_dropped": 1134787,
+          "probe_tcp_p50_ms": 1.874,
+          "probe_tcp_p99_ms": 13.645
+        },
+        {
+          "second": 9,
+          "softirq_percent": 85.12,
+          "pps_dropped": 1126407,
+          "probe_tcp_p50_ms": 1.851,
+          "probe_tcp_p99_ms": 12.095
+        },
+        {
+          "second": 10,
+          "softirq_percent": 85.21,
+          "pps_dropped": 1155744,
+          "probe_tcp_p50_ms": 1.959,
+          "probe_tcp_p99_ms": 15.074
+        },
+        {
+          "second": 11,
+          "softirq_percent": 84.97,
+          "pps_dropped": 1168797,
+          "probe_tcp_p50_ms": 1.792,
+          "probe_tcp_p99_ms": 13.203
+        },
+        {
+          "second": 12,
+          "softirq_percent": 84.89,
+          "pps_dropped": 1130929,
+          "probe_tcp_p50_ms": 1.782,
+          "probe_tcp_p99_ms": 11.808
+        },
+        {
+          "second": 13,
+          "softirq_percent": 83.65,
+          "pps_dropped": 1161089,
+          "probe_tcp_p50_ms": 1.943,
+          "probe_tcp_p99_ms": 15.006
+        },
+        {
+          "second": 14,
+          "softirq_percent": 84.89,
+          "pps_dropped": 1137393,
+          "probe_tcp_p50_ms": 1.805,
+          "probe_tcp_p99_ms": 13.522
+        },
+        {
+          "second": 15,
+          "softirq_percent": 85.4,
+          "pps_dropped": 1177131,
+          "probe_tcp_p50_ms": 1.802,
+          "probe_tcp_p99_ms": 14.856
+        },
+        {
+          "second": 16,
+          "softirq_percent": 83.36,
+          "pps_dropped": 1140217,
+          "probe_tcp_p50_ms": 1.498,
+          "probe_tcp_p99_ms": 15.4
+        },
+        {
+          "second": 17,
+          "softirq_percent": 86.4,
+          "pps_dropped": 1173962,
+          "probe_tcp_p50_ms": 1.936,
+          "probe_tcp_p99_ms": 13.226
+        },
+        {
+          "second": 18,
+          "softirq_percent": 83.84,
+          "pps_dropped": 1127606,
+          "probe_tcp_p50_ms": 1.943,
+          "probe_tcp_p99_ms": 14.748
+        },
+        {
+          "second": 19,
+          "softirq_percent": 83.41,
+          "pps_dropped": 1154827,
+          "probe_tcp_p50_ms": 1.912,
+          "probe_tcp_p99_ms": 14.172
+        },
+        {
+          "second": 20,
+          "softirq_percent": 84.74,
+          "pps_dropped": 1144842,
+          "probe_tcp_p50_ms": 1.937,
+          "probe_tcp_p99_ms": 15.838
+        },
+        {
+          "second": 21,
+          "softirq_percent": 85.01,
+          "pps_dropped": 1144156,
+          "probe_tcp_p50_ms": 2.0,
+          "probe_tcp_p99_ms": 13.134
+        },
+        {
+          "second": 22,
+          "softirq_percent": 84.48,
+          "pps_dropped": 1122047,
+          "probe_tcp_p50_ms": 1.856,
+          "probe_tcp_p99_ms": 16.426
+        },
+        {
+          "second": 23,
+          "softirq_percent": 85.36,
+          "pps_dropped": 1208795,
+          "probe_tcp_p50_ms": 1.711,
+          "probe_tcp_p99_ms": 15.622
+        },
+        {
+          "second": 24,
+          "softirq_percent": 83.25,
+          "pps_dropped": 1131760,
+          "probe_tcp_p50_ms": 2.013,
+          "probe_tcp_p99_ms": 15.763
+        },
+        {
+          "second": 25,
+          "softirq_percent": 83.79,
+          "pps_dropped": 1219733,
+          "probe_tcp_p50_ms": 1.61,
+          "probe_tcp_p99_ms": 13.918
+        },
+        {
+          "second": 26,
+          "softirq_percent": 83.59,
+          "pps_dropped": 1118247,
+          "probe_tcp_p50_ms": 1.563,
+          "probe_tcp_p99_ms": 13.774
+        },
+        {
+          "second": 27,
+          "softirq_percent": 83.69,
+          "pps_dropped": 1162817,
+          "probe_tcp_p50_ms": 1.582,
+          "probe_tcp_p99_ms": 15.556
+        },
+        {
+          "second": 28,
+          "softirq_percent": 85.49,
+          "pps_dropped": 1175082,
+          "probe_tcp_p50_ms": 1.62,
+          "probe_tcp_p99_ms": 11.969
+        },
+        {
+          "second": 29,
+          "softirq_percent": 86.96,
+          "pps_dropped": 1226301,
+          "probe_tcp_p50_ms": 1.712,
+          "probe_tcp_p99_ms": 15.931
+        },
+        {
+          "second": 30,
+          "softirq_percent": 82.39,
+          "pps_dropped": 1135664,
+          "probe_tcp_p50_ms": 1.787,
+          "probe_tcp_p99_ms": 14.683
+        }
+      ],
+      "xdp_series": [
+        {
+          "second": 1,
+          "softirq_percent": 4.27,
+          "pps_dropped": 4966073,
+          "probe_tcp_p50_ms": 0.197,
+          "probe_tcp_p99_ms": 0.392
+        },
+        {
+          "second": 2,
+          "softirq_percent": 4.18,
+          "pps_dropped": 4931353,
+          "probe_tcp_p50_ms": 0.202,
+          "probe_tcp_p99_ms": 0.336
+        },
+        {
+          "second": 3,
+          "softirq_percent": 3.76,
+          "pps_dropped": 4980524,
+          "probe_tcp_p50_ms": 0.212,
+          "probe_tcp_p99_ms": 0.285
+        },
+        {
+          "second": 4,
+          "softirq_percent": 4.08,
+          "pps_dropped": 4905463,
+          "probe_tcp_p50_ms": 0.186,
+          "probe_tcp_p99_ms": 0.318
+        },
+        {
+          "second": 5,
+          "softirq_percent": 4.37,
+          "pps_dropped": 4941267,
+          "probe_tcp_p50_ms": 0.212,
+          "probe_tcp_p99_ms": 0.359
+        },
+        {
+          "second": 6,
+          "softirq_percent": 4.14,
+          "pps_dropped": 4936429,
+          "probe_tcp_p50_ms": 0.189,
+          "probe_tcp_p99_ms": 0.348
+        },
+        {
+          "second": 7,
+          "softirq_percent": 3.91,
+          "pps_dropped": 4917416,
+          "probe_tcp_p50_ms": 0.172,
+          "probe_tcp_p99_ms": 0.362
+        },
+        {
+          "second": 8,
+          "softirq_percent": 4.79,
+          "pps_dropped": 4927733,
+          "probe_tcp_p50_ms": 0.192,
+          "probe_tcp_p99_ms": 0.369
+        },
+        {
+          "second": 9,
+          "softirq_percent": 4.6,
+          "pps_dropped": 4924404,
+          "probe_tcp_p50_ms": 0.176,
+          "probe_tcp_p99_ms": 0.305
+        },
+        {
+          "second": 10,
+          "softirq_percent": 4.54,
+          "pps_dropped": 4931543,
+          "probe_tcp_p50_ms": 0.178,
+          "probe_tcp_p99_ms": 0.36
+        },
+        {
+          "second": 11,
+          "softirq_percent": 4.08,
+          "pps_dropped": 4920707,
+          "probe_tcp_p50_ms": 0.184,
+          "probe_tcp_p99_ms": 0.294
+        },
+        {
+          "second": 12,
+          "softirq_percent": 3.78,
+          "pps_dropped": 4981575,
+          "probe_tcp_p50_ms": 0.194,
+          "probe_tcp_p99_ms": 0.292
+        },
+        {
+          "second": 13,
+          "softirq_percent": 4.11,
+          "pps_dropped": 4939324,
+          "probe_tcp_p50_ms": 0.195,
+          "probe_tcp_p99_ms": 0.388
+        },
+        {
+          "second": 14,
+          "softirq_percent": 4.34,
+          "pps_dropped": 4952852,
+          "probe_tcp_p50_ms": 0.207,
+          "probe_tcp_p99_ms": 0.37
+        },
+        {
+          "second": 15,
+          "softirq_percent": 4.14,
+          "pps_dropped": 4973480,
+          "probe_tcp_p50_ms": 0.198,
+          "probe_tcp_p99_ms": 0.339
+        },
+        {
+          "second": 16,
+          "softirq_percent": 4.06,
+          "pps_dropped": 4956469,
+          "probe_tcp_p50_ms": 0.205,
+          "probe_tcp_p99_ms": 0.348
+        },
+        {
+          "second": 17,
+          "softirq_percent": 4.18,
+          "pps_dropped": 4922592,
+          "probe_tcp_p50_ms": 0.203,
+          "probe_tcp_p99_ms": 0.305
+        },
+        {
+          "second": 18,
+          "softirq_percent": 4.11,
+          "pps_dropped": 4952058,
+          "probe_tcp_p50_ms": 0.21,
+          "probe_tcp_p99_ms": 0.358
+        },
+        {
+          "second": 19,
+          "softirq_percent": 4.15,
+          "pps_dropped": 4985656,
+          "probe_tcp_p50_ms": 0.187,
+          "probe_tcp_p99_ms": 0.362
+        },
+        {
+          "second": 20,
+          "softirq_percent": 4.22,
+          "pps_dropped": 4947688,
+          "probe_tcp_p50_ms": 0.187,
+          "probe_tcp_p99_ms": 0.324
+        },
+        {
+          "second": 21,
+          "softirq_percent": 4.27,
+          "pps_dropped": 4900957,
+          "probe_tcp_p50_ms": 0.205,
+          "probe_tcp_p99_ms": 0.349
+        },
+        {
+          "second": 22,
+          "softirq_percent": 4.25,
+          "pps_dropped": 4968802,
+          "probe_tcp_p50_ms": 0.184,
+          "probe_tcp_p99_ms": 0.309
+        },
+        {
+          "second": 23,
+          "softirq_percent": 4.45,
+          "pps_dropped": 4989346,
+          "probe_tcp_p50_ms": 0.189,
+          "probe_tcp_p99_ms": 0.36
+        },
+        {
+          "second": 24,
+          "softirq_percent": 4.06,
+          "pps_dropped": 4944151,
+          "probe_tcp_p50_ms": 0.202,
+          "probe_tcp_p99_ms": 0.365
+        },
+        {
+          "second": 25,
+          "softirq_percent": 4.3,
+          "pps_dropped": 4943208,
+          "probe_tcp_p50_ms": 0.201,
+          "probe_tcp_p99_ms": 0.321
+        },
+        {
+          "second": 26,
+          "softirq_percent": 4.72,
+          "pps_dropped": 4970080,
+          "probe_tcp_p50_ms": 0.192,
+          "probe_tcp_p99_ms": 0.34
+        },
+        {
+          "second": 27,
+          "softirq_percent": 4.2,
+          "pps_dropped": 4884798,
+          "probe_tcp_p50_ms": 0.203,
+          "probe_tcp_p99_ms": 0.334
+        },
+        {
+          "second": 28,
+          "softirq_percent": 4.32,
+          "pps_dropped": 4922503,
+          "probe_tcp_p50_ms": 0.174,
+          "probe_tcp_p99_ms": 0.396
+        },
+        {
+          "second": 29,
+          "softirq_percent": 3.56,
+          "pps_dropped": 4931644,
+          "probe_tcp_p50_ms": 0.174,
+          "probe_tcp_p99_ms": 0.325
+        },
+        {
+          "second": 30,
+          "softirq_percent": 4.19,
+          "pps_dropped": 4975074,
+          "probe_tcp_p50_ms": 0.201,
+          "probe_tcp_p99_ms": 0.304
+        }
+      ]
+    },
+    {
+      "run_id": 2,
+      "iptables_series": [
+        {
+          "second": 1,
+          "softirq_percent": 83.95,
+          "pps_dropped": 1128231,
+          "probe_tcp_p50_ms": 1.784,
+          "probe_tcp_p99_ms": 13.786
+        },
+        {
+          "second": 2,
+          "softirq_percent": 83.24,
+          "pps_dropped": 1179856,
+          "probe_tcp_p50_ms": 1.811,
+          "probe_tcp_p99_ms": 14.567
+        },
+        {
+          "second": 3,
+          "softirq_percent": 85.5,
+          "pps_dropped": 1180340,
+          "probe_tcp_p50_ms": 1.666,
+          "probe_tcp_p99_ms": 14.173
+        },
+        {
+          "second": 4,
+          "softirq_percent": 84.49,
+          "pps_dropped": 1169340,
+          "probe_tcp_p50_ms": 1.742,
+          "probe_tcp_p99_ms": 14.529
+        },
+        {
+          "second": 5,
+          "softirq_percent": 85.12,
+          "pps_dropped": 1077944,
+          "probe_tcp_p50_ms": 1.849,
+          "probe_tcp_p99_ms": 16.208
+        },
+        {
+          "second": 6,
+          "softirq_percent": 83.77,
+          "pps_dropped": 1154064,
+          "probe_tcp_p50_ms": 1.837,
+          "probe_tcp_p99_ms": 16.999
+        },
+        {
+          "second": 7,
+          "softirq_percent": 84.94,
+          "pps_dropped": 1177387,
+          "probe_tcp_p50_ms": 1.873,
+          "probe_tcp_p99_ms": 15.991
+        },
+        {
+          "second": 8,
+          "softirq_percent": 84.28,
+          "pps_dropped": 1205537,
+          "probe_tcp_p50_ms": 1.639,
+          "probe_tcp_p99_ms": 14.346
+        },
+        {
+          "second": 9,
+          "softirq_percent": 84.16,
+          "pps_dropped": 1163309,
+          "probe_tcp_p50_ms": 2.017,
+          "probe_tcp_p99_ms": 14.586
+        },
+        {
+          "second": 10,
+          "softirq_percent": 83.36,
+          "pps_dropped": 1122026,
+          "probe_tcp_p50_ms": 1.816,
+          "probe_tcp_p99_ms": 15.2
+        },
+        {
+          "second": 11,
+          "softirq_percent": 85.69,
+          "pps_dropped": 1120847,
+          "probe_tcp_p50_ms": 2.121,
+          "probe_tcp_p99_ms": 15.305
+        },
+        {
+          "second": 12,
+          "softirq_percent": 85.16,
+          "pps_dropped": 1093873,
+          "probe_tcp_p50_ms": 1.744,
+          "probe_tcp_p99_ms": 15.397
+        },
+        {
+          "second": 13,
+          "softirq_percent": 85.15,
+          "pps_dropped": 1184946,
+          "probe_tcp_p50_ms": 1.735,
+          "probe_tcp_p99_ms": 14.883
+        },
+        {
+          "second": 14,
+          "softirq_percent": 83.97,
+          "pps_dropped": 1105630,
+          "probe_tcp_p50_ms": 1.915,
+          "probe_tcp_p99_ms": 13.905
+        },
+        {
+          "second": 15,
+          "softirq_percent": 85.28,
+          "pps_dropped": 1192865,
+          "probe_tcp_p50_ms": 1.696,
+          "probe_tcp_p99_ms": 14.115
+        },
+        {
+          "second": 16,
+          "softirq_percent": 86.23,
+          "pps_dropped": 1171571,
+          "probe_tcp_p50_ms": 2.16,
+          "probe_tcp_p99_ms": 12.588
+        },
+        {
+          "second": 17,
+          "softirq_percent": 85.36,
+          "pps_dropped": 1174069,
+          "probe_tcp_p50_ms": 1.753,
+          "probe_tcp_p99_ms": 14.517
+        },
+        {
+          "second": 18,
+          "softirq_percent": 86.41,
+          "pps_dropped": 1161537,
+          "probe_tcp_p50_ms": 1.858,
+          "probe_tcp_p99_ms": 15.976
+        },
+        {
+          "second": 19,
+          "softirq_percent": 84.16,
+          "pps_dropped": 1115696,
+          "probe_tcp_p50_ms": 1.736,
+          "probe_tcp_p99_ms": 14.979
+        },
+        {
+          "second": 20,
+          "softirq_percent": 84.76,
+          "pps_dropped": 1119516,
+          "probe_tcp_p50_ms": 1.952,
+          "probe_tcp_p99_ms": 13.192
+        },
+        {
+          "second": 21,
+          "softirq_percent": 86.08,
+          "pps_dropped": 1135042,
+          "probe_tcp_p50_ms": 1.636,
+          "probe_tcp_p99_ms": 16.161
+        },
+        {
+          "second": 22,
+          "softirq_percent": 84.54,
+          "pps_dropped": 1193752,
+          "probe_tcp_p50_ms": 1.641,
+          "probe_tcp_p99_ms": 12.454
+        },
+        {
+          "second": 23,
+          "softirq_percent": 84.56,
+          "pps_dropped": 1146814,
+          "probe_tcp_p50_ms": 2.047,
+          "probe_tcp_p99_ms": 15.816
+        },
+        {
+          "second": 24,
+          "softirq_percent": 84.44,
+          "pps_dropped": 1205155,
+          "probe_tcp_p50_ms": 1.94,
+          "probe_tcp_p99_ms": 14.025
+        },
+        {
+          "second": 25,
+          "softirq_percent": 86.31,
+          "pps_dropped": 1092452,
+          "probe_tcp_p50_ms": 1.543,
+          "probe_tcp_p99_ms": 14.545
+        },
+        {
+          "second": 26,
+          "softirq_percent": 86.08,
+          "pps_dropped": 1078359,
+          "probe_tcp_p50_ms": 1.786,
+          "probe_tcp_p99_ms": 14.054
+        },
+        {
+          "second": 27,
+          "softirq_percent": 84.03,
+          "pps_dropped": 1186200,
+          "probe_tcp_p50_ms": 1.91,
+          "probe_tcp_p99_ms": 15.647
+        },
+        {
+          "second": 28,
+          "softirq_percent": 84.24,
+          "pps_dropped": 1177897,
+          "probe_tcp_p50_ms": 1.954,
+          "probe_tcp_p99_ms": 14.791
+        },
+        {
+          "second": 29,
+          "softirq_percent": 83.8,
+          "pps_dropped": 1080168,
+          "probe_tcp_p50_ms": 2.269,
+          "probe_tcp_p99_ms": 13.232
+        },
+        {
+          "second": 30,
+          "softirq_percent": 84.91,
+          "pps_dropped": 1127599,
+          "probe_tcp_p50_ms": 2.058,
+          "probe_tcp_p99_ms": 13.674
+        }
+      ],
+      "xdp_series": [
+        {
+          "second": 1,
+          "softirq_percent": 4.48,
+          "pps_dropped": 4951023,
+          "probe_tcp_p50_ms": 0.175,
+          "probe_tcp_p99_ms": 0.317
+        },
+        {
+          "second": 2,
+          "softirq_percent": 4.19,
+          "pps_dropped": 4993543,
+          "probe_tcp_p50_ms": 0.195,
+          "probe_tcp_p99_ms": 0.402
+        },
+        {
+          "second": 3,
+          "softirq_percent": 3.98,
+          "pps_dropped": 4942216,
+          "probe_tcp_p50_ms": 0.207,
+          "probe_tcp_p99_ms": 0.368
+        },
+        {
+          "second": 4,
+          "softirq_percent": 4.18,
+          "pps_dropped": 4945993,
+          "probe_tcp_p50_ms": 0.199,
+          "probe_tcp_p99_ms": 0.358
+        },
+        {
+          "second": 5,
+          "softirq_percent": 3.98,
+          "pps_dropped": 4960351,
+          "probe_tcp_p50_ms": 0.187,
+          "probe_tcp_p99_ms": 0.359
+        },
+        {
+          "second": 6,
+          "softirq_percent": 4.06,
+          "pps_dropped": 4969229,
+          "probe_tcp_p50_ms": 0.197,
+          "probe_tcp_p99_ms": 0.323
+        },
+        {
+          "second": 7,
+          "softirq_percent": 4.48,
+          "pps_dropped": 4935427,
+          "probe_tcp_p50_ms": 0.211,
+          "probe_tcp_p99_ms": 0.393
+        },
+        {
+          "second": 8,
+          "softirq_percent": 3.94,
+          "pps_dropped": 4951482,
+          "probe_tcp_p50_ms": 0.171,
+          "probe_tcp_p99_ms": 0.34
+        },
+        {
+          "second": 9,
+          "softirq_percent": 3.69,
+          "pps_dropped": 4960116,
+          "probe_tcp_p50_ms": 0.176,
+          "probe_tcp_p99_ms": 0.316
+        },
+        {
+          "second": 10,
+          "softirq_percent": 4.21,
+          "pps_dropped": 4969198,
+          "probe_tcp_p50_ms": 0.191,
+          "probe_tcp_p99_ms": 0.327
+        },
+        {
+          "second": 11,
+          "softirq_percent": 4.67,
+          "pps_dropped": 4963882,
+          "probe_tcp_p50_ms": 0.189,
+          "probe_tcp_p99_ms": 0.339
+        },
+        {
+          "second": 12,
+          "softirq_percent": 3.92,
+          "pps_dropped": 4980860,
+          "probe_tcp_p50_ms": 0.188,
+          "probe_tcp_p99_ms": 0.347
+        },
+        {
+          "second": 13,
+          "softirq_percent": 4.63,
+          "pps_dropped": 4960582,
+          "probe_tcp_p50_ms": 0.182,
+          "probe_tcp_p99_ms": 0.385
+        },
+        {
+          "second": 14,
+          "softirq_percent": 4.34,
+          "pps_dropped": 4926054,
+          "probe_tcp_p50_ms": 0.187,
+          "probe_tcp_p99_ms": 0.318
+        },
+        {
+          "second": 15,
+          "softirq_percent": 4.49,
+          "pps_dropped": 4955476,
+          "probe_tcp_p50_ms": 0.18,
+          "probe_tcp_p99_ms": 0.378
+        },
+        {
+          "second": 16,
+          "softirq_percent": 4.15,
+          "pps_dropped": 4981965,
+          "probe_tcp_p50_ms": 0.201,
+          "probe_tcp_p99_ms": 0.357
+        },
+        {
+          "second": 17,
+          "softirq_percent": 4.16,
+          "pps_dropped": 4961975,
+          "probe_tcp_p50_ms": 0.175,
+          "probe_tcp_p99_ms": 0.339
+        },
+        {
+          "second": 18,
+          "softirq_percent": 4.64,
+          "pps_dropped": 4968961,
+          "probe_tcp_p50_ms": 0.182,
+          "probe_tcp_p99_ms": 0.335
+        },
+        {
+          "second": 19,
+          "softirq_percent": 3.83,
+          "pps_dropped": 4924067,
+          "probe_tcp_p50_ms": 0.169,
+          "probe_tcp_p99_ms": 0.396
+        },
+        {
+          "second": 20,
+          "softirq_percent": 4.27,
+          "pps_dropped": 4940234,
+          "probe_tcp_p50_ms": 0.181,
+          "probe_tcp_p99_ms": 0.373
+        },
+        {
+          "second": 21,
+          "softirq_percent": 4.74,
+          "pps_dropped": 4942340,
+          "probe_tcp_p50_ms": 0.176,
+          "probe_tcp_p99_ms": 0.346
+        },
+        {
+          "second": 22,
+          "softirq_percent": 4.5,
+          "pps_dropped": 4944559,
+          "probe_tcp_p50_ms": 0.244,
+          "probe_tcp_p99_ms": 0.348
+        },
+        {
+          "second": 23,
+          "softirq_percent": 4.64,
+          "pps_dropped": 4979791,
+          "probe_tcp_p50_ms": 0.188,
+          "probe_tcp_p99_ms": 0.356
+        },
+        {
+          "second": 24,
+          "softirq_percent": 3.99,
+          "pps_dropped": 4972441,
+          "probe_tcp_p50_ms": 0.207,
+          "probe_tcp_p99_ms": 0.286
+        },
+        {
+          "second": 25,
+          "softirq_percent": 4.54,
+          "pps_dropped": 4922170,
+          "probe_tcp_p50_ms": 0.191,
+          "probe_tcp_p99_ms": 0.383
+        },
+        {
+          "second": 26,
+          "softirq_percent": 3.67,
+          "pps_dropped": 4956552,
+          "probe_tcp_p50_ms": 0.191,
+          "probe_tcp_p99_ms": 0.338
+        },
+        {
+          "second": 27,
+          "softirq_percent": 4.06,
+          "pps_dropped": 4958366,
+          "probe_tcp_p50_ms": 0.184,
+          "probe_tcp_p99_ms": 0.326
+        },
+        {
+          "second": 28,
+          "softirq_percent": 4.6,
+          "pps_dropped": 4959429,
+          "probe_tcp_p50_ms": 0.193,
+          "probe_tcp_p99_ms": 0.34
+        },
+        {
+          "second": 29,
+          "softirq_percent": 4.36,
+          "pps_dropped": 4958504,
+          "probe_tcp_p50_ms": 0.2,
+          "probe_tcp_p99_ms": 0.332
+        },
+        {
+          "second": 30,
+          "softirq_percent": 3.97,
+          "pps_dropped": 4936131,
+          "probe_tcp_p50_ms": 0.177,
+          "probe_tcp_p99_ms": 0.326
+        }
+      ]
+    },
+    {
+      "run_id": 3,
+      "iptables_series": [
+        {
+          "second": 1,
+          "softirq_percent": 83.82,
+          "pps_dropped": 1129688,
+          "probe_tcp_p50_ms": 2.167,
+          "probe_tcp_p99_ms": 14.826
+        },
+        {
+          "second": 2,
+          "softirq_percent": 84.67,
+          "pps_dropped": 1200021,
+          "probe_tcp_p50_ms": 2.236,
+          "probe_tcp_p99_ms": 13.896
+        },
+        {
+          "second": 3,
+          "softirq_percent": 83.3,
+          "pps_dropped": 1147287,
+          "probe_tcp_p50_ms": 1.601,
+          "probe_tcp_p99_ms": 12.552
+        },
+        {
+          "second": 4,
+          "softirq_percent": 85.32,
+          "pps_dropped": 1159999,
+          "probe_tcp_p50_ms": 1.981,
+          "probe_tcp_p99_ms": 12.817
+        },
+        {
+          "second": 5,
+          "softirq_percent": 83.97,
+          "pps_dropped": 1263073,
+          "probe_tcp_p50_ms": 2.129,
+          "probe_tcp_p99_ms": 15.378
+        },
+        {
+          "second": 6,
+          "softirq_percent": 82.83,
+          "pps_dropped": 1101121,
+          "probe_tcp_p50_ms": 1.905,
+          "probe_tcp_p99_ms": 14.093
+        },
+        {
+          "second": 7,
+          "softirq_percent": 85.32,
+          "pps_dropped": 1138819,
+          "probe_tcp_p50_ms": 1.549,
+          "probe_tcp_p99_ms": 13.923
+        },
+        {
+          "second": 8,
+          "softirq_percent": 84.91,
+          "pps_dropped": 1123609,
+          "probe_tcp_p50_ms": 2.074,
+          "probe_tcp_p99_ms": 15.004
+        },
+        {
+          "second": 9,
+          "softirq_percent": 84.56,
+          "pps_dropped": 1143506,
+          "probe_tcp_p50_ms": 1.594,
+          "probe_tcp_p99_ms": 15.45
+        },
+        {
+          "second": 10,
+          "softirq_percent": 83.47,
+          "pps_dropped": 1081844,
+          "probe_tcp_p50_ms": 1.886,
+          "probe_tcp_p99_ms": 12.296
+        },
+        {
+          "second": 11,
+          "softirq_percent": 85.84,
+          "pps_dropped": 1108643,
+          "probe_tcp_p50_ms": 1.879,
+          "probe_tcp_p99_ms": 16.116
+        },
+        {
+          "second": 12,
+          "softirq_percent": 84.38,
+          "pps_dropped": 1122765,
+          "probe_tcp_p50_ms": 1.849,
+          "probe_tcp_p99_ms": 14.251
+        },
+        {
+          "second": 13,
+          "softirq_percent": 82.73,
+          "pps_dropped": 1173392,
+          "probe_tcp_p50_ms": 1.826,
+          "probe_tcp_p99_ms": 15.764
+        },
+        {
+          "second": 14,
+          "softirq_percent": 86.01,
+          "pps_dropped": 1159461,
+          "probe_tcp_p50_ms": 1.565,
+          "probe_tcp_p99_ms": 15.862
+        },
+        {
+          "second": 15,
+          "softirq_percent": 85.95,
+          "pps_dropped": 1168201,
+          "probe_tcp_p50_ms": 2.211,
+          "probe_tcp_p99_ms": 12.201
+        },
+        {
+          "second": 16,
+          "softirq_percent": 83.41,
+          "pps_dropped": 1125972,
+          "probe_tcp_p50_ms": 1.485,
+          "probe_tcp_p99_ms": 12.576
+        },
+        {
+          "second": 17,
+          "softirq_percent": 85.06,
+          "pps_dropped": 1157431,
+          "probe_tcp_p50_ms": 2.038,
+          "probe_tcp_p99_ms": 15.477
+        },
+        {
+          "second": 18,
+          "softirq_percent": 84.16,
+          "pps_dropped": 1142002,
+          "probe_tcp_p50_ms": 1.647,
+          "probe_tcp_p99_ms": 12.634
+        },
+        {
+          "second": 19,
+          "softirq_percent": 84.09,
+          "pps_dropped": 1115033,
+          "probe_tcp_p50_ms": 1.719,
+          "probe_tcp_p99_ms": 15.482
+        },
+        {
+          "second": 20,
+          "softirq_percent": 85.4,
+          "pps_dropped": 1121860,
+          "probe_tcp_p50_ms": 1.934,
+          "probe_tcp_p99_ms": 14.937
+        },
+        {
+          "second": 21,
+          "softirq_percent": 83.6,
+          "pps_dropped": 1144211,
+          "probe_tcp_p50_ms": 1.51,
+          "probe_tcp_p99_ms": 17.834
+        },
+        {
+          "second": 22,
+          "softirq_percent": 84.97,
+          "pps_dropped": 1156147,
+          "probe_tcp_p50_ms": 1.867,
+          "probe_tcp_p99_ms": 18.038
+        },
+        {
+          "second": 23,
+          "softirq_percent": 84.26,
+          "pps_dropped": 1143542,
+          "probe_tcp_p50_ms": 1.795,
+          "probe_tcp_p99_ms": 14.827
+        },
+        {
+          "second": 24,
+          "softirq_percent": 84.99,
+          "pps_dropped": 1117257,
+          "probe_tcp_p50_ms": 1.853,
+          "probe_tcp_p99_ms": 15.393
+        },
+        {
+          "second": 25,
+          "softirq_percent": 84.04,
+          "pps_dropped": 1129325,
+          "probe_tcp_p50_ms": 2.255,
+          "probe_tcp_p99_ms": 12.779
+        },
+        {
+          "second": 26,
+          "softirq_percent": 86.11,
+          "pps_dropped": 1138903,
+          "probe_tcp_p50_ms": 1.954,
+          "probe_tcp_p99_ms": 13.553
+        },
+        {
+          "second": 27,
+          "softirq_percent": 83.74,
+          "pps_dropped": 1170546,
+          "probe_tcp_p50_ms": 1.936,
+          "probe_tcp_p99_ms": 16.059
+        },
+        {
+          "second": 28,
+          "softirq_percent": 86.62,
+          "pps_dropped": 1166007,
+          "probe_tcp_p50_ms": 1.801,
+          "probe_tcp_p99_ms": 12.14
+        },
+        {
+          "second": 29,
+          "softirq_percent": 86.22,
+          "pps_dropped": 1149764,
+          "probe_tcp_p50_ms": 1.985,
+          "probe_tcp_p99_ms": 16.595
+        },
+        {
+          "second": 30,
+          "softirq_percent": 86.84,
+          "pps_dropped": 1118428,
+          "probe_tcp_p50_ms": 1.752,
+          "probe_tcp_p99_ms": 14.589
+        }
+      ],
+      "xdp_series": [
+        {
+          "second": 1,
+          "softirq_percent": 4.38,
+          "pps_dropped": 4958847,
+          "probe_tcp_p50_ms": 0.209,
+          "probe_tcp_p99_ms": 0.375
+        },
+        {
+          "second": 2,
+          "softirq_percent": 4.14,
+          "pps_dropped": 4975462,
+          "probe_tcp_p50_ms": 0.185,
+          "probe_tcp_p99_ms": 0.342
+        },
+        {
+          "second": 3,
+          "softirq_percent": 4.47,
+          "pps_dropped": 4922942,
+          "probe_tcp_p50_ms": 0.202,
+          "probe_tcp_p99_ms": 0.317
+        },
+        {
+          "second": 4,
+          "softirq_percent": 3.9,
+          "pps_dropped": 4961854,
+          "probe_tcp_p50_ms": 0.196,
+          "probe_tcp_p99_ms": 0.34
+        },
+        {
+          "second": 5,
+          "softirq_percent": 4.35,
+          "pps_dropped": 4957622,
+          "probe_tcp_p50_ms": 0.194,
+          "probe_tcp_p99_ms": 0.306
+        },
+        {
+          "second": 6,
+          "softirq_percent": 4.24,
+          "pps_dropped": 4962546,
+          "probe_tcp_p50_ms": 0.186,
+          "probe_tcp_p99_ms": 0.324
+        },
+        {
+          "second": 7,
+          "softirq_percent": 4.33,
+          "pps_dropped": 4983868,
+          "probe_tcp_p50_ms": 0.174,
+          "probe_tcp_p99_ms": 0.358
+        },
+        {
+          "second": 8,
+          "softirq_percent": 4.24,
+          "pps_dropped": 4939635,
+          "probe_tcp_p50_ms": 0.194,
+          "probe_tcp_p99_ms": 0.394
+        },
+        {
+          "second": 9,
+          "softirq_percent": 3.96,
+          "pps_dropped": 4930662,
+          "probe_tcp_p50_ms": 0.218,
+          "probe_tcp_p99_ms": 0.378
+        },
+        {
+          "second": 10,
+          "softirq_percent": 4.15,
+          "pps_dropped": 4938335,
+          "probe_tcp_p50_ms": 0.187,
+          "probe_tcp_p99_ms": 0.366
+        },
+        {
+          "second": 11,
+          "softirq_percent": 4.19,
+          "pps_dropped": 4976927,
+          "probe_tcp_p50_ms": 0.172,
+          "probe_tcp_p99_ms": 0.333
+        },
+        {
+          "second": 12,
+          "softirq_percent": 4.36,
+          "pps_dropped": 4955789,
+          "probe_tcp_p50_ms": 0.178,
+          "probe_tcp_p99_ms": 0.314
+        },
+        {
+          "second": 13,
+          "softirq_percent": 4.64,
+          "pps_dropped": 4942144,
+          "probe_tcp_p50_ms": 0.19,
+          "probe_tcp_p99_ms": 0.352
+        },
+        {
+          "second": 14,
+          "softirq_percent": 4.23,
+          "pps_dropped": 4958916,
+          "probe_tcp_p50_ms": 0.183,
+          "probe_tcp_p99_ms": 0.383
+        },
+        {
+          "second": 15,
+          "softirq_percent": 4.0,
+          "pps_dropped": 4958141,
+          "probe_tcp_p50_ms": 0.178,
+          "probe_tcp_p99_ms": 0.389
+        },
+        {
+          "second": 16,
+          "softirq_percent": 4.49,
+          "pps_dropped": 4991930,
+          "probe_tcp_p50_ms": 0.179,
+          "probe_tcp_p99_ms": 0.408
+        },
+        {
+          "second": 17,
+          "softirq_percent": 3.8,
+          "pps_dropped": 4959544,
+          "probe_tcp_p50_ms": 0.212,
+          "probe_tcp_p99_ms": 0.305
+        },
+        {
+          "second": 18,
+          "softirq_percent": 4.0,
+          "pps_dropped": 4990247,
+          "probe_tcp_p50_ms": 0.188,
+          "probe_tcp_p99_ms": 0.377
+        },
+        {
+          "second": 19,
+          "softirq_percent": 4.57,
+          "pps_dropped": 4974167,
+          "probe_tcp_p50_ms": 0.176,
+          "probe_tcp_p99_ms": 0.333
+        },
+        {
+          "second": 20,
+          "softirq_percent": 4.38,
+          "pps_dropped": 4952841,
+          "probe_tcp_p50_ms": 0.188,
+          "probe_tcp_p99_ms": 0.378
+        },
+        {
+          "second": 21,
+          "softirq_percent": 4.16,
+          "pps_dropped": 4995757,
+          "probe_tcp_p50_ms": 0.209,
+          "probe_tcp_p99_ms": 0.349
+        },
+        {
+          "second": 22,
+          "softirq_percent": 4.33,
+          "pps_dropped": 4973964,
+          "probe_tcp_p50_ms": 0.198,
+          "probe_tcp_p99_ms": 0.349
+        },
+        {
+          "second": 23,
+          "softirq_percent": 4.33,
+          "pps_dropped": 4974087,
+          "probe_tcp_p50_ms": 0.173,
+          "probe_tcp_p99_ms": 0.358
+        },
+        {
+          "second": 24,
+          "softirq_percent": 4.04,
+          "pps_dropped": 4964584,
+          "probe_tcp_p50_ms": 0.185,
+          "probe_tcp_p99_ms": 0.354
+        },
+        {
+          "second": 25,
+          "softirq_percent": 4.36,
+          "pps_dropped": 4953964,
+          "probe_tcp_p50_ms": 0.192,
+          "probe_tcp_p99_ms": 0.352
+        },
+        {
+          "second": 26,
+          "softirq_percent": 4.64,
+          "pps_dropped": 4936887,
+          "probe_tcp_p50_ms": 0.189,
+          "probe_tcp_p99_ms": 0.333
+        },
+        {
+          "second": 27,
+          "softirq_percent": 3.36,
+          "pps_dropped": 4953405,
+          "probe_tcp_p50_ms": 0.213,
+          "probe_tcp_p99_ms": 0.35
+        },
+        {
+          "second": 28,
+          "softirq_percent": 4.69,
+          "pps_dropped": 4930666,
+          "probe_tcp_p50_ms": 0.209,
+          "probe_tcp_p99_ms": 0.339
+        },
+        {
+          "second": 29,
+          "softirq_percent": 4.57,
+          "pps_dropped": 4995080,
+          "probe_tcp_p50_ms": 0.207,
+          "probe_tcp_p99_ms": 0.334
+        },
+        {
+          "second": 30,
+          "softirq_percent": 3.94,
+          "pps_dropped": 4946361,
+          "probe_tcp_p50_ms": 0.167,
+          "probe_tcp_p99_ms": 0.369
+        }
+      ]
+    }
+  ]
+}

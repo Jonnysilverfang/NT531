@@ -1,0 +1,160 @@
+SSM connectivity a command=7d836bb0-a6e6-43dc-b209-c3d5d2ab0ef9
+UTC=2026-10-05T04:56:07Z source=10.10.10.212 declared_mode=tgw
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=126 time=0.675 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=126 time=0.460 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1018ms
+rtt min/avg/max/mdev = 0.460/0.567/0.675/0.107 ms
+PING PASS 10.10.10.212 -> 10.20.10.155
+TCP PASS 10.10.10.212 -> 10.20.10.155:5201
+TCP PASS 10.10.10.212 -> 10.20.10.155:5202
+TCP PASS 10.10.10.212 -> 10.20.10.155:5203
+IPERF PASS 10.10.10.212 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=126 time=0.953 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=126 time=0.547 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1019ms
+rtt min/avg/max/mdev = 0.547/0.750/0.953/0.203 ms
+PING PASS 10.10.10.212 -> 10.30.10.212
+TCP PASS 10.10.10.212 -> 10.30.10.212:5201
+TCP PASS 10.10.10.212 -> 10.30.10.212:5202
+TCP PASS 10.10.10.212 -> 10.30.10.212:5203
+IPERF PASS 10.10.10.212 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=126 time=0.770 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=126 time=0.435 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1019ms
+rtt min/avg/max/mdev = 0.435/0.602/0.770/0.167 ms
+PING PASS 10.10.10.212 -> 10.40.10.155
+TCP PASS 10.10.10.212 -> 10.40.10.155:5201
+TCP PASS 10.10.10.212 -> 10.40.10.155:5202
+TCP PASS 10.10.10.212 -> 10.40.10.155:5203
+IPERF PASS 10.10.10.212 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-tgw-20261005T045607Z-nCm6A6.txt
+
+SSM connectivity b command=429871fa-d127-40bf-af5b-533c72d19a02
+UTC=2026-10-05T04:56:22Z source=10.20.10.155 declared_mode=tgw
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=126 time=0.692 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=126 time=0.480 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1005ms
+rtt min/avg/max/mdev = 0.480/0.586/0.692/0.106 ms
+PING PASS 10.20.10.155 -> 10.10.10.212
+TCP PASS 10.20.10.155 -> 10.10.10.212:5201
+TCP PASS 10.20.10.155 -> 10.10.10.212:5202
+TCP PASS 10.20.10.155 -> 10.10.10.212:5203
+IPERF PASS 10.20.10.155 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=126 time=0.895 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=126 time=0.555 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1020ms
+rtt min/avg/max/mdev = 0.555/0.725/0.895/0.170 ms
+PING PASS 10.20.10.155 -> 10.30.10.212
+TCP PASS 10.20.10.155 -> 10.30.10.212:5201
+TCP PASS 10.20.10.155 -> 10.30.10.212:5202
+TCP PASS 10.20.10.155 -> 10.30.10.212:5203
+IPERF PASS 10.20.10.155 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=126 time=0.980 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=126 time=0.694 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.694/0.837/0.980/0.143 ms
+PING PASS 10.20.10.155 -> 10.40.10.155
+TCP PASS 10.20.10.155 -> 10.40.10.155:5201
+TCP PASS 10.20.10.155 -> 10.40.10.155:5202
+TCP PASS 10.20.10.155 -> 10.40.10.155:5203
+IPERF PASS 10.20.10.155 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-tgw-20261005T045622Z-opFmI7.txt
+
+SSM connectivity c command=e6a57b79-3baf-4feb-b7df-722335396f80
+UTC=2026-10-05T04:56:36Z source=10.30.10.212 declared_mode=tgw
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=126 time=1.02 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=126 time=0.671 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.671/0.845/1.019/0.174 ms
+PING PASS 10.30.10.212 -> 10.10.10.212
+TCP PASS 10.30.10.212 -> 10.10.10.212:5201
+TCP PASS 10.30.10.212 -> 10.10.10.212:5202
+TCP PASS 10.30.10.212 -> 10.10.10.212:5203
+IPERF PASS 10.30.10.212 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=126 time=1.12 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=126 time=0.802 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.802/0.959/1.116/0.157 ms
+PING PASS 10.30.10.212 -> 10.20.10.155
+TCP PASS 10.30.10.212 -> 10.20.10.155:5201
+TCP PASS 10.30.10.212 -> 10.20.10.155:5202
+TCP PASS 10.30.10.212 -> 10.20.10.155:5203
+IPERF PASS 10.30.10.212 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=126 time=0.869 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=126 time=0.555 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1053ms
+rtt min/avg/max/mdev = 0.555/0.712/0.869/0.157 ms
+PING PASS 10.30.10.212 -> 10.40.10.155
+TCP PASS 10.30.10.212 -> 10.40.10.155:5201
+TCP PASS 10.30.10.212 -> 10.40.10.155:5202
+TCP PASS 10.30.10.212 -> 10.40.10.155:5203
+IPERF PASS 10.30.10.212 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-tgw-20261005T045636Z-tmcQ0u.txt
+
+SSM connectivity d command=c9fc63c6-7dfb-42b6-a9a8-b78410921ecf
+UTC=2026-10-05T04:56:51Z source=10.40.10.155 declared_mode=tgw
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=126 time=0.758 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=126 time=0.449 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1048ms
+rtt min/avg/max/mdev = 0.449/0.603/0.758/0.154 ms
+PING PASS 10.40.10.155 -> 10.10.10.212
+TCP PASS 10.40.10.155 -> 10.10.10.212:5201
+TCP PASS 10.40.10.155 -> 10.10.10.212:5202
+TCP PASS 10.40.10.155 -> 10.10.10.212:5203
+IPERF PASS 10.40.10.155 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=126 time=1.07 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=126 time=0.689 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.689/0.880/1.071/0.191 ms
+PING PASS 10.40.10.155 -> 10.20.10.155
+TCP PASS 10.40.10.155 -> 10.20.10.155:5201
+TCP PASS 10.40.10.155 -> 10.20.10.155:5202
+TCP PASS 10.40.10.155 -> 10.20.10.155:5203
+IPERF PASS 10.40.10.155 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=126 time=0.963 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=126 time=0.685 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1038ms
+rtt min/avg/max/mdev = 0.685/0.824/0.963/0.139 ms
+PING PASS 10.40.10.155 -> 10.30.10.212
+TCP PASS 10.40.10.155 -> 10.30.10.212:5201
+TCP PASS 10.40.10.155 -> 10.30.10.212:5202
+TCP PASS 10.40.10.155 -> 10.30.10.212:5203
+IPERF PASS 10.40.10.155 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-tgw-20261005T045651Z-6ng3nr.txt
+

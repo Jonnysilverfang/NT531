@@ -1,0 +1,5 @@
+# Copy to experiment.auto.tfvars to persist experiment settings locally.
+# Four VPCs / EC2 instances are always described by this configuration.
+# TGW incurs attachment charges whenever enabled, even with peering routes.
+enable_transit_gateway = false
+routing_mode           = "peering"

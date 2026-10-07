@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="820" height="355" preserveAspectRatio="xMinYMin meet" viewBox="0 0 820 355" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="820" height="355"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-355)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="25" y="333" style="font-family: Arial; font-size: 19px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,666) scale(1,-1)">VPC Peering toàn lưới giữa bốn VPC</text>
+			<path d="M 270,254 L 550,254 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="550 254, 542 257, 542 251" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="270 254, 278 251, 278 257" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 82,205 L 82,143 Z" style="stroke: rgb(65%,68%,72%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="82 143, 85 151, 79 151" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<polygon points="82 205, 79 197, 85 197" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<path d="M 270,205 L 550,143 Z" style="stroke: rgb(65%,68%,72%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="550 143, 542.8378 147.6586, 541.5406 141.8005" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<polygon points="270 205, 277.1622 200.3414, 278.4594 206.1995" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<path d="M 270,143 L 550,205 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="550 205, 541.5406 206.1995, 542.8378 200.3414" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="270 143, 278.4594 141.8005, 277.1622 147.6586" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 738,143 L 738,205 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="738 205, 735 197, 741 197" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="738 143, 741 151, 735 151" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 270,94 L 550,94 Z" style="stroke: rgb(65%,68%,72%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="550 94, 542 97, 542 91" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<polygon points="270 94, 278 91, 278 97" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(65%,68%,72%); fill-rule: evenodd;"/>
+			<rect x="50" y="205" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="62" y="280" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,560) scale(1,-1)">VPC A    10.10.0.0/16</text>
+			<text x="62" y="257" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,514) scale(1,-1)">Subnet 10.10.10.0/24</text>
+			<text x="62" y="235" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,470) scale(1,-1)">EC2 A   10.10.10.212</text>
+			<text x="62" y="215" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,430) scale(1,-1)">SG và route table riêng</text>
+			<rect x="550" y="205" width="220" height="98" rx="6" ry="6" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="562" y="280" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,560) scale(1,-1)">VPC B    10.20.0.0/16</text>
+			<text x="562" y="257" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,514) scale(1,-1)">Subnet 10.20.10.0/24</text>
+			<text x="562" y="235" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,470) scale(1,-1)">EC2 B   10.20.10.155</text>
+			<text x="562" y="215" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,430) scale(1,-1)">SG và route table riêng</text>
+			<rect x="50" y="45" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="62" y="120" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,240) scale(1,-1)">VPC C    10.30.0.0/16</text>
+			<text x="62" y="97" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,194) scale(1,-1)">Subnet 10.30.10.0/24</text>
+			<text x="62" y="75" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,150) scale(1,-1)">EC2 C   10.30.10.212</text>
+			<text x="62" y="55" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,110) scale(1,-1)">SG và route table riêng</text>
+			<rect x="550" y="45" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="562" y="120" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,240) scale(1,-1)">VPC D    10.40.0.0/16</text>
+			<text x="562" y="97" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,194) scale(1,-1)">Subnet 10.40.10.0/24</text>
+			<text x="562" y="75" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,150) scale(1,-1)">EC2 D   10.40.10.155</text>
+			<text x="562" y="55" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,110) scale(1,-1)">SG và route table riêng</text>
+			<text x="400.662109375" y="266" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,532) scale(1,-1)">AB</text>
+			<text x="49.27587890625" y="172" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,344) scale(1,-1)">AC</text>
+			<text x="312.27587890625" y="208" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,416) scale(1,-1)">AD</text>
+			<text x="474.27587890625" y="202" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,404) scale(1,-1)">BC</text>
+			<text x="747.27587890625" y="172" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,344) scale(1,-1)">BD</text>
+			<text x="399.8896484375" y="108" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,216) scale(1,-1)">CD</text>
+			<text x="50" y="15" style="font-family: Arial; font-size: 14px;fill: rgb(12%,40%,67%); stroke:none;" transform="translate(0,30) scale(1,-1)">Xanh: AB BC BD dùng cho A/C/D → B</text>
+			<text x="450" y="15" style="font-family: Arial; font-size: 14px;fill: rgb(40%,40%,40%); stroke:none;" transform="translate(0,30) scale(1,-1)">Xám: ba Peering còn lại</text>
+		</g>
+	</g>
+</svg>

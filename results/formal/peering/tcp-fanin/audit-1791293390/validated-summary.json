@@ -1,0 +1,185 @@
+{
+  "session_epoch": 1791293390,
+  "mode_label": "peering",
+  "validated_sender_runs": 15,
+  "raw_files_on_ec2": 146,
+  "full_raw_download_verified": true,
+  "metrics": [
+    {
+      "node": "a",
+      "run": 1,
+      "receiver_Gbps": 4.0131283944918845,
+      "retransmits": 24993,
+      "cpu_busy_percent": 14.996666666666666
+    },
+    {
+      "node": "a",
+      "run": 2,
+      "receiver_Gbps": 3.9381783361287885,
+      "retransmits": 26323,
+      "cpu_busy_percent": 15.069333333333335
+    },
+    {
+      "node": "a",
+      "run": 3,
+      "receiver_Gbps": 3.9501594885345224,
+      "retransmits": 25420,
+      "cpu_busy_percent": 13.144666666666668
+    },
+    {
+      "node": "a",
+      "run": 4,
+      "receiver_Gbps": 3.9976468686941953,
+      "retransmits": 25668,
+      "cpu_busy_percent": 17.524
+    },
+    {
+      "node": "a",
+      "run": 5,
+      "receiver_Gbps": 3.89252729980075,
+      "retransmits": 25768,
+      "cpu_busy_percent": 14.620333333333333
+    },
+    {
+      "node": "c",
+      "run": 1,
+      "receiver_Gbps": 3.608911044618471,
+      "retransmits": 22949,
+      "cpu_busy_percent": 13.821666666666667
+    },
+    {
+      "node": "c",
+      "run": 2,
+      "receiver_Gbps": 3.888724224713939,
+      "retransmits": 25027,
+      "cpu_busy_percent": 15.125333333333334
+    },
+    {
+      "node": "c",
+      "run": 3,
+      "receiver_Gbps": 3.8240596683530796,
+      "retransmits": 22739,
+      "cpu_busy_percent": 15.149000000000001
+    },
+    {
+      "node": "c",
+      "run": 4,
+      "receiver_Gbps": 3.664123476531388,
+      "retransmits": 24385,
+      "cpu_busy_percent": 14.517000000000001
+    },
+    {
+      "node": "c",
+      "run": 5,
+      "receiver_Gbps": 3.9136985198889116,
+      "retransmits": 25682,
+      "cpu_busy_percent": 19.476
+    },
+    {
+      "node": "d",
+      "run": 1,
+      "receiver_Gbps": 3.9801325083930563,
+      "retransmits": 28089,
+      "cpu_busy_percent": 10.836333333333332
+    },
+    {
+      "node": "d",
+      "run": 2,
+      "receiver_Gbps": 3.774961064006579,
+      "retransmits": 25302,
+      "cpu_busy_percent": 10.150666666666666
+    },
+    {
+      "node": "d",
+      "run": 3,
+      "receiver_Gbps": 3.8639214980034575,
+      "retransmits": 25795,
+      "cpu_busy_percent": 9.360666666666667
+    },
+    {
+      "node": "d",
+      "run": 4,
+      "receiver_Gbps": 3.945451896864501,
+      "retransmits": 30529,
+      "cpu_busy_percent": 13.147666666666666
+    },
+    {
+      "node": "d",
+      "run": 5,
+      "receiver_Gbps": 3.7994196460469727,
+      "retransmits": 26983,
+      "cpu_busy_percent": 13.886666666666665
+    }
+  ],
+  "means": [
+    {
+      "node": "a",
+      "mean_receiver_Gbps": 3.958328077530028,
+      "mean_cpu_busy_percent": 15.071000000000002,
+      "min_retransmits": 24993.0,
+      "max_retransmits": 26323.0
+    },
+    {
+      "node": "c",
+      "mean_receiver_Gbps": 3.7799033868211582,
+      "mean_cpu_busy_percent": 15.617799999999999,
+      "min_retransmits": 22739.0,
+      "max_retransmits": 25682.0
+    },
+    {
+      "node": "d",
+      "mean_receiver_Gbps": 3.872777322662914,
+      "mean_cpu_busy_percent": 11.4764,
+      "min_retransmits": 25302.0,
+      "max_retransmits": 30529.0
+    }
+  ],
+  "windows": [
+    {
+      "run": 1,
+      "wrapper_start_spread_seconds": 0.2980655,
+      "approximate_common_measurement_seconds": 29.7088612,
+      "sum_receiver_Gbps": 11.602171947503413
+    },
+    {
+      "run": 2,
+      "wrapper_start_spread_seconds": 0.3014506,
+      "approximate_common_measurement_seconds": 29.7049385,
+      "sum_receiver_Gbps": 11.601863624849306
+    },
+    {
+      "run": 3,
+      "wrapper_start_spread_seconds": 0.9590056,
+      "approximate_common_measurement_seconds": 29.0476148,
+      "sum_receiver_Gbps": 11.63814065489106
+    },
+    {
+      "run": 4,
+      "wrapper_start_spread_seconds": 0.7354863,
+      "approximate_common_measurement_seconds": 29.2711919,
+      "sum_receiver_Gbps": 11.607222242090085
+    },
+    {
+      "run": 5,
+      "wrapper_start_spread_seconds": 0.7341142,
+      "approximate_common_measurement_seconds": 29.272631,
+      "sum_receiver_Gbps": 11.605645465736634
+    }
+  ],
+  "mean_sum_receiver_Gbps": 11.611008787014102,
+  "receiver_B_planned_window_mean_cpu_busy_percent": 59.18020459770115,
+  "receiver_B_capture_ena_delta": {
+    "bw_in_allowance_exceeded": 1434501,
+    "bw_out_allowance_exceeded": 0,
+    "pps_allowance_exceeded": 160457411,
+    "conntrack_allowance_exceeded": 0,
+    "linklocal_allowance_exceeded": 0
+  },
+  "notes": [
+    "Timing overlap uses wrapper start+5s/end, not precise iperf internal measurement windows.",
+    "B CPU uses planned 30s windows; B ENA delta covers the entire recording.",
+    "Sum of per-source averages approximates concurrent aggregate throughput.",
+    "Mode is a label; route snapshots are separate evidence.",
+    "Full raw files remain on EC2 and are backed up in local A/B/C/D folders; see full-backup-manifest.json."
+  ]
+}

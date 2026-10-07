@@ -1,0 +1,18 @@
+Bai: RTT khi mang ranh
+Mode: Peering (doi chieu route AWS truoc khi do)
+Huong: A -> B -> A
+Dich: 10.20.10.155
+So luot: 5
+Moi luot: 100 goi, interval 0.2 giay
+Payload ICMP: 56 byte
+Nghi giua luot: 5 giay
+Mon Oct  5 11:55:10 UTC 2026
+ip-10-10-10-212.ec2.internal
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+ens5             UP             10.10.10.212/24 metric 512 fe80::ff:f9ff:fea4:77bb/64 
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 02:ff:f9:a4:77:bb brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-08c2866aa52fb3c11
+    altname device-number-0.0
+ping from iputils 20210202

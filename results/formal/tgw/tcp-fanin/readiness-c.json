@@ -1,0 +1,13 @@
+{
+  "ip": "10.30.10.212",
+  "mtu": "1500",
+  "ntp": "yes",
+  "services": {
+    "5201": "active",
+    "5202": "active",
+    "5203": "active"
+  },
+  "script_syntax": "OK",
+  "tcp_to_B_port": 5202,
+  "tcp_to_B": "OK"
+}

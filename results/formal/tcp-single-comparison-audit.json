@@ -1,0 +1,302 @@
+[
+  {
+    "Mode": "peering",
+    "Run": 1,
+    "ReceiverGbps": 4.7820226466967695,
+    "Retransmits": 48253,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 19.549,
+      "SoftPercent": 15.785
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 17.656,
+      "SoftPercent": 10.141
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "peering",
+    "Run": 2,
+    "ReceiverGbps": 4.783141109495212,
+    "Retransmits": 57185,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 22.578,
+      "SoftPercent": 18.658
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 21.513,
+      "SoftPercent": 14.228
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "peering",
+    "Run": 3,
+    "ReceiverGbps": 4.78310775187597,
+    "Retransmits": 49851,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 19.812,
+      "SoftPercent": 15.923
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 17.744,
+      "SoftPercent": 9.841
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "peering",
+    "Run": 4,
+    "ReceiverGbps": 4.783202738997117,
+    "Retransmits": 55189,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 19.066,
+      "SoftPercent": 15.455
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 17.984,
+      "SoftPercent": 11.101
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "peering",
+    "Run": 5,
+    "ReceiverGbps": 4.7825456508088635,
+    "Retransmits": 49724,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 23.748,
+      "SoftPercent": 19.625
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 18.427,
+      "SoftPercent": 10.98
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "tgw",
+    "Run": 1,
+    "ReceiverGbps": 4.609523643281826,
+    "Retransmits": 280,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 16.209,
+      "SoftPercent": 12.147
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 18.229,
+      "SoftPercent": 10.554
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "tgw",
+    "Run": 2,
+    "ReceiverGbps": 4.609362331854768,
+    "Retransmits": 193,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 17.776,
+      "SoftPercent": 11.787
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 22.881,
+      "SoftPercent": 14.912
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "tgw",
+    "Run": 3,
+    "ReceiverGbps": 4.6094695658938925,
+    "Retransmits": 0,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 15.437,
+      "SoftPercent": 6.484
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 21.592,
+      "SoftPercent": 13.767
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "tgw",
+    "Run": 4,
+    "ReceiverGbps": 4.60618049746156,
+    "Retransmits": 671,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 20.522,
+      "SoftPercent": 15.08
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 18.08,
+      "SoftPercent": 10.337
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  },
+  {
+    "Mode": "tgw",
+    "Run": 5,
+    "ReceiverGbps": 4.6067892052233335,
+    "Retransmits": 411,
+    "CPU_A": {
+      "Samples": 30,
+      "BusyPercent": 19.101,
+      "SoftPercent": 11.451
+    },
+    "CPU_B": {
+      "Samples": 30,
+      "BusyPercent": 21.751,
+      "SoftPercent": 13.64
+    },
+    "ENA_A_Run_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    },
+    "ENA_B_Whole_Capture_Delta": {
+      "pps_allowance_exceeded": 0.0,
+      "bw_out_allowance_exceeded": 0.0,
+      "bw_in_allowance_exceeded": 0.0,
+      "linklocal_allowance_exceeded": 0.0,
+      "conntrack_allowance_exceeded": 0.0
+    }
+  }
+]

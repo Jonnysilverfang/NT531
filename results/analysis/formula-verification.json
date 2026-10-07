@@ -1,0 +1,130 @@
+{
+  "checked_utc": "2026-10-06T15:19:17.767896+00:00",
+  "sender_json_files_checked": 30,
+  "jain_checked_by": "1 / (1 + population-CV-squared) using raw JSON byte and seconds fields",
+  "sample_sd_checked_by": "NumPy ddof=1",
+  "source_files": [
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-1.json",
+      "sha256": "5007b2ad390cdcefd32a6483912e622caf3d67ef3bb368d15acfb2f992efd455"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-1.json",
+      "sha256": "83fb63306036842a37da8a06705e51bc6405dfc2c9da621979202166444a544d"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-1.json",
+      "sha256": "d9cbcf47ab39b52bc39209564470a5d88f7ac02da247aa00e6fb44bc2247f02c"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-2.json",
+      "sha256": "fab059dba0b01746283baae4f3060a26391e40e7fb7ca8726278cb49f8b25dfe"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-2.json",
+      "sha256": "c7d85bf54a77ef663f5c5bfb75e509b42d414572338e23b05e17d6938107394c"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-2.json",
+      "sha256": "ed4a78f7fd82e7a76fc16997587288988e9cf8e425fe6063e8a5c137e04a537c"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-3.json",
+      "sha256": "83c839a5c6c3059b222a67ea149cc02ceeaeeb672da27df6b2d420183a637647"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-3.json",
+      "sha256": "4f4ea876a00203c950bb234e839508177a7230a5ece8743b60c1b648eaafac96"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-3.json",
+      "sha256": "d70e04e9289d9d181a1ee85bf94f800ff6873dac222d3bf55c57731b8b6de1ba"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-4.json",
+      "sha256": "51cd42efd84782242129d9bec1934181e81e4f69cdd9b8e5f98ec5a1f281f688"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-4.json",
+      "sha256": "ec13f00ae39ea74827e61823fae37ca9ed2a4634edd281726cec248f98f6420d"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-4.json",
+      "sha256": "b34518220bc39fc6faa42220c69f3f996331f650ccad2973d35120dc87def8dd"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-5.json",
+      "sha256": "0d562979b82bc97bbcd3be6762316f8981d74645402bd01fddb1915a8bdd2478"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-5.json",
+      "sha256": "45aeffdd654602732e4b6a8129cf3550b055464cd2366f72e6cf497367b054fb"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-5.json",
+      "sha256": "d9a6bc18663a1b831a0e3d11d9591b88a17ad92b93fd0155a94d13da740590f7"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-1.json",
+      "sha256": "e7b91a2030dc2ac50650179ae23d6ae8624f8bec897e798a743d14829e1229f6"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-1.json",
+      "sha256": "75c68cf1ee3e60a559a33391dc9d8784029bd1de32861176765bdd4aae744649"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-1.json",
+      "sha256": "5928567431d41abee1585eab50665724d6d8720e26657fa5de0ccb88efe00bf2"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-2.json",
+      "sha256": "e0050caa078e6e4091a89455c76264304663909d1ead181572d95b5397ec2347"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-2.json",
+      "sha256": "f22ed7d7e9b845cacb898c24bd277556880d5dcf7ac712b7a40cc2e9cf4d31e8"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-2.json",
+      "sha256": "b8ceffd21f3e67074fedab646695a58a9e9e8f473c3b0d6587ab4f2d9f24fe93"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-3.json",
+      "sha256": "438c29f026ca54c9d9125817f1605a31a9c579ae16995f0011d4466c447c3c46"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-3.json",
+      "sha256": "6059ad97f12b1bfc79fcb89fdd9dfa2873fbb42a862a805fefc99e4e20af7d5d"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-3.json",
+      "sha256": "3c7dc13d455baa3465e235f2fb57025864e11aa3f5b0c5622ed893c1c8608f64"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-4.json",
+      "sha256": "2c5621499c56de16b5712ec5eecba371191f136e9e67a78afe6f685fdb792f27"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-4.json",
+      "sha256": "489110236b7c6b509c98a82e499c8c28d3e24cd16a8f1aac59fe5883d6f4ef86"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-4.json",
+      "sha256": "cd865516b8ce18a357910afc9dba401c231236752e09f012fc2e3a2ea202e6f2"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-5.json",
+      "sha256": "600a7e066565da150bcd5eafcbc1bfc3f7cdf6c66d6441bf083a3ecfecc143df"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-5.json",
+      "sha256": "4f63c6ad77e2ae14a1fa0510945b2d73e180c837b621f8c8c319b55f0224dc98"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-5.json",
+      "sha256": "b6e74c020725f9c8fa7e5758e25ef5fb6ed22c3dd3649ddef5274ff972425fb9"
+    }
+  ],
+  "report_metrics_sha256": "c8537ae84c0bf528b12a65edb53fc06dd4132e0966a3a6db1bfc4577ba42d94d",
+  "passed": true
+}

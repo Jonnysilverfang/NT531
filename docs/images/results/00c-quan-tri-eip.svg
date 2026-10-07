@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="820" height="315" preserveAspectRatio="xMinYMin meet" viewBox="0 0 820 315" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="820" height="315"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-315)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="25" y="291" style="font-family: Arial; font-size: 19px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,582) scale(1,-1)">Đường quản trị bằng Termius và Elastic IP</text>
+			<rect x="50" y="238" width="230" height="34" rx="4" ry="4" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,95%,90%); fill-rule: evenodd;"/>
+			<text x="73.359375" y="249" style="font-family: Arial; font-size: 17px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,498) scale(1,-1)">Máy cá nhân  ·  Termius</text>
+			<rect x="385" y="238" width="320" height="34" rx="4" ry="4" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,95%,90%); fill-rule: evenodd;"/>
+			<text x="455.24365234375" y="249" style="font-family: Arial; font-size: 17px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,498) scale(1,-1)">Internet  ·  SSH TCP 22</text>
+			<path d="M 280,255 L 385,255 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="385 255, 377 258, 377 252" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(77%,41%,13%); fill-rule: evenodd;"/>
+			<path d="M 545,238 L 545,215 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 107,215 L 713,215 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<path d="M 108,215 L 108,179 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="108 179, 111 187, 105 187" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(77%,41%,13%); fill-rule: evenodd;"/>
+			<rect x="20" y="34" width="175" height="145" rx="5" ry="5" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="80.9912109375" y="157" style="font-family: Arial; font-size: 18px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,314) scale(1,-1)">VPC A</text>
+			<text x="84.4453125" y="132" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,264) scale(1,-1)">IGW A</text>
+			<text x="61.304443359375" y="109" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,218) scale(1,-1)">Subnet và SG</text>
+			<rect x="29" y="45" width="157" height="52" rx="4" ry="4" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="58.601806640625" y="77" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,154) scale(1,-1)">EC2 A + EIP A</text>
+			<text x="41.05908203125" y="57" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,114) scale(1,-1)">IP riêng 10.10.10.212</text>
+			<path d="M 310,215 L 310,179 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="310 179, 313 187, 307 187" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(77%,41%,13%); fill-rule: evenodd;"/>
+			<rect x="222" y="34" width="175" height="145" rx="5" ry="5" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="282.9912109375" y="157" style="font-family: Arial; font-size: 18px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,314) scale(1,-1)">VPC B</text>
+			<text x="286.4453125" y="132" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,264) scale(1,-1)">IGW B</text>
+			<text x="263.304443359375" y="109" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,218) scale(1,-1)">Subnet và SG</text>
+			<rect x="231" y="45" width="157" height="52" rx="4" ry="4" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="260.601806640625" y="77" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,154) scale(1,-1)">EC2 B + EIP B</text>
+			<text x="243.05908203125" y="57" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,114) scale(1,-1)">IP riêng 10.20.10.155</text>
+			<path d="M 512,215 L 512,179 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="512 179, 515 187, 509 187" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(77%,41%,13%); fill-rule: evenodd;"/>
+			<rect x="424" y="34" width="175" height="145" rx="5" ry="5" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="484.49462890625" y="157" style="font-family: Arial; font-size: 18px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,314) scale(1,-1)">VPC C</text>
+			<text x="488.00390625" y="132" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,264) scale(1,-1)">IGW C</text>
+			<text x="465.304443359375" y="109" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,218) scale(1,-1)">Subnet và SG</text>
+			<rect x="433" y="45" width="157" height="52" rx="4" ry="4" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="461.774169921875" y="77" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,154) scale(1,-1)">EC2 C + EIP C</text>
+			<text x="445.05908203125" y="57" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,114) scale(1,-1)">IP riêng 10.30.10.212</text>
+			<path d="M 714,215 L 714,179 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="714 179, 717 187, 711 187" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(77%,41%,13%); fill-rule: evenodd;"/>
+			<rect x="626" y="34" width="175" height="145" rx="5" ry="5" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="686.49462890625" y="157" style="font-family: Arial; font-size: 18px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,314) scale(1,-1)">VPC D</text>
+			<text x="690.00390625" y="132" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,264) scale(1,-1)">IGW D</text>
+			<text x="667.304443359375" y="109" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,218) scale(1,-1)">Subnet và SG</text>
+			<rect x="635" y="45" width="157" height="52" rx="4" ry="4" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="663.774169921875" y="77" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,154) scale(1,-1)">EC2 D + EIP D</text>
+			<text x="647.05908203125" y="57" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,114) scale(1,-1)">IP riêng 10.40.10.155</text>
+			<text x="166.5576171875" y="10" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,20) scale(1,-1)">Mỗi EC2 có một EIP  ·  Benchmark dùng IP riêng qua Peering hoặc TGW</text>
+		</g>
+	</g>
+</svg>

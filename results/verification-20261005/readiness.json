@@ -1,0 +1,22 @@
+[
+    {
+        "ID": "i-0e806234909e239aa",
+        "Status": "Success",
+        "Output": "Mon Oct  5 04:55:00 UTC 2026\nip-10-20-10-155.ec2.internal\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\\    link/ether 02:ff:c5:6e:2e:01 brd ff:ff:ff:ff:ff:ff\\    altname enp0s5\\    altname eni-0ecb2ac044c7cb60f\\    altname device-number-0.0\niperf 3.19.1 (cJSON 1.7.15)\n6.18.51-120.163.amzn2023.x86_64\nNTPSynchronized=yes\nactive\nactive\nactive\ndriver: ena\nversion: 2.17.2g\nfirmware-version: \nexpansion-rom-version: \nbus-info: 0000:00:05.0\nsupports-statistics: yes\nsupports-test: no\nsupports-eeprom-access: no\nsupports-register-dump: no\nsupports-priv-flags: no\n"
+    },
+    {
+        "ID": "i-0b6a2c9a02367803d",
+        "Status": "Success",
+        "Output": "Mon Oct  5 04:55:00 UTC 2026\nip-10-10-10-212.ec2.internal\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\\    link/ether 02:ff:f9:a4:77:bb brd ff:ff:ff:ff:ff:ff\\    altname enp0s5\\    altname eni-08c2866aa52fb3c11\\    altname device-number-0.0\niperf 3.19.1 (cJSON 1.7.15)\n6.18.51-120.163.amzn2023.x86_64\nNTPSynchronized=yes\nactive\nactive\nactive\ndriver: ena\nversion: 2.17.2g\nfirmware-version: \nexpansion-rom-version: \nbus-info: 0000:00:05.0\nsupports-statistics: yes\nsupports-test: no\nsupports-eeprom-access: no\nsupports-register-dump: no\nsupports-priv-flags: no\n"
+    },
+    {
+        "ID": "i-0856b28fde5404aae",
+        "Status": "Success",
+        "Output": "Mon Oct  5 04:55:00 UTC 2026\nip-10-30-10-212.ec2.internal\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\\    link/ether 02:ff:c4:47:16:3d brd ff:ff:ff:ff:ff:ff\\    altname enp0s5\\    altname eni-0f695c3693b842a16\\    altname device-number-0.0\niperf 3.19.1 (cJSON 1.7.15)\n6.18.51-120.163.amzn2023.x86_64\nNTPSynchronized=yes\nactive\nactive\nactive\ndriver: ena\nversion: 2.17.2g\nfirmware-version: \nexpansion-rom-version: \nbus-info: 0000:00:05.0\nsupports-statistics: yes\nsupports-test: no\nsupports-eeprom-access: no\nsupports-register-dump: no\nsupports-priv-flags: no\n"
+    },
+    {
+        "ID": "i-002e318e4779c790d",
+        "Status": "Success",
+        "Output": "Mon Oct  5 04:55:00 UTC 2026\nip-10-40-10-155.ec2.internal\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\\    link/ether 02:ff:d8:fd:c0:25 brd ff:ff:ff:ff:ff:ff\\    altname enp0s5\\    altname eni-03c96a32d9c43c5e1\\    altname device-number-0.0\niperf 3.19.1 (cJSON 1.7.15)\n6.18.51-120.163.amzn2023.x86_64\nNTPSynchronized=yes\nactive\nactive\nactive\ndriver: ena\nversion: 2.17.2g\nfirmware-version: \nexpansion-rom-version: \nbus-info: 0000:00:05.0\nsupports-statistics: yes\nsupports-test: no\nsupports-eeprom-access: no\nsupports-register-dump: no\nsupports-priv-flags: no\n"
+    }
+]

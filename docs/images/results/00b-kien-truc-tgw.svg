@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="820" height="355" preserveAspectRatio="xMinYMin meet" viewBox="0 0 820 355" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="820" height="355"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-355)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="25" y="333" style="font-family: Arial; font-size: 19px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,666) scale(1,-1)">Transit Gateway kết nối bốn VPC</text>
+			<path d="M 270,239 L 337,183 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="337 183, 332.7857 190.4323, 328.9378 185.8286" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="270 239, 274.2143 231.5677, 278.0622 236.1714" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 270,111 L 337,157 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="337 157, 328.7068 154.9452, 332.1028 149.9987" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="270 111, 278.2932 113.0548, 274.8972 118.0013" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 550,239 L 483,183 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="483 183, 491.0622 185.8286, 487.2143 190.4323" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="550 239, 541.9378 236.1714, 545.7857 231.5677" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<path d="M 550,111 L 483,157 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<polygon points="483 157, 487.8972 149.9987, 491.2932 154.9452" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<polygon points="550 111, 545.1028 118.0013, 541.7068 113.0548" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(12%,40%,67%); fill-rule: evenodd;"/>
+			<rect x="50" y="205" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="62" y="280" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,560) scale(1,-1)">VPC A    10.10.0.0/16</text>
+			<text x="62" y="257" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,514) scale(1,-1)">Subnet 10.10.10.0/24</text>
+			<text x="62" y="235" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,470) scale(1,-1)">EC2 A   10.10.10.212</text>
+			<text x="62" y="215" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,430) scale(1,-1)">SG và route table riêng</text>
+			<rect x="550" y="205" width="220" height="98" rx="6" ry="6" style="stroke: rgb(29%,53%,37%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="562" y="280" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,560) scale(1,-1)">VPC B    10.20.0.0/16</text>
+			<text x="562" y="257" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,514) scale(1,-1)">Subnet 10.20.10.0/24</text>
+			<text x="562" y="235" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,470) scale(1,-1)">EC2 B   10.20.10.155</text>
+			<text x="562" y="215" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,430) scale(1,-1)">SG và route table riêng</text>
+			<rect x="50" y="45" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="62" y="120" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,240) scale(1,-1)">VPC C    10.30.0.0/16</text>
+			<text x="62" y="97" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,194) scale(1,-1)">Subnet 10.30.10.0/24</text>
+			<text x="62" y="75" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,150) scale(1,-1)">EC2 C   10.30.10.212</text>
+			<text x="62" y="55" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,110) scale(1,-1)">SG và route table riêng</text>
+			<rect x="550" y="45" width="220" height="98" rx="6" ry="6" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 1.5; fill: rgb(96%,97%,98%); fill-rule: evenodd;"/>
+			<text x="562" y="120" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,240) scale(1,-1)">VPC D    10.40.0.0/16</text>
+			<text x="562" y="97" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,194) scale(1,-1)">Subnet 10.40.10.0/24</text>
+			<text x="562" y="75" style="font-family: Arial; font-size: 16px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,150) scale(1,-1)">EC2 D   10.40.10.155</text>
+			<text x="562" y="55" style="font-family: Arial; font-size: 13px;fill: rgb(33%,33%,33%); stroke:none;" transform="translate(0,110) scale(1,-1)">SG và route table riêng</text>
+			<rect x="337" y="137" width="146" height="66" rx="8" ry="8" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2; fill: rgb(100%,95%,90%); fill-rule: evenodd;"/>
+			<text x="384.34228515625" y="177" style="font-family: Arial; font-size: 22px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,354) scale(1,-1)">TGW</text>
+			<text x="355.92431640625" y="152" style="font-family: Arial; font-size: 14px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,304) scale(1,-1)">Route table TGW</text>
+			<text x="303.6318359375" y="232" style="font-family: Arial; font-size: 13px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,464) scale(1,-1)">att A</text>
+			<text x="487.6318359375" y="232" style="font-family: Arial; font-size: 13px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,464) scale(1,-1)">att B</text>
+			<text x="303.273193359375" y="92" style="font-family: Arial; font-size: 13px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,184) scale(1,-1)">att C</text>
+			<text x="487.273193359375" y="92" style="font-family: Arial; font-size: 13px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,184) scale(1,-1)">att D</text>
+			<text x="281.192626953125" y="15" style="font-family: Arial; font-size: 15px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,30) scale(1,-1)">1 TGW và 4 VPC attachment hai chiều</text>
+		</g>
+	</g>
+</svg>

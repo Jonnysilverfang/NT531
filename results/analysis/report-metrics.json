@@ -1,0 +1,988 @@
+{
+  "scope": "six verified empirical datasets; five runs per dataset",
+  "rtt": {
+    "peering": {
+      "n": 5,
+      "mean": 0.20779999999999998,
+      "sample_sd": 0.007854934754662188,
+      "minimum": 0.195,
+      "maximum": 0.215
+    },
+    "tgw": {
+      "n": 5,
+      "mean": 0.5630000000000001,
+      "sample_sd": 0.07750806409658288,
+      "minimum": 0.501,
+      "maximum": 0.666
+    }
+  },
+  "tcp_single": {
+    "peering": {
+      "n": 5,
+      "mean": 4.782803979574786,
+      "sample_sd": 0.0005104307222050434,
+      "minimum": 4.7820226466967695,
+      "maximum": 4.783202738997117
+    },
+    "tgw": {
+      "n": 5,
+      "mean": 4.608265048743076,
+      "sample_sd": 0.0016403063850103034,
+      "minimum": 4.60618049746156,
+      "maximum": 4.609523643281826
+    }
+  },
+  "fanin_approximate_total": {
+    "peering": {
+      "n": 5,
+      "mean": 11.6110087870141,
+      "sample_sd": 0.015337577348115914,
+      "minimum": 11.601863624849306,
+      "maximum": 11.63814065489106
+    },
+    "tgw": {
+      "n": 5,
+      "mean": 11.590519964023217,
+      "sample_sd": 0.02320862901279063,
+      "minimum": 11.550671892612048,
+      "maximum": 11.6082240249928
+    }
+  },
+  "rtt_rows": {
+    "peering": [
+      {
+        "run": 1.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.187,
+        "avg_ms": 0.212,
+        "max_ms": 0.25,
+        "mdev_ms": 0.01
+      },
+      {
+        "run": 2.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.177,
+        "avg_ms": 0.195,
+        "max_ms": 0.238,
+        "mdev_ms": 0.009
+      },
+      {
+        "run": 3.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.198,
+        "avg_ms": 0.215,
+        "max_ms": 0.256,
+        "mdev_ms": 0.01
+      },
+      {
+        "run": 4.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.186,
+        "avg_ms": 0.211,
+        "max_ms": 0.256,
+        "mdev_ms": 0.01
+      },
+      {
+        "run": 5.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.181,
+        "avg_ms": 0.206,
+        "max_ms": 0.227,
+        "mdev_ms": 0.008
+      }
+    ],
+    "tgw": [
+      {
+        "run": 1.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.576,
+        "avg_ms": 0.666,
+        "max_ms": 5.897,
+        "mdev_ms": 0.525
+      },
+      {
+        "run": 2.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.483,
+        "avg_ms": 0.521,
+        "max_ms": 1.271,
+        "mdev_ms": 0.076
+      },
+      {
+        "run": 3.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.453,
+        "avg_ms": 0.501,
+        "max_ms": 1.961,
+        "mdev_ms": 0.147
+      },
+      {
+        "run": 4.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.583,
+        "avg_ms": 0.626,
+        "max_ms": 0.903,
+        "mdev_ms": 0.04
+      },
+      {
+        "run": 5.0,
+        "transmitted": 100.0,
+        "received": 100.0,
+        "loss_percent": 0.0,
+        "min_ms": 0.467,
+        "avg_ms": 0.501,
+        "max_ms": 1.006,
+        "mdev_ms": 0.064
+      }
+    ]
+  },
+  "single_rows": {
+    "peering": [
+      {
+        "Mode": "peering",
+        "Run": 1,
+        "ReceiverGbps": 4.7820226466967695,
+        "Retransmits": 48253,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 19.549,
+          "SoftPercent": 15.785
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 17.656,
+          "SoftPercent": 10.141
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "peering",
+        "Run": 2,
+        "ReceiverGbps": 4.783141109495212,
+        "Retransmits": 57185,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 22.578,
+          "SoftPercent": 18.658
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 21.513,
+          "SoftPercent": 14.228
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "peering",
+        "Run": 3,
+        "ReceiverGbps": 4.78310775187597,
+        "Retransmits": 49851,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 19.812,
+          "SoftPercent": 15.923
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 17.744,
+          "SoftPercent": 9.841
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "peering",
+        "Run": 4,
+        "ReceiverGbps": 4.783202738997117,
+        "Retransmits": 55189,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 19.066,
+          "SoftPercent": 15.455
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 17.984,
+          "SoftPercent": 11.101
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "peering",
+        "Run": 5,
+        "ReceiverGbps": 4.7825456508088635,
+        "Retransmits": 49724,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 23.748,
+          "SoftPercent": 19.625
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 18.427,
+          "SoftPercent": 10.98
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      }
+    ],
+    "tgw": [
+      {
+        "Mode": "tgw",
+        "Run": 1,
+        "ReceiverGbps": 4.609523643281826,
+        "Retransmits": 280,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 16.209,
+          "SoftPercent": 12.147
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 18.229,
+          "SoftPercent": 10.554
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "tgw",
+        "Run": 2,
+        "ReceiverGbps": 4.609362331854768,
+        "Retransmits": 193,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 17.776,
+          "SoftPercent": 11.787
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 22.881,
+          "SoftPercent": 14.912
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "tgw",
+        "Run": 3,
+        "ReceiverGbps": 4.6094695658938925,
+        "Retransmits": 0,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 15.437,
+          "SoftPercent": 6.484
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 21.592,
+          "SoftPercent": 13.767
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "tgw",
+        "Run": 4,
+        "ReceiverGbps": 4.60618049746156,
+        "Retransmits": 671,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 20.522,
+          "SoftPercent": 15.08
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 18.08,
+          "SoftPercent": 10.337
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      },
+      {
+        "Mode": "tgw",
+        "Run": 5,
+        "ReceiverGbps": 4.6067892052233335,
+        "Retransmits": 411,
+        "CPU_A": {
+          "Samples": 30,
+          "BusyPercent": 19.101,
+          "SoftPercent": 11.451
+        },
+        "CPU_B": {
+          "Samples": 30,
+          "BusyPercent": 21.751,
+          "SoftPercent": 13.64
+        },
+        "ENA_A_Run_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        },
+        "ENA_B_Whole_Capture_Delta": {
+          "pps_allowance_exceeded": 0.0,
+          "bw_out_allowance_exceeded": 0.0,
+          "bw_in_allowance_exceeded": 0.0,
+          "linklocal_allowance_exceeded": 0.0,
+          "conntrack_allowance_exceeded": 0.0
+        }
+      }
+    ]
+  },
+  "fanin_metrics": {
+    "peering": [
+      {
+        "node": "a",
+        "run": 1,
+        "receiver_Gbps": 4.0131283944918845,
+        "retransmits": 24993,
+        "cpu_busy_percent": 14.996666666666666
+      },
+      {
+        "node": "a",
+        "run": 2,
+        "receiver_Gbps": 3.9381783361287885,
+        "retransmits": 26323,
+        "cpu_busy_percent": 15.069333333333335
+      },
+      {
+        "node": "a",
+        "run": 3,
+        "receiver_Gbps": 3.9501594885345224,
+        "retransmits": 25420,
+        "cpu_busy_percent": 13.144666666666668
+      },
+      {
+        "node": "a",
+        "run": 4,
+        "receiver_Gbps": 3.9976468686941953,
+        "retransmits": 25668,
+        "cpu_busy_percent": 17.524
+      },
+      {
+        "node": "a",
+        "run": 5,
+        "receiver_Gbps": 3.89252729980075,
+        "retransmits": 25768,
+        "cpu_busy_percent": 14.620333333333333
+      },
+      {
+        "node": "c",
+        "run": 1,
+        "receiver_Gbps": 3.608911044618471,
+        "retransmits": 22949,
+        "cpu_busy_percent": 13.821666666666667
+      },
+      {
+        "node": "c",
+        "run": 2,
+        "receiver_Gbps": 3.888724224713939,
+        "retransmits": 25027,
+        "cpu_busy_percent": 15.125333333333334
+      },
+      {
+        "node": "c",
+        "run": 3,
+        "receiver_Gbps": 3.8240596683530796,
+        "retransmits": 22739,
+        "cpu_busy_percent": 15.149000000000001
+      },
+      {
+        "node": "c",
+        "run": 4,
+        "receiver_Gbps": 3.664123476531388,
+        "retransmits": 24385,
+        "cpu_busy_percent": 14.517000000000001
+      },
+      {
+        "node": "c",
+        "run": 5,
+        "receiver_Gbps": 3.9136985198889116,
+        "retransmits": 25682,
+        "cpu_busy_percent": 19.476
+      },
+      {
+        "node": "d",
+        "run": 1,
+        "receiver_Gbps": 3.9801325083930563,
+        "retransmits": 28089,
+        "cpu_busy_percent": 10.836333333333332
+      },
+      {
+        "node": "d",
+        "run": 2,
+        "receiver_Gbps": 3.774961064006579,
+        "retransmits": 25302,
+        "cpu_busy_percent": 10.150666666666666
+      },
+      {
+        "node": "d",
+        "run": 3,
+        "receiver_Gbps": 3.8639214980034575,
+        "retransmits": 25795,
+        "cpu_busy_percent": 9.360666666666667
+      },
+      {
+        "node": "d",
+        "run": 4,
+        "receiver_Gbps": 3.945451896864501,
+        "retransmits": 30529,
+        "cpu_busy_percent": 13.147666666666666
+      },
+      {
+        "node": "d",
+        "run": 5,
+        "receiver_Gbps": 3.7994196460469727,
+        "retransmits": 26983,
+        "cpu_busy_percent": 13.886666666666665
+      }
+    ],
+    "tgw": [
+      {
+        "node": "a",
+        "run": 1,
+        "receiver_Gbps": 3.9879968491355657,
+        "retransmits": 66458,
+        "cpu_busy_percent": 16.912
+      },
+      {
+        "node": "a",
+        "run": 2,
+        "receiver_Gbps": 3.5195593969675585,
+        "retransmits": 75103,
+        "cpu_busy_percent": 11.995
+      },
+      {
+        "node": "a",
+        "run": 3,
+        "receiver_Gbps": 3.113589346431633,
+        "retransmits": 23690,
+        "cpu_busy_percent": 14.195333333333332
+      },
+      {
+        "node": "a",
+        "run": 4,
+        "receiver_Gbps": 3.7533730511069074,
+        "retransmits": 24217,
+        "cpu_busy_percent": 13.336333333333334
+      },
+      {
+        "node": "a",
+        "run": 5,
+        "receiver_Gbps": 4.608679287454484,
+        "retransmits": 1017,
+        "cpu_busy_percent": 17.755
+      },
+      {
+        "node": "c",
+        "run": 1,
+        "receiver_Gbps": 3.457244129379885,
+        "retransmits": 57152,
+        "cpu_busy_percent": 16.877333333333333
+      },
+      {
+        "node": "c",
+        "run": 2,
+        "receiver_Gbps": 3.8755950032570685,
+        "retransmits": 84048,
+        "cpu_busy_percent": 18.208000000000002
+      },
+      {
+        "node": "c",
+        "run": 3,
+        "receiver_Gbps": 4.605977489604143,
+        "retransmits": 1602,
+        "cpu_busy_percent": 19.603
+      },
+      {
+        "node": "c",
+        "run": 4,
+        "receiver_Gbps": 4.232073733321022,
+        "retransmits": 31508,
+        "cpu_busy_percent": 18.477
+      },
+      {
+        "node": "c",
+        "run": 5,
+        "receiver_Gbps": 2.80057965223703,
+        "retransmits": 18164,
+        "cpu_busy_percent": 12.252666666666666
+      },
+      {
+        "node": "d",
+        "run": 1,
+        "receiver_Gbps": 4.144947424265676,
+        "retransmits": 63560,
+        "cpu_busy_percent": 15.473
+      },
+      {
+        "node": "d",
+        "run": 2,
+        "receiver_Gbps": 4.155517492387422,
+        "retransmits": 50315,
+        "cpu_busy_percent": 13.404333333333332
+      },
+      {
+        "node": "d",
+        "run": 3,
+        "receiver_Gbps": 3.8827264875859484,
+        "retransmits": 30093,
+        "cpu_busy_percent": 14.933666666666667
+      },
+      {
+        "node": "d",
+        "run": 4,
+        "receiver_Gbps": 3.62277724056487,
+        "retransmits": 21649,
+        "cpu_busy_percent": 11.742666666666668
+      },
+      {
+        "node": "d",
+        "run": 5,
+        "receiver_Gbps": 4.191963236416875,
+        "retransmits": 29722,
+        "cpu_busy_percent": 15.584666666666667
+      }
+    ]
+  },
+  "fanin_B_cpu": {
+    "peering": [
+      {
+        "samples": 30,
+        "busy_percent": 59.45033333333333,
+        "soft_percent": 34.06966666666666
+      },
+      {
+        "samples": 30,
+        "busy_percent": 58.74166666666667,
+        "soft_percent": 35.102000000000004
+      },
+      {
+        "samples": 30,
+        "busy_percent": 60.22533333333333,
+        "soft_percent": 36.403666666666666
+      },
+      {
+        "samples": 30,
+        "busy_percent": 57.853,
+        "soft_percent": 34.513333333333335
+      },
+      {
+        "samples": 29,
+        "busy_percent": 59.63068965517241,
+        "soft_percent": 35.48551724137931
+      }
+    ],
+    "tgw": [
+      {
+        "samples": 30,
+        "busy_percent": 57.48433333333333,
+        "soft_percent": 34.101
+      },
+      {
+        "samples": 30,
+        "busy_percent": 57.754333333333335,
+        "soft_percent": 33.836
+      },
+      {
+        "samples": 30,
+        "busy_percent": 59.538666666666664,
+        "soft_percent": 36.43866666666667
+      },
+      {
+        "samples": 30,
+        "busy_percent": 49.772,
+        "soft_percent": 28.307666666666666
+      },
+      {
+        "samples": 30,
+        "busy_percent": 59.82633333333333,
+        "soft_percent": 35.11
+      }
+    ]
+  },
+  "architecture": {
+    "region": "us-east-1",
+    "availability_zone": "us-east-1a",
+    "nodes": {
+      "a": {
+        "vpc_cidr": "10.10.0.0/16",
+        "subnet_cidr": "10.10.10.0/24",
+        "private_ip": "10.10.10.212"
+      },
+      "b": {
+        "vpc_cidr": "10.20.0.0/16",
+        "subnet_cidr": "10.20.10.0/24",
+        "private_ip": "10.20.10.155"
+      },
+      "c": {
+        "vpc_cidr": "10.30.0.0/16",
+        "subnet_cidr": "10.30.10.0/24",
+        "private_ip": "10.30.10.212"
+      },
+      "d": {
+        "vpc_cidr": "10.40.0.0/16",
+        "subnet_cidr": "10.40.10.0/24",
+        "private_ip": "10.40.10.155"
+      }
+    },
+    "peering_pairs": [
+      "ab",
+      "ac",
+      "ad",
+      "bc",
+      "bd",
+      "cd"
+    ],
+    "transit_gateways": 1,
+    "vpc_attachments": 4,
+    "directed_inter_vpc_routes": 12,
+    "management_eips": 4,
+    "provenance": [
+      {
+        "path": "infra/terraform/full-mesh.tf",
+        "sha256": "4f23768f7eca35b2189dba46ff7b55c2162a559c7e52caba8f995504bfc67bfb"
+      },
+      {
+        "path": "infra/terraform/transit-gateway.tf",
+        "sha256": "52aa64bf51d7dd6cd39225ea2c618673e3e01828cc5611fdce7b0bedcb5cd13b"
+      },
+      {
+        "path": "infra/terraform/routes.tf",
+        "sha256": "77b4fc0f522e2d2476849107965a3d006b81b4a0cbc57a71141ac0054d588585"
+      },
+      {
+        "path": "infra/terraform/elastic-ips.tf",
+        "sha256": "3a4d6c092a78788e0c03e2d7461fce217023874d1195599cbdae3459e9b6a6e1"
+      },
+      {
+        "path": "infra/terraform/expansion.tf",
+        "sha256": "ade20e170765e5c68322f3ed3f8ee8183f4e24193ca74ffc7509b8950f456b57"
+      },
+      {
+        "path": "infra/terraform/subnets.tf",
+        "sha256": "ddd4224b062e24f98e0f26dae2556bdf33b075cf1adc8d03404ed3072f242023"
+      }
+    ],
+    "notes": [
+      "Logical topology from project configuration and verified measurement metadata; not a fresh AWS inventory.",
+      "EIP management addresses are separate from private-IP benchmark paths."
+    ]
+  },
+  "sources": [
+    {
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/summary.csv",
+      "sha256": "e295af0a11ae8d6e0b9e8455aa843a38a2c2cac2e29ff5912da559444e6b101d"
+    },
+    {
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/summary.csv",
+      "sha256": "1c6a1aafc7b7c444796b57a36c1f2fa2fd1460301a67fb1b86a2f9440f686e2f"
+    },
+    {
+      "path": "results/formal/tcp-single-comparison-audit.json",
+      "sha256": "e06d55f835e74ad602ec651fdc1a60f79fdcbf05cd924024331dc1a6662f4c7c"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/audit-1791293390/validated-summary.json",
+      "sha256": "b152bab25ab427a8479d181b79e9e89e9493e7e8f25e82f7f09d5b501b32114e"
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/audit-1791293390/remote-b.json",
+      "sha256": "e08acf889cc7920003d78783372badafbcb8b4dff2534b46684d8010d6cf2b24"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/audit-1791296141/validated-summary.json",
+      "sha256": "72f3019ebeef320e3ed329796c53a55fd7425e3887a0ef3397a8ff1caa9df359"
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/audit-1791296141/remote-b.json",
+      "sha256": "c5484be8045bcafbccb8b9a912f5060bf61ad60027a0a26a1f97a833c89cb5ee"
+    }
+  ],
+  "notes": [
+    "Sample SD is descriptive across five run averages, not ping mdev or inferential confidence intervals.",
+    "Run indices across modes do not imply contemporaneous paired observations.",
+    "Fanin totals sum separate source-window averages, not interval-aligned common-window goodput.",
+    "B ENA deltas cover whole captures; no packet-loss percentage can be inferred."
+  ],
+  "quantitative_methods": {
+    "jain_window_basis": "Per-source full-run receiver windows; not common-window aligned.",
+    "jain_per_run": {
+      "peering": [
+        {
+          "run": 1,
+          "receiver_Gbps": {
+            "a": 4.0131283944918845,
+            "c": 3.608911044618471,
+            "d": 3.9801325083930563
+          },
+          "approx_total_Gbps": 11.602171947503411,
+          "jain": 0.9977593968902948
+        },
+        {
+          "run": 2,
+          "receiver_Gbps": {
+            "a": 3.9381783361287885,
+            "c": 3.888724224713939,
+            "d": 3.774961064006579
+          },
+          "approx_total_Gbps": 11.601863624849306,
+          "jain": 0.9996878639356677
+        },
+        {
+          "run": 3,
+          "receiver_Gbps": {
+            "a": 3.9501594885345224,
+            "c": 3.8240596683530796,
+            "d": 3.8639214980034575
+          },
+          "approx_total_Gbps": 11.63814065489106,
+          "jain": 0.9998159969584746
+        },
+        {
+          "run": 4,
+          "receiver_Gbps": {
+            "a": 3.9976468686941953,
+            "c": 3.664123476531388,
+            "d": 3.945451896864501
+          },
+          "approx_total_Gbps": 11.607222242090085,
+          "jain": 0.998568730925986
+        },
+        {
+          "run": 5,
+          "receiver_Gbps": {
+            "a": 3.89252729980075,
+            "c": 3.9136985198889116,
+            "d": 3.7994196460469727
+          },
+          "approx_total_Gbps": 11.605645465736634,
+          "jain": 0.9998353767896903
+        }
+      ],
+      "tgw": [
+        {
+          "run": 1,
+          "receiver_Gbps": {
+            "a": 3.9879968491355657,
+            "c": 3.457244129379885,
+            "d": 4.144947424265676
+          },
+          "approx_total_Gbps": 11.590188402781127,
+          "jain": 0.9942324198963713
+        },
+        {
+          "run": 2,
+          "receiver_Gbps": {
+            "a": 3.5195593969675585,
+            "c": 3.8755950032570685,
+            "d": 4.155517492387422
+          },
+          "approx_total_Gbps": 11.55067189261205,
+          "jain": 0.9954519760506987
+        },
+        {
+          "run": 3,
+          "receiver_Gbps": {
+            "a": 3.113589346431633,
+            "c": 4.605977489604143,
+            "d": 3.8827264875859484
+          },
+          "approx_total_Gbps": 11.602293323621724,
+          "jain": 0.975775550132888
+        },
+        {
+          "run": 4,
+          "receiver_Gbps": {
+            "a": 3.7533730511069074,
+            "c": 4.232073733321022,
+            "d": 3.62277724056487
+          },
+          "approx_total_Gbps": 11.6082240249928,
+          "jain": 0.995438727174979
+        },
+        {
+          "run": 5,
+          "receiver_Gbps": {
+            "a": 4.608679287454484,
+            "c": 2.80057965223703,
+            "d": 4.191963236416875
+          },
+          "approx_total_Gbps": 11.601222176108388,
+          "jain": 0.9615708139219513
+        }
+      ]
+    },
+    "jain_descriptive": {
+      "peering": {
+        "mean_of_run_indices": 0.9991334731000227,
+        "minimum": 0.9977593968902948,
+        "maximum": 0.9998353767896903
+      },
+      "tgw": {
+        "mean_of_run_indices": 0.9844938974353776,
+        "minimum": 0.9615708139219513,
+        "maximum": 0.9954519760506987
+      }
+    },
+    "cv_percent": {
+      "peering": {
+        "rtt": 3.780045598971217,
+        "tcp_single": 0.010672206604846537,
+        "fanin_approximate_total": 0.1320951316932053
+      },
+      "tgw": {
+        "rtt": 13.766974084650599,
+        "tcp_single": 0.03559487936696923,
+        "fanin_approximate_total": 0.20023803146735292
+      }
+    },
+    "goodput_example": {
+      "bytes": 17932877824,
+      "seconds": 30.00049,
+      "receiver_Gbps": 4.78202264669677,
+      "source": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-1.json",
+      "sha256": "dd3653a5839bb16a6c9231defbf2e9c13452d158149520229249e7c5593899d1"
+    },
+    "single_peering_vs_tgw_percent": 3.787519358924829,
+    "fanin_tgw_vs_peering_percent": -0.1764603176753976,
+    "rtt_tgw_minus_peering_ms": 0.35520000000000007,
+    "limits": [
+      "Descriptive statistics from five runs per batch; no inferential test or confidence interval.",
+      "Mean of Jain per-run indices, not Jain of session-average source rates.",
+      "Logical topology counts are not physical link counts or service capacity measurements.",
+      "Physical delay examples are hypothetical, not AWS measurements."
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+# ==============================================================================
+# Docker Compose: Bộ Giám Sát Hiệu Năng Mạng Cloud-Native Chuẩn CNCF
+# Dịch vụ:
+#  - Prometheus (Metrics Scraper Engine)
+#  - Grafana (Visual Dashboard P50/P95/P99)
+#  - Mock Metrics Exporter (Phục vụ số liệu RTT, Placement Group, SoftIRQ, eBPF)
+# ==============================================================================
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: prometheus-network-perf
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: grafana-network-perf
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  mock-metrics-exporter:
+    image: python:3.12-alpine
+    container_name: mock-metrics-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - ./mock_metrics_exporter.py:/app/mock_metrics_exporter.py:ro
+      - ../results/summary_statistics.json:/results/summary_statistics.json:ro
+    working_dir: /app
+    command: ["python", "mock_metrics_exporter.py"]
+
+volumes:
+  prometheus_data:
+  grafana_data:

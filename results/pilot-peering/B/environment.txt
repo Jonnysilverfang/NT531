@@ -1,0 +1,29 @@
+Sun Oct  4 04:47:29 UTC 2026
+ip-10-20-10-155.ec2.internal
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+VERSION_ID="2023"
+PLATFORM_ID="platform:al2023"
+PRETTY_NAME="Amazon Linux 2023.12.20260930"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023"
+HOME_URL="https://aws.amazon.com/linux/amazon-linux-2023/"
+DOCUMENTATION_URL="https://docs.aws.amazon.com/linux/"
+SUPPORT_URL="https://aws.amazon.com/premiumsupport/"
+BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023"
+VENDOR_NAME="AWS"
+VENDOR_URL="https://aws.amazon.com/"
+SUPPORT_END="2029-06-30"
+6.18.51-120.163.amzn2023.x86_64
+iperf 3.19.1 (cJSON 1.7.15)
+Linux ip-10-20-10-155.ec2.internal 6.18.51-120.163.amzn2023.x86_64 #2 SMP PREEMPT_DYNAMIC Fri Sep 25 01:45:40 UTC 2026 x86_64
+Optional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+ens5             UP             10.20.10.155/24 metric 512 fe80::ff:c5ff:fe6e:2e01/64 
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 02:ff:c5:6e:2e:01 brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-0ecb2ac044c7cb60f
+    altname device-number-0.0

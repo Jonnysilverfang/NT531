@@ -1,0 +1,280 @@
+{
+  "folders_found": 1,
+  "captures": [
+    {
+      "folder": "/home/ec2-user/nt531-results/peering-tcp-fanin-d-1791293390-DcwPRL",
+      "node": "d",
+      "files": 47,
+      "metadata": "mode=peering\nscenario=fanin\nnode=d\nrole=sender\npair=d-b\npeer=10.20.10.155\nstart_epoch=1791293390\nport=5203\nThree sources to B; TCP P1 per source; omit 5s; measure 30s; five starts 45s apart; MTU 1500\nTue Oct  6 13:28:03 UTC 2026\nip-10-40-10-155.ec2.internal\niperf 3.19.1 (cJSON 1.7.15)\nLinux ip-10-40-10-155.ec2.internal 6.18.51-120.163.amzn2023.x86_64 #2 SMP PREEMPT_DYNAMIC Fri Sep 25 01:45:40 UTC 2026 x86_64\nOptional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\n    link/ether 02:ff:d8:fd:c0:25 brd ff:ff:ff:ff:ff:ff\n    altname enp0s5\n    altname eni-03c96a32d9c43c5e1\n    altname device-number-0.0\nnet.ipv4.tcp_congestion_control = cubic\nNTPSynchronized=yes\n",
+      "schedule_error": null,
+      "runs": [
+        {
+          "run": 1,
+          "json_exists": true,
+          "error": null,
+          "test": {
+            "protocol": "TCP",
+            "num_streams": 1,
+            "blksize": 131072,
+            "omit": 5,
+            "duration": 30,
+            "bytes": 0,
+            "blocks": 0,
+            "reverse": 0,
+            "tos": 0,
+            "target_bitrate": 0,
+            "bidir": 0,
+            "fqrate": 0,
+            "interval": 1
+          },
+          "receiver": {
+            "start": 0,
+            "end": 30.000394,
+            "seconds": 30.000394,
+            "bytes": 14925692928,
+            "bits_per_second": 3980132508.3930564,
+            "sender": true
+          },
+          "sender": {
+            "start": 0,
+            "end": 29.99997,
+            "seconds": 29.99997,
+            "bytes": 14926479360,
+            "bits_per_second": 3980398476.398476,
+            "retransmits": 28089,
+            "sender": true
+          },
+          "start": "2026-10-06T13:29:50.656914636Z",
+          "end": "2026-10-06T13:30:25.663841382Z",
+          "exit": "0",
+          "stderr_bytes": 0,
+          "ena_delta": {
+            "bw_in_allowance_exceeded": 0,
+            "bw_out_allowance_exceeded": 0,
+            "pps_allowance_exceeded": 0,
+            "conntrack_allowance_exceeded": 0,
+            "linklocal_allowance_exceeded": 0
+          },
+          "cpu": {
+            "samples": 30,
+            "busy_percent": 10.836333333333332,
+            "soft_percent": 9.304333333333334
+          }
+        },
+        {
+          "run": 2,
+          "json_exists": true,
+          "error": null,
+          "test": {
+            "protocol": "TCP",
+            "num_streams": 1,
+            "blksize": 131072,
+            "omit": 5,
+            "duration": 30,
+            "bytes": 0,
+            "blocks": 0,
+            "reverse": 0,
+            "tos": 0,
+            "target_bitrate": 0,
+            "bidir": 0,
+            "fqrate": 0,
+            "interval": 1
+          },
+          "receiver": {
+            "start": 0,
+            "end": 30.000416,
+            "seconds": 30.000416,
+            "bytes": 14156300288,
+            "bits_per_second": 3774961064.006579,
+            "sender": true
+          },
+          "sender": {
+            "start": 0,
+            "end": 30.000257,
+            "seconds": 30.000257,
+            "bytes": 14156562432,
+            "bits_per_second": 3775050975.596642,
+            "retransmits": 25302,
+            "sender": true
+          },
+          "start": "2026-10-06T13:30:35.708462063Z",
+          "end": "2026-10-06T13:31:10.714851164Z",
+          "exit": "0",
+          "stderr_bytes": 0,
+          "ena_delta": {
+            "bw_in_allowance_exceeded": 0,
+            "bw_out_allowance_exceeded": 0,
+            "pps_allowance_exceeded": 0,
+            "conntrack_allowance_exceeded": 0,
+            "linklocal_allowance_exceeded": 0
+          },
+          "cpu": {
+            "samples": 30,
+            "busy_percent": 10.150666666666666,
+            "soft_percent": 8.474333333333334
+          }
+        },
+        {
+          "run": 3,
+          "json_exists": true,
+          "error": null,
+          "test": {
+            "protocol": "TCP",
+            "num_streams": 1,
+            "blksize": 131072,
+            "omit": 5,
+            "duration": 30,
+            "bytes": 0,
+            "blocks": 0,
+            "reverse": 0,
+            "tos": 0,
+            "target_bitrate": 0,
+            "bidir": 0,
+            "fqrate": 0,
+            "interval": 1
+          },
+          "receiver": {
+            "start": 0,
+            "end": 30.000358,
+            "seconds": 30.000358,
+            "bytes": 14489878528,
+            "bits_per_second": 3863921498.0034575,
+            "sender": true
+          },
+          "sender": {
+            "start": 0,
+            "end": 30.00027,
+            "seconds": 30.00027,
+            "bytes": 14489747456,
+            "bits_per_second": 3863897879.8524146,
+            "retransmits": 25795,
+            "sender": true
+          },
+          "start": "2026-10-06T13:31:20.756793832Z",
+          "end": "2026-10-06T13:31:55.763438171Z",
+          "exit": "0",
+          "stderr_bytes": 0,
+          "ena_delta": {
+            "bw_in_allowance_exceeded": 0,
+            "bw_out_allowance_exceeded": 0,
+            "pps_allowance_exceeded": 0,
+            "conntrack_allowance_exceeded": 0,
+            "linklocal_allowance_exceeded": 0
+          },
+          "cpu": {
+            "samples": 30,
+            "busy_percent": 9.360666666666667,
+            "soft_percent": 7.864
+          }
+        },
+        {
+          "run": 4,
+          "json_exists": true,
+          "error": null,
+          "test": {
+            "protocol": "TCP",
+            "num_streams": 1,
+            "blksize": 131072,
+            "omit": 5,
+            "duration": 30,
+            "bytes": 0,
+            "blocks": 0,
+            "reverse": 0,
+            "tos": 0,
+            "target_bitrate": 0,
+            "bidir": 0,
+            "fqrate": 0,
+            "interval": 1
+          },
+          "receiver": {
+            "start": 0,
+            "end": 30.000456,
+            "seconds": 30.000456,
+            "bytes": 14795669504,
+            "bits_per_second": 3945451896.864501,
+            "sender": true
+          },
+          "sender": {
+            "start": 0,
+            "end": 30.000335,
+            "seconds": 30.000335,
+            "bytes": 14797635584,
+            "bits_per_second": 3945992092.154971,
+            "retransmits": 30529,
+            "sender": true
+          },
+          "start": "2026-10-06T13:32:05.806262744Z",
+          "end": "2026-10-06T13:32:40.813155444Z",
+          "exit": "0",
+          "stderr_bytes": 0,
+          "ena_delta": {
+            "bw_in_allowance_exceeded": 0,
+            "bw_out_allowance_exceeded": 0,
+            "pps_allowance_exceeded": 0,
+            "conntrack_allowance_exceeded": 0,
+            "linklocal_allowance_exceeded": 0
+          },
+          "cpu": {
+            "samples": 30,
+            "busy_percent": 13.147666666666666,
+            "soft_percent": 11.809333333333333
+          }
+        },
+        {
+          "run": 5,
+          "json_exists": true,
+          "error": null,
+          "test": {
+            "protocol": "TCP",
+            "num_streams": 1,
+            "blksize": 131072,
+            "omit": 5,
+            "duration": 30,
+            "bytes": 0,
+            "blocks": 0,
+            "reverse": 0,
+            "tos": 0,
+            "target_bitrate": 0,
+            "bidir": 0,
+            "fqrate": 0,
+            "interval": 1
+          },
+          "receiver": {
+            "start": 0,
+            "end": 30.000478,
+            "seconds": 30.000478,
+            "bytes": 14248050688,
+            "bits_per_second": 3799419646.0469728,
+            "sender": true
+          },
+          "sender": {
+            "start": 0,
+            "end": 30.000298,
+            "seconds": 30.000298,
+            "bytes": 14249885696,
+            "bits_per_second": 3799931772.944389,
+            "retransmits": 26983,
+            "sender": true
+          },
+          "start": "2026-10-06T13:32:50.854834778Z",
+          "end": "2026-10-06T13:33:25.861842846Z",
+          "exit": "0",
+          "stderr_bytes": 0,
+          "ena_delta": {
+            "bw_in_allowance_exceeded": 0,
+            "bw_out_allowance_exceeded": 0,
+            "pps_allowance_exceeded": 0,
+            "conntrack_allowance_exceeded": 0,
+            "linklocal_allowance_exceeded": 0
+          },
+          "cpu": {
+            "samples": 30,
+            "busy_percent": 13.886666666666665,
+            "soft_percent": 11.299666666666667
+          }
+        }
+      ],
+      "summary": "run,sender_Gbps,receiver_Gbps,retransmits\n1,3.9803984763984763,3.9801325083930563,28089\n2,3.775050975596642,3.774961064006579,25302\n3,3.8638978798524146,3.8639214980034575,25795\n4,3.945992092154971,3.945451896864501,30529\n5,3.799931772944389,3.7994196460469727,26983\n"
+    }
+  ]
+}

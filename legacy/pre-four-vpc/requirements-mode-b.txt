@@ -1,0 +1,2 @@
+# Visualization only; the empirical analyzer itself uses the Python standard library.
+matplotlib>=3.9,<4

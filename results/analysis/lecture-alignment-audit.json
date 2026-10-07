@@ -1,0 +1,648 @@
+{
+  "purpose": "Field availability audit only; no new performance estimates or experiment executions.",
+  "files_checked": 40,
+  "files_with_all_fields": 40,
+  "files": [
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-1.json",
+      "sha256": "5007b2ad390cdcefd32a6483912e622caf3d67ef3bb368d15acfb2f992efd455",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-1.json",
+      "sha256": "83fb63306036842a37da8a06705e51bc6405dfc2c9da621979202166444a544d",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-1.json",
+      "sha256": "d9cbcf47ab39b52bc39209564470a5d88f7ac02da247aa00e6fb44bc2247f02c",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-2.json",
+      "sha256": "fab059dba0b01746283baae4f3060a26391e40e7fb7ca8726278cb49f8b25dfe",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-2.json",
+      "sha256": "c7d85bf54a77ef663f5c5bfb75e509b42d414572338e23b05e17d6938107394c",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-2.json",
+      "sha256": "ed4a78f7fd82e7a76fc16997587288988e9cf8e425fe6063e8a5c137e04a537c",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-3.json",
+      "sha256": "83c839a5c6c3059b222a67ea149cc02ceeaeeb672da27df6b2d420183a637647",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-3.json",
+      "sha256": "4f4ea876a00203c950bb234e839508177a7230a5ece8743b60c1b648eaafac96",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-3.json",
+      "sha256": "d70e04e9289d9d181a1ee85bf94f800ff6873dac222d3bf55c57731b8b6de1ba",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-4.json",
+      "sha256": "51cd42efd84782242129d9bec1934181e81e4f69cdd9b8e5f98ec5a1f281f688",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-4.json",
+      "sha256": "ec13f00ae39ea74827e61823fae37ca9ed2a4634edd281726cec248f98f6420d",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-4.json",
+      "sha256": "b34518220bc39fc6faa42220c69f3f996331f650ccad2973d35120dc87def8dd",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/A/peering-tcp-fanin-a-1791293390-RyXrAo/run-5.json",
+      "sha256": "0d562979b82bc97bbcd3be6762316f8981d74645402bd01fddb1915a8bdd2478",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/C/peering-tcp-fanin-c-1791293390-P5LLrh/run-5.json",
+      "sha256": "45aeffdd654602732e4b6a8129cf3550b055464cd2366f72e6cf497367b054fb",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-fanin/D/peering-tcp-fanin-d-1791293390-DcwPRL/run-5.json",
+      "sha256": "d9a6bc18663a1b831a0e3d11d9591b88a17ad92b93fd0155a94d13da740590f7",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-1.json",
+      "sha256": "e7b91a2030dc2ac50650179ae23d6ae8624f8bec897e798a743d14829e1229f6",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-1.json",
+      "sha256": "75c68cf1ee3e60a559a33391dc9d8784029bd1de32861176765bdd4aae744649",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-1.json",
+      "sha256": "5928567431d41abee1585eab50665724d6d8720e26657fa5de0ccb88efe00bf2",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-2.json",
+      "sha256": "e0050caa078e6e4091a89455c76264304663909d1ead181572d95b5397ec2347",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-2.json",
+      "sha256": "f22ed7d7e9b845cacb898c24bd277556880d5dcf7ac712b7a40cc2e9cf4d31e8",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-2.json",
+      "sha256": "b8ceffd21f3e67074fedab646695a58a9e9e8f473c3b0d6587ab4f2d9f24fe93",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-3.json",
+      "sha256": "438c29f026ca54c9d9125817f1605a31a9c579ae16995f0011d4466c447c3c46",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-3.json",
+      "sha256": "6059ad97f12b1bfc79fcb89fdd9dfa2873fbb42a862a805fefc99e4e20af7d5d",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-3.json",
+      "sha256": "3c7dc13d455baa3465e235f2fb57025864e11aa3f5b0c5622ed893c1c8608f64",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-4.json",
+      "sha256": "2c5621499c56de16b5712ec5eecba371191f136e9e67a78afe6f685fdb792f27",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-4.json",
+      "sha256": "489110236b7c6b509c98a82e499c8c28d3e24cd16a8f1aac59fe5883d6f4ef86",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-4.json",
+      "sha256": "cd865516b8ce18a357910afc9dba401c231236752e09f012fc2e3a2ea202e6f2",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/A/tgw-tcp-fanin-a-1791296141-V2CCdZ/run-5.json",
+      "sha256": "600a7e066565da150bcd5eafcbc1bfc3f7cdf6c66d6441bf083a3ecfecc143df",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/C/tgw-tcp-fanin-c-1791296141-jimn5d/run-5.json",
+      "sha256": "4f63c6ad77e2ae14a1fa0510945b2d73e180c837b621f8c8c319b55f0224dc98",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-fanin/D/tgw-tcp-fanin-d-1791296141-NefCr0/run-5.json",
+      "sha256": "b6e74c020725f9c8fa7e5758e25ef5fb6ed22c3dd3649ddef5274ff972425fb9",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-1.json",
+      "sha256": "dd3653a5839bb16a6c9231defbf2e9c13452d158149520229249e7c5593899d1",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-2.json",
+      "sha256": "2669fcc82d75b8a1232f9fc2c49b48afe5e752d57d6ff282dbf19b526bd3dc43",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-3.json",
+      "sha256": "30c6386516efc9094f4ef6cc7c10b2e0d20d84409c5da950f6ed3755dcb09279",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-4.json",
+      "sha256": "90320aedcfdc4a1cdc7f4750261c00f339237122d2b2cef8a83c35943b3e7a9a",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/peering/tcp-single-a-b/A/peering-tcp-single-a-b-20261006T091620Z-uupMz9/run-5.json",
+      "sha256": "705fd343f84aed772562c0f18d92bfa55c68b6ded417bf1e1e2e2ad5621a66c4",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-single-a-b/A/tgw-tcp-single-a-b-20261005T123159Z-rqzOZj/run-1.json",
+      "sha256": "c736bb42147d6379228b870f1f4fafa345b130e76ff9dd703f48b7c89f0cef25",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-single-a-b/A/tgw-tcp-single-a-b-20261005T123159Z-rqzOZj/run-2.json",
+      "sha256": "58de17c5719c149ec8dd64d2d2bf85822db35e0902871152d433fe13e886269e",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-single-a-b/A/tgw-tcp-single-a-b-20261005T123159Z-rqzOZj/run-3.json",
+      "sha256": "2739bd4679b0d595201160d46fdd2b8f7b3bc4422602d730132ccbfb5f27435f",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-single-a-b/A/tgw-tcp-single-a-b-20261005T123159Z-rqzOZj/run-4.json",
+      "sha256": "033e6a317ca1f01db8a39c3b961af0c948488e0f47f552f7bbcd5b9eb02e92b8",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    },
+    {
+      "path": "results/formal/tgw/tcp-single-a-b/A/tgw-tcp-single-a-b-20261005T123159Z-rqzOZj/run-5.json",
+      "sha256": "3aeddeae544abfcc7ccb93a44be1d57c249db5a6ec7df7db540706ed0916c54e",
+      "measured_intervals": 30,
+      "fields_all_present": {
+        "snd_cwnd": true,
+        "snd_wnd": true,
+        "rtt": true,
+        "rttvar": true,
+        "retransmits": true,
+        "bits_per_second": true
+      },
+      "error": null
+    }
+  ],
+  "checked_utc": "2026-10-06T15:57:33.451035+00:00",
+  "lecture_sources": [
+    {
+      "path": "D:/NT531 - Introduction1.pptx",
+      "sha256": "df352a8e7d3008b7fed61742fe70fcaefaa1be38413123e963d8c10932ae1cae"
+    },
+    {
+      "path": "D:/NT531 - Lecture 02 - Arrival Processes and Queuing Systems.pdf",
+      "sha256": "3017204d2157bf43c43d47c5a282fa5e6e6d435e2bd1daf9ecd74d5cb3c21324"
+    },
+    {
+      "path": "D:/lec4 - NT531 - Congestion Control.pdf",
+      "sha256": "45029bffbb93af7953a73cd6aa365f363ec19dab01738b4d8218673c1ed65184"
+    },
+    {
+      "path": "D:/NT531 - Internet Performance, QoS and Cloud-Native Metrics.pdf",
+      "sha256": "fbfe8816e31aeea662684b48d0ac895ab29bf468ff9c109b408a0dad96c1ccfa"
+    }
+  ],
+  "ping_sources": [
+    {
+      "mode": "peering",
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/run-1.txt",
+      "reply_samples": 100,
+      "sha256": "07116b64773e39321a03301882f08c028c72caa82da1a30363b47833bad5e396"
+    },
+    {
+      "mode": "peering",
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/run-2.txt",
+      "reply_samples": 100,
+      "sha256": "6dfad28397fce7e92cf40b600c450d79e31e12af6052e66b5718c15ca5b2addf"
+    },
+    {
+      "mode": "peering",
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/run-3.txt",
+      "reply_samples": 100,
+      "sha256": "806e62afc187c9f80729656c13afac6fc1d181cabad3d348655a2c347f1cd230"
+    },
+    {
+      "mode": "peering",
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/run-4.txt",
+      "reply_samples": 100,
+      "sha256": "a754f963b7427d24b63a2a38e1aacd5fe3aef5c686e5afae846e048fa62425c3"
+    },
+    {
+      "mode": "peering",
+      "path": "results/pilot-peering/rtt-idle-a-b/nt531-results/peering-rtt-idle-a-b-20261005T115510Z-6qX9Gm/run-5.txt",
+      "reply_samples": 100,
+      "sha256": "b39eac1c07e76da0d19c0954d9ee19528662125709cfee8e1d08b5c4dbe8eab0"
+    },
+    {
+      "mode": "tgw",
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/run-1.txt",
+      "reply_samples": 100,
+      "sha256": "ac24b11281b400b0b5160d8cada9822f7ca04c995d394b6328cbcc9ba3928d2d"
+    },
+    {
+      "mode": "tgw",
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/run-2.txt",
+      "reply_samples": 100,
+      "sha256": "e350f55bce61d199c5cb346801ebc14113e52d26d8995ea3961d68cf0084f872"
+    },
+    {
+      "mode": "tgw",
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/run-3.txt",
+      "reply_samples": 100,
+      "sha256": "f5779274da776cc766ba0e39d947ff945751308eb07edd421fed4d2f494f83b3"
+    },
+    {
+      "mode": "tgw",
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/run-4.txt",
+      "reply_samples": 100,
+      "sha256": "bc004c389be7b0ef5511917b937ca728c2d80775167eb9b94477a4ccebcba21c"
+    },
+    {
+      "mode": "tgw",
+      "path": "results/formal/tgw/rtt-idle-a-b/nt531-results/tgw-rtt-idle-a-b-20261005T120751Z-mx0lij/run-5.txt",
+      "reply_samples": 100,
+      "sha256": "2600856063ee00d92cc38c48601be974d9d44854b03f44b275958ef05957bbc8"
+    }
+  ]
+}

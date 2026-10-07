@@ -1,0 +1,30 @@
+[
+  {
+    "node": "a",
+    "folder": "results\\formal\\tgw\\tcp-fanin\\A\\tgw-tcp-fanin-a-1791296141-V2CCdZ",
+    "files": 47,
+    "archive_sha256": "7856710a5b548653dacdb87e9ef4030f7e1ffceac51515af7ca78bb937744f2c",
+    "archive_bytes": 36523
+  },
+  {
+    "node": "b",
+    "folder": "results\\formal\\tgw\\tcp-fanin\\B\\tgw-tcp-fanin-b-1791296141-6nNO8D",
+    "files": 5,
+    "archive_sha256": "6865a8e729a0295de8367d3efc325a8b8700d0264c05516caa9072c18668e85f",
+    "archive_bytes": 14066
+  },
+  {
+    "node": "c",
+    "folder": "results\\formal\\tgw\\tcp-fanin\\C\\tgw-tcp-fanin-c-1791296141-jimn5d",
+    "files": 47,
+    "archive_sha256": "b06b0ffe28c15242177205d14bb0670a6f80db571b2ee406896f8fd1d8308c00",
+    "archive_bytes": 37197
+  },
+  {
+    "node": "d",
+    "folder": "results\\formal\\tgw\\tcp-fanin\\D\\tgw-tcp-fanin-d-1791296141-NefCr0",
+    "files": 47,
+    "archive_sha256": "fa3de36bedbd862af1fc5788c076e2b8e8b578464c32c49ca14084ed8d5eb820",
+    "archive_bytes": 37137
+  }
+]

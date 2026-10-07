@@ -1,71 +1,115 @@
-# NT531 — AWS Empirical Network Performance Evaluation
+# Đồ án NT531 — Đánh giá hiệu năng AWS VPC Peering và Transit Gateway
 
-> Current status: implementation and Terraform plan validated; **no AWS resources have been applied and no empirical results exist yet**.
+## Đồ án trả lời câu hỏi gì?
 
-This repository evaluates network performance on real AWS infrastructure in `us-east-1`, constrained to `us-east-1a`. It separates historical Mode A synthetic methodology artifacts from Mode B empirical evidence. Only a checksum-verified Mode B final run may support findings in the final report.
+Giữ nguyên bốn EC2 và điều kiện thử nghiệm, thay đường định tuyến giữa
+VPC Peering và Transit Gateway (TGW), rồi so sánh thông lượng, RTT,
+retransmission và tải CPU. Kết quả phản ánh toàn đường truyền giữa các
+EC2 trong cấu hình này, không phải giới hạn tuyệt đối của dịch vụ AWS.
 
-## Registered research scope
+Tên đăng ký: **Performance Evaluation of AWS VPC Peering and Transit Gateway**.
+Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
+[Bảng môn học](https://docs.google.com/spreadsheets/d/1WJ8oUXO-NLPxHZ2eL1pFzYHndRo64IWtAPUTtsWq7Ro/edit?gid=0).
 
-| Test | Comparison | Primary outputs |
-|---|---|---|
-| TC01 | VPC Peering vs Transit Gateway | RTT P50/P95/P99, ping jitter/mdev, packet loss |
-| TC02 | MTU 1500/9001 × iperf3 streams 1/4/8 | Gbps, ENA RX/TX PPS, DUT CPU, SoftIRQ, retransmits |
-| TC03 | iptables vs verified XDP native under increasing UDP load | target/achieved/DUT RX PPS, maximum sustainable PPS, CPU, SoftIRQ, P99, loss |
+## Đọc theo thứ tự
 
-PrivateLink, placement groups, security benchmarking, and architecture scoring are outside the active experiment.
+Xem [trạng thái bản công bố ngày 07/10/2026 và việc tiếp theo](docs/19-trang-thai-ban-cong-bo.md).
+Bản này gồm Terraform bốn VPC, script đo, sáu bộ kết quả chính đã kiểm chứng,
+chương kết quả DOCX, sơ đồ, biểu đồ, công thức và kế hoạch trước 26/10.
+Đây chưa phải báo cáo toàn bộ đồ án hoặc bằng chứng đã chạy các bài bổ sung.
 
-## AWS topology
+![Kiến trúc Peering bốn VPC](docs/images/results/00a-kien-truc-peering.png)
+![Kiến trúc Transit Gateway bốn VPC](docs/images/results/00b-kien-truc-tgw.png)
 
-```text
-EC2 client — c6i.large / AL2023 / 10.1.1.10 / us-east-1a
-  ├── 10.2.1.10 ── VPC Peering ── EC2 server-b1 (TC01, TC02, TC03 DUT)
-  └── 10.2.2.10 ── Transit Gateway ── EC2 server-b2 (TC01 target)
+Trên GitHub, thiết kế cũ cùng dữ liệu mô phỏng được lưu tại
+`legacy/pre-four-vpc/`; không dùng dữ liệu đó để tính kết quả AWS thực nghiệm.
+Thư mục này chỉ có trong bản Git công bố; thư mục vận hành giữ state riêng.
 
-VPC A 10.1.0.0/16                       VPC B 10.2.0.0/16
-  workload 10.1.1.0/24                    peering workload 10.2.1.0/24
-  TGW attach 10.1.255.0/28                TGW workload 10.2.2.0/24
-                                             TGW attach 10.2.255.0/28
-```
+1. [Kiến trúc và cách vận hành bốn VPC](docs/03-bon-vpc.md).
+2. [Chi tiết Terraform, state và IP SSH](infra/terraform/README.md).
+3. [Hướng dẫn đo, nguyên tắc so sánh và câu hỏi bảo vệ](docs/04-do-va-giai-thich.md).
+4. [Trạng thái triển khai và kiểm chứng](docs/05-trang-thai-trien-khai.md).
+5. [Truy cập và chuẩn bị máy bằng Systems Manager](docs/06-truy-cap-ssm.md).
+6. [Kết quả fan-in Peering đã kiểm tra](docs/10-ket-qua-fan-in-peering.md).
+7. [Quy trình bài fan-in TGW đã thực hiện](docs/11-do-fan-in-tgw.md).
+8. [Kết quả fan-in TGW và đối chiếu Peering](docs/12-ket-qua-fan-in-tgw-va-so-sanh.md).
+9. [Chương kết quả DOCX có kiến trúc, biểu đồ và công thức giải thích đầy đủ](docs/13-tong-hop-ket-qua.md).
+10. [Công thức, ký hiệu, đơn vị và ví dụ thế số](docs/14-cong-thuc-va-ky-hieu.md).
+11. [Khái niệm cho người mới và kết luận Peering TGW có lợi thế ở đâu](docs/15-khai-niem-va-ket-luan-so-sanh.md).
+12. [Kế hoạch củng cố đồ án trước ngày 26/10](docs/16-ke-hoach-hoan-thien-den-26-10.md).
+13. [Đối chiếu bài giảng NT531, công cụ cần thêm và công thức áp dụng](docs/17-doi-chieu-bai-giang-va-cong-cu.md).
+14. [Số liệu từng lượt, công thức và file nguồn để kiểm chứng](docs/18-so-lieu-de-kiem-chung.md).
 
-All three instances use the same resolved AMI, instance type, and AZ. There is no SSH ingress. The workstation only deploys, stages a hash-addressed runtime bundle, and invokes SSM; benchmark traffic originates on the EC2 client. The client role can send only `AWS-RunShellScript` commands to the two experiment servers.
+Kết luận hiện tại: Peering có RTT thấp hơn và TCP một luồng cao hơn
+trong các phiên đã đo; TGW có lợi thế kiến trúc về kết nối nhiều VPC
+và định tuyến tập trung. Bài fan-in cho thấy giới hạn máy nhận, chưa
+xếp hạng năng lực tối đa dịch vụ. Phần bổ sung ưu tiên là đo lặp có
+kiểm soát và RTT khi có tải; kế hoạch không có nghĩa đã chạy các bài mới.
 
-TC01 still changes both route and destination host. Its permitted claim is therefore an observed path-configuration association conditional on the recorded host assignment, not an isolated causal TGW effect.
+`docs/01-hai-vpc.md`, `docs/02-van-hanh-ec2.md` và ảnh tổng quan cũ ghi lại
+các bước ban đầu; phạm vi mới nằm ở tài liệu bốn VPC. Không dùng sơ đồ cũ
+để xác nhận số tài nguyên đang chạy.
 
-## Evidence workflow
+## Kiến trúc
 
-1. Review [the implementation audit](docs/IMPLEMENTATION_AUDIT.md) and [registered protocol](docs/MODE_B_EXPERIMENTAL_PROTOCOL.md).
-2. Authenticate with an assumed role or IAM Identity Center session. The controller refuses an IAM-user identity.
-3. Run Terraform `fmt`, `init`, `validate`, and `plan`; review the billable components and explicit flat two-spoke TGW route table.
-4. Apply only after the account and TGW-intent gates are approved.
-5. Run AWS preflight from the EC2 client through SSM.
-6. Execute pilot N=3, analyze and explicitly accept it.
-7. Execute final N=10, seal checksums, analyze, graph, and complete the report.
+| VPC | CIDR | IP riêng EC2 | Vai trò ví dụ |
+|---|---|---|---|
+| A | 10.10.0.0/16 | 10.10.10.212 | Nguồn dữ liệu |
+| B | 10.20.0.0/16 | 10.20.10.155 | Máy nhận |
+| C | 10.30.0.0/16 | 10.30.10.212 | Nguồn dữ liệu |
+| D | 10.40.0.0/16 | 10.40.10.155 | Nguồn hoặc máy nhận |
 
-```powershell
-terraform -chdir=terraform init
-terraform -chdir=terraform validate
-terraform -chdir=terraform plan
+Bốn máy `c6i.large`, cùng AZ `us-east-1a`, cùng AMI, root disk 8 GiB gp3.
+Mỗi VPC có một subnet /24, IGW, route table, SG. Mỗi EC2 có một EIP để SSH.
 
-# After reviewed apply and SSM Online:
-.\scripts\aws_controller.ps1 -Phase Preflight -Profile <assumed-role-profile>
-.\scripts\aws_controller.ps1 -Phase Pilot -Profile <assumed-role-profile>
-.\scripts\aws_controller.ps1 -Phase Final -Profile <assumed-role-profile> `
-  -PilotSummary <pilot-summary-path>
-```
+- **Peering:** AB, AC, AD, BC, BD, CD (6 kết nối hai chiều).
+- **TGW:** 1 TGW + 4 VPC attachment, mỗi VPC có đường tới ba VPC khác.
+- **Chuyển chế độ:** 12 route liên VPC đổi target theo `routing_mode`.
+- **Không đổi:** địa chỉ riêng EC2, máy đo, cổng công cụ và đường quản trị.
 
-The final controller writes `results/final_summary.json` and the following experiment-scoped figures:
+Hai phương án có thể cùng được cấp tài nguyên nhưng mỗi route chỉ có một
+target. `enable_transit_gateway=true` giữ TGW tồn tại; `routing_mode` mới
+chọn đường gói tin. Không mặc định dữ liệu tự chia đều qua hai công nghệ.
 
-- `tc01_latency.png`
-- `tc02_mtu_throughput.png`
-- `tc02_softirq.png`
-- `tc03_xdp_saturation.png`
+## Cách hiểu từng thành phần
 
-## Fail-closed gates
+| Thành phần | Vai trò |
+|---|---|
+| VPC/subnet | Phân chia mạng và dải địa chỉ |
+| Route table | Chọn next hop theo địa chỉ đích |
+| Peering | Nối trực tiếp một cặp VPC, không chuyển tiếp qua VPC thứ ba |
+| TGW/attachment | Router trung tâm và kết nối của từng VPC vào router |
+| SG | Cho phép SSH từ IP quản trị; ICMP và TCP đo giữa các endpoint |
+| EIP/IGW | Truy cập quản trị từ máy cá nhân; không phải đường đo private IP |
+| Terraform state | Ánh xạ địa chỉ resource trong code với tài nguyên AWS thật |
+| iperf3 | Tạo tải và đo thông lượng ở tầng ứng dụng |
 
-Execution stops on wrong account/Region/AZ/AMI/type, any SSM node not Online, route or port mismatch, failed jumbo-frame probe, non-ENA driver, generic/unverified XDP, missing cells, configuration drift, checksum mismatch, overwrite attempts, or absent pilot acceptance.
+SSH dùng `ssh_admin_cidr`; cấu hình demo hiện tại là `0.0.0.0/0` theo yêu cầu.
+ICMP giữa các endpoint được cho phép.
+TCP 5201–5203 giữa các EC2 dành cho iperf3. Không mở UDP cho bài đo hiện tại.
+Ba listener riêng trên mỗi máy hỗ trợ ba client đồng thời tới một receiver.
 
-The current evidence status is tracked in [MODE_B_READINESS_REPORT.md](MODE_B_READINESS_REPORT.md). The final narrative belongs in [docs/FINAL_EXPERIMENT_REPORT.md](docs/FINAL_EXPERIMENT_REPORT.md) and must remain incomplete until real final artifacts pass every gate.
+## Git và nơi chạy lệnh
 
-## Historical Mode A material
+Thư mục vận hành: `D:\NT531-DanhGiaHieuNang`. State local nằm trong
+`infra/terraform/nt531.tfstate`. Các bản Git là bản sao riêng:
+đẩy code lên GitHub không đồng nghĩa di chuyển state.
 
-`results/raw`, `results/summary_statistics.json`, and older analysis documents are synthetic methodology-prototype artifacts with `empirical=false`. They are retained for provenance and regression testing only; they are never inputs to the Mode B analyzer.
+Commit: `.tf`, `.terraform.lock.hcl`, test, scripts, docs, `.example` và
+kết quả đã rà soát. Không commit `.pem`, `.tfstate*`, `.tfplan`, file biến
+thật `.tfvars`, `.env`, `.terraform/` hoặc `tmp/`. Không áp dụng lại plan
+cũ sau khi thay đổi cấu hình; luôn tạo plan mới.
+
+## Giới hạn và chi phí
+
+Terraform không tự quản lý nội dung hệ điều hành của các EC2 đã import.
+Script SSH chuẩn bị công cụ và listener; dữ liệu đo lưu trên từng máy rồi
+sao lưu về `results/`. Key pair `nt531-key` là phụ thuộc đã có trong AWS.
+
+EIP, EBS và attachment TGW vẫn có phí khi stop EC2. Bốn EIP có giá niêm
+yết 0.48 USD/ngày; TGW còn phí attachment và lượng dữ liệu xử lý. Không
+để benchmark không giới hạn thời gian. Xem [AWS VPC pricing](https://aws.amazon.com/vpc/pricing/)
+và [TGW pricing](https://aws.amazon.com/transit-gateway/pricing/).
+
+`prevent_destroy` bảo vệ EC2 trong các thao tác Terraform thông thường;
+nó không bảo vệ thao tác xóa thủ công qua Console. Sao lưu kết quả và state.

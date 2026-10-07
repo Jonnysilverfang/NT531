@@ -1,0 +1,5 @@
+# Preserve exact source bytes: raw measurements and report provenance use SHA256.
+* -text
+*.png binary
+*.docx binary
+*.tar.gz binary

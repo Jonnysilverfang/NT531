@@ -1,0 +1,5 @@
+# Example only: replace with your actual public IPv4 address before use.
+# 203.0.113.10 is reserved for documentation and is not your address.
+# Save your local values in admin.auto.tfvars (ignored by Git).
+# Terraform does not automatically load this .example file.
+ssh_admin_cidr = "203.0.113.10/32"

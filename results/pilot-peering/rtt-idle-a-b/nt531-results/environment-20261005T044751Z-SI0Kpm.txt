@@ -1,0 +1,190 @@
+Mon Oct  5 04:47:51 UTC 2026
+ip-10-10-10-212.ec2.internal
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+VERSION_ID="2023"
+PLATFORM_ID="platform:al2023"
+PRETTY_NAME="Amazon Linux 2023.12.20260930"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2023"
+HOME_URL="https://aws.amazon.com/linux/amazon-linux-2023/"
+DOCUMENTATION_URL="https://docs.aws.amazon.com/linux/"
+SUPPORT_URL="https://aws.amazon.com/premiumsupport/"
+BUG_REPORT_URL="https://github.com/amazonlinux/amazon-linux-2023"
+VENDOR_NAME="AWS"
+VENDOR_URL="https://aws.amazon.com/"
+SUPPORT_END="2029-06-30"
+6.18.51-120.163.amzn2023.x86_64
+iperf 3.19.1 (cJSON 1.7.15)
+Linux ip-10-10-10-212.ec2.internal 6.18.51-120.163.amzn2023.x86_64 #2 SMP PREEMPT_DYNAMIC Fri Sep 25 01:45:40 UTC 2026 x86_64
+Optional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+ens5             UP             10.10.10.212/24 metric 512 fe80::ff:f9ff:fea4:77bb/64 
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 02:ff:f9:a4:77:bb brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-08c2866aa52fb3c11
+    altname device-number-0.0
+default via 10.10.10.1 dev ens5 proto dhcp src 10.10.10.212 metric 512 
+10.10.0.2 via 10.10.10.1 dev ens5 proto dhcp src 10.10.10.212 metric 512 
+10.10.10.0/24 dev ens5 proto kernel scope link src 10.10.10.212 metric 512 
+10.10.10.1 dev ens5 proto dhcp scope link src 10.10.10.212 metric 512 
+net.ipv4.tcp_congestion_control = cubic
+Linux 6.18.51-120.163.amzn2023.x86_64 (ip-10-10-10-212.ec2.internal) 	10/05/26 	_x86_64_	(2 CPU)
+
+04:47:51     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+04:47:52     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+Average:     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+NIC statistics:
+     total_resets: 0
+     reset_fail: 0
+     tx_timeout: 0
+     wd_expired: 0
+     admin_q_pause: 0
+     bad_tx_req_id: 0
+     bad_rx_req_id: 0
+     bad_rx_desc_num: 0
+     missing_intr: 0
+     suspected_poll_starvation: 0
+     missing_tx_cmpl: 0
+     rx_desc_malformed: 0
+     tx_desc_malformed: 0
+     invalid_state: 0
+     os_netdev_wd: 0
+     missing_admin_interrupt: 0
+     admin_to: 0
+     device_request_reset: 0
+     missing_first_intr: 0
+     suspend: 0
+     resume: 0
+     interface_down: 0
+     interface_up: 1
+     bw_in_allowance_exceeded: 0
+     bw_out_allowance_exceeded: 0
+     pps_allowance_exceeded: 0
+     conntrack_allowance_exceeded: 0
+     linklocal_allowance_exceeded: 0
+     conntrack_allowance_available: 102599
+     ena_srd_mode: 0
+     ena_srd_tx_pkts: 0
+     ena_srd_eligible_tx_pkts: 0
+     ena_srd_rx_pkts: 0
+     ena_srd_resource_utilization: 0
+     ena_admin_q_aborted_cmd: 0
+     ena_admin_q_submitted_cmd: 31
+     ena_admin_q_completed_cmd: 31
+     ena_admin_q_out_of_space: 0
+     ena_admin_q_no_completion: 0
+     num_of_active_io_queues: 2
+     queue_0_tx_tx_poll: 808
+     queue_0_tx_doorbells: 495
+     queue_0_tx_unmask_interrupt: 808
+     queue_0_tx_lost_interrupt: 0
+     queue_0_tx_cnt: 499
+     queue_0_tx_bytes: 66170
+     queue_0_tx_queue_stop: 0
+     queue_0_tx_queue_wakeup: 0
+     queue_0_tx_dma_mapping_err: 0
+     queue_0_tx_linearize: 0
+     queue_0_tx_linearize_failed: 0
+     queue_0_tx_napi_comp: 808
+     queue_0_tx_prepare_ctx_err: 0
+     queue_0_tx_bad_req_id: 0
+     queue_0_tx_llq_buffer_copy: 82
+     queue_0_tx_missed_tx: 0
+     queue_0_tx_pending_timedout_pkt: 0
+     queue_0_tx_xsk_cnt: 0
+     queue_0_tx_xsk_bytes: 0
+     queue_0_tx_xsk_need_wakeup_set: 0
+     queue_0_tx_xsk_wakeup_request: 0
+     queue_0_rx_cnt: 378
+     queue_0_rx_bytes: 76349
+     queue_0_rx_rx_copybreak_pkt: 292
+     queue_0_rx_csum_good: 372
+     queue_0_rx_refil_partial: 0
+     queue_0_rx_csum_bad: 0
+     queue_0_rx_page_alloc_fail: 0
+     queue_0_rx_skb_alloc_fail: 0
+     queue_0_rx_dma_mapping_err: 0
+     queue_0_rx_bad_desc_num: 0
+     queue_0_rx_bp_invocations_cnt: 0
+     queue_0_rx_bad_req_id: 0
+     queue_0_rx_empty_rx_ring: 0
+     queue_0_rx_csum_unchecked: 0
+     queue_0_rx_xdp_aborted: 0
+     queue_0_rx_xdp_drop: 0
+     queue_0_rx_xdp_pass: 0
+     queue_0_rx_xdp_tx: 0
+     queue_0_rx_xdp_invalid: 0
+     queue_0_rx_xdp_redirect: 0
+     queue_0_rx_pp_alloc_fast: 1009
+     queue_0_rx_pp_alloc_slow: 16
+     queue_0_rx_pp_alloc_slow_hi_ord: 0
+     queue_0_rx_pp_alloc_empty: 16
+     queue_0_rx_pp_alloc_refill: 1
+     queue_0_rx_pp_alloc_waive: 0
+     queue_0_rx_pp_cached: 1
+     queue_0_rx_pp_cache_full: 0
+     queue_0_rx_pp_ring: 2
+     queue_0_rx_pp_ring_full: 0
+     queue_0_rx_pp_released_ref: 0
+     queue_0_rx_xsk_need_wakeup_set: 0
+     queue_0_rx_zc_queue_pkt_copy: 0
+     queue_1_tx_tx_poll: 905
+     queue_1_tx_doorbells: 441
+     queue_1_tx_unmask_interrupt: 905
+     queue_1_tx_lost_interrupt: 0
+     queue_1_tx_cnt: 445
+     queue_1_tx_bytes: 62791
+     queue_1_tx_queue_stop: 0
+     queue_1_tx_queue_wakeup: 0
+     queue_1_tx_dma_mapping_err: 0
+     queue_1_tx_linearize: 0
+     queue_1_tx_linearize_failed: 0
+     queue_1_tx_napi_comp: 905
+     queue_1_tx_prepare_ctx_err: 0
+     queue_1_tx_bad_req_id: 0
+     queue_1_tx_llq_buffer_copy: 90
+     queue_1_tx_missed_tx: 0
+     queue_1_tx_pending_timedout_pkt: 0
+     queue_1_tx_xsk_cnt: 0
+     queue_1_tx_xsk_bytes: 0
+     queue_1_tx_xsk_need_wakeup_set: 0
+     queue_1_tx_xsk_wakeup_request: 0
+     queue_1_rx_cnt: 721
+     queue_1_rx_bytes: 2317425
+     queue_1_rx_rx_copybreak_pkt: 329
+     queue_1_rx_csum_good: 717
+     queue_1_rx_refil_partial: 0
+     queue_1_rx_csum_bad: 0
+     queue_1_rx_page_alloc_fail: 0
+     queue_1_rx_skb_alloc_fail: 0
+     queue_1_rx_dma_mapping_err: 0
+     queue_1_rx_bad_desc_num: 0
+     queue_1_rx_bp_invocations_cnt: 0
+     queue_1_rx_bad_req_id: 0
+     queue_1_rx_empty_rx_ring: 0
+     queue_1_rx_csum_unchecked: 0
+     queue_1_rx_xdp_aborted: 0
+     queue_1_rx_xdp_drop: 0
+     queue_1_rx_xdp_pass: 0
+     queue_1_rx_xdp_tx: 0
+     queue_1_rx_xdp_invalid: 0
+     queue_1_rx_xdp_redirect: 0
+     queue_1_rx_pp_alloc_fast: 1549
+     queue_1_rx_pp_alloc_slow: 17
+     queue_1_rx_pp_alloc_slow_hi_ord: 0
+     queue_1_rx_pp_alloc_empty: 17
+     queue_1_rx_pp_alloc_refill: 0
+     queue_1_rx_pp_alloc_waive: 0
+     queue_1_rx_pp_cached: 493
+     queue_1_rx_pp_cache_full: 19
+     queue_1_rx_pp_ring: 52
+     queue_1_rx_pp_ring_full: 0
+     queue_1_rx_pp_released_ref: 0
+     queue_1_rx_xsk_need_wakeup_set: 0
+     queue_1_rx_zc_queue_pkt_copy: 0

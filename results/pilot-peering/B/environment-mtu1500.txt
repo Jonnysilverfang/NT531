@@ -1,0 +1,7 @@
+Sun Oct  4 05:28:03 UTC 2026
+ip-10-20-10-155.ec2.internal
+2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 02:ff:c5:6e:2e:01 brd ff:ff:ff:ff:ff:ff
+    altname enp0s5
+    altname eni-0ecb2ac044c7cb60f
+    altname device-number-0.0

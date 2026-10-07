@@ -1,8 +1,0 @@
-aws_region         = "us-east-1"
-availability_zone  = "us-east-1a"
-allowed_account_id = "411509276671"
-project_name       = "nt531-netperf"
-instance_type      = "c6i.large"
-
-# Optional: set an exact AL2023 x86_64 AMI after the first reviewed plan.
-# benchmark_ami_id = "ami-0123456789abcdef0"

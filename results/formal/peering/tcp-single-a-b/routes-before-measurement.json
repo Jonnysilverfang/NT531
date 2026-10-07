@@ -1,0 +1,142 @@
+[
+    {
+        "ID": "rtb-045ff335d6160bffa",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.10.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0ca632e04a3aaffe3"
+            },
+            {
+                "DestinationCidrBlock": "10.20.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-02c1dcc715c555d3f"
+            },
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "10.40.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0a24d4789cb038b1c"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-0f5ca8f735c9e41f5",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "ID": "rtb-07bb4237be663c475",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.10.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0e62a059e8fb327ba"
+            },
+            {
+                "DestinationCidrBlock": "10.20.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0e8e16d12ab06dd36"
+            },
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0a24d4789cb038b1c"
+            },
+            {
+                "DestinationCidrBlock": "10.40.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-0c725b0da8560864a",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "ID": "rtb-0eb842ec2e5c1d6e8",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.10.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "10.20.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0d52503115f5644b6"
+            },
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0ca632e04a3aaffe3"
+            },
+            {
+                "DestinationCidrBlock": "10.40.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0e62a059e8fb327ba"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-01757ea4e730f306f",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    },
+    {
+        "ID": "rtb-0930c358cc8dcfe25",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.10.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0d52503115f5644b6"
+            },
+            {
+                "DestinationCidrBlock": "10.20.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            },
+            {
+                "DestinationCidrBlock": "10.30.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-02c1dcc715c555d3f"
+            },
+            {
+                "DestinationCidrBlock": "10.40.0.0/16",
+                "Origin": "CreateRoute",
+                "State": "active",
+                "VpcPeeringConnectionId": "pcx-0e8e16d12ab06dd36"
+            },
+            {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": "igw-0e2967415d1bbab31",
+                "Origin": "CreateRoute",
+                "State": "active"
+            }
+        ]
+    }
+]

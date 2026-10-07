@@ -1,0 +1,49 @@
+{
+  "folders_found": 1,
+  "captures": [
+    {
+      "folder": "/home/ec2-user/nt531-results/peering-tcp-fanin-b-1791293390-MsjotI",
+      "node": "b",
+      "files": 5,
+      "metadata": "mode=peering\nscenario=fanin\nnode=b\nrole=receiver\npair=a-c-d-to-b\npeer=10.20.10.155\nstart_epoch=1791293390\nport=0\nThree sources to B; TCP P1 per source; omit 5s; measure 30s; five starts 45s apart; MTU 1500\nTue Oct  6 13:27:59 UTC 2026\nip-10-20-10-155.ec2.internal\niperf 3.19.1 (cJSON 1.7.15)\nLinux ip-10-20-10-155.ec2.internal 6.18.51-120.163.amzn2023.x86_64 #2 SMP PREEMPT_DYNAMIC Fri Sep 25 01:45:40 UTC 2026 x86_64\nOptional features available: CPU affinity setting, IPv6 flow label, SCTP, TCP congestion algorithm setting, sendfile / zerocopy, socket pacing, authentication, bind to device, support IPv4 don't fragment, POSIX threads\n2: ens5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\n    link/ether 02:ff:c5:6e:2e:01 brd ff:ff:ff:ff:ff:ff\n    altname enp0s5\n    altname eni-0ecb2ac044c7cb60f\n    altname device-number-0.0\nnet.ipv4.tcp_congestion_control = cubic\nNTPSynchronized=yes\n",
+      "schedule_error": null,
+      "runs": [],
+      "end": "2026-10-06T13:33:31.014330012Z",
+      "ena_delta": {
+        "bw_in_allowance_exceeded": 1434501,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 160457411,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      },
+      "cpu_bytes": 128467,
+      "planned_cpu_windows": [
+        {
+          "samples": 30,
+          "busy_percent": 59.45033333333333,
+          "soft_percent": 34.06966666666666
+        },
+        {
+          "samples": 30,
+          "busy_percent": 58.74166666666667,
+          "soft_percent": 35.102000000000004
+        },
+        {
+          "samples": 30,
+          "busy_percent": 60.22533333333333,
+          "soft_percent": 36.403666666666666
+        },
+        {
+          "samples": 30,
+          "busy_percent": 57.853,
+          "soft_percent": 34.513333333333335
+        },
+        {
+          "samples": 29,
+          "busy_percent": 59.63068965517241,
+          "soft_percent": 35.48551724137931
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "peering_session": 1791293390,
+  "tgw_session": 1791296141,
+  "peering_sum_Gbps": 11.611008787014102,
+  "tgw_sum_Gbps": 11.590519964023217,
+  "tgw_vs_peering_percent": -0.1764603176754087,
+  "peering_B_cpu_percent": 59.18020459770115,
+  "tgw_B_cpu_percent": 56.87513333333332,
+  "nodes": [
+    {
+      "node": "a",
+      "peering_Gbps": 3.958328077530028,
+      "tgw_Gbps": 3.79663958621923,
+      "tgw_min_Gbps": 3.113589346431633,
+      "tgw_max_Gbps": 4.608679287454484
+    },
+    {
+      "node": "c",
+      "peering_Gbps": 3.7799033868211582,
+      "tgw_Gbps": 3.7942940015598294,
+      "tgw_min_Gbps": 2.80057965223703,
+      "tgw_max_Gbps": 4.605977489604143
+    },
+    {
+      "node": "d",
+      "peering_Gbps": 3.872777322662914,
+      "tgw_Gbps": 3.999586376244159,
+      "tgw_min_Gbps": 3.62277724056487,
+      "tgw_max_Gbps": 4.191963236416875
+    }
+  ],
+  "notes": [
+    "Only one batch of five runs per mode, measured sequentially.",
+    "Aggregate is approximate sum of per-source full-window receiver averages, not interval-aligned.",
+    "Both batches show receiver B bandwidth/PPS allowance exceedance; throughput is not a service capacity measurement.",
+    "Per-source variation is observed, but causes and statistical significance are not established."
+  ]
+}

@@ -1,0 +1,262 @@
+SSM setup a command=b0e93967-11c2-4622-acaf-b6b79c11fc5e
+Environment saved to /home/ec2-user/nt531-results/environment-20261005T044947Z-AhJ1AA.txt
+LISTEN 0      4096    10.10.10.212:5202      0.0.0.0:*   
+LISTEN 0      4096    10.10.10.212:5203      0.0.0.0:*   
+LISTEN 0      4096    10.10.10.212:5201      0.0.0.0:*   
+Ready: 10.10.10.212, TCP 5201/5202/5203. MTU unchanged.
+
+SSM setup b command=0c5638cc-a9a8-4c1a-8d85-d9c151b05839
+Environment saved to /home/ec2-user/nt531-results/environment-20261005T044954Z-T3qHEN.txt
+LISTEN 0      4096    10.20.10.155:5202      0.0.0.0:*   
+LISTEN 0      4096    10.20.10.155:5203      0.0.0.0:*   
+LISTEN 0      4096    10.20.10.155:5201      0.0.0.0:*   
+Ready: 10.20.10.155, TCP 5201/5202/5203. MTU unchanged.
+
+SSM setup c command=668da62d-f156-4e29-8e0e-f4b626199161
+Amazon Linux 2023 Kernel Livepatch repository   838 kB/s |  89 kB     00:00    
+Dependencies resolved.
+================================================================================
+ Package          Arch       Version                      Repository       Size
+================================================================================
+Installing:
+ iperf3           x86_64     3.19.1-1.amzn2023.0.1        amazonlinux     126 k
+Installing dependencies:
+ lksctp-tools     x86_64     1.0.18-9.amzn2023.0.3        amazonlinux      92 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 218 k
+Installed size: 576 k
+Downloading Packages:
+(1/2): lksctp-tools-1.0.18-9.amzn2023.0.3.x86_6 3.5 MB/s |  92 kB     00:00    
+(2/2): iperf3-3.19.1-1.amzn2023.0.1.x86_64.rpm  3.6 MB/s | 126 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           2.7 MB/s | 218 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64              1/2 
+  Installing       : iperf3-3.19.1-1.amzn2023.0.1.x86_64                    2/2 
+  Running scriptlet: iperf3-3.19.1-1.amzn2023.0.1.x86_64                    2/2 
+  Verifying        : iperf3-3.19.1-1.amzn2023.0.1.x86_64                    1/2 
+  Verifying        : lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64              2/2 
+
+Installed:
+  iperf3-3.19.1-1.amzn2023.0.1.x86_64 lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64
+
+Complete!
+Environment saved to /home/ec2-user/nt531-results/environment-20261005T045017Z-Sdrq8Y.txt
+LISTEN 0      4096    10.30.10.212:5201      0.0.0.0:*   
+LISTEN 0      4096    10.30.10.212:5203      0.0.0.0:*   
+LISTEN 0      4096    10.30.10.212:5202      0.0.0.0:*   
+Ready: 10.30.10.212, TCP 5201/5202/5203. MTU unchanged.
+
+SSM setup d command=42a29c58-e9cc-41c3-bc1e-aa332dcb62a3
+Amazon Linux 2023 Kernel Livepatch repository   848 kB/s |  89 kB     00:00    
+Dependencies resolved.
+================================================================================
+ Package          Arch       Version                      Repository       Size
+================================================================================
+Installing:
+ iperf3           x86_64     3.19.1-1.amzn2023.0.1        amazonlinux     126 k
+Installing dependencies:
+ lksctp-tools     x86_64     1.0.18-9.amzn2023.0.3        amazonlinux      92 k
+
+Transaction Summary
+================================================================================
+Install  2 Packages
+
+Total download size: 218 k
+Installed size: 576 k
+Downloading Packages:
+(1/2): lksctp-tools-1.0.18-9.amzn2023.0.3.x86_6 4.1 MB/s |  92 kB     00:00    
+(2/2): iperf3-3.19.1-1.amzn2023.0.1.x86_64.rpm  4.4 MB/s | 126 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           3.1 MB/s | 218 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64              1/2 
+  Installing       : iperf3-3.19.1-1.amzn2023.0.1.x86_64                    2/2 
+  Running scriptlet: iperf3-3.19.1-1.amzn2023.0.1.x86_64                    2/2 
+  Verifying        : iperf3-3.19.1-1.amzn2023.0.1.x86_64                    1/2 
+  Verifying        : lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64              2/2 
+
+Installed:
+  iperf3-3.19.1-1.amzn2023.0.1.x86_64 lksctp-tools-1.0.18-9.amzn2023.0.3.x86_64
+
+Complete!
+Environment saved to /home/ec2-user/nt531-results/environment-20261005T045044Z-WDbAiz.txt
+LISTEN 0      4096    10.40.10.155:5202      0.0.0.0:*   
+LISTEN 0      4096    10.40.10.155:5203      0.0.0.0:*   
+LISTEN 0      4096    10.40.10.155:5201      0.0.0.0:*   
+Ready: 10.40.10.155, TCP 5201/5202/5203. MTU unchanged.
+
+SSM connectivity a command=252aa64d-05f4-4879-9641-79e77755607a
+UTC=2026-10-05T04:50:57Z source=10.10.10.212 declared_mode=peering
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=127 time=1.06 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=127 time=0.227 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.227/0.645/1.063/0.418 ms
+PING PASS 10.10.10.212 -> 10.20.10.155
+TCP PASS 10.10.10.212 -> 10.20.10.155:5201
+TCP PASS 10.10.10.212 -> 10.20.10.155:5202
+TCP PASS 10.10.10.212 -> 10.20.10.155:5203
+IPERF PASS 10.10.10.212 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=127 time=1.65 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=127 time=0.228 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.228/0.937/1.646/0.709 ms
+PING PASS 10.10.10.212 -> 10.30.10.212
+TCP PASS 10.10.10.212 -> 10.30.10.212:5201
+TCP PASS 10.10.10.212 -> 10.30.10.212:5202
+TCP PASS 10.10.10.212 -> 10.30.10.212:5203
+IPERF PASS 10.10.10.212 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=127 time=1.53 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=127 time=0.211 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.211/0.871/1.531/0.660 ms
+PING PASS 10.10.10.212 -> 10.40.10.155
+TCP PASS 10.10.10.212 -> 10.40.10.155:5201
+TCP PASS 10.10.10.212 -> 10.40.10.155:5202
+TCP PASS 10.10.10.212 -> 10.40.10.155:5203
+IPERF PASS 10.10.10.212 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-peering-20261005T045056Z-OPEhtk.txt
+
+SSM connectivity b command=5a6327d4-badf-43ad-90c4-c7cbaf2b4070
+UTC=2026-10-05T04:51:11Z source=10.20.10.155 declared_mode=peering
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=127 time=0.238 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=127 time=0.235 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1034ms
+rtt min/avg/max/mdev = 0.235/0.236/0.238/0.001 ms
+PING PASS 10.20.10.155 -> 10.10.10.212
+TCP PASS 10.20.10.155 -> 10.10.10.212:5201
+TCP PASS 10.20.10.155 -> 10.10.10.212:5202
+TCP PASS 10.20.10.155 -> 10.10.10.212:5203
+IPERF PASS 10.20.10.155 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=127 time=1.09 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=127 time=0.164 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.164/0.627/1.091/0.463 ms
+PING PASS 10.20.10.155 -> 10.30.10.212
+TCP PASS 10.20.10.155 -> 10.30.10.212:5201
+TCP PASS 10.20.10.155 -> 10.30.10.212:5202
+TCP PASS 10.20.10.155 -> 10.30.10.212:5203
+IPERF PASS 10.20.10.155 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=127 time=1.66 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=127 time=0.218 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.218/0.938/1.658/0.720 ms
+PING PASS 10.20.10.155 -> 10.40.10.155
+TCP PASS 10.20.10.155 -> 10.40.10.155:5201
+TCP PASS 10.20.10.155 -> 10.40.10.155:5202
+TCP PASS 10.20.10.155 -> 10.40.10.155:5203
+IPERF PASS 10.20.10.155 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-peering-20261005T045111Z-FgzMHo.txt
+
+SSM connectivity c command=a98d2f25-50ce-43fb-a179-7e9418b17310
+UTC=2026-10-05T04:51:25Z source=10.30.10.212 declared_mode=peering
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=127 time=0.252 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=127 time=0.248 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1051ms
+rtt min/avg/max/mdev = 0.248/0.250/0.252/0.002 ms
+PING PASS 10.30.10.212 -> 10.10.10.212
+TCP PASS 10.30.10.212 -> 10.10.10.212:5201
+TCP PASS 10.30.10.212 -> 10.10.10.212:5202
+TCP PASS 10.30.10.212 -> 10.10.10.212:5203
+IPERF PASS 10.30.10.212 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=127 time=0.185 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=127 time=0.165 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1024ms
+rtt min/avg/max/mdev = 0.165/0.175/0.185/0.010 ms
+PING PASS 10.30.10.212 -> 10.20.10.155
+TCP PASS 10.30.10.212 -> 10.20.10.155:5201
+TCP PASS 10.30.10.212 -> 10.20.10.155:5202
+TCP PASS 10.30.10.212 -> 10.20.10.155:5203
+IPERF PASS 10.30.10.212 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.40.10.155 (10.40.10.155) 56(84) bytes of data.
+64 bytes from 10.40.10.155: icmp_seq=1 ttl=127 time=1.56 ms
+64 bytes from 10.40.10.155: icmp_seq=2 ttl=127 time=0.228 ms
+
+--- 10.40.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.228/0.893/1.558/0.665 ms
+PING PASS 10.30.10.212 -> 10.40.10.155
+TCP PASS 10.30.10.212 -> 10.40.10.155:5201
+TCP PASS 10.30.10.212 -> 10.40.10.155:5202
+TCP PASS 10.30.10.212 -> 10.40.10.155:5203
+IPERF PASS 10.30.10.212 -> 10.40.10.155 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-peering-20261005T045125Z-NpcvOW.txt
+
+SSM connectivity d command=336442f4-1f10-4197-8559-13a8a98bd50b
+UTC=2026-10-05T04:51:40Z source=10.40.10.155 declared_mode=peering
+PING 10.10.10.212 (10.10.10.212) 56(84) bytes of data.
+64 bytes from 10.10.10.212: icmp_seq=1 ttl=127 time=0.216 ms
+64 bytes from 10.10.10.212: icmp_seq=2 ttl=127 time=0.205 ms
+
+--- 10.10.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1020ms
+rtt min/avg/max/mdev = 0.205/0.210/0.216/0.005 ms
+PING PASS 10.40.10.155 -> 10.10.10.212
+TCP PASS 10.40.10.155 -> 10.10.10.212:5201
+TCP PASS 10.40.10.155 -> 10.10.10.212:5202
+TCP PASS 10.40.10.155 -> 10.10.10.212:5203
+IPERF PASS 10.40.10.155 -> 10.10.10.212 (1 Mbit/s, 2 seconds)
+PING 10.20.10.155 (10.20.10.155) 56(84) bytes of data.
+64 bytes from 10.20.10.155: icmp_seq=1 ttl=127 time=0.241 ms
+64 bytes from 10.20.10.155: icmp_seq=2 ttl=127 time=0.235 ms
+
+--- 10.20.10.155 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1024ms
+rtt min/avg/max/mdev = 0.235/0.238/0.241/0.003 ms
+PING PASS 10.40.10.155 -> 10.20.10.155
+TCP PASS 10.40.10.155 -> 10.20.10.155:5201
+TCP PASS 10.40.10.155 -> 10.20.10.155:5202
+TCP PASS 10.40.10.155 -> 10.20.10.155:5203
+IPERF PASS 10.40.10.155 -> 10.20.10.155 (1 Mbit/s, 2 seconds)
+PING 10.30.10.212 (10.30.10.212) 56(84) bytes of data.
+64 bytes from 10.30.10.212: icmp_seq=1 ttl=127 time=0.499 ms
+64 bytes from 10.30.10.212: icmp_seq=2 ttl=127 time=0.232 ms
+
+--- 10.30.10.212 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1024ms
+rtt min/avg/max/mdev = 0.232/0.365/0.499/0.133 ms
+PING PASS 10.40.10.155 -> 10.30.10.212
+TCP PASS 10.40.10.155 -> 10.30.10.212:5201
+TCP PASS 10.40.10.155 -> 10.30.10.212:5202
+TCP PASS 10.40.10.155 -> 10.30.10.212:5203
+IPERF PASS 10.40.10.155 -> 10.30.10.212 (1 Mbit/s, 2 seconds)
+Evidence: /home/ec2-user/nt531-results/connectivity-peering-20261005T045140Z-AAslhh.txt
+

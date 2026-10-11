@@ -1,0 +1,118 @@
+\section{Amazon Virtual Private Cloud}
+
+Amazon VPC là miền mạng logic cô lập trong AWS. CIDR xác định dải địa chỉ;
+subnet chia dải đó theo Availability Zone; route table quyết định target cho
+từng prefix; Security Group (SG) lọc traffic stateful tại network interface
+\cite{aws-vpc-guide}. Trong thí nghiệm, bốn CIDR không chồng lấn là điều kiện
+để route liên VPC có đích xác định.
+
+\section{VPC Peering}
+
+VPC Peering nối hai VPC để traffic private đi trực tiếp giữa chúng. Kết nối
+không có tính bắc cầu: A peering với B và B peering với C không làm A tự động
+truy cập C qua B \cite{aws-peering-guide}. Vì vậy, full mesh của $n$ VPC cần:
+
+\begin{equation}
+N_{\mathrm{peering}}=\frac{n(n-1)}{2}.
+\end{equation}
+
+Với $n=4$, hệ thống cần sáu connection: AB, AC, AD, BC, BD và CD. Mỗi route
+table VPC vẫn cần ba route có hướng tới ba CIDR còn lại, tổng cộng 12 route
+liên VPC trong cấu hình này.
+
+\section{AWS Transit Gateway}
+
+TGW cung cấp mô hình hub-and-spoke. Mỗi VPC tạo một attachment tới hub; TGW
+route table điều khiển việc chuyển tiếp giữa các attachment
+\cite{aws-tgw-overview,aws-tgw-routing}. Với bốn VPC, đồ án dùng một TGW và
+bốn VPC attachment. Mô hình này giảm số quan hệ kết nối logic khi số VPC tăng,
+nhưng không làm mất yêu cầu cấu hình route đi và route về.
+
+\section{So sánh kiến trúc Peering và TGW}
+
+\begin{table}[H]
+\centering
+\caption{Đặc tính kiến trúc, chưa phải kết quả hiệu năng}
+\label{tab:architecture-comparison}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}XX}
+\toprule
+\textbf{Tiêu chí} & \textbf{VPC Peering} & \textbf{Transit Gateway} \\
+\midrule
+Topology & Point-to-point; full mesh khi mọi VPC cần liên lạc & Hub-and-spoke \\
+Tính bắc cầu & Không hỗ trợ & Chuyển tiếp qua hub theo TGW route table \\
+Quản trị & Phân tán theo từng cặp và route table VPC & Tập trung attachment và TGW route table \\
+Mở rộng kết nối & Số connection tăng theo $n(n-1)/2$ & Số attachment tăng tuyến tính theo $n$; quota áp dụng \cite{aws-tgw-quotas} \\
+Chi phí cơ bản & Không tính phí theo giờ cho connection; data transfer áp dụng theo tài liệu AWS \cite{aws-peering-pricing} & Có phí attachment theo giờ và data processing \cite{aws-tgw-pricing} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Bảng \ref{tab:architecture-comparison} chỉ mô tả thiết kế. RTT và goodput phải
+được xác định từ thực nghiệm, không suy ra trực tiếp từ số connection.
+
+\section{EC2 networking và ENA}
+
+EC2 network performance phụ thuộc loại instance, kích thước, loại traffic và
+chính sách allowance. Tài liệu AWS phân biệt baseline bandwidth với khả năng
+burst ở một số instance; mức công bố không đồng nghĩa một TCP flow luôn đạt
+mức đó \cite{aws-ec2-bandwidth}. ENA xuất các counter như
+\texttt{bw\_in\_allowance\_exceeded} và
+\texttt{pps\_allowance\_exceeded}. Counter tăng cho biết traffic đã gặp giới
+hạn tương ứng tại interface; không được cộng các counter để suy ra packet loss
+\cite{aws-ena-metrics}.
+
+Trong fan-in, ba sender hội tụ vào B. Ngay cả khi đường kết nối còn dư năng
+lực, giới hạn bandwidth, PPS, CPU hoặc xử lý TCP tại B vẫn có thể chi phối tổng
+goodput. Vì vậy CPU và ENA là bằng chứng hỗ trợ xác định bottleneck endpoint,
+không phải metric phụ.
+
+\section{TCP và các metric}
+
+RTT là thời gian khứ hồi của một request và response. Throughput là tốc độ dữ
+liệu truyền qua hệ thống; receiver goodput trong báo cáo là số bit payload mà
+phía nhận ghi nhận chia cho thời lượng nhận. Với số byte $B$ và thời gian
+$T$, giá trị dùng trong báo cáo là:
+
+\begin{equation}
+G=\frac{8B}{T\times10^9}\quad\text{(Gbps)}.
+\end{equation}
+
+TCP retransmission là số segment TCP truyền lại do iperf3 báo cáo. Đại lượng
+này không đồng nhất với phần trăm packet loss. Một single flow còn chịu ảnh
+hưởng của congestion window, RTT, socket processing và giới hạn endpoint;
+nhiều concurrent flow có thể phân chia tài nguyên khác với một flow.
+
+\section{Mô hình fan-in}
+
+Kịch bản fan-in có ba source cùng gửi tới một receiver:
+
+\begin{verbatim}
+A -----5201---\
+C -----5202----> B
+D -----5203---/
+\end{verbatim}
+
+Ba listener tách cổng để tránh tranh chấp một tiến trình server và giữ từng
+JSON độc lập. Tổng fan-in hiện tại là tổng ba goodput tính trên cửa sổ riêng
+của từng source. Do wrapper khởi chạy lệch dưới một giây, đây là tổng xấp xỉ,
+không phải phép tích phân byte trên một cửa sổ giao nhau tuyệt đối.
+
+\section{Metric thống kê}
+
+Với $m=5$ lượt và giá trị $x_i$, mean và sample standard deviation là:
+
+\begin{align}
+\bar{x}&=\frac{1}{m}\sum_{i=1}^{m}x_i,\\
+s&=\sqrt{\frac{\sum_{i=1}^{m}(x_i-\bar{x})^2}{m-1}}.
+\end{align}
+
+Coefficient of variation là $CV=100s/\bar{x}$. Chênh lệch tương đối dùng
+Peering làm mốc được ghi rõ tại từng bảng. Mức chia đều ba flow trong một lượt
+dùng Jain fairness index \cite{jain-fairness}:
+
+\begin{equation}
+J=\frac{(\sum_{i=1}^{3}g_i)^2}{3\sum_{i=1}^{3}g_i^2}.
+\end{equation}
+
+$J$ gần 1 chỉ mô tả mức chia đều trong các cửa sổ đã ghi; không chứng minh
+max-min fairness hoặc năng lực tối đa của dịch vụ.

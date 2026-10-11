@@ -1,0 +1,86 @@
+\section{Trả lời câu hỏi nghiên cứu}
+
+\subsection{RQ1: RTT khác nhau như thế nào?}
+
+Trong môi trường thử nghiệm hiện tại, RTT mean qua Peering là 0,2078 ms và qua
+TGW là 0,5630 ms. Peering thấp hơn 0,3552 ms. Đây là kết quả end-to-end của
+cùng endpoint sau khi đổi route, không phải tuyên bố Peering luôn có latency
+thấp hơn TGW.
+
+\subsection{RQ2: TCP single-flow khác nhau như thế nào?}
+
+Receiver goodput mean đạt 4,782804 Gbps qua Peering và 4,608265 Gbps qua TGW.
+Theo định nghĩa comparison của independent review, Peering cao hơn 3,7875\%
+trong các phiên đo hiện tại. Retransmission khác biệt lớn giữa hai phiên nhưng
+chưa đủ bằng chứng để quy nguyên nhân cho riêng network service.
+
+\subsection{RQ3: Tổng fan-in thay đổi như thế nào?}
+
+Tổng goodput xấp xỉ đạt 11,611009 Gbps qua Peering và 11,590520 Gbps qua TGW,
+chênh lệch 0,17646\% theo Peering làm mốc. Hai giá trị gần nhau trong dữ liệu
+hiện có, nhưng chưa có equivalence test và cửa sổ source chưa trùng tuyệt đối.
+
+\subsection{RQ4: Endpoint ảnh hưởng cách diễn giải ra sao?}
+
+CPU busy B khoảng 59,18\% và 56,88\%; đồng thời bandwidth/PPS allowance
+counter tại B tăng trong cả hai phiên fan-in. Vì ba source dùng chung receiver,
+tổng goodput có thể bị giới hạn bởi EC2/ENA tại B. Fan-in vì vậy không cô lập
+riêng khả năng chuyển tiếp của Peering hoặc TGW.
+
+\subsection{RQ5: Trade-off performance và scalability là gì?}
+
+Peering có RTT và single-flow goodput tốt hơn trong cấu hình đã đo, đồng thời
+phù hợp khi số VPC nhỏ và cần kết nối trực tiếp. TGW đổi lại bằng topology
+hub-and-spoke, định tuyến tập trung và số attachment tăng tuyến tính. Lựa chọn
+phụ thuộc latency target, quy mô VPC, governance, cost và khả năng vận hành.
+
+\section{Đánh giá trade-off kiến trúc}
+
+Peering không bắc cầu. Full mesh bốn VPC cần sáu connection; khi thêm VPC, số
+quan hệ và route cần quản trị tăng nhanh. Lợi thế là topology trực tiếp và
+không có phí attachment theo giờ.
+
+TGW thêm một lớp hub, VPC attachment, TGW route table và chi phí xử lý dữ liệu.
+Đổi lại, network team có điểm kiểm soát tập trung, tách policy tốt hơn và không
+cần tạo peering cho từng cặp. Đây là architectural advantage, không phải bằng
+chứng TGW có throughput hoặc latency tốt hơn.
+
+\section{Hạn chế}
+
+\begin{itemize}
+  \item Mỗi bộ dữ liệu chính chỉ có năm lượt trong một phiên.
+  \item Peering và TGW được đo nối tiếp, chưa counterbalance/randomize đầy đủ.
+  \item Burst bandwidth, placement và nhiễu nền của EC2 có thể ảnh hưởng.
+  \item Fan-in cộng mean từ các cửa sổ riêng, chưa căn common overlap window.
+  \item ENA delta của B bao phủ cả phiên, chưa gắn cho từng lượt.
+  \item Receiver B có dấu hiệu bandwidth/PPS allowance bottleneck.
+  \item Phạm vi chỉ gồm một Region, một AZ và một loại/kích thước instance.
+  \item Workload chỉ gồm idle RTT, TCP single-flow và TCP fan-in baseline.
+  \item Kết quả chưa xác định performance tối đa hoặc equivalence của dịch vụ.
+\end{itemize}
+
+\section{Hướng phát triển}
+
+Các hạng mục sau là future work, chưa có kết quả thực nghiệm trong báo cáo:
+
+\begin{itemize}
+  \item thực hiện repeated balanced trials và đảo thứ tự mode theo đợt;
+  \item đo RTT idle và RTT under load, báo cáo P50/P95 và ECDF;
+  \item phân tích TCP congestion window và RTT theo thời gian;
+  \item tính fan-in trên common overlapping window;
+  \item thử receiver lớn hơn để kiểm tra giả thuyết endpoint bottleneck;
+  \item xây dựng cost/performance analysis bằng bảng giá chốt theo ngày.
+\end{itemize}
+
+\section{Kết luận}
+
+Trong môi trường bốn EC2 \texttt{c6i.large} cùng AZ, MTU 1500 và workload đã
+đo, Peering cho thấy lợi thế về RTT idle và receiver goodput TCP một luồng.
+TGW đem lại lợi thế về topology hub-and-spoke, định tuyến tập trung và khả năng
+mở rộng quan hệ kết nối khi số VPC tăng.
+
+Fan-in đạt tổng xấp xỉ gần nhau, nhưng network allowance counter tại B tăng ở
+cả hai mode. Kết quả phù hợp với khả năng endpoint chi phối aggregate
+throughput, không đủ để tuyên bố Peering và TGW có performance giống nhau.
+Lựa chọn giải pháp cần xét đồng thời latency, scale, governance, cost và
+workload; không nên dựa riêng vào một giá trị throughput.

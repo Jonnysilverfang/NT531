@@ -1,0 +1,37 @@
+\section{Hiệu năng mạng trong public cloud}
+
+CloudCmp đề xuất benchmark nhiều chiều để so sánh public cloud và chỉ ra rằng
+kết luận phụ thuộc workload, metric và thời điểm đo \cite{cloudcmp}. Cách tiếp
+cận này hỗ trợ lựa chọn phương pháp của đồ án: không dùng một metric duy nhất
+để kết luận toàn bộ giải pháp kết nối.
+
+Wang và Ng đo ảnh hưởng của virtualization lên network performance của Amazon
+EC2, cho thấy biến thiên và overhead của nền tảng ảo hóa cần được xem xét khi
+giải thích latency và throughput \cite{wang-ec2-network}. Nghiên cứu đó tạo
+bối cảnh cho việc lưu CPU, retransmission và nhiều lượt đo, nhưng không trực
+tiếp so sánh VPC Peering với TGW trên cùng endpoint.
+
+\section{Tài liệu AWS về kết nối liên VPC}
+
+AWS mô tả VPC Peering là kết nối point-to-point, không bắc cầu; TGW là router
+khu vực kết nối VPC và mạng ngoài AWS qua attachment
+\cite{aws-vpc-peering,aws-tgw-overview}. Tài liệu route, quota và pricing xác
+định đặc tính quản trị, scale và cost model, nhưng không công bố một giá trị
+RTT hoặc TCP goodput áp dụng cho mọi workload.
+
+\section{Tài liệu về EC2, ENA và công cụ benchmark}
+
+Tài liệu EC2 network bandwidth giải thích giới hạn của instance
+\cite{aws-ec2-bandwidth}. Tài liệu ENA mô tả ý nghĩa của allowance counter
+\cite{aws-ena-metrics}. iperf3 cung cấp JSON gồm byte, thời gian, bitrate phía
+nhận và retransmission; công cụ đo end-to-end nên không cô lập riêng một nút
+mạng \cite{iperf3-docs}.
+
+\section{Vị trí của đồ án}
+
+Đồ án sử dụng cùng bốn EC2, cùng Availability Zone, private IP, MTU và tham số
+tải; chỉ chuyển 12 route giữa Peering và TGW. Ngoài RTT và TCP single-flow,
+nghiên cứu còn quan sát fan-in, CPU và ENA, đồng thời giữ raw artifact để tính
+lại. Thiết kế này giảm một số confounder so với hai environment độc lập nhưng
+không loại bỏ biến thiên host, không thay thế benchmark đa region và không tạo
+cơ sở để tuyên bố đây là nghiên cứu đầu tiên về chủ đề này.

@@ -1,0 +1,88 @@
+\section{Bối cảnh}
+
+Kiến trúc cloud thường tách workload thành nhiều VPC để phân chia miền lỗi,
+quyền quản trị và chính sách bảo mật. Khi các workload cần trao đổi bằng địa
+chỉ riêng, hệ thống phải bổ sung kết nối liên VPC. Hai phương án AWS được khảo
+sát trong đồ án là VPC Peering và Transit Gateway (TGW). Peering tạo kết nối
+trực tiếp giữa từng cặp VPC, trong khi TGW cung cấp một hub định tuyến tập
+trung cho nhiều attachment \cite{aws-vpc-peering,aws-tgw-overview}.
+
+Luồng vấn đề của nghiên cứu được tóm tắt như sau:
+
+\begin{center}
+Nhiều VPC $\rightarrow$ cần kết nối liên VPC $\rightarrow$
+Peering hoặc TGW $\rightarrow$ kiến trúc đường đi khác nhau
+$\rightarrow$ có thể tạo khác biệt hiệu năng.
+\end{center}
+
+Khác biệt kiến trúc không tự động chứng minh khác biệt hiệu năng. Phép so sánh
+cần giữ nguyên endpoint, vị trí triển khai, tải và công cụ đo; chỉ thay đường
+định tuyến giữa hai mode.
+
+\section{Vấn đề nghiên cứu}
+
+Vấn đề trung tâm là: với cùng endpoint EC2 và cùng điều kiện benchmark, hiệu
+năng mạng quan sát được giữa VPC Peering và TGW khác nhau như thế nào? Nghiên
+cứu không đo hai môi trường độc lập vì khác biệt instance có thể làm nhiễu kết
+quả. Thay vào đó, Terraform chuyển route của cùng bốn EC2 giữa hai đường kết
+nối rồi kiểm tra lại trước khi đo.
+
+\section{Mục tiêu}
+
+Đồ án đánh giá các đại lượng sau:
+
+\begin{itemize}
+  \item RTT khi mạng rảnh giữa A và B;
+  \item receiver goodput của TCP một luồng;
+  \item số TCP retransmission do iperf3 ghi nhận;
+  \item tổng receiver goodput xấp xỉ trong kịch bản fan-in;
+  \item CPU busy tại endpoint gửi và nhận;
+  \item thay đổi các network allowance counter do ENA cung cấp.
+\end{itemize}
+
+Mục tiêu phân tích không chỉ là xếp hạng hai giá trị throughput. Báo cáo còn
+phải xác định khi nào endpoint trở thành bottleneck và ranh giới nào khiến dữ
+liệu chưa đủ để suy ra năng lực tối đa của dịch vụ AWS.
+
+\section{Câu hỏi nghiên cứu}
+
+\begin{enumerate}
+  \item RTT qua Peering và TGW khác nhau bao nhiêu trong cấu hình thử nghiệm?
+  \item Receiver goodput TCP một luồng khác nhau như thế nào?
+  \item Khi A, C và D cùng gửi tới B, tổng goodput thay đổi như thế nào?
+  \item Endpoint EC2/ENA ảnh hưởng ra sao tới cách diễn giải kết quả fan-in?
+  \item Trade-off giữa performance và khả năng mở rộng kiến trúc là gì?
+\end{enumerate}
+
+\section{Phạm vi}
+
+Hệ thống thực nghiệm đặt tại region \texttt{us-east-1}, Availability Zone
+\texttt{us-east-1a}; gồm bốn VPC và bốn EC2 \texttt{c6i.large}. Traffic đo đi
+qua private IP, dùng TCP và MTU 1500 byte cho baseline. RTT dùng ICMP. Mỗi bộ
+đo chính có năm lượt.
+
+Phạm vi này không đại diện cho mọi region, Availability Zone, loại instance,
+MTU, số luồng hay quy mô VPC. Kết quả không phải benchmark năng lực tối đa của
+Peering hoặc TGW. Chi phí được thảo luận theo mô hình tính phí, không dùng như
+số liệu hóa đơn của phiên đo.
+
+\section{Đóng góp của đồ án}
+
+\begin{itemize}
+  \item Hạ tầng bốn VPC có thể tái tạo bằng Terraform.
+  \item Cùng endpoint được giữ nguyên khi thay đổi đường Peering và TGW.
+  \item Ba kịch bản chính bao phủ RTT, TCP single-flow và TCP fan-in.
+  \item Raw data, metadata, route snapshot, CPU và ENA counter được lưu cùng
+        kết quả.
+  \item Script độc lập tính lại số liệu và kiểm tra tính nhất quán của nguồn.
+  \item Phân tích tách kết quả thực nghiệm khỏi đặc tính kiến trúc và nêu rõ
+        ảnh hưởng của bottleneck tại máy nhận.
+\end{itemize}
+
+\section{Cấu trúc báo cáo}
+
+Chương 2 trình bày nội dung kỹ thuật trực tiếp phục vụ phép đo. Chương 3 mô tả
+hạ tầng, thiết kế đối chứng, quy trình benchmark và kết quả thực nghiệm chi
+tiết. Chương 4 tổng hợp các nghiên cứu và tài liệu liên quan. Chương 5 đánh giá
+các finding, trả lời câu hỏi nghiên cứu, nêu hạn chế, hướng phát triển và kết
+luận.

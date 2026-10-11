@@ -1,0 +1,185 @@
+\section{Kiểm chứng dữ liệu}
+
+Pipeline tạo số liệu của báo cáo gồm bốn lớp:
+
+\begin{center}
+Raw data $\rightarrow$ audit/validated summary $\rightarrow$
+verification script $\rightarrow$ report metrics.
+\end{center}
+
+Script kiểm chứng độc lập đọc lại ping output, iperf3 JSON, mpstat, ENA
+snapshot và metadata thay vì tin trực tiếp bảng trong tài liệu. Kết quả
+independent review ghi 434 kiểm tra đạt trên 307 file nguồn duy nhất, trạng thái
+tổng thể \texttt{passed=true}. Script build report sau đó tạo bộ report metrics.
+Đường dẫn đầy đủ của hai nguồn nằm trong source map. Các số dưới đây ưu tiên
+hai nguồn kiểm chứng này; raw artifact được giữ để truy ngược.
+
+\section{RTT khi mạng rảnh}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{img/chapter3/rtt-comparison.png}
+\caption{RTT trung bình của năm lượt theo từng mode}
+\label{fig:rtt-comparison}
+\end{figure}
+
+Peering đạt RTT mean 0,2078 ms, sample SD 0,007855 ms và CV 3,7800\%.
+TGW đạt 0,5630 ms, sample SD 0,077508 ms và CV 13,7670\%. Chênh lệch mean
+là 0,3552 ms; tỷ số TGW/Peering là 2,7093. Cả hai phiên nhận đủ 500/500 ICMP
+response, loss quan sát 0\%.
+
+Trong các phiên thử nghiệm này, Peering cho RTT thấp hơn TGW. Kết quả
+end-to-end không tách được propagation, queue, xử lý endpoint và xử lý dịch vụ;
+0,3552 ms vì vậy không được gọi là ``TGW processing delay'' và không chứng
+minh Peering luôn có latency thấp hơn trong mọi môi trường.
+
+\section{TCP single-flow}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{img/chapter3/tcp-single.png}
+\caption{Receiver goodput và retransmission TCP một luồng}
+\label{fig:tcp-single}
+\end{figure}
+
+Receiver goodput mean qua Peering là 4,782804 Gbps, sample SD 0,000510 Gbps;
+qua TGW là 4,608265 Gbps, sample SD 0,001640 Gbps. Theo định nghĩa comparison
+của independent review, lấy TGW làm mẫu số:
+
+\begin{equation}
+100\frac{4.782804-4.608265}{4.608265}=3.7875\%.
+\end{equation}
+
+Peering đạt receiver goodput cao hơn khoảng 3,79\% trong các phiên đo hiện
+tại. Đây là chênh lệch mô tả giữa hai phiên nối tiếp, không phải confidence
+interval hoặc kết luận về giới hạn dịch vụ.
+
+\subsection{Retransmission}
+
+Peering ghi lần lượt 48.253, 57.185, 49.851, 55.189 và 49.724 retransmission;
+TGW ghi 280, 193, 0, 671 và 411. Chênh lệch cho thấy trạng thái TCP của hai
+phiên khác nhau, nhưng dữ liệu hiện có chưa xác định nguyên nhân.
+Retransmission không được đổi trực tiếp thành packet-loss percentage vì một
+segment có thể truyền lại do loss, reordering, timeout hoặc cơ chế TCP khác;
+mẫu số packet cũng chưa có.
+
+ENA allowance counter được theo dõi trong bài single-flow đều có delta bằng 0
+ở phạm vi artifact. Điều này chỉ cho biết các counter allowance đã theo dõi
+không tăng; không chứng minh toàn đường mạng không có packet loss.
+
+\section{TCP fan-in}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{img/chapter3/tcp-fanin.png}
+\caption{Receiver goodput ba nguồn trong kịch bản fan-in}
+\label{fig:tcp-fanin}
+\end{figure}
+
+Tổng xấp xỉ mean qua Peering là 11,611009 Gbps; qua TGW là 11,590520 Gbps.
+TGW thấp hơn 0,17646\% theo Peering làm mốc. Tổng goodput fan-in trong hai
+phiên đo gần nhau, nhưng kết quả không đủ để kết luận hai service có throughput
+tương đương. Ba goodput được cộng từ cửa sổ riêng, hai mode đo nối tiếp và
+receiver B gặp allowance limit.
+
+Mean Peering của A, C và D lần lượt là 3,9583; 3,7799; 3,8728 Gbps. Mean TGW
+lần lượt là 3,7966; 3,7943; 3,9996 Gbps. Jain index trung bình năm lượt là
+0,999133 qua Peering và 0,984494 qua TGW. Chỉ số này mô tả mức chia đều trong
+dữ liệu hiện có, không chứng minh cơ chế fairness hoặc năng lực tối đa dịch vụ.
+
+\section{CPU tại receiver}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{img/chapter3/cpu-comparison.png}
+\caption{CPU busy trung bình của receiver B trong fan-in}
+\label{fig:cpu-comparison}
+\end{figure}
+
+CPU busy B đạt 59,1802\% qua Peering và 56,8751\% qua TGW. Đây là mức bận
+tổng hợp của máy. CPU tổng hợp chưa đạt 100\% không loại trừ bottleneck tại
+một core, network stack, ENA bandwidth hoặc PPS.
+
+\section{ENA allowance counters}
+
+\begin{table}[H]
+\centering
+\caption{Delta ENA allowance counter tại B trong toàn phiên fan-in}
+\label{tab:ena-delta}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Counter} & \textbf{Peering} & \textbf{TGW} \\
+\midrule
+\texttt{bw\_in\_allowance\_exceeded} & 1.434.501 & 6.608.210 \\
+\texttt{pps\_allowance\_exceeded} & 160.457.411 & 77.094.456 \\
+\texttt{bw\_out\_allowance\_exceeded} & 0 & 0 \\
+\texttt{conntrack\_allowance\_exceeded} & 0 & 0 \\
+\texttt{linklocal\_allowance\_exceeded} & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Các delta trong Bảng \ref{tab:ena-delta} bao phủ toàn phiên, gồm thời gian chờ
+và nghỉ; không phân bổ được cho từng lượt. Không cộng bandwidth và PPS counter
+thành số packet loss vì cùng packet có thể liên quan nhiều allowance.
+
+\section{Thảo luận bottleneck tại endpoint}
+
+Ba source hội tụ vào cùng EC2 B:
+
+\begin{center}
+A/C/D $\rightarrow$ EC2 B $\rightarrow$ CPU + ENA bandwidth/PPS allowance
+$\rightarrow$ aggregate goodput quan sát.
+\end{center}
+
+Counter tại B tăng ở cả hai mode trong khi tổng fan-in gần nhau. Bằng chứng
+phù hợp với khả năng receiver limitation chi phối phép đo. Tuy nhiên, dữ liệu
+không tách được tỷ lệ ảnh hưởng của endpoint và network path; không được kết
+luận TGW hay Peering là bottleneck duy nhất.
+
+\section{Diễn giải thống kê}
+
+Mỗi bộ chính gồm năm lượt trong một phiên. Mean, sample SD và CV mô tả biến
+thiên giữa năm giá trị từng lượt. Lượt cùng số ở hai mode không phải cặp đo
+đồng thời. Không có equivalence test, confidence interval theo các đợt độc lập
+hoặc thiết kế counterbalanced; vì vậy báo cáo không gọi hai mode ``statistically
+equivalent'' và không ghép tùy ý các lượt để tạo CI.
+
+\section{Bảng tổng hợp}
+
+\begin{table}[H]
+\centering
+\caption{Experimental findings trong cấu hình đã đo}
+\label{tab:experimental-findings}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Metric} & \textbf{Peering} & \textbf{TGW} \\
+\midrule
+RTT mean & 0,2078 ms & 0,5630 ms \\
+Single-flow receiver goodput & 4,782804 Gbps & 4,608265 Gbps \\
+Fan-in tổng xấp xỉ & 11,611009 Gbps & 11,590520 Gbps \\
+CPU busy B khi fan-in & 59,1802\% & 56,8751\% \\
+Jain index fan-in & 0,999133 & 0,984494 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Architectural characteristics từ thiết kế và tài liệu AWS}
+\label{tab:architectural-characteristics}
+\begin{tabularx}{\textwidth}{p{0.25\textwidth}XX}
+\toprule
+\textbf{Tiêu chí} & \textbf{Peering} & \textbf{TGW} \\
+\midrule
+Topology & Point-to-point; sáu connection cho bốn VPC full mesh & Hub-and-spoke; bốn attachment \\
+Mở rộng kết nối & Tăng theo $n(n-1)/2$ & Tăng tuyến tính theo số VPC attachment \\
+Quản trị route & Phân tán theo cặp VPC & TGW route table tập trung \\
+Operational complexity & Thấp khi ít VPC, tăng nhanh với full mesh & Thêm hub/policy nhưng giảm quan hệ từng cặp \\
+Cost model & Không phí giờ cho peering connection; data transfer theo AWS & Phí attachment theo giờ và data processing \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Hai bảng tách rõ measurement khỏi đặc tính kiến trúc. Scalability và cost không
+phải metric đã benchmark trong các phiên đo.

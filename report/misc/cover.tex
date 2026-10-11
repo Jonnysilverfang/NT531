@@ -1,0 +1,51 @@
+% ==================== TRANG BÌA ====================
+\begin{titlepage}
+\thispagestyle{empty}
+% Khung viền tikz chuẩn UIT
+\begin{tikzpicture}[remember picture, overlay]
+  \draw[line width=1pt, color=blue!80!black]
+    ($(current page.north west) + (108pt,-65pt)$)
+    rectangle
+    ($(current page.south east) + (-56pt,56pt)$);
+\end{tikzpicture}
+
+\vspace*{0pt} % reset vertical position
+\begin{center}
+  {\large\bfseries ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[3pt]
+  {\large\bfseries TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN}\\[3pt]
+  {\normalsize\bfseries KHOA MẠNG MÁY TÍNH VÀ TRUYỀN THÔNG}\\[24pt]
+
+  % Logo UIT
+  \includegraphics[height=2cm]{img/logo/logo_uit.png}\hspace{0.6cm}%
+  \includegraphics[height=2cm]{img/logo/logo_faculty_basic_latex.png}\\[14pt]
+
+  {\large\bfseries BÁO CÁO ĐỒ ÁN CUỐI KỲ}\\[5pt]
+  {\normalsize\bfseries MÔN HỌC: NT531}\\[18pt]
+
+  {\normalsize\bfseries ĐỀ TÀI}\\[8pt]
+  {\large\bfseries PERFORMANCE EVALUATION OF AWS VPC PEERING\\[4pt]
+  AND TRANSIT GATEWAY}\\[8pt]
+  {\normalsize\bfseries Đánh giá hiệu năng AWS VPC Peering và Transit Gateway}\\[34pt]
+
+  % Thông tin GVHD và nhóm SV — dùng minipage căn giữa
+  \begin{minipage}{0.75\textwidth}
+    \raggedright
+    % TODO(user): cung cấp mã lớp học phần.
+    {\bfseries Lớp:}\enspace \textit{CHƯA CUNG CẤP}\\[10pt]
+    {\bfseries Giảng viên hướng dẫn:}\enspace
+    % TODO(user): cung cấp họ tên giảng viên.
+    \textit{CHƯA CUNG CẤP}\\[10pt]
+    {\bfseries Sinh viên thực hiện:}\enspace
+    % TODO(user): cung cấp họ tên và MSSV.
+    \textit{CHƯA CUNG CẤP}
+  \end{minipage}
+
+  \vspace{18pt}
+  \fbox{\parbox{0.74\textwidth}{\centering\bfseries
+  BẢN CHƯA HOÀN THIỆN -- KHÔNG DÙNG ĐỂ NỘP\\
+  Thiếu thông tin lớp, giảng viên, sinh viên, phân công và phản biện.}}
+
+  \vfill
+  {\bfseries TP. Hồ Chí Minh, tháng 10 năm 2026}
+\end{center}
+\end{titlepage}

@@ -1,0 +1,22 @@
+\chapter*{TÓM TẮT}
+\addcontentsline{toc}{chapter}{TÓM TẮT}
+
+Đồ án đánh giá VPC Peering và AWS Transit Gateway (TGW) trên cùng bốn
+endpoint EC2 nhằm tách ảnh hưởng của đường kết nối khỏi khác biệt cấu hình
+máy. Hạ tầng gồm bốn VPC trong \texttt{us-east-1}, mỗi VPC có một EC2
+\texttt{c6i.large} tại cùng Availability Zone. Terraform giữ nguyên endpoint
+và chuyển 12 route liên VPC giữa full-mesh Peering và TGW hub-and-spoke.
+Ba bài đo chính gồm RTT khi mạng rảnh, TCP một luồng từ A tới B và TCP fan-in
+từ A, C, D tới B. Mỗi bộ dữ liệu có năm lượt; raw data, metadata, CPU và bộ
+đếm ENA được lưu để kiểm chứng lại bằng script.
+
+Trong các phiên đo của nghiên cứu này, RTT trung bình là 0,2078 ms qua
+Peering và 0,5630 ms qua TGW. Receiver goodput TCP một luồng đạt lần lượt
+4,7828 và 4,6083 Gbps. Tổng fan-in xấp xỉ đạt 11,6110 và 11,5905 Gbps,
+nhưng cả hai phiên đều ghi nhận bộ đếm network allowance tại máy nhận tăng.
+Kết quả fan-in vì vậy phản ánh đồng thời đường mạng và giới hạn endpoint,
+không chứng minh hai dịch vụ có năng lực tối đa tương đương. Báo cáo kết luận
+Peering có lợi thế về latency và single-flow trong cấu hình đã đo, còn TGW có
+lợi thế về topology, định tuyến tập trung và khả năng mở rộng quản trị. Phạm
+vi kết luận bị giới hạn bởi số lượt nhỏ, phép đo hai mode nối tiếp, đặc tính
+burst của EC2 và cửa sổ fan-in chưa đồng bộ tuyệt đối.

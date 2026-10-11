@@ -1,0 +1,207 @@
+\section{Kiến trúc hệ thống thử nghiệm}
+
+Hạ tầng gồm bốn VPC trong \texttt{us-east-1a}. Mỗi VPC có một subnet và một
+EC2. Các private IP được gán cố định trong Terraform, trình bày tại Bảng
+\ref{tab:endpoints}.
+
+\begin{table}[H]
+\centering
+\caption{Endpoint được giữ nguyên giữa hai mode}
+\label{tab:endpoints}
+\begin{tabular}{llll}
+\toprule
+\textbf{Nút} & \textbf{VPC CIDR} & \textbf{Subnet CIDR} & \textbf{Private IP} \\
+\midrule
+A & 10.10.0.0/16 & 10.10.10.0/24 & 10.10.10.212 \\
+B & 10.20.0.0/16 & 10.20.10.0/24 & 10.20.10.155 \\
+C & 10.30.0.0/16 & 10.30.10.0/24 & 10.30.10.212 \\
+D & 10.40.0.0/16 & 10.40.10.0/24 & 10.40.10.155 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Bốn máy dùng \texttt{c6i.large}, cùng AMI
+\texttt{ami-0d27e0fb3bac4d724}, root volume gp3 8 GiB và IMDSv2 bắt buộc.
+Elastic IP phục vụ quản trị; traffic benchmark dùng private IP nên EIP và
+Internet Gateway không nằm trên đường đo.
+
+\section{Kiến trúc VPC Peering}
+
+Mode Peering tạo full mesh sáu connection. Mỗi route table có ba route đến ba
+CIDR còn lại; target của mỗi route là peering connection tương ứng.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{img/chapter3/peering-architecture.png}
+\caption{Kiến trúc thử nghiệm sử dụng VPC Peering}
+\label{fig:peering-architecture}
+\end{figure}
+
+Hình \ref{fig:peering-architecture} cho thấy endpoint và địa chỉ không thay
+đổi. Full mesh cung cấp đường trực tiếp cho AB, AC, AD, BC, BD và CD; không
+dựa vào một VPC trung gian.
+
+\section{Kiến trúc Transit Gateway}
+
+Mode TGW giữ nguyên VPC, subnet và EC2 nhưng đổi target của 12 route liên VPC
+sang một TGW. Mỗi VPC có một attachment tới hub.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{img/chapter3/tgw-architecture.png}
+\caption{Kiến trúc thử nghiệm sử dụng AWS Transit Gateway}
+\label{fig:tgw-architecture}
+\end{figure}
+
+Hình \ref{fig:tgw-architecture} biểu diễn topology hub-and-spoke. Traffic A
+tới B đi từ route table A tới TGW, qua attachment của B rồi tới EC2 B; chiều
+về cần route đối ứng.
+
+\section{Điều khiển đường đi bằng Terraform}
+
+Hai biến quyết định mode:
+
+\begin{itemize}
+  \item \texttt{enable\_transit\_gateway}: tạo TGW và bốn attachment;
+  \item \texttt{routing\_mode}: nhận \texttt{peering} hoặc \texttt{tgw} và
+        chọn target cho toàn bộ 12 route liên VPC.
+\end{itemize}
+
+\begin{center}
+\texttt{enable\_transit\_gateway} + \texttt{routing\_mode}
+$\rightarrow$ 12 route liên VPC
+$\rightarrow$ Peering target hoặc TGW target.
+\end{center}
+
+Cơ chế này quan trọng cho tính công bằng: phép đo không tạo một tập EC2 mới
+cho TGW. Terraform \texttt{No changes} chỉ chứng minh desired state khớp state
+đã biết; nó không tự chứng minh packet đang đi đúng đường. Vì vậy quy trình còn
+lưu route snapshot và chạy connectivity check sau khi đổi mode.
+
+\section{Đường quản trị và đường đo}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{img/chapter3/management-path.png}
+\caption{Phân biệt Elastic IP quản trị và private IP dùng cho benchmark}
+\label{fig:management-path}
+\end{figure}
+
+Elastic IP, Internet Gateway và SSH/SSM phục vụ quản trị instance. Traffic
+benchmark dùng private IP và route liên VPC. Vì vậy EIP không nằm trên đường
+dữ liệu được so sánh; Hình \ref{fig:management-path} chỉ mô tả control path
+giúp chuẩn bị và thu thập kết quả.
+
+\section{Điều kiện benchmark}
+
+\begin{table}[H]
+\centering
+\caption{Điều kiện của sáu bộ dữ liệu chính}
+\label{tab:benchmark-conditions}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth}X}
+\toprule
+\textbf{Thuộc tính} & \textbf{Giá trị đã lưu} \\
+\midrule
+Region/AZ & \texttt{us-east-1}/\texttt{us-east-1a} \\
+Instance & Bốn EC2 \texttt{c6i.large} \\
+Đường dữ liệu & Private IPv4 \\
+MTU & 1500 byte \\
+iperf3 & 3.19.1; TCP cubic \\
+TCP single-flow & Một stream, omit 5 s, đo 30 s, cổng 5201 \\
+TCP fan-in & Một stream mỗi source, omit 5 s, đo 30 s, cổng 5201--5203 \\
+RTT idle & 100 ICMP echo, payload 56 byte, interval 0,2 s \\
+Số lượt & Năm lượt cho mỗi bài và mỗi mode \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Metadata ghi NTP đồng bộ trong các phiên fan-in. Hai mode được đo nối tiếp,
+không randomize hoặc counterbalance đầy đủ; đây là hạn chế phương pháp chứ
+không phải chi tiết có thể bỏ qua.
+
+\section{Công cụ đo và kiểm chứng}
+
+\begin{itemize}
+  \item \texttt{ping}: RTT, số request gửi/nhận và loss quan sát.
+  \item \texttt{iperf3}: byte nhận, thời lượng, receiver bitrate,
+        retransmission và JSON theo interval \cite{iperf3-docs}.
+  \item \texttt{mpstat}: lấy \%idle của dòng \texttt{all}; CPU busy được tính
+        bằng $100-\%idle$.
+  \item \texttt{ethtool -S}: chụp ENA counter trước/sau.
+  \item Terraform: tạo topology và chuyển route có kiểm soát
+        \cite{terraform-aws-provider}.
+  \item Python: kiểm tra checksum, parse raw data, tính metric và đối chiếu
+        giữa JSON, Markdown và figures.
+\end{itemize}
+
+\section{Quan sát CPU và ENA}
+
+\texttt{mpstat} lấy mẫu CPU trong cửa sổ đo. CPU busy được tính từ dòng
+\texttt{all} theo $100-\%idle$; đây là mức bận toàn máy, không phải CPU riêng
+của iperf3. Lệnh \texttt{ethtool} với option \texttt{-S} trên interface
+\texttt{ens5} chụp trước/sau năm counter:
+
+\begin{itemize}
+  \item \path{bw_in_allowance_exceeded} và \path{bw_out_allowance_exceeded};
+  \item \path{pps_allowance_exceeded};
+  \item \path{conntrack_allowance_exceeded};
+  \item \path{linklocal_allowance_exceeded}.
+\end{itemize}
+
+\section{Experiment 1: RTT idle}
+
+A gửi 100 ICMP echo tới B qua private IP. Mỗi lượt lưu raw output và summary
+gồm min/avg/max/mdev. Metric so sánh là mean của năm giá trị RTT avg. Payload
+56 byte và interval 0,2 s được giữ giống nhau giữa hai mode.
+
+\section{Experiment 2: TCP single-flow}
+
+A chạy một TCP stream tới listener B:5201. Command cốt lõi trong script là:
+
+\begin{lstlisting}[language=bash,caption={Lệnh TCP single-flow cốt lõi},label={lst:tcp-single}]
+iperf3 -c 10.20.10.155 -p 5201 -P 1 -O 5 -t 30 -i 1 -J \
+  --get-server-output > "$run_file"
+\end{lstlisting}
+
+Goodput lấy từ phía nhận, không lấy bitrate phía gửi. CPU và ENA được thu ở
+cả endpoint theo phạm vi mà artifact cho phép.
+
+\section{Experiment 3: TCP fan-in}
+
+A, C và D lần lượt gửi tới B trên cổng 5201, 5202 và 5203. Ba listener độc
+lập giúp server nhận đồng thời và từng source có JSON riêng. Mỗi lượt được lên
+lịch cách nhau 45 giây; thời gian bắt đầu wrapper giữa source lệch khoảng
+0,78--0,82 giây trong phiên TGW. Vì cửa sổ nội bộ không trùng tuyệt đối, tổng
+ba mean được gọi là tổng xấp xỉ.
+
+\section{Quy trình chuyển Peering và TGW}
+
+\begin{enumerate}
+  \item Áp dụng mode định tuyến bằng Terraform.
+  \item Kiểm tra 12 route liên VPC và target hai chiều.
+  \item Chạy connectivity check giữa endpoint và các cổng đo.
+  \item Chuẩn bị EC2: MTU, NTP, listener, công cụ và tiến trình cũ.
+  \item Chạy benchmark với tham số cố định.
+  \item Thu raw output, CPU, ENA, timestamps và metadata.
+  \item Sao lưu artifact và manifest/checksum.
+  \item Chạy script verify và build báo cáo kết quả.
+\end{enumerate}
+
+\input{chapters/chapter3-results}
+
+\section{Khả năng tái tạo}
+
+Terraform mô tả topology; shell script mô tả workload; raw artifact giữ đầu
+vào; JSON phân tích giữ số đầy đủ và SHA256. Báo cáo này dùng số đã được tính
+lại từ nguồn thay vì nhập tay từ biểu đồ. Tuy vậy, tái tạo cùng code không bảo
+đảm số đo giống hệt vì nền tảng cloud có biến thiên theo thời gian và host.
+
+\section{Nguy cơ ảnh hưởng tính hợp lệ}
+
+Thiết kế hiện tại có năm lượt cho mỗi bộ chính; Peering và TGW được chạy nối
+tiếp, chưa counterbalance đầy đủ. Bandwidth burst, placement và nhiễu nền của
+EC2 không được kiểm soát trực tiếp. Trong fan-in, ba wrapper không bắt đầu tuyệt
+đối đồng thời và ENA tại B được chụp cho cả phiên. Receiver B có thể trở thành
+bottleneck dùng chung. Các điểm này giới hạn causal attribution: kết quả là
+end-to-end observation của cấu hình đã đo, không phải service limit riêng của
+Peering hoặc TGW.

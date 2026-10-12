@@ -1,6 +1,6 @@
 # Đối chiếu đồ án Peering TGW với bài giảng NT531
 
-Ngày đối chiếu: 06/10/2026. Đây là đánh giá phạm vi và đề xuất bổ sung; không có phép đo EC2 mới trong lần đối chiếu này.
+Ngày đối chiếu ban đầu: 06/10/2026. Cập nhật 12/10 sau khi khôi phục hạ tầng và hoàn tất block RTT xác nhận đầu tiên.
 
 ## Kết luận về mô hình và công cụ
 
@@ -66,8 +66,8 @@ Chi tiết file và SHA256 trong `results/analysis/lecture-alignment-audit.json`
 | `ss -tin`, `tc -s qdisc show dev ens5` | Xem trạng thái socket TCP và qdisc của Linux endpoint | Bổ sung nhẹ vào lần đo tiếp theo nếu có sẵn |
 | `sar -n DEV 1` | Đối chiếu byte/gói theo giây ở NIC khi cần | Tùy chọn; sysstat đã là phụ thuộc của mpstat |
 | `tcpdump` và Wireshark | Một trace ngắn minh họa ACK, retransmission, cửa sổ TCP | Tùy chọn cho phần giải thích giao thức |
-| Prometheus/Grafana | Dashboard CPU/mạng cho demo observability | Sau khi hoàn thiện phân tích; không bắt buộc cho benchmark này |
-| SimPy/ns-3, k6/wrk2, OTel/Loki/Tempo | Mô phỏng hàng đợi hoặc đo HTTP/microservices theo câu hỏi riêng | Chưa cần cho phạm vi hiện tại |
+| OpenTelemetry Collector + Prometheus/Grafana | Dashboard CPU/mạng cho loaded RTT và demo observability | Phiên phụ trợ; tắt agent A/B trong 16 block chính |
+| SimPy/ns-3, k6/wrk2, Loki/Tempo | Mô phỏng hàng đợi hoặc đo HTTP/microservices theo câu hỏi riêng | Chỉ thêm khi có câu hỏi ứng dụng/tracing cụ thể |
 
 `tc -s` chỉ đọc hàng đợi Linux. Nó không nhìn được hàng đợi nội bộ AWS. Cấu hình `tc netem`/TBF/HTB thay đổi mạng thực nghiệm; nếu triển khai phải tách thành bài riêng và ghi rõ là độ trễ/mất gói/giới hạn do nhóm tạo ra. Không trộn vào baseline AWS.
 
@@ -120,14 +120,20 @@ RTT tăng khi tải là kết quả end-to-end; chưa tách chính xác bao nhi�
 
 ## Việc nên làm tiếp
 
-Cập nhật 11/10: [phần thống kê và xác suất](20-thong-ke-va-xac-suat.md)
+Cập nhật 12/10: [phần thống kê và xác suất](20-thong-ke-va-xac-suat.md)
 đã tính P50/P95/P99, ECDF và tần suất RTT vượt ngưỡng từ 1.000 phản hồi
 hai mode; đã vẽ RTT/cwnd/rate của 10 JSON TCP một luồng. Dữ liệu cũ được
 giữ nguyên. Phần đồ thị của 30 JSON fan-in và các đợt lặp mới vẫn chưa làm.
 
 1. **Offline trước:** đồ thị TCP từ 40 JSON và P50/P95/ECDF từ hai phiên ping chuẩn; bổ sung phần giải thích mã iperf3 3.19.1 và các giới hạn lấy mẫu.
 2. **Củng cố kết luận:** thực hiện các đợt lặp cân bằng thứ tự theo kế hoạch 16 nếu ngân sách cho phép; giữ số liệu lỗi/outlier có lý do.
-3. **Một bài mới trực tiếp:** RTT khi có tải với mức pacing chung cho hai mode, goodput thực đạt, CPU và delta ENA. Bài này chưa được tính hoàn thành.
-4. **Hoàn thiện nộp:** related work, chi phí, tài liệu kiến trúc, slide và demo; một trace TCP ngắn là bổ sung có ích nếu cần giải thích bằng hình ảnh.
+3. **Một bài mới trực tiếp:** RTT khi có tải với mức pacing chung cho hai mode, goodput thực đạt, CPU và delta ENA. Chỉ chạy sau 16 block xác nhận.
+4. **Observability phụ trợ:** cấu hình Collector/Grafana cho phiên demo riêng; không chạy scrape/export trên A/B trong phép đo chính.
+5. **Hoàn thiện nộp:** related work, chi phí, tài liệu kiến trúc, slide và demo; một trace TCP ngắn là bổ sung có ích nếu cần giải thích bằng hình ảnh.
+
+Lý do tách observability khỏi primary: hostmetrics đọc hệ thống và export theo
+chu kỳ, tạo CPU/network activity đúng trên endpoint đang đo. Với effect size
+cỡ phần mười mili giây, đây là biến gây nhiễu tránh được. Chi tiết và nguồn
+nằm trong [tài liệu cơ sở khoa học và observability](24-co-so-khoa-hoc-thong-ke-va-observability.md).
 
 Không cần làm tất cả nội dung môn thành kịch bản mới. Giá trị của phần bổ sung nằm ở câu hỏi được trả lời, cơ chế được giải thích và số liệu có thể tái tạo. Theo slide 18, chuẩn bị để tự giải thích/sửa code và kiểm chứng nguồn; ghi AI Usage Declaration theo việc sử dụng thực tế của nhóm, không khai thay cho những việc chưa làm.

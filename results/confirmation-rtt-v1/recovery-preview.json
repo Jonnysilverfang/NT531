@@ -17,7 +17,8 @@
     "VPC": 4,
     "Update": 0
   },
-  "Applied": false,
+  "Applied": true,
+  "AppliedUTC": "2026-10-12T09:37:00Z",
   "HourlyFixedTGWAndEIPUSD": 0.22,
   "Fixed96HourExampleUSD": 21.12,
   "Excluded": "EC2 compute, EBS, data processing/transfer, tax, credits and discounts",

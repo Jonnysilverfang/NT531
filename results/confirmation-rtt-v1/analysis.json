@@ -1,11 +1,61 @@
 {
   "protocol_hash": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
-  "completed_blocks": 0,
+  "completed_blocks": 1,
   "required_blocks": 16,
-  "local_dates": [],
+  "local_dates": [
+    "2026-10-12"
+  ],
   "issues": [],
-  "rows": [],
-  "sources": [],
+  "rows": [
+    {
+      "block": 1,
+      "order": [
+        "peering",
+        "tgw"
+      ],
+      "started_utc": "2026-10-12T09:41:00.344740+00:00",
+      "span_seconds": 297.645162,
+      "peering_ms": 0.21133333333333335,
+      "tgw_ms": 0.44166666666666665,
+      "difference_ms": 0.23033333333333333,
+      "missing_replies": 0,
+      "cohort_ids": [
+        "i-0484f42b82795f765",
+        "i-089bae0de9ec6bc4e"
+      ],
+      "tgw_id": "tgw-036e551008b8c0805"
+    }
+  ],
+  "sources": [
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/peering/routes-before.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/peering/routes-after.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/peering/capture.json",
+      "sha256": "7a8819fe31e99c26ce1205cc4401193a470d6ed583ecc29302cc752a9241370e"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/tgw/routes-before.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/tgw/routes-after.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/tgw/capture.json",
+      "sha256": "ce42854a380e878b6b391fd6c8112bd4bd045118ada8a533eb6c3c5f3bc10ea8"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-01/f3b3d4b2a47e483190d205520899ec0b/complete.json",
+      "sha256": "810fdaf72633b276a194aaf4b7eb2c36809f7410c52c4efb120c8dd3bdf25bc8"
+    }
+  ],
   "inferential_result": null,
   "status": "incomplete_no_inferential_conclusion",
   "assumptions": "Inference conditional on sufficiently independent blocks and suitable sampling process; spacing does not prove independence."

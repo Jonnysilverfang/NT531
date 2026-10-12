@@ -1,0 +1,41 @@
+{
+  "deployed_utc": "2026-10-12T09:37:00Z",
+  "region": "us-east-1",
+  "routing_mode_after_block_1": "tgw",
+  "terraform_apply": {
+    "add": 100,
+    "change": 0,
+    "destroy": 0
+  },
+  "instances": {
+    "a": {
+      "id": "i-089bae0de9ec6bc4e",
+      "private_ip": "10.10.10.212",
+      "public_ip": "18.215.76.235"
+    },
+    "b": {
+      "id": "i-0484f42b82795f765",
+      "private_ip": "10.20.10.155",
+      "public_ip": "44.193.132.188"
+    },
+    "c": {
+      "id": "i-0a3f3e2e9d7185970",
+      "private_ip": "10.30.10.212",
+      "public_ip": "44.195.220.184"
+    },
+    "d": {
+      "id": "i-0abcc8853cee750e7",
+      "private_ip": "10.40.10.155",
+      "public_ip": "34.199.47.71"
+    }
+  },
+  "peering_ab": "pcx-00fb47a60a956e36b",
+  "transit_gateway_id": "tgw-036e551008b8c0805",
+  "preparation": {
+    "ssm_online": 4,
+    "iperf_ports": [5201, 5202, 5203],
+    "full_mesh_connectivity": "pass",
+    "mode_checked": "tgw"
+  },
+  "primary_observability_policy": "No OpenTelemetry, Prometheus or Grafana agent on A/B during the 16 confirmatory RTT blocks."
+}

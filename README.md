@@ -42,11 +42,17 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 15. [Phân bố RTT, xác suất vượt ngưỡng, TCP theo thời gian và thiết kế suy luận thống kê](docs/20-thong-ke-va-xac-suat.md).
 16. [Rà soát PDF 27 trang: chỗ cần sửa và vị trí ghép phần thống kê](docs/21-ra-soat-bao-cao-main-pdf.md).
 17. [Đợt xác nhận RTT 16 block: giả thuyết, công suất, tiêu chí kết luận và script tự động](docs/23-thiet-ke-xac-nhan-rtt.md).
+18. [Cơ sở khoa học, công thức, liên hệ bài giảng và quyết định OpenTelemetry/Grafana](docs/24-co-so-khoa-hoc-thong-ke-va-observability.md).
 
-Cập nhật 12/10: người dùng đã dọn hạ tầng AWS để giảm phí. Đợt xác nhận RTT
-được chuẩn bị với protocol đóng băng, hiện **0/16 block**, chưa có số đo mới.
-Khôi phục tài nguyên cần chốt chi phí trước; trạng thái triển khai ngày 05–06/10
-trong các tài liệu lịch sử không phản ánh tài nguyên đang tồn tại hôm nay.
+Cập nhật 12/10: đã khôi phục hạ tầng bằng Terraform với **100 tạo, 0 sửa,
+0 xóa**. Bốn EC2 đã pass full-mesh ICMP/TCP và smoke test qua TGW. Đợt xác
+nhận RTT có protocol đóng băng hiện **1/16 block hợp lệ**: Peering 0,2113 ms,
+TGW 0,4417 ms, chênh +0,2303 ms, không mất packet. Chưa có kết luận suy diễn
+trước khi đủ 16 block và tiêu chí chất lượng.
+
+OpenTelemetry/Grafana được giữ cho phiên observability phụ trợ và demo. Không
+chạy collector trên A/B trong 16 block chính vì hoạt động scrape/export định
+kỳ có thể làm nhiễu chênh lệch RTT cỡ phần mười mili giây. Xem tài liệu 24.
 
 Cập nhật 11/10: đã khai thác log cũ để tính ECDF/P50/P95/P99 và tần suất
 vượt ngưỡng, cùng đồ thị TCP RTT/cwnd. Không có phép đo AWS mới; các đợt

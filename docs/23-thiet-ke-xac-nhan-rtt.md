@@ -123,7 +123,7 @@ theo cả hai thứ tự đều >δ, có thể viết:
 > 0.1 ms ở đa số block. Có …/16 block vượt margin, p-value một phía …, cận dưới
 > exact của xác suất vượt margin …; chênh lệch trung bình … ms.
 
-Thay dấu … bằng số thực tế; không có câu kết luận này ở hiện trạng 0/16.
+Thay dấu … bằng số thực tế; chưa có câu kết luận này ở hiện trạng 1/16.
 Các giả định về block và nhiễu chung phải nêu cùng kết luận. Điều kiện hai
 thứ tự là kiểm tra mô tả bổ sung; không lấy p-value của từng nhóm để chọn kết
 quả. Nếu hai thứ tự khác nhiều, điều tra carryover/thời điểm, không bỏ một nhóm.
@@ -179,22 +179,27 @@ A↔B và analyzer kiểm lại target. Cohort/hash/time/missing/duplicate đư�
 trước kết luận. Script bảo vệ workflow, không chứng minh cloud không có mọi
 nhiễu. Raw trên EC2 cũng được giữ; stdout SSM trả gói gzip/base64 có giới hạn.
 
-## Hiện trạng và việc cần duyệt
+## Hiện trạng
 
-**0/16 block**, chưa có phép đo mới. AWS đã được người dùng dọn để giảm phí.
-Plan phục hồi trong tmp (không commit) là **100 resource tạo, 0 sửa/xóa**:
-4 VPC, 4 EC2/EIP, 6 Peering, 1 TGW/4 attachment và mạng/IAM/rule liên quan.
-AMI và key pair nt531-key vẫn tồn tại. Chưa apply. EIP được cấp lại có thể
-khác địa chỉ SSH cũ; cập nhật Termius từ output mới, không dùng IP cũ.
+**1/16 block hợp lệ**. Ngày 12/10/2026, Terraform đã apply đúng plan
+**100 tạo, 0 sửa, 0 xóa**: 4 VPC, 4 EC2/EIP, 6 Peering, 1 TGW/4 attachment
+và các tài nguyên mạng/IAM/rule liên quan. Bốn máy Online qua SSM, cùng MTU
+1500, có listener iperf3 5201–5203 và đã pass full-mesh ICMP/TCP/smoke test
+ở mode TGW.
 
-Khôi phục sẽ phát sinh phí; phải được người dùng chốt trước vì đã chủ động
-dọn tài nguyên để tiết kiệm. Có thể stop C/D sau chuẩn bị khi chỉ đo A/B, nhưng
-TGW attachment, EIP và EBS vẫn tính phí. Không tự đổi mô hình thành hai VPC
-hoặc gộp cohort mới với cũ để tiết kiệm mà không cập nhật phạm vi nghiên cứu.
+Block 1 chạy Peering rồi TGW, nhận đủ 300/300 packet mỗi mode. Mean của ba
+RTT avg là 0,2113 ms và 0,4417 ms; `d₁=+0,2303 ms>δ`, nên `Z₁=1`. Route đã
+phục hồi về TGW. Đây là bằng chứng ban đầu, chưa có kết luận suy diễn trước
+khi đủ 16 block. Mốc sớm nhất block 2 là 18:41 giờ Việt Nam ngày 12/10.
+
+Cohort xác nhận: A `i-089bae0de9ec6bc4e`, B `i-0484f42b82795f765`, TGW
+`tgw-036e551008b8c0805`. Giữ các ID này giữa 16 block; không destroy/recreate
+rồi gộp dữ liệu. EIP mới và toàn bộ ID triển khai nằm trong
+[`deployment.json`](../results/confirmation-rtt-v1/deployment.json).
 
 ## Dự toán trước khi khôi phục
 
-[Preview đã kiểm tra](../results/confirmation-rtt-v1/recovery-preview.json)
+[Preview và trạng thái apply](../results/confirmation-rtt-v1/recovery-preview.json)
 ghi giá Price List API của AWS us-east-1: VPC attachment TGW 0.05 USD/giờ,
 SKU 9N2FHGMMCZBKDCGH, version 20260917190528. IPv4/EIP 0.005 USD/giờ theo
 [AWS VPC pricing](https://aws.amazon.com/vpc/pricing/).

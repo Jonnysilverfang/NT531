@@ -1,16 +1,16 @@
 # Kế hoạch hoàn thiện đồ án trước ngày 26 tháng 10 năm 2026
 
-Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch này được lập ngày 06/10; các phép đo mới dưới đây **chưa thực hiện**.
+Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 12/10 sau khi khôi phục hạ tầng và hoàn tất block xác nhận đầu tiên.
 
 ## Phần đã có và phần còn thiếu
 
 | Hạng mục | Trạng thái đã có bằng chứng |
 |---|---|
-| Bốn VPC EC2 và chuyển Peering TGW bằng Terraform | Đã triển khai và dùng để đo; tài liệu kiến trúc đã có |
+| Bốn VPC EC2 và chuyển Peering TGW bằng Terraform | Đã khôi phục 12/10: 100 tạo, 0 sửa/xóa; full mesh pass |
 | RTT khi rảnh và TCP một luồng | Có 5 lượt mỗi mode mỗi bài |
 | Fan-in A C D tới B | Có 5 lượt mỗi mode; 146 file gốc mỗi phiên đã sao lưu và đối chiếu |
 | Báo cáo kết quả | Có bảng, biểu đồ, CPU ENA, công thức, khái niệm và kết luận lựa chọn |
-| Tái lập giữa các thời điểm | Chưa có thiết kế bổ sung cân bằng thứ tự được thực hiện |
+| Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 1/16 block hợp lệ |
 | RTT khi có tải | Chưa tính là hoàn thành |
 | Tổng fan-in theo cùng cửa sổ thời gian | Hiện vẫn là tổng xấp xỉ; cần kiểm tra interval và mốc thời gian gốc |
 | Báo cáo toàn bộ slide demo repo nộp | Cần hoàn thiện và rà soát; chương kết quả không thay cho báo cáo đầy đủ |
@@ -50,44 +50,17 @@ R_i(W): byte payload nhận từ nguồn i trong đúng W; T_0,T_1 tính bằng 
 
 Cập nhật 12/10 theo hướng người dùng chọn: RTT xác nhận dùng
 [protocol 16 block](23-thiet-ke-xac-nhan-rtt.md), thay cho mức khởi đầu bốn
-đợt RTT dưới đây. Script được chuẩn bị, **0/16 block**, hạ tầng đã dọn nên
-chưa chạy. Sau đó mới chạy loaded RTT khám phá. Phần TCP một luồng bổ sung
-bên dưới vẫn là đề xuất, không tự chạy cùng đợt RTT hoặc nhập vào kiểm định.
+đợt RTT trước đây. Hạ tầng mới đã dựng và **1/16 block** đã hoàn tất: Peering
+0,2113 ms, TGW 0,4417 ms, `d₁=+0,2303 ms`, không mất packet. Block 2 chỉ
+được bắt đầu từ 18:41 giờ Việt Nam ngày 12/10; toàn bộ 16 block phải trải trên
+ít nhất bốn ngày và start cách nhau ít nhất hai giờ.
 
-Đề xuất **bốn đợt bổ sung** ở các thời điểm khác nhau. Mỗi đợt có cả Peering và TGW; mỗi mode chạy ba lượt RTT khi rảnh và ba lượt TCP một luồng. Tổng là **24 lượt ping và 24 lượt TCP**, ngoài dữ liệu cũ. Bốn đợt là mức khởi đầu theo thời gian/ngân sách, không phải chứng minh đủ công suất thống kê.
-
-Phân bổ hai đợt Peering trước, hai đợt TGW trước; xáo thứ tự bốn đợt và lưu lịch trước khi chạy. Đây là cách áp dụng ý tưởng block theo thời gian và cân bằng thứ tự từ [NIST randomized block designs](https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm). Không gọi việc luôn chạy Peering trước là ngẫu nhiên. Không ghép lượt 1 của hai phiên cũ thành cặp đồng thời.
-
-Giữ cấu hình RTT 100 gói, 56 byte payload, interval 0,2 giây; TCP P1, omit 5 giây, đo 30 giây. Giữ EC2, AZ, MTU, kernel/công cụ, congestion control, chiều truyền, warm-up và nghỉ giống nhau giữa mode. Sau đổi mode, kiểm tra route hai chiều bằng AWS và connectivity; chỉ đo khi thay đổi đã ổn định. Mỗi chế độ phải có cùng quy tắc warm-up/nghỉ. Nghỉ cố định không chứng minh burst credits đã hồi phục, vì vậy lưu lịch hoạt động và nêu đây là yếu tố chưa quan sát trực tiếp.
-
-Lưu raw JSON/ping, mã thoát, route snapshot, metadata và CPU/ENA A/B trước sau từng lượt. Snapshot route dùng API có chọn trường định tuyến, không xuất credentials. Nếu lượt lỗi, lưu nguyên log và lý do chạy lại. Không bỏ outlier chỉ vì kết quả xấu; không dừng lấy mẫu chỉ khi p-value đã nhỏ.
-
-### Phân tích theo đợt và khoảng tin cậy
-
-Với đợt b, lấy trung bình ba lượt của từng mode rồi tính:
-
-\[
-d_b = \bar{x}_{TGW,b} - \bar{x}_{Peering,b},\qquad
-CI_{95\%} = \bar d \pm t_{0.975,B-1}\frac{s_d}{\sqrt B}.
-\]
-
-Trong đó tính từ B chênh lệch theo đợt:
-
-\[
-\bar d=\frac{1}{B}\sum_{b=1}^{B}d_b,\qquad
-s_d=\sqrt{\frac{\sum_{b=1}^{B}(d_b-\bar d)^2}{B-1}}.
-\]
-
-Với B=4, t_{0.975,3} ≈ 3,18245 nên nửa độ rộng CI ≈ 1,59122s_d. Đây là ví dụ thiết kế, chưa có CI thực nghiệm theo đợt. d_b>0 nghĩa TGW có RTT cao hơn khi xét RTT, nhưng có goodput cao hơn khi xét goodput; dấu dương không có cùng ý nghĩa tốt/xấu cho hai chỉ số.
-
-- b: chỉ số đợt; B: số đợt đã thực hiện đủ hai mode, ban đầu đề xuất B=4.
-- x: chỉ số đang so; dùng ms cho RTT hoặc Gbps cho goodput, không trộn đơn vị.
-- d_b: chênh lệch trong đợt; d trung bình: trung bình B chênh lệch; s_d: SD mẫu giữa B chênh lệch.
-- t: phân vị Student t với B−1 bậc tự do. Khoảng tin cậy này yêu cầu chênh lệch giữa các đợt đủ độc lập và phân bố phù hợp; B nhỏ khiến việc đánh giá giả định yếu. Nếu giả định không phù hợp, báo cáo mô tả theo đợt và cân nhắc thêm dữ liệu, không ép kiểm định.
-
-CI chứa 0 không chứng minh hai mode tương đương. Muốn đánh giá tương đương thực tiễn phải định trước biên chênh lệch chấp nhận được dựa trên nhu cầu ứng dụng và thiết kế phép kiểm định tương đương; không lấy chênh lệch đã thấy làm biên. Không dùng số gói ping hoặc số interval thay cho B. CI không sửa được sai lệch thiết kế hoặc loại bỏ ảnh hưởng credits.
-
-Tiêu chí xong: bảng mỗi đợt và biểu đồ chênh lệch có độ bất định; kết luận nêu cỡ ảnh hưởng, điều kiện áp dụng và việc khác biệt có nhất quán hay không. Nếu CI rộng, công bố đúng như vậy.
+Thiết kế bốn đợt và CI Student t cũ được thay thế trước khi thu dữ liệu xác
+nhận. Phân tích chính hiện dùng biến vượt margin `Z_b=1{d_b>0,1 ms}`, exact
+binomial một phía, cận exact của xác suất vượt margin và cận order-statistic
+cho median. Cần `K≥12/16` ở mức `α=0,05`; không dừng sớm. Công thức, giả định
+và câu kết luận được khóa trong tài liệu 23. Phần TCP một luồng và loaded RTT
+không nhập vào `K`.
 
 ## Ưu tiên 3 Một bài mới có ý nghĩa ứng dụng
 
@@ -123,8 +96,8 @@ C_TGW: USD phí TGW; h_j: giờ bị tính phí attachment j; r_h: USD/attachmen
 | Thời gian | Việc chính | Điều kiện chốt |
 |---|---|---|
 | 06–08/10 | Rà raw, kết luận, glossary, phạm vi và thiết kế thí nghiệm | Câu hỏi và quy tắc tổng hợp được ghi trước |
-| 09–12/10 | Bốn đợt bổ sung RTT khi rảnh và TCP một luồng | Đủ log hai mode, thứ tự cân bằng và bằng chứng route |
-| 13–16/10 | Phân tích các đợt; bài RTT khi có tải nếu ngân sách cho phép | Có đồ thị tải độ trễ, CPU ENA; phân biệt đo thử và chính thức |
+| 12–16/10 | Hoàn tất 16 block RTT xác nhận trên ≥4 ngày | Đủ log hai mode, spacing ≥2 giờ, thứ tự cân bằng và bằng chứng route |
+| 17–18/10 | Chốt suy luận và chạy loaded RTT khám phá | Có effect size, cận exact, đồ thị tải độ trễ, CPU và ENA |
 | 17–20/10 | Ghép báo cáo đầy đủ, chi phí, công thức và tài liệu tham khảo | Các số truy về raw, nhất quán thuật ngữ và đơn vị |
 | 21–23/10 | Repo GitHub sạch, slide, demo và video dự phòng | Chạy thử từ tài liệu; rà không lẫn dữ liệu mô phỏng với thực nghiệm |
 | 24–25/10 | Tập bảo vệ, sửa trình bày, chốt bản nộp | Không mở thêm kịch bản; trả lời được câu hỏi phương pháp |
@@ -138,12 +111,13 @@ Demo phân đoạn TGW có thể minh họa khả năng nhiều bảng route sau
 
 ## Chuẩn bị bảo vệ
 
-Cập nhật 11/10: phân tích offline ECDF/phân vị/tần suất RTT vượt ngưỡng
+Cập nhật 12/10: phân tích offline ECDF/phân vị/tần suất RTT vượt ngưỡng
 và đồ thị TCP một luồng đã hoàn thành; xem [phần thống kê](20-thong-ke-va-xac-suat.md).
 Bốn đợt đề xuất không bảo đảm đủ công suất thống kê. Phần mới giải thích
 giả thuyết/CI theo đợt và giới hạn exact sign test với B nhỏ. Trước khi đo,
 chốt đầu ra chính, số đợt, độ chính xác mong muốn, phương pháp và ngân sách;
-không dừng lấy mẫu ngay khi p-value nhỏ. Chưa có đợt mới trong cập nhật này.
+không dừng lấy mẫu ngay khi p-value nhỏ. Block 1 đã hoàn tất nhưng chưa đủ để
+đưa ra kết luận suy diễn.
 
 Chuẩn bị câu trả lời có trỏ nguồn cho các câu: vì sao chọn bốn VPC; sáu Peering so với bốn attachment có công bằng không; route nào chứng minh mode; RTT khác độ trễ một chiều thế nào; vì sao throughput không phải năng lực dịch vụ; ENA tăng có phải packet loss không; vì sao chưa kết luận tương đương; tác động credits; lựa chọn theo chi phí/quy mô ra sao.
 

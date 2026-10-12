@@ -1,5 +1,6 @@
 """Behavioral checks: parallel calls, overload, failure accounting, W3C traces."""
 import importlib.util
+import gzip
 import json
 from pathlib import Path
 import socket
@@ -45,7 +46,8 @@ class ApplicationTests(unittest.TestCase):
                     urls.append(f'http://127.0.0.1:{number}')
                     processes.append(subprocess.Popen([sys.executable, str(HERE / 'app.py'), 'worker',
                         '--node', node, '--mode', 'local', '--port', str(number), '--worker-delay-ms', '30',
-                        '--worker-slots', '1', '--test-shutdown', '--trace-file', str(directory / (node + '.jsonl'))],
+                        '--worker-slots', '1', '--test-shutdown', '--trace-file', str(directory / (node + '.jsonl')),
+                        '--queue-file', str(directory / (node + '-queue.jsonl.gz'))],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE))
                 number = port()
                 gateway = f'http://127.0.0.1:{number}'
@@ -114,6 +116,14 @@ class ApplicationTests(unittest.TestCase):
                 for process in processes:
                     process.wait(timeout=10)
                     process.stderr.close()
+            # Worker logs retain all entered calls, including calls whose client failed.
+            for node in 'cd':
+                rows = [json.loads(line) for line in gzip.decompress((directory/(node+'-queue.jsonl.gz')).read_bytes()).decode().splitlines()]
+                self.assertGreaterEqual(len(rows), 31)
+                self.assertTrue(all(r['request_id'] is not None and r['exit_s'] is not None for r in rows))
+                completed = [r for r in rows if r['status']=='handler_completed']
+                self.assertTrue(all(r['entered_s']<=r['service_start_s']<=r['service_end_s']<=r['exit_s'] for r in completed))
+                self.assertGreater(max((r['service_start_s']-r['entered_s'])*1000 for r in completed), 200)
 
 
 if __name__ == '__main__':

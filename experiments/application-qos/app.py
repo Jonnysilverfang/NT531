@@ -1,12 +1,13 @@
 """Four-host synthetic RPC experiment; open-loop arrivals, explicit deadline failures.
 
 Worker service time is an asynchronous wait representing an I/O task, not CPU work.
-Only the eight worker slots are intentionally bounded. No artificial network delay.
+Worker slots are intentionally bounded. No artificial network delay.
 """
 import argparse
 import asyncio
 import contextlib
 import datetime as dt
+import gzip
 import json
 import math
 from pathlib import Path
@@ -97,10 +98,13 @@ async def serve(args, tracing):
     application = web.Application()
     stop = asyncio.Event()
     slots = asyncio.Semaphore(args.worker_slots)
+    queue_rows = []
+    queued = active = 0
     async def health(_):
         return web.json_response({'role': args.role, 'node': args.node,
             'tracing': tracing.on, 'worker_delay_ms': args.worker_delay_ms,
-            'worker_slots': args.worker_slots, 'response_bytes': args.response_bytes})
+            'worker_slots': args.worker_slots, 'response_bytes': args.response_bytes,
+            'queued': queued, 'active': active, 'queue_logging': args.queue_file is not None})
     application.router.add_get('/health', health)
     if args.test_shutdown:
         if args.bind != '127.0.0.1':
@@ -113,20 +117,46 @@ async def serve(args, tracing):
         connector=aiohttp.TCPConnector(limit=0, limit_per_host=0), trust_env=False)
 
     async def worker(request):
-        with tracing.span('worker.handle', request.headers, 'SERVER', **{'nt531.node': args.node}):
-            with tracing.span('worker.queue'):
-                await slots.acquire()
-            try:
+        nonlocal queued, active
+        entered = time.perf_counter()
+        row = {'request_id': request.headers.get('X-NT531-Request-ID'), 'node': args.node,
+            'entered_s': entered, 'service_start_s': None, 'service_end_s': None,
+            'exit_s': None, 'status': 'entered', 'queued_before': queued, 'active_before': active}
+        if args.queue_file is not None:
+            queue_rows.append(row)
+        acquired = False
+        queued += 1
+        try:
+            with tracing.span('worker.handle', request.headers, 'SERVER', **{'nt531.node': args.node}):
+                with tracing.span('worker.queue'):
+                    await slots.acquire()
+                acquired = True
+                queued -= 1
+                active += 1
+                row['service_start_s'] = time.perf_counter()
                 with tracing.span('worker.process', **{'nt531.synthetic_wait_ms': args.worker_delay_ms}):
                     await asyncio.sleep(args.worker_delay_ms / 1000)
+                row['service_end_s'] = time.perf_counter()
+                row['status'] = 'handler_completed'
                 return web.Response(body=b'x' * args.response_bytes,
                     headers={'X-NT531-Node': args.node})
-            finally:
+        except asyncio.CancelledError:
+            row['status'] = 'cancelled'
+            raise
+        except Exception as e:
+            row['status'] = type(e).__name__
+            raise
+        finally:
+            row['exit_s'] = time.perf_counter()
+            if acquired:
+                active -= 1
                 slots.release()
+            else:
+                queued -= 1
 
-    async def fetch(url, node):
+    async def fetch(url, node, request_id):
         with tracing.span('gateway.call.' + node, kind='CLIENT', **{'server.address': url}):
-            async with session.get(url + '/work', headers=tracing.headers()) as response:
+            async with session.get(url + '/work', headers={**tracing.headers(), 'X-NT531-Request-ID': request_id}) as response:
                 body = await response.read()
                 if response.status != 200 or len(body) != args.response_bytes or response.headers.get('X-NT531-Node') != node:
                     raise ValueError('Invalid worker result ' + node)
@@ -134,7 +164,8 @@ async def serve(args, tracing):
 
     async def gateway(request):
         with tracing.span('gateway.handle', request.headers, 'SERVER'):
-            tasks = [asyncio.create_task(fetch(url, node)) for node, url in zip(('c', 'd'), args.workers)]
+            request_id = request.headers.get('X-NT531-Request-ID', 'unidentified')
+            tasks = [asyncio.create_task(fetch(url, node, request_id)) for node, url in zip(('c', 'd'), args.workers)]
             try:
                 sizes = await asyncio.gather(*tasks)
                 return web.json_response({'ok': True, 'workers': ['c', 'd'], 'bytes': sizes})
@@ -159,6 +190,9 @@ async def serve(args, tracing):
     finally:
         await runner.cleanup()
         await session.close()
+        if args.queue_file is not None:
+            args.queue_file.parent.mkdir(parents=True, exist_ok=True)
+            args.queue_file.write_bytes(gzip.compress((''.join(json.dumps(row)+'\n' for row in queue_rows)).encode(), mtime=0))
 
 
 async def load(args, tracing):
@@ -171,13 +205,14 @@ async def load(args, tracing):
         connector=aiohttp.TCPConnector(limit=0, limit_per_host=0), trust_env=False) as session:
         async def request(number, due):
             dispatched = time.perf_counter()
-            row = {'id': number, 'scheduled_s': number / args.rate,
+            request_id = f'{args.run_id}:{number}'
+            row = {'id': number, 'request_id': request_id, 'scheduled_s': number / args.rate,
                 'dispatch_lag_ms': max(0, (dispatched - due) * 1000),
                 'sent': True, 'ok': False, 'status': None, 'error': None}
             with tracing.span('load.request', kind='CLIENT', **{'nt531.request': number}):
                 row['trace_id'] = tracing.trace_id()
                 try:
-                    async with session.get(args.url + '/aggregate', headers=tracing.headers()) as response:
+                    async with session.get(args.url + '/aggregate', headers={**tracing.headers(), 'X-NT531-Request-ID': request_id}) as response:
                         row['status'] = response.status
                         body = await response.json()
                         row['ok'] = response.status == 200 and body.get('ok') is True and body.get('workers') == ['c', 'd'] and body.get('bytes') == [args.response_bytes] * 2
@@ -193,7 +228,7 @@ async def load(args, tracing):
             await asyncio.sleep(max(0, due - time.perf_counter()))
             if len(inflight) >= args.maximum_inflight:
                 now = time.perf_counter()
-                rows.append({'id': number, 'scheduled_s': number / args.rate,
+                rows.append({'id': number, 'request_id': f'{args.run_id}:{number}', 'scheduled_s': number / args.rate,
                     'dispatch_lag_ms': max(0, (now - due) * 1000), 'sent': False,
                     'ok': False, 'status': None, 'error': 'generator_inflight_limit',
                     'completion_ms': max(0, (now - due) * 1000),
@@ -237,6 +272,8 @@ def parser():
     p.add_argument('--maximum-inflight', type=int, default=2000)
     p.add_argument('--out', type=Path)
     p.add_argument('--trace-file', type=Path)
+    p.add_argument('--queue-file', type=Path, help='Worker timing log; buffered in memory and saved only during shutdown')
+    p.add_argument('--run-id', default='local')
     p.add_argument('--otlp-endpoint')
     p.add_argument('--test-shutdown', action='store_true', help=argparse.SUPPRESS)
     return p

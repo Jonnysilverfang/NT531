@@ -1,0 +1,21 @@
+{
+  "status": "verified_download_only",
+  "started_utc": "2026-10-12T16:34:06.831968+00:00",
+  "failed_attempt_sha256": "bf8351917dbc6a38252ed7b44d8b59211cf501f352115ae486eac56ad9340bff",
+  "recovered_files": [
+    {
+      "path": "tgw/slots-8-rate-600/queue-c.jsonl.gz",
+      "sha256": "fb5c0dc376fc797585dc88523a6834def3afd4b9e2c8e2b3675627fd29297224"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-d.jsonl.gz",
+      "sha256": "722f85dcda27be817d75f4eff711604750a1770308bc70bcf7e361cb870fb2df"
+    },
+    {
+      "path": "tgw/routes-after.json",
+      "sha256": "87d480d28b75b458a7b04da6b1623611fff90a8ddd9ee31e13eab736c7052056"
+    }
+  ],
+  "scope": "Read-only recovery after AWS OAuth 429; no remeasurement/start/route changes. Original failed attempt.json retained. TGW after-snapshot is taken after successful original cleanup restored TGW.",
+  "ended_utc": "2026-10-12T16:35:47.163542+00:00"
+}

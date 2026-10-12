@@ -1,0 +1,105 @@
+{
+  "action": "stop_only",
+  "user_decision": "Stop four EC2; keep infrastructure for next confirmation sessions",
+  "started_utc": "2026-10-12T16:38:04.661360+00:00",
+  "instances": {
+    "a": {
+      "id": "i-089bae0de9ec6bc4e",
+      "key_name": "nt531-key",
+      "private_ip": "10.10.10.212",
+      "public_ip": "18.215.76.235",
+      "security_group_id": "sg-04dc2df4181f005c1",
+      "subnet_id": "subnet-03bd2733d5b1749da"
+    },
+    "b": {
+      "id": "i-0484f42b82795f765",
+      "key_name": "nt531-key",
+      "private_ip": "10.20.10.155",
+      "public_ip": "44.193.132.188",
+      "security_group_id": "sg-0429ec1bc76b99ba8",
+      "subnet_id": "subnet-0e92a1e819eb87fc3"
+    },
+    "c": {
+      "id": "i-0a3f3e2e9d7185970",
+      "key_name": "nt531-key",
+      "private_ip": "10.30.10.212",
+      "public_ip": "44.195.220.184",
+      "security_group_id": "sg-0ef3f78f36cb4b5a9",
+      "subnet_id": "subnet-03f4d7bb22778a927"
+    },
+    "d": {
+      "id": "i-0abcc8853cee750e7",
+      "key_name": "nt531-key",
+      "private_ip": "10.40.10.155",
+      "public_ip": "34.199.47.71",
+      "security_group_id": "sg-0e61ff5174a592093",
+      "subnet_id": "subnet-049a464ed7039817e"
+    }
+  },
+  "retained_tgw_id": "tgw-036e551008b8c0805",
+  "backup": {
+    "private_backup": "D:\\NT531-DanhGiaHieuNang\\backups\\nt531-private-session-20261012T163803Z.zip",
+    "payload_files": 1019,
+    "bytes": 17336911,
+    "sha256": "ccec3302f7cc758d5b4a7c8516e15cbad6a01aa587f88ea0098d56d1651a51b9",
+    "verified": true,
+    "scope": "All local results/docs/scripts/experiments plus Terraform code, lock and current state; no credentials, keys, tfvars, tmp or monitoring password. Keep ZIP private."
+  },
+  "status": "stopped_verified",
+  "stop_response": {
+    "StoppingInstances": [
+      {
+        "InstanceId": "i-089bae0de9ec6bc4e",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      },
+      {
+        "InstanceId": "i-0abcc8853cee750e7",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      },
+      {
+        "InstanceId": "i-0484f42b82795f765",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      },
+      {
+        "InstanceId": "i-0a3f3e2e9d7185970",
+        "CurrentState": {
+          "Code": 64,
+          "Name": "stopping"
+        },
+        "PreviousState": {
+          "Code": 16,
+          "Name": "running"
+        }
+      }
+    ]
+  },
+  "states": {
+    "i-089bae0de9ec6bc4e": "stopped",
+    "i-0484f42b82795f765": "stopped",
+    "i-0abcc8853cee750e7": "stopped",
+    "i-0a3f3e2e9d7185970": "stopped"
+  },
+  "ended_utc": "2026-10-12T16:38:41.598387+00:00",
+  "scope": "No terminate/destroy/delete calls. EBS, EIP and TGW retained and may continue to incur fees."
+}

@@ -1,5 +1,12 @@
 # Bước xác nhận tiếp theo — bản thiết kế, chưa chạy
 
+Cập nhật 12/10: đã khóa protocol riêng **16 block** theo kiểm định exact
+một phía và margin 10 điểm phần trăm. Đây là thiết kế chính thay cho đề xuất
+12 phiên dưới đây; xem [tài liệu 27](../../docs/27-can-thiep-slots-va-hang-doi.md)
+và [protocol](../../results/application-slots-confirmation-v1/protocol.json).
+Phần dưới giữ như lịch sử thiết kế; không coi đề xuất 12 phiên/margin
+tương đương mạng là tiêu chí đang dùng. Engineering không phải block xác nhận.
+
 Pilot và calibration ngày 12/10 đã tìm vùng tải ứng dụng bắt đầu trễ,
 không dùng lại chúng như dữ liệu xác nhận. Xem [báo cáo](../../docs/26-ket-qua-pilot-ung-dung.md).
 

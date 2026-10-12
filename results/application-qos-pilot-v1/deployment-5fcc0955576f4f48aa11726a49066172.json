@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-10-12T16:02:38.927782+00:00",
+  "instances": {
+    "a": {
+      "id": "i-089bae0de9ec6bc4e",
+      "key_name": "nt531-key",
+      "private_ip": "10.10.10.212",
+      "public_ip": "18.215.76.235",
+      "security_group_id": "sg-04dc2df4181f005c1",
+      "subnet_id": "subnet-03bd2733d5b1749da"
+    },
+    "b": {
+      "id": "i-0484f42b82795f765",
+      "key_name": "nt531-key",
+      "private_ip": "10.20.10.155",
+      "public_ip": "44.193.132.188",
+      "security_group_id": "sg-0429ec1bc76b99ba8",
+      "subnet_id": "subnet-0e92a1e819eb87fc3"
+    },
+    "c": {
+      "id": "i-0a3f3e2e9d7185970",
+      "key_name": "nt531-key",
+      "private_ip": "10.30.10.212",
+      "public_ip": "44.195.220.184",
+      "security_group_id": "sg-0ef3f78f36cb4b5a9",
+      "subnet_id": "subnet-03f4d7bb22778a927"
+    },
+    "d": {
+      "id": "i-0abcc8853cee750e7",
+      "key_name": "nt531-key",
+      "private_ip": "10.40.10.155",
+      "public_ip": "34.199.47.71",
+      "security_group_id": "sg-0e61ff5174a592093",
+      "subnet_id": "subnet-049a464ed7039817e"
+    }
+  },
+  "new_compute_resources": 0,
+  "new_ingress_rules": 0,
+  "application_sha256": "80375466aff90524ca01f030ba96f31f2449b06813762acfda413043dc6d54ef",
+  "requirements_sha256": "0d021e662fc5dc77aaac96045a95bc9e61e065d66f9a37a22300e6b3a97c41e7",
+  "services_start_on_boot": false,
+  "original_mode": "tgw"
+}

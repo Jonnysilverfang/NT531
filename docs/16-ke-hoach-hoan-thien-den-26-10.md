@@ -14,6 +14,7 @@ Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file g
 | RTT khi có tải | Chưa tính là hoàn thành |
 | Ứng dụng HTTP fan-out, P95 và tỷ lệ đúng hạn | Pilot/calibration 12/10 đã kiểm tra 62.200 requests; chưa suy luận xác nhận |
 | Distributed tracing ứng dụng | 12 traces thật/120 spans; replay Collector → Tempo → Grafana local, chưa OTLP live |
+| Can thiệp slots và log hàng đợi | Engineering 84.000 requests đã kiểm tra, có dấu vết recovery tải log; 0/16 block xác nhận; thiết kế đã khóa |
 | Tổng fan-in theo cùng cửa sổ thời gian | Hiện vẫn là tổng xấp xỉ; cần kiểm tra interval và mốc thời gian gốc |
 | Báo cáo toàn bộ slide demo repo nộp | Cần hoàn thiện và rà soát; chương kết quả không thay cho báo cáo đầy đủ |
 

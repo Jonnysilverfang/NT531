@@ -2,7 +2,7 @@
 
 Đọc [kiến trúc, công thức và phạm vi kết luận](../../docs/25-ung-dung-phan-tan-va-qos.md).
 Kết quả đã chạy nằm ở [báo cáo hai phiên](../../docs/26-ket-qua-pilot-ung-dung.md);
-[study-plan.md](study-plan.md) là bước xác nhận/can thiệp chưa chạy.
+[study-plan.md](study-plan.md) dẫn tới [thiết kế can thiệp slots đã khóa](../../docs/27-can-thiep-slots-va-hang-doi.md).
 
 - `app.py`: A tạo yêu cầu open-loop; B fan-out HTTP; C/D worker I/O tổng hợp.
 - `pilot.json`: tải, thời lượng và ngân sách đặt trước đợt thăm dò đầu tiên.
@@ -17,6 +17,10 @@ Kết quả đã chạy nằm ở [báo cáo hai phiên](../../docs/26-ket-qua-p
   đọc mật khẩu local từ file `.env` đã ignore, không ghi vào bằng chứng.
 - `diagnostics.py`: căn cửa sổ CPU theo UTC, delta ENA toàn mode.
 - `plot_pilot.py`: hai hình báo cáo từ analysis đã kiểm tra.
+- `analyze_slots.py`: ghép request ID với log hàng đợi C/D; chỉ suy luận sau
+  đủ 16 block hợp lệ. Dữ liệu engineering tách riêng, không nhập nghiên cứu.
+- `plot_slots.py`: CPU theo cửa sổ UTC, delta ENA từng điều kiện và biểu đồ slots.
+- `test_slots.py`: kiểm tra biên kiểm định exact và không kết luận sớm.
 - `requirements.txt`: môi trường runtime ghim thư viện chính; `pip freeze`
   bốn máy được so sánh và lưu để biết mọi phiên bản phụ thuộc đã thực dùng.
 

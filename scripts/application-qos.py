@@ -17,6 +17,7 @@ import secrets
 import shlex
 import shutil
 import subprocess
+import threading
 import time
 import uuid
 
@@ -38,6 +39,9 @@ def sha(path):
 class Experiment:
     def __init__(self, profile):
         self.profile = profile
+        # AWS login's credential process can be rate-limited under CLI bursts.
+        # Serialize local CLI invocations while SSM commands still run independently.
+        self._aws_slots = threading.BoundedSemaphore(1)
         self.attempt = uuid.uuid4().hex
         self.temp = ROOT / 'tmp/application-qos' / self.attempt
         self.temp.mkdir(parents=True)
@@ -55,8 +59,9 @@ class Experiment:
             assert any(x['InstanceId'] == self.instances[node]['id'] and x['PingStatus'] == 'Online' for x in online), node + ' not Online'
 
     def aws(self, args):
-        return cli(['aws', *args, '--profile', self.profile, '--region', 'us-east-1',
-            '--output', 'json', '--no-cli-pager'], True)
+        with self._aws_slots:
+            return cli(['aws', *args, '--profile', self.profile, '--region', 'us-east-1',
+                '--output', 'json', '--no-cli-pager'], True)
 
     def remote(self, node, commands, timeout=240):
         request = {'DocumentName': 'AWS-RunShellScript', 'InstanceIds': [self.instances[node]['id']],
@@ -147,28 +152,40 @@ class Experiment:
             list(pool.map(start_node, 'abcd'))
 
     def monitor_save(self, mode, destination):
-        for node in 'abcd':
+        def save_node(node):
             path = f'{REMOTE}/results/{self.attempt}-{mode}-{node}-monitor'
             code = f"import pathlib,gzip,json; p=pathlib.Path({path!r}); b=json.dumps({{f.name:f.read_text() for f in p.glob('*.txt')}}).encode(); (p/'monitor.json.gz').write_bytes(gzip.compress(b,mtime=0))"
             self.remote(node, ['systemctl stop nt531-app-monitor.service', f'ethtool -S ens5 > {path}/ena-after.txt',
                 'python3 -c ' + shlex.quote(code)])
             self.fetch(node, path + '/monitor.json.gz', destination / f'monitor-{node}.json.gz')
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            list(pool.map(save_node, 'abcd'))
 
     def start(self, mode, tracing=False, protocol=None):
         protocol = protocol or json.loads((APP / 'pilot.json').read_text(encoding='utf-8'))
+        health = {}
         for node in 'cdb':
             instance = self.instances[node]
             role, port = ('gateway', 8080) if node == 'b' else ('worker', 8081)
             command = f'{REMOTE}/venv/bin/python {REMOTE}/app.py {role} --node {node} --mode {mode} --bind {instance["private_ip"]} --port {port}'
             command += f' --worker-delay-ms {protocol["worker_delay_ms"]} --worker-slots {protocol["worker_slots"]} --response-bytes {protocol["worker_response_bytes"]} --timeout {protocol["request_timeout_seconds"]}'
+            if protocol.get('queue_logging') and node in 'cd':
+                command += f' --queue-file {REMOTE}/queue-{self.attempt}-{node}.jsonl.gz'
             if tracing:
                 command += f' --trace-file {REMOTE}/traces-{self.attempt}-{node}.jsonl'
             unit = '[Unit]\nDescription=NT531 application pilot\nAfter=network-online.target\n[Service]\nType=simple\nUser=ec2-user\nExecStart=' + command + '\nRestart=no\nTimeoutStopSec=10\nLimitNOFILE=8192\n[Install]\nWantedBy=multi-user.target\n'
             encoded = base64.b64encode(unit.encode()).decode()
-            self.remote(node, [f"printf '%s' '{encoded}' | base64 -d > /etc/systemd/system/nt531-app.service",
+            text = self.remote(node, [f"printf '%s' '{encoded}' | base64 -d > /etc/systemd/system/nt531-app.service",
                 'systemctl daemon-reload', 'systemctl start nt531-app.service',
                 'sleep 1', 'systemctl is-active --quiet nt531-app.service',
                 f"curl --fail --silent http://{instance['private_ip']}:{port}/health"])
+            health[node] = json.loads(text)
+            assert health[node]['node'] == node and health[node]['role'] == role
+            assert health[node]['worker_slots'] == protocol['worker_slots'] and health[node]['worker_delay_ms'] == protocol['worker_delay_ms']
+            assert health[node]['tracing'] == tracing and health[node]['response_bytes'] == protocol['worker_response_bytes']
+            assert health[node]['queued'] == health[node]['active'] == 0
+            if node in 'cd':assert health[node]['queue_logging'] == bool(protocol.get('queue_logging'))
+        return health
 
     def fetch(self, node, filename, destination):
         """SSM output is capped: fetch independent 18000-byte base64 chunks, hash verify."""
@@ -179,7 +196,7 @@ class Experiment:
             encoded = self.remote(node, ["python3 -c " + shlex.quote(
                 f"import pathlib,base64; b=pathlib.Path({filename!r}).read_bytes(); print(base64.b64encode(b[{offset}:{offset+17000}]).decode())")])
             return base64.b64decode(encoded, validate=True)
-        with ThreadPoolExecutor(max_workers=4) as pool:
+        with ThreadPoolExecutor(max_workers=2) as pool:
             content = b''.join(pool.map(chunk, range(0, info['size'], 17000)))
         assert len(content) == info['size'] and hashlib.sha256(content).hexdigest() == info['sha256']
         destination.write_bytes(content)
@@ -213,7 +230,7 @@ def setup(experiment):
             f'{REMOTE}/venv/bin/pip check']
         experiment.remote(node, commands, timeout=600)
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / 'deployment.json').write_text(json.dumps({'created_utc': dt.datetime.now(dt.timezone.utc).isoformat(),
+    (RESULTS / ('deployment-' + experiment.attempt + '.json')).write_text(json.dumps({'created_utc': dt.datetime.now(dt.timezone.utc).isoformat(),
         'instances': experiment.instances, 'new_compute_resources': 0, 'new_ingress_rules': len(changes),
         'application_sha256': sha(APP / 'app.py'), 'requirements_sha256': sha(APP / 'requirements.txt'),
         'services_start_on_boot': False, 'original_mode': experiment.original}, indent=2) + '\n', encoding='utf-8')

@@ -49,6 +49,26 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 19. [Cấu hình OpenTelemetry → Prometheus → Grafana cho phiên demo riêng](monitoring/README.md).
 20. [Ứng dụng A → B → C/D: thời gian hoàn thành, tỷ lệ đúng hạn và distributed tracing](docs/25-ung-dung-phan-tan-va-qos.md).
 21. [Kết quả hai phiên ứng dụng, 62.200 yêu cầu và vùng tải trễ hạn](docs/26-ket-qua-pilot-ung-dung.md).
+22. [Can thiệp 8 → 16 slots, đo hàng đợi và thiết kế xác nhận](docs/27-can-thiep-slots-va-hang-doi.md).
+23. [Sao lưu, stop EC2 và cách tiếp tục cùng cohort](docs/28-tam-dung-va-tiep-tuc-xac-nhan.md).
+24. [Kết quả engineering: can thiệp slots, chờ hàng đợi và deadline](docs/29-ket-qua-engineering-slots.md).
+
+Đợt slots có protocol riêng đã khóa: **16 block, ít nhất bốn ngày**, tỷ lệ
+đúng hạn 50 ms là outcome chính; request trong một phiên không thay cho
+block độc lập. Engineering được loại khỏi suy luận xác nhận. Người dùng
+chọn stop bốn EC2 cuối phiên và giữ EBS/EIP/TGW để tiếp tục cùng cohort.
+Trạng thái dừng phải đối chiếu bằng chứng tại `results/session-lifecycle/`.
+Cuối phiên đã xác nhận cả bốn EC2 `stopped` lúc 23:38–23:39 ngày 12/10;
+[bằng chứng và checksum backup](results/session-lifecycle/20261012T163804Z-stop.json).
+Giữ EBS/EIP/TGW; xem tài liệu 28 về phí và quy trình mở lại.
+
+Engineering slots 12/10 đã thu và kiểm tra **84.000 yêu cầu**: tại 800 rps,
+8 → 16 slots nâng tỷ lệ đúng hạn từ **3,6% → 100% (Peering)** và
+**3,2% → 100% (TGW)**; P95 chờ worker giảm từ cỡ giây xuống cỡ 0,01 ms.
+Đây là một phiên kỹ thuật, **0/16 block xác nhận slots**, chưa có CI liên
+block. Lỗi AWS OAuth 429 khi tải log cuối đã được phục hồi bằng đọc lại
+file còn thiếu, không đo lại; giữ dấu vết lỗi và phạm vi route snapshot.
+Xem tài liệu 29 để kiểm chứng mọi số liệu và hạn chế.
 
 Cập nhật ứng dụng tối 12/10: đã chạy pilot và calibration trên bốn EC2,
 kiểm tra toàn bộ **62.200 yêu cầu**. Trong calibration, 600 yêu cầu/s giữ

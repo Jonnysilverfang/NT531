@@ -1,0 +1,272 @@
+{
+  "RouteTables": [
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-027c53aa0d076a00a",
+          "RouteTableId": "rtb-0b1bd8f37ac6649e2",
+          "SubnetId": "subnet-0e92a1e819eb87fc3",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0b1bd8f37ac6649e2",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.10.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-00fb47a60a956e36b"
+        },
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "10.30.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-0034d25ba224e4fff"
+        },
+        {
+          "DestinationCidrBlock": "10.40.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-041ac960ba525e905"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-014ebb629fc3992d1",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "nt531-rt-b"
+        },
+        {
+          "Key": "Purpose",
+          "Value": "Learning"
+        },
+        {
+          "Key": "ManagedBy",
+          "Value": "Terraform"
+        },
+        {
+          "Key": "Project",
+          "Value": "NT531"
+        }
+      ],
+      "VpcId": "vpc-06b87147e87faeb43",
+      "OwnerId": "620306387033"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0a836a9f2b717e216",
+          "RouteTableId": "rtb-0494ead75dcfa4cca",
+          "SubnetId": "subnet-03f4d7bb22778a927",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0494ead75dcfa4cca",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.10.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-0c8fcb7017a95dde9"
+        },
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-0034d25ba224e4fff"
+        },
+        {
+          "DestinationCidrBlock": "10.30.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "10.40.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-064bd54dd4b044bda"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-0d1ac761779aa510f",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "ManagedBy",
+          "Value": "Terraform"
+        },
+        {
+          "Key": "Name",
+          "Value": "nt531-rt-c"
+        },
+        {
+          "Key": "Purpose",
+          "Value": "Learning"
+        },
+        {
+          "Key": "Project",
+          "Value": "NT531"
+        }
+      ],
+      "VpcId": "vpc-077903d49d9c96a09",
+      "OwnerId": "620306387033"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-004428d3fdd0600b1",
+          "RouteTableId": "rtb-002a20655274d4a71",
+          "SubnetId": "subnet-049a464ed7039817e",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-002a20655274d4a71",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.10.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-07063d5268c85a96d"
+        },
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-041ac960ba525e905"
+        },
+        {
+          "DestinationCidrBlock": "10.30.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-064bd54dd4b044bda"
+        },
+        {
+          "DestinationCidrBlock": "10.40.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-0e524542066ba8145",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Purpose",
+          "Value": "Learning"
+        },
+        {
+          "Key": "ManagedBy",
+          "Value": "Terraform"
+        },
+        {
+          "Key": "Name",
+          "Value": "nt531-rt-d"
+        },
+        {
+          "Key": "Project",
+          "Value": "NT531"
+        }
+      ],
+      "VpcId": "vpc-06de62033a8abb54c",
+      "OwnerId": "620306387033"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-080d448ab5e5eef8e",
+          "RouteTableId": "rtb-079cc4f5cccbb1b81",
+          "SubnetId": "subnet-03bd2733d5b1749da",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-079cc4f5cccbb1b81",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.10.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-00fb47a60a956e36b"
+        },
+        {
+          "DestinationCidrBlock": "10.30.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-0c8fcb7017a95dde9"
+        },
+        {
+          "DestinationCidrBlock": "10.40.0.0/16",
+          "Origin": "CreateRoute",
+          "State": "active",
+          "VpcPeeringConnectionId": "pcx-07063d5268c85a96d"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-0b0280151c3f526b5",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "nt531-rt-a"
+        },
+        {
+          "Key": "Purpose",
+          "Value": "Learning"
+        },
+        {
+          "Key": "ManagedBy",
+          "Value": "Terraform"
+        },
+        {
+          "Key": "Project",
+          "Value": "NT531"
+        }
+      ],
+      "VpcId": "vpc-0334c20ee0bf09591",
+      "OwnerId": "620306387033"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-12",
+  "application_behavioral_tests": "passed: 2 tests with failure accounting, parallel RPC, overload and distributed trace assertions",
+  "local_test_environment": "Windows loopback integration required execution outside restricted sandbox; sandbox attempt failed before this passing rerun",
+  "rtt_confirmation_guard_tests": "passed",
+  "terraform_fmt_application_qos": "passed",
+  "terraform_validate": "passed",
+  "post_measurement_terraform_plan": "No changes; exit 0; TGW routing and application ingress match configuration",
+  "complete_attempts": 2,
+  "raw_scheduled_requests_verified": 62200,
+  "raw_summary_mismatches": 0,
+  "complete_smoke_traces_verified": 12,
+  "smoke_spans_verified": 120,
+  "grafana_trace_and_search": "passed; datasource proxy returned 10-span trace and 12 traces in search",
+  "confirmation_protocol_unchanged": true,
+  "inference": "exploratory only; no p-value, equivalence or AWS capacity claim"
+}

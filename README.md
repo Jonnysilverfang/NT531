@@ -7,6 +7,9 @@ VPC Peering và Transit Gateway (TGW), rồi so sánh thông lượng, RTT,
 retransmission và tải CPU. Kết quả phản ánh toàn đường truyền giữa các
 EC2 trong cấu hình này, không phải giới hạn tuyệt đối của dịch vụ AWS.
 
+Phần ứng dụng mới hỏi: khi một yêu cầu gọi hai worker song song, đường
+mạng và mức tải ảnh hưởng bao nhiêu đến P95 và tỷ lệ hoàn thành đúng hạn?
+
 Tên đăng ký: **Performance Evaluation of AWS VPC Peering and Transit Gateway**.
 Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
 [Bảng môn học](https://docs.google.com/spreadsheets/d/1WJ8oUXO-NLPxHZ2eL1pFzYHndRo64IWtAPUTtsWq7Ro/edit?gid=0).
@@ -44,6 +47,17 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 17. [Đợt xác nhận RTT 16 block: giả thuyết, công suất, tiêu chí kết luận và script tự động](docs/23-thiet-ke-xac-nhan-rtt.md).
 18. [Cơ sở khoa học, công thức, liên hệ bài giảng và quyết định OpenTelemetry/Grafana](docs/24-co-so-khoa-hoc-thong-ke-va-observability.md).
 19. [Cấu hình OpenTelemetry → Prometheus → Grafana cho phiên demo riêng](monitoring/README.md).
+20. [Ứng dụng A → B → C/D: thời gian hoàn thành, tỷ lệ đúng hạn và distributed tracing](docs/25-ung-dung-phan-tan-va-qos.md).
+21. [Kết quả hai phiên ứng dụng, 62.200 yêu cầu và vùng tải trễ hạn](docs/26-ket-qua-pilot-ung-dung.md).
+
+Cập nhật ứng dụng tối 12/10: đã chạy pilot và calibration trên bốn EC2,
+kiểm tra toàn bộ **62.200 yêu cầu**. Trong calibration, 600 yêu cầu/s giữ
+100% đúng hạn 50 ms ở cả hai mode; 800 chỉ còn khoảng 6%; 1.000 xuất hiện
+khoảng 47% lỗi/time-out. Đây là workload có 8 slots/I/O mô phỏng mỗi worker,
+không phải phép đo công suất tối đa mạng AWS. Chưa có CI liên phiên hoặc
+kết luận tương đương. Đã có 12 traces thật/120 spans, Collector → Tempo →
+Grafana local qua replay dữ liệu đã lưu. Không chạy hostmetrics agent EC2.
+Xem tài liệu 26 và [thiết kế xác nhận tiếp](experiments/application-qos/study-plan.md).
 
 Cập nhật 12/10: đã khôi phục hạ tầng bằng Terraform với **100 tạo, 0 sửa,
 0 xóa**. Bốn EC2 đã pass full-mesh ICMP/TCP và smoke test qua TGW. Đợt xác
@@ -64,8 +78,9 @@ chưa ghép vào chương DOCX 19 trang.
 Kết luận hiện tại: Peering có RTT thấp hơn và TCP một luồng cao hơn
 trong các phiên đã đo; TGW có lợi thế kiến trúc về kết nối nhiều VPC
 và định tuyến tập trung. Bài fan-in cho thấy giới hạn máy nhận, chưa
-xếp hạng năng lực tối đa dịch vụ. Phần bổ sung ưu tiên là đo lặp có
-kiểm soát và RTT khi có tải; kế hoạch không có nghĩa đã chạy các bài mới.
+xếp hạng năng lực tối đa dịch vụ. Ưu tiên hiện tại là hoàn tất RTT xác nhận
+và kiểm chứng ứng dụng bằng lặp độc lập/can thiệp slots; RTT khi có tải giữ
+làm tùy chọn. Kế hoạch chưa chạy không được tính thành kết quả.
 
 `docs/01-hai-vpc.md`, `docs/02-van-hanh-ec2.md` và ảnh tổng quan cũ ghi lại
 các bước ban đầu; phạm vi mới nằm ở tài liệu bốn VPC. Không dùng sơ đồ cũ

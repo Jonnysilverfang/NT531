@@ -1,0 +1,20 @@
+{
+  "id": "application-qos-pilot-v1",
+  "phase": "exploratory_pilot_not_confirmatory",
+  "question": "How does the network path affect completion time and deadline success of a parallel two-worker request?",
+  "topology": "A load generator -> B gateway -> C and D workers in parallel",
+  "rates_rps": [10, 100, 600],
+  "duration_seconds": 10,
+  "warmup_seconds": 3,
+  "settle_seconds": 20,
+  "worker_delay_ms": 10,
+  "worker_slots": 8,
+  "worker_response_bytes": 4096,
+  "deadline_ms": 50,
+  "request_timeout_seconds": 2,
+  "maximum_inflight": 2000,
+  "tracing": "off during comparison; separate functional tracing smoke",
+  "deadline_origin": "Illustrative application budget chosen before this pilot; not an external SLA",
+  "rate_order": "ascending, identical in both modes; a pilot only, not a randomized load study",
+  "decision": "Use pilot to check validity and choose a subsequent frozen study, not to claim significance or equivalence."
+}

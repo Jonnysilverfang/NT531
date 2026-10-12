@@ -12,6 +12,8 @@ Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file g
 | Báo cáo kết quả | Có bảng, biểu đồ, CPU ENA, công thức, khái niệm và kết luận lựa chọn |
 | Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 2/16 block hợp lệ |
 | RTT khi có tải | Chưa tính là hoàn thành |
+| Ứng dụng HTTP fan-out, P95 và tỷ lệ đúng hạn | Pilot/calibration 12/10 đã kiểm tra 62.200 requests; chưa suy luận xác nhận |
+| Distributed tracing ứng dụng | 12 traces thật/120 spans; replay Collector → Tempo → Grafana local, chưa OTLP live |
 | Tổng fan-in theo cùng cửa sổ thời gian | Hiện vẫn là tổng xấp xỉ; cần kiểm tra interval và mốc thời gian gốc |
 | Báo cáo toàn bộ slide demo repo nộp | Cần hoàn thiện và rà soát; chương kết quả không thay cho báo cáo đầy đủ |
 
@@ -63,6 +65,19 @@ và câu kết luận được khóa trong tài liệu 23. Phần TCP một lu�
 không nhập vào `K`.
 
 ## Ưu tiên 3 Một bài mới có ý nghĩa ứng dụng
+
+Cập nhật theo yêu cầu ngày 12/10: ưu tiên **ứng dụng A → B → C/D** để đo thời
+gian hoàn thành và tỷ lệ đúng hạn theo tải. Có pipeline traces cho phiên
+kiểm tra riêng. Xem [thiết kế ứng dụng và công thức](25-ung-dung-phan-tan-va-qos.md).
+
+Đã chạy hai phiên khám phá tối 12/10, xem [kết quả và giới hạn](26-ket-qua-pilot-ung-dung.md).
+Tải 800 yêu cầu/s làm tỷ lệ đúng hạn giảm còn khoảng 6% ở cả hai mạng.
+Việc tiếp theo là can thiệp slots 8/16 và các phiên độc lập theo
+[thiết kế xác nhận ứng dụng](../experiments/application-qos/study-plan.md),
+không chỉ đo lại các mức tải cũ. Không gộp pilot vào mẫu xác nhận.
+Pilot là đợt thăm dò tách biệt, không thay protocol 16 block RTT. Kế hoạch
+loaded RTT dưới đây giữ làm phương án tùy chọn, chưa tự động chạy hoặc
+được tính là phần bắt buộc bên cạnh nghiên cứu ứng dụng.
 
 **RTT khi có tải TCP**, giữ A/B làm cặp đo, cùng cấu hình cho cả hai mode. Đo idle và hai mức tải giới hạn phía gửi bằng pacing, ví dụ 0,25 và 0,50 Gbps tổng cho P1. Đây là mức đề xuất, cần chạy thử ngắn để kiểm tra goodput thực đạt và delta ENA; không coi giá trị -b của TCP là tải thực tế được đảm bảo.
 

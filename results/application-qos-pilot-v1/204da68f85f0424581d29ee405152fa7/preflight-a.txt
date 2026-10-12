@@ -1,0 +1,38 @@
+Python 3.9.25
+aiohappyeyeballs==2.6.1
+aiohttp==3.12.15
+aiosignal==1.4.0
+async-timeout==5.0.1
+attrs==26.1.0
+certifi==2026.7.22
+charset-normalizer==3.5.2
+frozenlist==1.8.0
+googleapis-common-protos==1.75.0
+idna==3.20
+importlib_metadata==8.7.1
+multidict==6.7.1
+opentelemetry-api==1.37.0
+opentelemetry-exporter-otlp-proto-common==1.37.0
+opentelemetry-exporter-otlp-proto-http==1.37.0
+opentelemetry-proto==1.37.0
+opentelemetry-sdk==1.37.0
+opentelemetry-semantic-conventions==0.58b0
+propcache==0.4.1
+protobuf==6.33.6
+requests==2.32.5
+typing_extensions==4.16.0
+urllib3==2.6.3
+yarl==1.22.0
+zipp==3.23.1
+6.18.51-120.163.amzn2023.x86_64
+Linux 6.18.51-120.163.amzn2023.x86_64 (ip-10-10-10-212.ec2.internal) 	10/12/26 	_x86_64_	(2 CPU)
+
+15:04:11     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+15:04:12     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+15:04:12       0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+15:04:12       1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+
+Average:     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+Average:     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+Average:       0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+Average:       1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00

@@ -1,0 +1,13 @@
+{
+  "verified_utc": "2026-10-12T15:44:38.651678+00:00",
+  "route_mode": "tgw",
+  "used_routes_active_verified": 6,
+  "nodes": {
+    "a": "1500\nyes",
+    "b": "1500\nyes",
+    "c": "1500\nyes",
+    "d": "1500\nyes"
+  },
+  "app_and_cpu_monitor_inactive_all_nodes": true,
+  "confirmation_rtt_protocol_unchanged": true
+}

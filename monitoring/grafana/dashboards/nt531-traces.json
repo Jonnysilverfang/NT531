@@ -1,0 +1,28 @@
+{
+  "uid": "nt531-application-traces",
+  "title": "NT531 · Hành trình yêu cầu ứng dụng",
+  "schemaVersion": 41,
+  "version": 1,
+  "tags": ["NT531", "application", "trace-smoke"],
+  "timezone": "utc",
+  "time": {"from": "now-24h", "to": "now"},
+  "refresh": "",
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "Đọc trace đúng phạm vi",
+      "gridPos": {"x": 0, "y": 0, "w": 24, "h": 5},
+      "options": {"mode": "markdown", "content": "**A tạo yêu cầu → B gọi song song C và D → trả đủ kết quả.**\n\nDữ liệu là span thật từ phiên smoke riêng, nhập lại với timestamp gốc. Không phải stream live. Phiên so sánh hiệu năng tắt tracing. Chọn trace để xem 10 span qua bốn máy. Span RPC gồm mạng + xử lý, không phải độ trễ mạng thuần.\n\nKhông có dữ liệu hostmetrics không đồng nghĩa CPU/traffic bằng 0."}
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Yêu cầu đã truy vết · chọn Trace ID để mở chi tiết",
+      "gridPos": {"x": 0, "y": 5, "w": 24, "h": 12},
+      "datasource": {"type": "tempo", "uid": "nt531-tempo"},
+      "targets": [{"refId": "A", "queryType": "traceql", "query": "{ resource.service.name = \"nt531-load\" }", "limit": 20, "tableType": "traces", "filters": []}],
+      "options": {"showHeader": true}
+    }
+  ]
+}

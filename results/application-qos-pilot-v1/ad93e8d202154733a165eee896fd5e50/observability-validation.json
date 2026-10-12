@@ -1,0 +1,15 @@
+{
+  "collector_spans_replayed": 60,
+  "tempo_trace_id": "f709c2c6f69fbc0f50758ee6daccc456",
+  "span_count_via_grafana_proxy": 10,
+  "grafana_datasource_proxy_status": 200,
+  "source": "real AWS smoke spans replayed with original timestamps",
+  "not_live_measurement": true,
+  "hostmetrics_agents_installed": false,
+  "grafana_dashboard_search": {
+    "query": "{ resource.service.name = \"nt531-load\" }",
+    "path": "Grafana frontend datasource proxy /api/search",
+    "status": 200,
+    "traces_returned": 6
+  }
+}

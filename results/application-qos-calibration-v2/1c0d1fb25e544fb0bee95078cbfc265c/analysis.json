@@ -1,0 +1,289 @@
+{
+  "phase": "exploratory_load_calibration_not_confirmatory",
+  "issues": [],
+  "rows": [
+    {
+      "mode": "tgw",
+      "rate_rps": 600,
+      "generator_valid": true,
+      "scheduled": 6000,
+      "sent": 6000,
+      "successful": 6000,
+      "failed": 0,
+      "deadline_ms": 50,
+      "deadline_success_count": 6000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 12.073057998350123,
+      "successful_completion_p95_ms": 12.86238599641365,
+      "successful_completion_p99_ms": 13.45983366627479,
+      "dispatch_lag_p95_ms": 1.0132069983228575,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "tgw",
+      "rate_rps": 800,
+      "generator_valid": true,
+      "scheduled": 8000,
+      "sent": 8000,
+      "successful": 8000,
+      "failed": 0,
+      "deadline_ms": 50,
+      "deadline_success_count": 474,
+      "deadline_success_fraction": 0.05925,
+      "successful_completion_p50_ms": 405.0900129986985,
+      "successful_completion_p95_ms": 825.7177689993114,
+      "successful_completion_p99_ms": 849.1786149970721,
+      "dispatch_lag_p95_ms": 1.0441579979669768,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "tgw",
+      "rate_rps": 1000,
+      "generator_valid": true,
+      "scheduled": 10000,
+      "sent": 10000,
+      "successful": 5282,
+      "failed": 4718,
+      "deadline_ms": 50,
+      "deadline_success_count": 53,
+      "deadline_success_fraction": 0.0053,
+      "successful_completion_p50_ms": 1051.878743000998,
+      "successful_completion_p95_ms": 1939.0935329975036,
+      "successful_completion_p99_ms": 1986.7879590019584,
+      "dispatch_lag_p95_ms": 1.0963250024360605,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "rate_rps": 600,
+      "generator_valid": true,
+      "scheduled": 6000,
+      "sent": 6000,
+      "successful": 6000,
+      "failed": 0,
+      "deadline_ms": 50,
+      "deadline_success_count": 6000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 11.653838333586464,
+      "successful_completion_p95_ms": 12.169407666078769,
+      "successful_completion_p99_ms": 12.26003866395331,
+      "dispatch_lag_p95_ms": 1.0424646679894067,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "rate_rps": 800,
+      "generator_valid": true,
+      "scheduled": 8000,
+      "sent": 8000,
+      "successful": 8000,
+      "failed": 0,
+      "deadline_ms": 50,
+      "deadline_success_count": 482,
+      "deadline_success_fraction": 0.06025,
+      "successful_completion_p50_ms": 434.72528500205954,
+      "successful_completion_p95_ms": 884.1898280006717,
+      "successful_completion_p99_ms": 909.6299129996623,
+      "dispatch_lag_p95_ms": 1.0484240010555368,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "rate_rps": 1000,
+      "generator_valid": true,
+      "scheduled": 10000,
+      "sent": 10000,
+      "successful": 5303,
+      "failed": 4697,
+      "deadline_ms": 50,
+      "deadline_success_count": 108,
+      "deadline_success_fraction": 0.0108,
+      "successful_completion_p50_ms": 1040.473089000443,
+      "successful_completion_p95_ms": 1946.588194998185,
+      "successful_completion_p99_ms": 1987.1231899996928,
+      "dispatch_lag_p95_ms": 1.0719259953475557,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    }
+  ],
+  "comparison": [
+    {
+      "rate_rps": 600,
+      "tgw_minus_peering_p95_ms": 0.6929783303348813,
+      "tgw_minus_peering_deadline_success_percentage_points": 0.0
+    },
+    {
+      "rate_rps": 800,
+      "tgw_minus_peering_p95_ms": -58.47205900136032,
+      "tgw_minus_peering_deadline_success_percentage_points": -0.10000000000000009
+    },
+    {
+      "rate_rps": 1000,
+      "tgw_minus_peering_p95_ms": -7.494662000681274,
+      "tgw_minus_peering_deadline_success_percentage_points": -0.55
+    }
+  ],
+  "traces": [
+    {
+      "trace_id": "12b1248f2ee1e3bc52e754b19126e0c9",
+      "spans": 10,
+      "valid": true
+    },
+    {
+      "trace_id": "d7387259054d4028b48e59712a232b0c",
+      "spans": 10,
+      "valid": true
+    },
+    {
+      "trace_id": "9fd874a716d2c4c6c8945460e54b4818",
+      "spans": 10,
+      "valid": true
+    },
+    {
+      "trace_id": "210001d92c8a3360737e901538bbdf58",
+      "spans": 10,
+      "valid": true
+    },
+    {
+      "trace_id": "f28dd39e9c48a32f9fbdc6540f483613",
+      "spans": 10,
+      "valid": true
+    },
+    {
+      "trace_id": "2d6ab3013099ca64a169b001dbc70081",
+      "spans": 10,
+      "valid": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "app.py",
+      "sha256": "1752aab5e3fde17aa92bedcd1b34b41aa50cea1417568bd605063f93ac420891"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "0d021e662fc5dc77aaac96045a95bc9e61e065d66f9a37a22300e6b3a97c41e7"
+    },
+    {
+      "path": "pilot.json",
+      "sha256": "6e50087a4e4b7e1d07a8070a105369e4fe64f462e55b4357dfc5021e5d326f66"
+    },
+    {
+      "path": "runner-source.py",
+      "sha256": "529d8532d2a8018f9cadf3c6ec28c664bac387a16b27f95f5ed782490c8fcd2a"
+    },
+    {
+      "path": "tgw\\routes-before.json",
+      "sha256": "87d480d28b75b458a7b04da6b1623611fff90a8ddd9ee31e13eab736c7052056"
+    },
+    {
+      "path": "tgw\\routes-after.json",
+      "sha256": "87d480d28b75b458a7b04da6b1623611fff90a8ddd9ee31e13eab736c7052056"
+    },
+    {
+      "path": "tgw\\rate-600\\summary.json",
+      "sha256": "08d71dd80237290f41e8c2cba7d1f31c08a03120b9cf0c4b099d50f825c909d2"
+    },
+    {
+      "path": "tgw\\rate-600\\requests.jsonl.gz",
+      "sha256": "d21206ecba1408dc068b2fe8b951128b28a3e1ac5865b177c15932433ef876f0"
+    },
+    {
+      "path": "tgw\\rate-800\\summary.json",
+      "sha256": "7e2be62748b27c074207d458dd9da9e782407950e82a71a1c7b5f8d885432102"
+    },
+    {
+      "path": "tgw\\rate-800\\requests.jsonl.gz",
+      "sha256": "24d70e6a54d91f962245652e1b5129cbf693e2c4a367bb573beae794a7b69835"
+    },
+    {
+      "path": "tgw\\rate-1000\\summary.json",
+      "sha256": "3ce113d0c1f17f3d6b30d0370a6ab56e3a9d53afd22b6d693fd7667069e90b6c"
+    },
+    {
+      "path": "tgw\\rate-1000\\requests.jsonl.gz",
+      "sha256": "f81d9125b8a0a47d57d8cb9e37ef1a61f24f3561e4dd2a2b32fd534e63959aa7"
+    },
+    {
+      "path": "peering\\routes-before.json",
+      "sha256": "0f26724c700ae0b0b6d42d900d645d18edc29bdb1f07a23133b788b9d5f75cec"
+    },
+    {
+      "path": "peering\\routes-after.json",
+      "sha256": "0f26724c700ae0b0b6d42d900d645d18edc29bdb1f07a23133b788b9d5f75cec"
+    },
+    {
+      "path": "peering\\rate-600\\summary.json",
+      "sha256": "4be7e5ffbf1a09274f53197f929eb24586b5f9c842d367b33d7b43ff9865dd7a"
+    },
+    {
+      "path": "peering\\rate-600\\requests.jsonl.gz",
+      "sha256": "26ebef13e77a136aa7b6cd3aa04a4928792f2401dc6319268c2885e955a9fa4e"
+    },
+    {
+      "path": "peering\\rate-800\\summary.json",
+      "sha256": "3fae4bb9c8963afb17a2de81dbc0952e2b9b9b1b48767dfb48171f7c88bee316"
+    },
+    {
+      "path": "peering\\rate-800\\requests.jsonl.gz",
+      "sha256": "5f08a08702e6151eeafe17233f8c79b5f1f02505860c6b227d73511a97a154d4"
+    },
+    {
+      "path": "peering\\rate-1000\\summary.json",
+      "sha256": "05eb16b01c06362ee7e024dec62f7354b9d79bf734aa7299bc7683b283d4a9e0"
+    },
+    {
+      "path": "peering\\rate-1000\\requests.jsonl.gz",
+      "sha256": "6ccdb18fa353a3acffdbea9f52fc2846d03a61fcedd1d382ba7476dd03b2f808"
+    },
+    {
+      "path": "trace-smoke\\a.jsonl",
+      "sha256": "bdba1f4ac31d9f634ea32b442a035947f523e0b744c176010b6c4cd6b77a8f0c"
+    },
+    {
+      "path": "tgw\\monitor-a.json.gz",
+      "sha256": "dde12a2ae2f38da7e44af9269926649bca49259c4ebd36c61242a864674a00d7"
+    },
+    {
+      "path": "peering\\monitor-a.json.gz",
+      "sha256": "c1245a3509268ae82d09b0d6fd7d71f0255df5b556322577f9a0336e297293f0"
+    },
+    {
+      "path": "trace-smoke\\b.jsonl",
+      "sha256": "773c4c4b965faf55a322703ee1ce7f8d9213190a5e944496cc68c37693b1269b"
+    },
+    {
+      "path": "tgw\\monitor-b.json.gz",
+      "sha256": "0cd3180bba984b00ee8fc57da4456ed857a75208b8f04c1dbbcea4c8e03fd861"
+    },
+    {
+      "path": "peering\\monitor-b.json.gz",
+      "sha256": "996a3993deef13aee1c5dc405a21fb31a726eb3e41d07b13978be2cf02bc8858"
+    },
+    {
+      "path": "trace-smoke\\c.jsonl",
+      "sha256": "875ed2e14683323f79130c0e9a6a8f950ebed6ad595882d676a5b54ce104a56c"
+    },
+    {
+      "path": "tgw\\monitor-c.json.gz",
+      "sha256": "48888aea842a3bcd25f3d9c1aa934bf114701b2235f775e3033a067044f6c395"
+    },
+    {
+      "path": "peering\\monitor-c.json.gz",
+      "sha256": "e4c692c6240af4093bd94c481231f42f3a4baaa833dc44ca115af79458d3cdc9"
+    },
+    {
+      "path": "trace-smoke\\d.jsonl",
+      "sha256": "b4dddaa84ccf66a4ff1e5291f92c4a23e25929f8be23b56441632c11a8ae42e7"
+    },
+    {
+      "path": "tgw\\monitor-d.json.gz",
+      "sha256": "bbd34ac9e54efd11adf03947f0a5576dd8f634b6ee4cb586de9dce87e27158b6"
+    },
+    {
+      "path": "peering\\monitor-d.json.gz",
+      "sha256": "699e1977228520e420ce73ad1862cb99b6db464d0f826384cf8359fbf9bdc10a"
+    }
+  ],
+  "inferential_result": null,
+  "scope": "One paired pilot session, deterministic open-loop arrivals. No service capacity, superiority or equivalence conclusion."
+}

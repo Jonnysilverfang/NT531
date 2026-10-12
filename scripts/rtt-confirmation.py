@@ -223,6 +223,8 @@ def run_block(block,profile,load=False):
             preflight=remote(node,['set -eu','ip link set dev ens5 mtu 1500',
                             'test "$(timedatectl show -p NTPSynchronized --value)" = yes',
                             "if pgrep -x 'otelcol|otelcol-contrib|prometheus|grafana|grafana-server' >/dev/null; then echo 'Stop observability processes before measurement' >&2; exit 5; fi",
+                            "if pgrep -f '[/]opt/nt531-application/app.py' >/dev/null; then echo 'Stop application experiment before RTT confirmation' >&2; exit 5; fi",
+                            "if systemctl is-active --quiet nt531-app-monitor.service; then echo 'Stop application CPU monitor before RTT confirmation' >&2; exit 5; fi",
                             "ss -Htn state established | grep -E ':520[123]([^0-9]|$)' && exit 4 || test $? -eq 1",
                             'uname -r','ip -4 -o addr show dev ens5','mpstat -P ALL 1 1'])
             (out/f'preflight-{node}.txt').write_text(preflight,encoding='utf-8')

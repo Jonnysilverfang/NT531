@@ -1,0 +1,12 @@
+apiVersion: 1
+datasources:
+  - name: NT531 traces
+    uid: nt531-tempo
+    type: tempo
+    access: proxy
+    url: http://tempo:3200
+    editable: false
+    jsonData:
+      streamingEnabled:
+        search: false
+        metrics: false

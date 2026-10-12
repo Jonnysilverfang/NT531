@@ -1,0 +1,2 @@
+# Optional, local report plots only; not installed on EC2.
+matplotlib==3.10.5

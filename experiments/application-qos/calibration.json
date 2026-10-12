@@ -1,0 +1,21 @@
+{
+  "id": "application-qos-calibration-v2",
+  "phase": "exploratory_load_calibration_not_confirmatory",
+  "question": "Locate the load region where the fixed worker-slot workload stops meeting its illustrative deadline, without changing work or deadline.",
+  "topology": "A load generator -> B gateway -> C and D workers in parallel",
+  "rates_rps": [600, 800, 1000],
+  "duration_seconds": 10,
+  "warmup_seconds": 3,
+  "settle_seconds": 20,
+  "worker_delay_ms": 10,
+  "worker_slots": 8,
+  "worker_response_bytes": 4096,
+  "deadline_ms": 50,
+  "request_timeout_seconds": 2,
+  "maximum_inflight": 4000,
+  "tracing": "off during comparison; separate functional tracing smoke",
+  "deadline_origin": "Same illustrative 50ms budget as pilot v1, unchanged after viewing results",
+  "rate_order": "ascending, identical in both modes; exploratory only",
+  "decision": "A calibration session to select future study conditions. Exclude from confirmatory inference. No guarantee of congestion or service capacity claim.",
+  "change_from_v1": "Higher arrival rates bracket the nominal 8/0.010=800 requests/s worker service budget. Generator safety limit raised to 4000 and server FD limit fixed at 8192; no worker or deadline tuning."
+}

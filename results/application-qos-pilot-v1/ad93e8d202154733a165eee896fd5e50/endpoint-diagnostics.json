@@ -1,0 +1,360 @@
+{
+  "cpu_windows": [
+    {
+      "mode": "peering",
+      "node": "a",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:14:46.821928+00:00",
+      "end_utc": "2026-10-12T15:14:56.934744+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "a",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:15:22.463159+00:00",
+      "end_utc": "2026-10-12T15:15:32.666786+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.22555555555555726,
+      "peak_logical_cpu_non_idle_percent": 1.019999999999996,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "a",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:16:04.485608+00:00",
+      "end_utc": "2026-10-12T15:16:14.697684+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 4.339999999999999,
+      "peak_logical_cpu_non_idle_percent": 15.379999999999995,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "b",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:14:46.821928+00:00",
+      "end_utc": "2026-10-12T15:14:56.934744+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.3333333333333333,
+      "peak_logical_cpu_non_idle_percent": 1.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "b",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:15:22.463159+00:00",
+      "end_utc": "2026-10-12T15:15:32.666786+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 10.172222222222222,
+      "peak_logical_cpu_non_idle_percent": 20.83,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "b",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:16:04.485608+00:00",
+      "end_utc": "2026-10-12T15:16:14.697684+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 11.502222222222224,
+      "peak_logical_cpu_non_idle_percent": 23.400000000000006,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "c",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:14:46.821928+00:00",
+      "end_utc": "2026-10-12T15:14:56.934744+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "c",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:15:22.463159+00:00",
+      "end_utc": "2026-10-12T15:15:32.666786+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "c",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:16:04.485608+00:00",
+      "end_utc": "2026-10-12T15:16:14.697684+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 5.414444444444445,
+      "peak_logical_cpu_non_idle_percent": 14.810000000000002,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "d",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:14:46.821928+00:00",
+      "end_utc": "2026-10-12T15:14:56.934744+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.39333333333333403,
+      "peak_logical_cpu_non_idle_percent": 5.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "d",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:15:22.463159+00:00",
+      "end_utc": "2026-10-12T15:15:32.666786+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 3.8844444444444437,
+      "peak_logical_cpu_non_idle_percent": 9.260000000000005,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "peering",
+      "node": "d",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:16:04.485608+00:00",
+      "end_utc": "2026-10-12T15:16:14.697684+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 5.702222222222223,
+      "peak_logical_cpu_non_idle_percent": 13.209999999999994,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "a",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:19:58.800009+00:00",
+      "end_utc": "2026-10-12T15:20:08.912361+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.22111111111111054,
+      "peak_logical_cpu_non_idle_percent": 3.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "a",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:20:29.235512+00:00",
+      "end_utc": "2026-10-12T15:20:39.438305+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.27888888888888946,
+      "peak_logical_cpu_non_idle_percent": 3.0600000000000023,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "a",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:21:05.260984+00:00",
+      "end_utc": "2026-10-12T15:21:15.473615+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 4.872222222222224,
+      "peak_logical_cpu_non_idle_percent": 13.730000000000004,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "b",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:19:58.800009+00:00",
+      "end_utc": "2026-10-12T15:20:08.912361+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.05555555555555555,
+      "peak_logical_cpu_non_idle_percent": 1.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "b",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:20:29.235512+00:00",
+      "end_utc": "2026-10-12T15:20:39.438305+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "b",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:21:05.260984+00:00",
+      "end_utc": "2026-10-12T15:21:15.473615+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 12.558888888888887,
+      "peak_logical_cpu_non_idle_percent": 28.709999999999994,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "c",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:19:58.800009+00:00",
+      "end_utc": "2026-10-12T15:20:08.912361+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 1.098888888888889,
+      "peak_logical_cpu_non_idle_percent": 3.8799999999999955,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "c",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:20:29.235512+00:00",
+      "end_utc": "2026-10-12T15:20:39.438305+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.44888888888888956,
+      "peak_logical_cpu_non_idle_percent": 4.079999999999998,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "c",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:21:05.260984+00:00",
+      "end_utc": "2026-10-12T15:21:15.473615+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 2.963333333333335,
+      "peak_logical_cpu_non_idle_percent": 8.909999999999997,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "d",
+      "rate_rps": 10,
+      "start_utc": "2026-10-12T15:19:58.800009+00:00",
+      "end_utc": "2026-10-12T15:20:08.912361+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "d",
+      "rate_rps": 100,
+      "start_utc": "2026-10-12T15:20:29.235512+00:00",
+      "end_utc": "2026-10-12T15:20:39.438305+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 0.0,
+      "peak_logical_cpu_non_idle_percent": 0.0,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    },
+    {
+      "mode": "tgw",
+      "node": "d",
+      "rate_rps": 600,
+      "start_utc": "2026-10-12T15:21:05.260984+00:00",
+      "end_utc": "2026-10-12T15:21:15.473615+00:00",
+      "one_second_aggregate_samples": 9,
+      "mean_host_non_idle_percent": 3.8333333333333317,
+      "peak_logical_cpu_non_idle_percent": 13.329999999999998,
+      "metric": "100 - %idle; includes I/O wait; host-level, not application-only"
+    }
+  ],
+  "ena_by_mode": [
+    {
+      "mode": "peering",
+      "node": "a",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "peering",
+      "node": "b",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "peering",
+      "node": "c",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "peering",
+      "node": "d",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "tgw",
+      "node": "a",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "tgw",
+      "node": "b",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "tgw",
+      "node": "c",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    },
+    {
+      "mode": "tgw",
+      "node": "d",
+      "counter_deltas": {
+        "bw_in_allowance_exceeded": 0,
+        "bw_out_allowance_exceeded": 0,
+        "pps_allowance_exceeded": 0,
+        "conntrack_allowance_exceeded": 0,
+        "linklocal_allowance_exceeded": 0
+      }
+    }
+  ],
+  "ena_scope": "Whole mode including warmup, load, waits and downloads; not per rate",
+  "interpretation": "No change in allowance counters is not proof of unlimited network capacity; CPU/ENA do not isolate the cause of application latency."
+}

@@ -123,7 +123,7 @@ theo cả hai thứ tự đều >δ, có thể viết:
 > 0.1 ms ở đa số block. Có …/16 block vượt margin, p-value một phía …, cận dưới
 > exact của xác suất vượt margin …; chênh lệch trung bình … ms.
 
-Thay dấu … bằng số thực tế; chưa có câu kết luận này ở hiện trạng 1/16.
+Thay dấu … bằng số thực tế; chưa có câu kết luận này ở hiện trạng 2/16.
 Các giả định về block và nhiễu chung phải nêu cùng kết luận. Điều kiện hai
 thứ tự là kiểm tra mô tả bổ sung; không lấy p-value của từng nhóm để chọn kết
 quả. Nếu hai thứ tự khác nhiều, điều tra carryover/thời điểm, không bỏ một nhóm.
@@ -181,7 +181,7 @@ nhiễu. Raw trên EC2 cũng được giữ; stdout SSM trả gói gzip/base64 c
 
 ## Hiện trạng
 
-**1/16 block hợp lệ**. Ngày 12/10/2026, Terraform đã apply đúng plan
+**2/16 block hợp lệ**. Ngày 12/10/2026, Terraform đã apply đúng plan
 **100 tạo, 0 sửa, 0 xóa**: 4 VPC, 4 EC2/EIP, 6 Peering, 1 TGW/4 attachment
 và các tài nguyên mạng/IAM/rule liên quan. Bốn máy Online qua SSM, cùng MTU
 1500, có listener iperf3 5201–5203 và đã pass full-mesh ICMP/TCP/smoke test
@@ -190,7 +190,12 @@ và các tài nguyên mạng/IAM/rule liên quan. Bốn máy Online qua SSM, cù
 Block 1 chạy Peering rồi TGW, nhận đủ 300/300 packet mỗi mode. Mean của ba
 RTT avg là 0,2113 ms và 0,4417 ms; `d₁=+0,2303 ms>δ`, nên `Z₁=1`. Route đã
 phục hồi về TGW. Đây là bằng chứng ban đầu, chưa có kết luận suy diễn trước
-khi đủ 16 block. Mốc sớm nhất block 2 là 18:41 giờ Việt Nam ngày 12/10.
+khi đủ 16 block.
+
+Block 2 bắt đầu 21:26:56 giờ Việt Nam ngày 12/10, thứ tự TGW rồi Peering.
+Peering đạt 0,2067 ms, TGW 0,4463 ms; `d₂=+0,2397 ms`, nhận đủ 300/300
+packet mỗi mode. Route phục hồi về TGW. Hiện có `Z₁=Z₂=1` nhưng chưa thực
+hiện suy luận; block 3 chỉ được bắt đầu từ 23:26:57 ngày 12/10 hoặc muộn hơn.
 
 Cohort xác nhận: A `i-089bae0de9ec6bc4e`, B `i-0484f42b82795f765`, TGW
 `tgw-036e551008b8c0805`. Giữ các ID này giữa 16 block; không destroy/recreate

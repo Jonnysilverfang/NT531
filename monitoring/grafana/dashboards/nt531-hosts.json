@@ -1,0 +1,174 @@
+{
+  "uid": "nt531-host-demo",
+  "title": "NT531 · Host observability demo",
+  "tags": [
+    "NT531",
+    "observability-demo"
+  ],
+  "schemaVersion": 40,
+  "version": 1,
+  "editable": false,
+  "refresh": "10s",
+  "timezone": "utc",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "NT531 · Separate observability demo",
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "Host metrics every 10 seconds. Use this dashboard to explain CPU and network load. RTT, TCP goodput and ENA allowance events remain in the raw experiment files. No data means no agent is reporting; it does not mean zero CPU or zero traffic. Keep collectors stopped during all 16 confirmatory RTT blocks."
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "CPU busy by logical CPU",
+      "description": "Busy includes user/system/softirq/iowait/steal. Inspect raw mpstat to distinguish causes.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "nt531-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "100 * (1 - sum by (nt531_node, nt531_mode, cpu) (rate(system_cpu_time{nt531_phase=\"observability-demo\",state=\"idle\"}[1m])))",
+          "legendFormat": "{{nt531_node}} / {{nt531_mode}} / CPU {{cpu}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Network interface traffic",
+      "description": "Interface byte rate includes overhead and telemetry; it is not iperf3 payload goodput.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "nt531-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "8 * sum by (nt531_node, nt531_mode, direction) (rate(system_network_io{nt531_phase=\"observability-demo\"}[1m]))",
+          "legendFormat": "{{nt531_node}} / {{nt531_mode}} / {{direction}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "One-minute load average",
+      "description": "Runnable and uninterruptible tasks; not CPU utilization or a queue length in the AWS network.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "nt531-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "system_cpu_load_average_1m{nt531_phase=\"observability-demo\"}",
+          "legendFormat": "{{nt531_node}} / {{nt531_mode}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Network drops reported by the OS",
+      "description": "OS interface drop counters; not the ENA allowance counters and not end-to-end packet loss.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "nt531-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (nt531_node, nt531_mode, direction) (rate(system_network_dropped{nt531_phase=\"observability-demo\"}[1m]))",
+          "legendFormat": "{{nt531_node}} / {{nt531_mode}} / {{direction}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    }
+  ]
+}

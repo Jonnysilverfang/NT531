@@ -43,11 +43,13 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 16. [Rà soát PDF 27 trang: chỗ cần sửa và vị trí ghép phần thống kê](docs/21-ra-soat-bao-cao-main-pdf.md).
 17. [Đợt xác nhận RTT 16 block: giả thuyết, công suất, tiêu chí kết luận và script tự động](docs/23-thiet-ke-xac-nhan-rtt.md).
 18. [Cơ sở khoa học, công thức, liên hệ bài giảng và quyết định OpenTelemetry/Grafana](docs/24-co-so-khoa-hoc-thong-ke-va-observability.md).
+19. [Cấu hình OpenTelemetry → Prometheus → Grafana cho phiên demo riêng](monitoring/README.md).
 
 Cập nhật 12/10: đã khôi phục hạ tầng bằng Terraform với **100 tạo, 0 sửa,
 0 xóa**. Bốn EC2 đã pass full-mesh ICMP/TCP và smoke test qua TGW. Đợt xác
-nhận RTT có protocol đóng băng hiện **1/16 block hợp lệ**: Peering 0,2113 ms,
-TGW 0,4417 ms, chênh +0,2303 ms, không mất packet. Chưa có kết luận suy diễn
+nhận RTT có protocol đóng băng hiện **2/16 block hợp lệ**. Chênh lệch TGW −
+Peering ở block 1 là +0,2303 ms và block 2 là +0,2397 ms; hai block dùng hai
+thứ tự khác nhau, không mất packet. Chưa có kết luận suy diễn
 trước khi đủ 16 block và tiêu chí chất lượng.
 
 OpenTelemetry/Grafana được giữ cho phiên observability phụ trợ và demo. Không

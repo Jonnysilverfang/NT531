@@ -1,0 +1,52 @@
+{
+  "block": 2,
+  "attempt": "3392ffe33eac4cfa9d2d0de76313bdaa",
+  "protocol_hash": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
+  "order": [
+    "tgw",
+    "peering"
+  ],
+  "started_utc": "2026-10-12T14:26:56.192302+00:00",
+  "status": "complete",
+  "routing_context": {
+    "route_table_a_id": "rtb-079cc4f5cccbb1b81",
+    "route_table_b_id": "rtb-0b1bd8f37ac6649e2",
+    "peering_id": "pcx-00fb47a60a956e36b",
+    "transit_gateway_id": "tgw-036e551008b8c0805"
+  },
+  "instance_environment": [
+    {
+      "InstanceId": "i-089bae0de9ec6bc4e",
+      "ImageId": "ami-0d27e0fb3bac4d724",
+      "State": {
+        "Code": 16,
+        "Name": "running"
+      },
+      "InstanceType": "c6i.large",
+      "Placement": {
+        "AvailabilityZoneId": "use1-az1",
+        "GroupName": "",
+        "Tenancy": "default",
+        "AvailabilityZone": "us-east-1a"
+      },
+      "PrivateIpAddress": "10.10.10.212"
+    },
+    {
+      "InstanceId": "i-0484f42b82795f765",
+      "ImageId": "ami-0d27e0fb3bac4d724",
+      "State": {
+        "Code": 16,
+        "Name": "running"
+      },
+      "InstanceType": "c6i.large",
+      "Placement": {
+        "AvailabilityZoneId": "use1-az1",
+        "GroupName": "",
+        "Tenancy": "default",
+        "AvailabilityZone": "us-east-1a"
+      },
+      "PrivateIpAddress": "10.20.10.155"
+    }
+  ],
+  "ended_utc": "2026-10-12T14:32:06.525288+00:00"
+}

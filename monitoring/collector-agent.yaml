@@ -1,0 +1,46 @@
+# Run the native Linux collector on EC2, only during the separate demo.
+# Set NT531_NODE to a/b/c/d and NT531_MODE to peering/tgw.
+receivers:
+  hostmetrics:
+    collection_interval: 10s
+    scrapers:
+      cpu:
+      load:
+      memory:
+      network:
+        include:
+          interfaces: [ens5]
+          match_type: strict
+processors:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 128
+    spike_limit_mib: 32
+  resource:
+    attributes:
+      - key: nt531.node
+        value: ${env:NT531_NODE}
+        action: upsert
+      - key: nt531.mode
+        value: ${env:NT531_MODE}
+        action: upsert
+      - key: nt531.phase
+        value: observability-demo
+        action: upsert
+      - key: service.name
+        value: nt531-host
+        action: upsert
+      - key: service.instance.id
+        value: ${env:NT531_NODE}
+        action: upsert
+  batch:
+    timeout: 10s
+exporters:
+  otlphttp:
+    endpoint: http://127.0.0.1:14318
+service:
+  pipelines:
+    metrics:
+      receivers: [hostmetrics]
+      processors: [memory_limiter, resource, batch]
+      exporters: [otlphttp]

@@ -128,7 +128,7 @@ giữ nguyên. Phần đồ thị của 30 JSON fan-in và các đợt lặp m�
 1. **Offline trước:** đồ thị TCP từ 40 JSON và P50/P95/ECDF từ hai phiên ping chuẩn; bổ sung phần giải thích mã iperf3 3.19.1 và các giới hạn lấy mẫu.
 2. **Củng cố kết luận:** thực hiện các đợt lặp cân bằng thứ tự theo kế hoạch 16 nếu ngân sách cho phép; giữ số liệu lỗi/outlier có lý do.
 3. **Một bài mới trực tiếp:** RTT khi có tải với mức pacing chung cho hai mode, goodput thực đạt, CPU và delta ENA. Chỉ chạy sau 16 block xác nhận.
-4. **Observability phụ trợ:** cấu hình Collector/Grafana cho phiên demo riêng; không chạy scrape/export trên A/B trong phép đo chính.
+4. **Observability phụ trợ:** [cấu hình Collector/Prometheus/Grafana](../monitoring/README.md) đã chuẩn bị và kiểm tra tĩnh; chạy pipeline thật trong phiên demo riêng sau đợt xác nhận. Không chạy scrape/export trên A/B trong phép đo chính.
 5. **Hoàn thiện nộp:** related work, chi phí, tài liệu kiến trúc, slide và demo; một trace TCP ngắn là bổ sung có ích nếu cần giải thích bằng hình ảnh.
 
 Lý do tách observability khỏi primary: hostmetrics đọc hệ thống và export theo

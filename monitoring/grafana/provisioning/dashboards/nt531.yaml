@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: nt531
+    folder: NT531
+    type: file
+    disableDeletion: false
+    editable: false
+    options:
+      path: /var/lib/grafana/dashboards

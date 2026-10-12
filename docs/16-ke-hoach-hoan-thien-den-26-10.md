@@ -1,6 +1,6 @@
 # Kế hoạch hoàn thiện đồ án trước ngày 26 tháng 10 năm 2026
 
-Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 12/10 sau khi khôi phục hạ tầng và hoàn tất block xác nhận đầu tiên.
+Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 12/10 sau khi khôi phục hạ tầng và hoàn tất hai block xác nhận.
 
 ## Phần đã có và phần còn thiếu
 
@@ -10,7 +10,7 @@ Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file g
 | RTT khi rảnh và TCP một luồng | Có 5 lượt mỗi mode mỗi bài |
 | Fan-in A C D tới B | Có 5 lượt mỗi mode; 146 file gốc mỗi phiên đã sao lưu và đối chiếu |
 | Báo cáo kết quả | Có bảng, biểu đồ, CPU ENA, công thức, khái niệm và kết luận lựa chọn |
-| Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 1/16 block hợp lệ |
+| Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 2/16 block hợp lệ |
 | RTT khi có tải | Chưa tính là hoàn thành |
 | Tổng fan-in theo cùng cửa sổ thời gian | Hiện vẫn là tổng xấp xỉ; cần kiểm tra interval và mốc thời gian gốc |
 | Báo cáo toàn bộ slide demo repo nộp | Cần hoàn thiện và rà soát; chương kết quả không thay cho báo cáo đầy đủ |
@@ -50,9 +50,9 @@ R_i(W): byte payload nhận từ nguồn i trong đúng W; T_0,T_1 tính bằng 
 
 Cập nhật 12/10 theo hướng người dùng chọn: RTT xác nhận dùng
 [protocol 16 block](23-thiet-ke-xac-nhan-rtt.md), thay cho mức khởi đầu bốn
-đợt RTT trước đây. Hạ tầng mới đã dựng và **1/16 block** đã hoàn tất: Peering
-0,2113 ms, TGW 0,4417 ms, `d₁=+0,2303 ms`, không mất packet. Block 2 chỉ
-được bắt đầu từ 18:41 giờ Việt Nam ngày 12/10; toàn bộ 16 block phải trải trên
+đợt RTT trước đây. Hạ tầng mới đã dựng và **2/16 block** đã hoàn tất:
+`d₁=+0,2303 ms`, `d₂=+0,2397 ms`, hai thứ tự khác nhau, không mất packet.
+Block 3 chỉ được bắt đầu từ 23:26:57 giờ Việt Nam ngày 12/10; toàn bộ 16 block phải trải trên
 ít nhất bốn ngày và start cách nhau ít nhất hai giờ.
 
 Thiết kế bốn đợt và CI Student t cũ được thay thế trước khi thu dữ liệu xác
@@ -116,7 +116,7 @@ và đồ thị TCP một luồng đã hoàn thành; xem [phần thống kê](20
 Bốn đợt đề xuất không bảo đảm đủ công suất thống kê. Phần mới giải thích
 giả thuyết/CI theo đợt và giới hạn exact sign test với B nhỏ. Trước khi đo,
 chốt đầu ra chính, số đợt, độ chính xác mong muốn, phương pháp và ngân sách;
-không dừng lấy mẫu ngay khi p-value nhỏ. Block 1 đã hoàn tất nhưng chưa đủ để
+không dừng lấy mẫu ngay khi p-value nhỏ. Hai block đã hoàn tất nhưng chưa đủ để
 đưa ra kết luận suy diễn.
 
 Chuẩn bị câu trả lời có trỏ nguồn cho các câu: vì sao chọn bốn VPC; sáu Peering so với bốn attachment có công bằng không; route nào chứng minh mode; RTT khác độ trễ một chiều thế nào; vì sao throughput không phải năng lực dịch vụ; ENA tăng có phải packet loss không; vì sao chưa kết luận tương đương; tác động credits; lựa chọn theo chi phí/quy mô ra sao.

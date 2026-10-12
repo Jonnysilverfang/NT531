@@ -38,9 +38,11 @@ nhận đủ 300/300 phản hồi và không có lỗi kiểm soát.
 | Packet chính | 300/300 | 300/300 | 0 missing |
 | TTL | 127 | 126 | phù hợp TGW thêm một hop |
 
-Block này vượt margin đã chốt `δ=0,1 ms`, nên `Z₁=1`. Đây mới là 1/16 block;
-không tính p-value kết luận và không dừng sớm. Mốc sớm nhất cho block 2 là
-`2026-10-12T11:41:00Z`, tức `18:41:00` giờ Việt Nam. Cohort phải giữ hai
+Block 2 bắt đầu `2026-10-12T14:26:56Z`, đo TGW rồi Peering: Peering 0,2067 ms,
+TGW 0,4463 ms, chênh +0,2397 ms, không mất packet. Cả hai block vượt margin
+đã chốt `δ=0,1 ms`, nên `Z₁=Z₂=1`. Đây mới là 2/16 block; không tính p-value
+kết luận và không dừng sớm. Block 3 chỉ được bắt đầu từ 23:26:57 giờ Việt Nam
+ngày 12/10 hoặc muộn hơn. Cohort phải giữ hai
 instance ID `i-089bae0de9ec6bc4e`, `i-0484f42b82795f765` và TGW
 `tgw-036e551008b8c0805` trong toàn đợt.
 
@@ -114,12 +116,16 @@ Nguồn: [Dean & Barroso, “The Tail at Scale”, CACM 2013](https://research.g
 Một cách phân rã khái niệm:
 
 $$
-RTT \approx \sum_{h\in path}2(d_{prop,h}+d_{tx,h}+d_{proc,h}+d_{queue,h}).
+RTT \approx d_{host}+
+\sum_{h\in P_{forward}}(d_{prop,h}+d_{tx,h}+d_{proc,h}+d_{queue,h})+
+\sum_{h\in P_{return}}(d_{prop,h}+d_{tx,h}+d_{proc,h}+d_{queue,h}).
 $$
 
 `d_prop` là trễ lan truyền, `d_tx=L/R` là thời gian đẩy gói dài `L` bit lên
 đường tốc độ `R` bit/s, `d_proc` là xử lý và `d_queue` là chờ hàng đợi. Công
-thức giúp giải thích vì sao thêm một hop có thể tăng RTT; số đo end-to-end
+thức dùng `P_forward` và `P_return` cho đường đi/về, `d_host` cho xử lý ở hai
+endpoint. Chỉ khi giả định hai chiều đối xứng mới dùng hai lần tổng một chiều.
+Công thức giúp giải thích vì sao thêm một hop có thể tăng RTT; số đo end-to-end
 không tự xác định chính xác thành phần nào tạo ra chênh lệch.
 
 Với mô hình M/M/1 lý tưởng:
@@ -196,6 +202,12 @@ Nguồn chính:
 **Có, nhưng dùng cho observability phụ trợ và demo, không dùng làm nguồn bằng
 chứng chính của 16 block RTT.**
 
+Bộ cấu hình agent/gateway, Prometheus và Grafana đã được chuẩn bị trong
+[`monitoring`](../monitoring/README.md), có sơ đồ, dashboard provision tự động,
+SSH tunnel và hướng dẫn dừng agent. Compose schema, JSON dashboard và tag
+image đã được kiểm tra; chưa chạy pipeline với agent EC2. Docker daemon trên
+laptop hiện chưa bật. Không ghi phần này là một phép đo đã hoàn thành.
+
 OpenTelemetry Collector có thể chạy dạng agent hoặc gateway. Host Metrics
 receiver đọc CPU, memory, disk, network và TCP connection theo chu kỳ; mặc
 định receiver hỗ trợ `collection_interval`. Prometheus lưu time series và
@@ -214,9 +226,12 @@ agent trong cửa sổ primary sẽ tạo thêm một biến gây nhiễu. Thi�
 
 1. **Primary RTT:** OTel/Prometheus/Grafana tắt trên A/B. Dùng raw ping,
    `mpstat`, `ethtool -S`, route snapshot và metadata như hiện tại.
-2. **Loaded RTT và demo observability:** chạy một phiên riêng có nhãn rõ,
+2. **Demo observability:** chạy một phiên riêng có nhãn rõ sau bài loaded RTT,
    collector lấy host metrics 10 giây/lần; dashboard hiện CPU, network bytes,
-   retransmission và load. Không nhập phiên này vào 16 block.
+   OS drop counter và load. ENA/retransmission vẫn đối chiếu raw logs, không
+   coi hostmetrics là nguồn cung cấp các bộ đếm ENA. Bài loaded RTT theo script
+   cũng chạy khi agent tắt để nhất quán giữa hai mode. Không nhập phiên demo
+   vào 16 block.
 3. **AWS-native visibility:** có thể bật TGW Flow Logs/CloudWatch trong phiên
    chẩn đoán. Vì Peering không có cùng TGW metric, không dùng các metric riêng
    của TGW làm thước đo đối xứng để xếp hạng hai mode.
@@ -228,9 +243,9 @@ agent trong cửa sổ primary sẽ tạo thêm một biến gây nhiễu. Thi�
 
 | Câu kết luận | Bằng chứng tối thiểu | Trạng thái |
 |---|---|---|
-| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | 1/16, chưa kết luận |
+| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | 2/16, chưa kết luận |
 | TGW dễ mở rộng topology full mesh hơn Peering | công thức 6 Peering vs 4 attachment và tài liệu AWS | đủ bằng chứng kiến trúc |
-| Peering có latency thấp hơn do TGW thêm hop | TTL, route snapshot, số đo paired và tài liệu AWS | bằng chứng bước đầu; chờ 16 block |
+| RTT TGW cao hơn đi kèm đường đi có thêm hop | TTL, route snapshot, số đo paired và tài liệu AWS | bằng chứng bước đầu; không phân lập được chi phí riêng của hop |
 | TGW/Peering chịu tải tốt hơn | loaded RTT lặp theo block, goodput/loss/CPU/ENA | chưa đủ; bài tải hiện chỉ khám phá |
 | Một dịch vụ luôn nhanh hơn trong mọi AWS workload | cần nhiều region, AZ, instance, traffic, thời gian và workload | ngoài phạm vi, không tuyên bố |
 

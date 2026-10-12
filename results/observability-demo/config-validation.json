@@ -1,0 +1,11 @@
+{
+  "validated_utc": "2026-10-12T14:29:00.046569+00:00",
+  "yaml_files": 6,
+  "compose_schema": "passed via docker compose config --quiet",
+  "yaml_parse_and_pipeline_references": "passed",
+  "dashboard_json_and_demo_filters": "passed",
+  "pinned_image_tags": "verified with docker manifest inspect",
+  "runtime_pipeline": "not_run_docker_daemon_unavailable",
+  "ec2_agents": "not_installed_or_started",
+  "measurement_data": "none_this_is_configuration_validation_only"
+}

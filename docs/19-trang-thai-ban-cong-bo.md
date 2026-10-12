@@ -77,3 +77,11 @@ theo thời gian; các đoạn trạng thái cũ không phải giám sát tài n
 
 Repo không chứa private key, credentials, Terraform state/plan, file biến thật
 hoặc ZIP backup. Clone repo không mang theo state hoặc quyền truy cập AWS.
+
+## Bổ sung ngày 11/10/2026
+
+[Phần thống kê và xác suất](20-thong-ke-va-xac-suat.md) bổ sung phân bố RTT,
+P50/P95/P99, tần suất vượt ngưỡng, ví dụ Binomial có điều kiện và thiết kế
+suy luận theo đợt. Có hai hình PNG/SVG và JSON nguồn, script tái tạo.
+Phân tích dùng 20 file gốc (10 ping, 10 TCP một luồng) đã khớp SHA256;
+không có phép đo AWS mới. Chương DOCX 19 trang chưa chứa phần bổ sung này.

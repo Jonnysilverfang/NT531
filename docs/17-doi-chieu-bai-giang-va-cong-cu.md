@@ -120,6 +120,11 @@ RTT tăng khi tải là kết quả end-to-end; chưa tách chính xác bao nhi�
 
 ## Việc nên làm tiếp
 
+Cập nhật 11/10: [phần thống kê và xác suất](20-thong-ke-va-xac-suat.md)
+đã tính P50/P95/P99, ECDF và tần suất RTT vượt ngưỡng từ 1.000 phản hồi
+hai mode; đã vẽ RTT/cwnd/rate của 10 JSON TCP một luồng. Dữ liệu cũ được
+giữ nguyên. Phần đồ thị của 30 JSON fan-in và các đợt lặp mới vẫn chưa làm.
+
 1. **Offline trước:** đồ thị TCP từ 40 JSON và P50/P95/ECDF từ hai phiên ping chuẩn; bổ sung phần giải thích mã iperf3 3.19.1 và các giới hạn lấy mẫu.
 2. **Củng cố kết luận:** thực hiện các đợt lặp cân bằng thứ tự theo kế hoạch 16 nếu ngân sách cho phép; giữ số liệu lỗi/outlier có lý do.
 3. **Một bài mới trực tiếp:** RTT khi có tải với mức pacing chung cho hai mode, goodput thực đạt, CPU và delta ENA. Bài này chưa được tính hoàn thành.

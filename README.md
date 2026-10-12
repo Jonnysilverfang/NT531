@@ -39,6 +39,13 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 12. [Kế hoạch củng cố đồ án trước ngày 26/10](docs/16-ke-hoach-hoan-thien-den-26-10.md).
 13. [Đối chiếu bài giảng NT531, công cụ cần thêm và công thức áp dụng](docs/17-doi-chieu-bai-giang-va-cong-cu.md).
 14. [Số liệu từng lượt, công thức và file nguồn để kiểm chứng](docs/18-so-lieu-de-kiem-chung.md).
+15. [Phân bố RTT, xác suất vượt ngưỡng, TCP theo thời gian và thiết kế suy luận thống kê](docs/20-thong-ke-va-xac-suat.md).
+16. [Rà soát PDF 27 trang: chỗ cần sửa và vị trí ghép phần thống kê](docs/21-ra-soat-bao-cao-main-pdf.md).
+
+Cập nhật 11/10: đã khai thác log cũ để tính ECDF/P50/P95/P99 và tần suất
+vượt ngưỡng, cùng đồ thị TCP RTT/cwnd. Không có phép đo AWS mới; các đợt
+suy luận thống kê và RTT khi tải vẫn chưa thực hiện. Phần mới ở tài liệu 20,
+chưa ghép vào chương DOCX 19 trang.
 
 Kết luận hiện tại: Peering có RTT thấp hơn và TCP một luồng cao hơn
 trong các phiên đã đo; TGW có lợi thế kiến trúc về kết nối nhiều VPC

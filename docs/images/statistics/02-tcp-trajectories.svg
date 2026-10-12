@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="960" height="740" preserveAspectRatio="xMinYMin meet" viewBox="0 0 960 740" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="960" height="740"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-740)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="960" height="740" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="60" y="714" style="font-family: Helvetica; font-size: 16px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1428) scale(1,-1)">TCP single stream: median trajectories across five runs per mode</text>
+			<text x="60" y="692" style="font-family: Helvetica; font-size: 10px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1384) scale(1,-1)">TCP_INFO RTT and cwnd snapshots; sender rate; omitted warm-up intervals excluded</text>
+			<text x="65" y="608" style="font-family: Helvetica; font-size: 12px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1216) scale(1,-1)">Sender rate (Gbps)</text>
+			<text x="61" y="593" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1186) scale(1,-1)"></text>
+			<path d="M 65,460 L 905,460 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="457.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,914) scale(1,-1)">0</text>
+			<path d="M 65,507.272727 L 905,507.272727 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="504.27272727272725" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1008) scale(1,-1)">2</text>
+			<path d="M 65,554.545455 L 905,554.545455 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="551.5454545454545" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1103) scale(1,-1)">4</text>
+			<path d="M 65,578.181818 L 905,578.181818 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="575.1818181818181" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1150) scale(1,-1)">5</text>
+			<path d="M 65,460 L 65,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="62.498" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">0</text>
+			<path d="M 200.483871,460 L 200.483871,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="197.9818709677419" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">5</text>
+			<path d="M 335.967742,460 L 335.967742,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="330.9637419354838" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">10</text>
+			<path d="M 471.451613,460 L 471.451613,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="466.4476129032258" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">15</text>
+			<path d="M 606.935484,460 L 606.935484,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="601.9314838709677" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">20</text>
+			<path d="M 742.419355,460 L 742.419355,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="737.4153548387096" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">25</text>
+			<path d="M 877.903226,460 L 877.903226,456 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="872.8992258064516" y="443" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,886) scale(1,-1)">30</text>
+			<path d="M 65,460 L 905,460 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 65,460 L 65,590 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polyline points="65.02775 516.6166, 92.12466 573.0672, 119.2214 573.067, 146.3181 573.0169, 173.4148 572.9681, 200.5118 573.1416, 227.6084 573.0671, 254.7052 573.0172, 281.8022 573.1406, 308.8987 572.8944, 335.9955 573.1479, 363.0925 573.0876, 390.1892 572.9659, 417.2861 573.1169, 444.3825 572.9478, 471.4794 573.0922, 498.5764 573.1132, 525.673 572.9943, 552.7699 573.0917, 579.8674 573.0386, 606.9637 573.02, 634.0601 573.0928, 661.1571 573.0663, 688.254 573.0945, 715.3505 573.065, 742.4473 573.0655, 769.5439 573.067, 796.6414 572.9682, 823.7379 572.9439, 850.817 573.0642" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<polyline points="92.09463 568.7678, 119.1907 568.9007, 146.2876 568.8795, 173.3844 568.9778, 200.4817 568.8807, 227.578 568.9262, 254.675 568.8785, 281.7713 568.8784, 308.8686 568.9278, 335.9649 568.953, 363.0617 568.9776, 390.1589 569.0271, 417.2553 568.8798, 444.3784 568.8538, 471.4487 568.9274, 498.5455 568.9532, 525.6424 568.9285, 552.7653 568.9028, 579.8359 569.0269, 606.9326 568.9009, 634.0293 568.9054, 661.1262 568.9284, 688.2229 568.9529, 715.3197 568.9778, 742.4166 568.878, 769.5397 568.8787, 796.6365 568.9282, 823.707 568.8784, 850.8044 568.9034, 877.9082 568.9612" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<text x="65" y="418" style="font-family: Helvetica; font-size: 12px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,836) scale(1,-1)">TCP RTT estimate (ms)</text>
+			<text x="61" y="403" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,806) scale(1,-1)"></text>
+			<path d="M 65,270 L 905,270 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="267.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,534) scale(1,-1)">0</text>
+			<path d="M 65,334.957192 L 905,334.957192 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="39.486000000000004" y="331.95719153566415" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,663) scale(1,-1)">3.49</text>
+			<path d="M 65,399.914383 L 905,399.914383 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="39.486000000000004" y="396.91438307132836" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,793) scale(1,-1)">6.98</text>
+			<path d="M 65,270 L 65,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="62.498" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">0</text>
+			<path d="M 200.483871,270 L 200.483871,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="197.9818709677419" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">5</text>
+			<path d="M 335.967742,270 L 335.967742,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="330.9637419354838" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">10</text>
+			<path d="M 471.451613,270 L 471.451613,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="466.4476129032258" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">15</text>
+			<path d="M 606.935484,270 L 606.935484,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="601.9314838709677" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">20</text>
+			<path d="M 742.419355,270 L 742.419355,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="737.4153548387096" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">25</text>
+			<path d="M 877.903226,270 L 877.903226,266 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="872.8992258064516" y="253" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,506) scale(1,-1)">30</text>
+			<path d="M 65,270 L 905,270 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 65,270 L 65,400 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polyline points="65.02775 279.1945, 92.12466 280.4043, 119.2214 280.758, 146.3181 278.2825, 173.4148 278.5245, 200.5118 280.6277, 227.6084 278.9526, 254.7052 280.9441, 281.8022 279.0642, 308.8987 280.4229, 335.9955 278.3197, 363.0925 278.6175, 390.1892 280.4043, 417.2861 278.1708, 444.3825 280.4602, 471.4794 279.697, 498.5764 278.7664, 525.673 278.5059, 552.7699 278.6175, 579.8674 281.428, 606.9637 278.3011, 634.0601 279.6784, 661.1571 278.1336, 688.254 280.1065, 715.3505 280.3299, 742.4473 280.4043, 769.5439 278.3197, 796.6414 278.45, 823.7379 278.5431, 850.817 280.3485" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<polyline points="92.09463 348.8792, 119.1907 353.3834, 146.2876 358.9299, 173.3844 361.8707, 200.4817 366.7285, 227.578 365.4257, 254.675 351.2616, 281.7713 357.0129, 308.8686 361.3495, 335.9649 363.918, 363.0617 369.4459, 390.1589 371.4933, 417.2553 369.6507, 444.3784 368.4036, 471.4487 377.6354, 498.5455 374.2107, 525.6424 378.8452, 552.7653 379.0127, 579.8359 378.4915, 606.9326 331.5511, 634.0293 339.2939, 661.1262 345.0823, 688.2229 351.6525, 715.3197 356.6964, 742.4166 361.8893, 769.5397 366.5796, 796.6365 370.4882, 823.707 366.0771, 850.8044 369.6507, 877.9082 371.1397" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<text x="65" y="228" style="font-family: Helvetica; font-size: 12px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,456) scale(1,-1)">cwnd (KiB)</text>
+			<text x="61" y="213" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,426) scale(1,-1)"></text>
+			<path d="M 65,80 L 905,80 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="51.996" y="77.0" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,154) scale(1,-1)">0</text>
+			<path d="M 65,144.999965 L 905,144.999965 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="24.474000000000004" y="141.9999650291146" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,283) scale(1,-1)">2178.15</text>
+			<path d="M 65,209.99993 L 905,209.99993 Z" style="stroke: rgb(88%,90%,92%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="29.477999999999998" y="206.9999300582292" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,413) scale(1,-1)">4356.3</text>
+			<path d="M 65,80 L 65,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="62.498" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">0</text>
+			<path d="M 200.483871,80 L 200.483871,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="197.9818709677419" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">5</text>
+			<path d="M 335.967742,80 L 335.967742,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="330.9637419354838" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">10</text>
+			<path d="M 471.451613,80 L 471.451613,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="466.4476129032258" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">15</text>
+			<path d="M 606.935484,80 L 606.935484,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="601.9314838709677" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">20</text>
+			<path d="M 742.419355,80 L 742.419355,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="737.4153548387096" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">25</text>
+			<path d="M 877.903226,80 L 877.903226,76 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<text x="872.8992258064516" y="63" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,126) scale(1,-1)">30</text>
+			<path d="M 65,80 L 905,80 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<path d="M 65,80 L 65,210 Z" style="stroke: rgb(39%,45%,54%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polyline points="65.02775 87.1315, 92.12466 90.50735, 119.2214 90.67615, 146.3181 88.52404, 173.4148 88.60843, 200.5118 90.63395, 227.6084 89.4102, 254.7052 90.88714, 281.8022 88.81942, 308.8987 90.33856, 335.9955 88.48184, 363.0925 88.86162, 390.1892 90.29636, 417.2861 88.27085, 444.3825 90.29636, 471.4794 89.66339, 498.5764 88.69283, 525.673 88.52404, 552.7699 89.07261, 579.8674 89.15701, 606.9637 88.48184, 634.0601 89.57899, 661.1571 88.52404, 688.254 88.35524, 715.3505 90.25416, 742.4473 90.46515, 769.5439 88.65063, 796.6414 88.60843, 823.7379 88.69283, 850.817 89.87438" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<polyline points="92.09463 151.6947, 119.1907 155.8724, 146.2876 160.683, 173.3844 164.101, 200.4817 168.363, 227.578 172.5829, 254.675 154.1422, 281.7713 158.995, 308.8686 163.7634, 335.9649 168.1942, 363.0617 172.4141, 390.1589 176.2963, 417.2553 180.0941, 444.3784 183.8498, 471.4487 187.4366, 498.5455 190.8547, 525.6424 194.2305, 552.7653 182.626, 579.8359 186.2551, 606.9326 136.6722, 634.0293 142.8331, 661.1262 148.6565, 688.2229 153.9312, 715.3197 158.9106, 742.4166 163.468, 769.5397 167.9411, 796.6365 172.2453, 823.707 175.0304, 850.8044 178.9548, 877.9082 182.6682" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+			<path d="M 615,666 L 637,666 Z" style="stroke: rgb(12%,40%,67%); stroke-linecap: butt; stroke-width: 2;"/>
+			<text x="643" y="662" style="font-family: Helvetica; font-size: 10px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1324) scale(1,-1)">PEERING</text>
+			<path d="M 765,666 L 787,666 Z" style="stroke: rgb(77%,41%,13%); stroke-linecap: butt; stroke-width: 2;"/>
+			<text x="793" y="662" style="font-family: Helvetica; font-size: 10px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,1324) scale(1,-1)">TGW</text>
+			<text x="384.695" y="36" style="font-family: Helvetica; font-size: 10px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,72) scale(1,-1)">Elapsed measurement time after warm-up (s)</text>
+			<text x="60" y="14" style="font-family: Helvetica; font-size: 9px;fill: rgb(14%,20%,27%); stroke:none;" transform="translate(0,28) scale(1,-1)">Medians, not confidence bands. First reported interval may be partial; durations are retained in JSON.</text>
+		</g>
+	</g>
+</svg>

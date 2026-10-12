@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "independent_checks": 645,
+  "original_metrics_unchanged": true,
+  "rtt_replies": 1000,
+  "raw_sources": 20,
+  "tcp_intervals": 300,
+  "lecture_sources": [
+    {
+      "filename": "NT531 - Lecture 02 - Arrival Processes and Queuing Systems.pdf",
+      "sha256": "3017204d2157bf43c43d47c5a282fa5e6e6d435e2bd1daf9ecd74d5cb3c21324"
+    },
+    {
+      "filename": "lec4 - NT531 - Congestion Control.pdf",
+      "sha256": "45029bffbb93af7953a73cd6aa365f363ec19dab01738b4d8218673c1ed65184"
+    },
+    {
+      "filename": "NT531 - Internet Performance, QoS and Cloud-Native Metrics.pdf",
+      "sha256": "fbfe8816e31aeea662684b48d0ac895ab29bf468ff9c109b408a0dad96c1ccfa"
+    }
+  ],
+  "methods": "NumPy inverted_cdf quantiles and ddof=1 SD, direct interval byte/time rates and raw hashes"
+}

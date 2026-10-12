@@ -132,6 +132,13 @@ Demo phân đoạn TGW có thể minh họa khả năng nhiều bảng route sau
 
 ## Chuẩn bị bảo vệ
 
+Cập nhật 11/10: phân tích offline ECDF/phân vị/tần suất RTT vượt ngưỡng
+và đồ thị TCP một luồng đã hoàn thành; xem [phần thống kê](20-thong-ke-va-xac-suat.md).
+Bốn đợt đề xuất không bảo đảm đủ công suất thống kê. Phần mới giải thích
+giả thuyết/CI theo đợt và giới hạn exact sign test với B nhỏ. Trước khi đo,
+chốt đầu ra chính, số đợt, độ chính xác mong muốn, phương pháp và ngân sách;
+không dừng lấy mẫu ngay khi p-value nhỏ. Chưa có đợt mới trong cập nhật này.
+
 Chuẩn bị câu trả lời có trỏ nguồn cho các câu: vì sao chọn bốn VPC; sáu Peering so với bốn attachment có công bằng không; route nào chứng minh mode; RTT khác độ trễ một chiều thế nào; vì sao throughput không phải năng lực dịch vụ; ENA tăng có phải packet loss không; vì sao chưa kết luận tương đương; tác động credits; lựa chọn theo chi phí/quy mô ra sao.
 
 Điểm mạnh nên trình bày là hạ tầng tái lập, số liệu thực có provenance, phân tích endpoint và kết luận lựa chọn theo tiêu chí. Không có thiết kế thực nghiệm nào khiến đồ án miễn bị phản biện; giải thích đúng phạm vi và bảo vệ được bằng chứng đáng tin hơn lời khẳng định tuyệt đối hoặc cam kết hơn nhóm khác.

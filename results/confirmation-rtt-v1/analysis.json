@@ -1,0 +1,12 @@
+{
+  "protocol_hash": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
+  "completed_blocks": 0,
+  "required_blocks": 16,
+  "local_dates": [],
+  "issues": [],
+  "rows": [],
+  "sources": [],
+  "inferential_result": null,
+  "status": "incomplete_no_inferential_conclusion",
+  "assumptions": "Inference conditional on sufficiently independent blocks and suitable sampling process; spacing does not prove independence."
+}

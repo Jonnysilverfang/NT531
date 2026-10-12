@@ -1,0 +1,139 @@
+{
+  "id": "rtt-confirmation-v1",
+  "created_utc": "2026-10-12T01:43:22.331275+00:00",
+  "primary": "P(block RTT_TGW - RTT_Peering > 0.1 ms) exceeds 0.5",
+  "alpha": 0.05,
+  "minimum_relevant_difference_ms": 0.1,
+  "blocks": 16,
+  "runs_per_mode": 3,
+  "packets_per_run": 100,
+  "interval_seconds": 0.2,
+  "payload_bytes": 56,
+  "timeout_seconds": 2,
+  "settle_seconds": 30,
+  "warmup_packets": 10,
+  "rest_seconds": 5,
+  "minimum_gap_between_block_starts_seconds": 7200,
+  "minimum_distinct_local_dates": 4,
+  "maximum_pair_span_seconds": 1200,
+  "timezone": "Asia/Saigon",
+  "seed": 10979394028553206585,
+  "schedule": [
+    {
+      "block": 1,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 2,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 3,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 4,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 5,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 6,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 7,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 8,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 9,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 10,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 11,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 12,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 13,
+      "order": [
+        "peering",
+        "tgw"
+      ]
+    },
+    {
+      "block": 14,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 15,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    },
+    {
+      "block": 16,
+      "order": [
+        "tgw",
+        "peering"
+      ]
+    }
+  ],
+  "stopping_rule": "Collect all 16 valid paired blocks. No significance-based early stop.",
+  "technical_retry_rule": "Retain failed attempts. No automatic retry; whole block repeated only for documented technical failure, not RTT/outlier magnitude.",
+  "scope": "Same c6i.large A/B, us-east-1a, MTU1500, no benchmark load. Historical sessions excluded.",
+  "assumptions": "Inference conditional on sufficiently independent blocks and suitable sampling process; spacing does not prove independence."
+}

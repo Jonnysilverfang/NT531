@@ -1,0 +1,26 @@
+{
+  "CheckedUTC": "2026-10-12T02:04:19.9567216Z",
+  "Region": "us-east-1",
+  "TGWAttachmentUSDPerHour": 0.05,
+  "PriceListVersion": "20260917190528",
+  "TGWSKU": "9N2FHGMMCZBKDCGH",
+  "EIPUSDPerHour": 0.005,
+  "EIPSource": "https://aws.amazon.com/vpc/pricing/",
+  "ResourceCounts": {
+    "Destroy": 0,
+    "TGWAttachments": 4,
+    "Create": 100,
+    "EC2": 4,
+    "TGW": 1,
+    "Peering": 6,
+    "EIP": 4,
+    "VPC": 4,
+    "Update": 0
+  },
+  "Applied": false,
+  "HourlyFixedTGWAndEIPUSD": 0.22,
+  "Fixed96HourExampleUSD": 21.12,
+  "Excluded": "EC2 compute, EBS, data processing/transfer, tax, credits and discounts",
+  "KeyPairAvailable": true,
+  "AMIAvailable": true
+}

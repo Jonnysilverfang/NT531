@@ -48,6 +48,12 @@ R_i(W): byte payload nhận từ nguồn i trong đúng W; T_0,T_1 tính bằng 
 
 ## Ưu tiên 2 Đo lặp RTT và TCP một luồng
 
+Cập nhật 12/10 theo hướng người dùng chọn: RTT xác nhận dùng
+[protocol 16 block](23-thiet-ke-xac-nhan-rtt.md), thay cho mức khởi đầu bốn
+đợt RTT dưới đây. Script được chuẩn bị, **0/16 block**, hạ tầng đã dọn nên
+chưa chạy. Sau đó mới chạy loaded RTT khám phá. Phần TCP một luồng bổ sung
+bên dưới vẫn là đề xuất, không tự chạy cùng đợt RTT hoặc nhập vào kiểm định.
+
 Đề xuất **bốn đợt bổ sung** ở các thời điểm khác nhau. Mỗi đợt có cả Peering và TGW; mỗi mode chạy ba lượt RTT khi rảnh và ba lượt TCP một luồng. Tổng là **24 lượt ping và 24 lượt TCP**, ngoài dữ liệu cũ. Bốn đợt là mức khởi đầu theo thời gian/ngân sách, không phải chứng minh đủ công suất thống kê.
 
 Phân bổ hai đợt Peering trước, hai đợt TGW trước; xáo thứ tự bốn đợt và lưu lịch trước khi chạy. Đây là cách áp dụng ý tưởng block theo thời gian và cân bằng thứ tự từ [NIST randomized block designs](https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm). Không gọi việc luôn chạy Peering trước là ngẫu nhiên. Không ghép lượt 1 của hai phiên cũ thành cặp đồng thời.

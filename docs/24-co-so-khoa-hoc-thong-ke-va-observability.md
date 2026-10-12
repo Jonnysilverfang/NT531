@@ -84,6 +84,21 @@ của paired sign test vì tie `d_b=δ` được tính là không vượt margin
 thích thống kê dấu theo phân bố binomial](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm)
 và [cận exact cho tỷ lệ binomial](https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbici.htm).
 
+Ngưỡng quyết định và cận dưới Clopper–Pearson một phía 95% đã được tính trước:
+
+| `K` trên 16 block | p-value exact một phía | Cận dưới 95% của `π` |
+|---:|---:|---:|
+| 12 | 0,038406 | 0,515604 |
+| 13 | 0,010635 | 0,583428 |
+| 14 | 0,002090 | 0,656175 |
+| 15 | 0,000259 | 0,736043 |
+| 16 | 0,000015 | 0,829250 |
+
+Nếu xác suất thật `π=0,8`, xác suất thiết kế đạt `K≥12` là khoảng 79,8%; nếu
+`π=0,85` thì khoảng 92,1%. Đây là công suất theo mô hình Bernoulli của block,
+không phải xác suất kết luận hiện tại đúng. Script phân tích tính lại toàn bộ
+các giá trị từ raw data sau block 16.
+
 ### Độ bất định và tail latency
 
 Ngoài quyết định `K≥12`, báo cáo phải công bố `d_b` từng block, mean, median,

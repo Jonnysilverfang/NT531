@@ -40,6 +40,15 @@ def plan(require_due=True):
         assert not list(next_folder.glob('*/attempt.json')),'Upcoming block has an earlier attempt; adjudicate rather than automatically retry'
         rows=analysis['rows']
         due=max((utc(row['started_utc'])+dt.timedelta(hours=2) for row in rows),default=now)
+        # Reserve enough remaining blocks for the protocol's distinct dates.
+        # More daily sessions must never consume block 16 before date 4.
+        zone=dt.timezone(dt.timedelta(hours=7))
+        today=now.astimezone(zone).date()
+        dates={utc(row['started_utc']).astimezone(zone).date() for row in rows}
+        missing_dates=max(0,4-len(dates|{today}))
+        if missing_dates>16-(count+1):
+            next_date=dt.datetime.combine(today+dt.timedelta(days=1),dt.time.min,tzinfo=zone)
+            due=max(due,next_date.astimezone(dt.timezone.utc))
         jobs.append(dict(study=name,block=count+1,earliest_utc=due.isoformat(),due=due<=now))
     assert jobs,'Confirmation complete; do not start EC2 for this phase'
     if require_due:assert all(job['due'] for job in jobs),'Not yet two hours since preceding block; wait for a later scheduled session'

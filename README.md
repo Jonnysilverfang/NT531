@@ -65,13 +65,21 @@ theo analyzer, 56 file tải sau capture đã đối chiếu size/SHA và host k
 Chưa công bố suy luận trước khi đủ 16 block và tiêu chí ngày/chất lượng.
 Attempt uptime bị chặn trước outcome được giữ cùng quyết định retry.
 
-Người dùng đã chọn tự tiếp tục lúc 08:00, 11:00, 14:00, 17:00 giờ Việt Nam
+Theo yêu cầu đẩy nhanh ngày 13/10, lịch tự tiếp tục là
+08:00, 11:00, 14:00, 17:00, 20:00 và 23:00 giờ Việt Nam
 qua heartbeat trong chat; mỗi phiên kiểm tra, sao lưu rồi stop bốn EC2,
 giữ hạ tầng. Lịch phụ thuộc ứng dụng đang hoạt động và AWS còn đăng nhập.
 Xem tài liệu 32 để biết phạm vi, điều kiện và việc còn thiếu.
-Cuối phiên 13/10 đã xác nhận bốn máy `stopped` lúc 12:05 giờ Việt Nam;
+Phiên buổi trưa 13/10 đã xác nhận bốn máy `stopped` lúc 12:05 giờ Việt Nam;
 [bằng chứng stop và checksum backup riêng](results/session-lifecycle/20261013T050449Z-stop.json).
 Đã xóa bản sao khóa tải raw tạm; khóa SSH gốc giữ nguyên.
+
+Sau đó người dùng yêu cầu tiếp tục. Mỗi phiên dùng wrapper
+`scripts/run-confirmation-session.py` có khóa chống chạy chồng và cleanup
+sao lưu/stop trong finally. Bộ lập kế hoạch giữ block cuối cho đủ bốn ngày;
+tăng số phiên/ngày không thay đổi protocol hoặc tăng giả số mẫu độc lập.
+Trạng thái máy hiện tại phải đọc bằng chứng phiên mới nhất hoặc AWS;
+bằng chứng stop buổi trưa là trạng thái tại thời điểm đó.
 
 Đợt slots có protocol riêng đã khóa: **16 block, ít nhất bốn ngày**, tỷ lệ
 đúng hạn 50 ms là outcome chính; request trong một phiên không thay cho

@@ -28,6 +28,15 @@ with tempfile.TemporaryDirectory(dir=ROOT/'tmp',prefix='planning-tests-') as t:
     try:m.plan();raise RuntimeError('Spacing violation accepted')
     except AssertionError as e:assert 'two hours' in str(e)
     checks.append('spacing_guard_uses_aware_UTC')
+    # Faster daily cadence must leave the final block for a fourth local date.
+    zone=dt.timezone(dt.timedelta(hours=7));today=dt.datetime.now(zone).date()
+    dates=[today-dt.timedelta(days=d) for d in [2,1,0]]
+    # The timestamps are unambiguously within their respective local dates.
+    times=[dt.datetime.combine(d,dt.time(0,1),tzinfo=zone).astimezone(dt.timezone.utc) for d in dates]
+    (rtt/'analysis.json').write_text(json.dumps(dict(completed_blocks=15,issues=[],rows=[dict(started_utc=times[i%3].isoformat()) for i in range(15)],inferential_result=None)))
+    reserved=next(j for j in m.plan(require_due=False) if j['study']=='confirmation-rtt-v1')
+    assert not reserved['due'] and m.utc(reserved['earliest_utc']).astimezone(zone).date()>today
+    checks.append('final_block_reserved_for_fourth_local_date')
     (rtt/'analysis.json').write_text(json.dumps(dict(completed_blocks=0,issues=[],rows=[],inferential_result=None)))
     (rtt/'protocol.json').write_text('{}')
     try:m.plan();raise RuntimeError('Protocol edit accepted')

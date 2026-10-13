@@ -55,6 +55,7 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 25. [Bằng chứng, tiêu chí hoàn thành và cách kết luận thống kê](docs/30-bang-chung-va-tieu-chi-hoan-thanh.md).
 26. [Phụ lục Word có công thức và bằng chứng xác nhận đã kiểm tra từng trang](docs/31-phu-luc-bang-chung-thong-ke.docx).
 27. [Trạng thái xác nhận, số block còn thiếu và lịch tự tiếp tục](docs/32-trang-thai-xac-nhan.md).
+28. [Hàng đợi ứng dụng, chứng minh công thức Little trong cửa sổ hữu hạn và thế số từ raw](docs/33-hang-doi-va-dinh-luat-little.md).
 
 Cập nhật 13/10: RTT có **3/16 block hợp lệ trên hai ngày**; block 3 có
 Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.

@@ -120,6 +120,11 @@ OpenTelemetry giúp theo dõi các lời gọi phân tán và minh họa phiên 
 Nó không thay cho thiết kế lấy mẫu, raw request, queue logs hay kiểm định;
 tracing đầy đủ tắt trong so sánh chính để giữ điều kiện giống nhau.
 
+[Phân tích hàng đợi và công thức Little từ raw](33-hang-doi-va-dinh-luat-little.md)
+bổ sung kiểm tra sample path: tích phân số đang chờ bằng tổng thời gian chờ
+của cohort chứa trọn entry/exit. Phần này giải thích định lượng cơ chế,
+không phải kiểm định mới hoặc bằng chứng độc lập với chính log đã dùng.
+
 ## Công việc để bàn giao trọn vẹn
 
 1. Thu các block xác nhận còn thiếu; phân tích lại sau từng block, không

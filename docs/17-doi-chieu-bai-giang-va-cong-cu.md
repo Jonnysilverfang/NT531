@@ -99,6 +99,13 @@ L=\lambda W.
 
 Cần cùng ranh giới hệ thống, đơn vị và điều kiện trung bình ổn định. Little không đòi hỏi arrival Poisson. Tuy nhiên, số liệu hiện có chưa đo được λ và W của hàng đợi TGW. **Không lấy bit/s iperf nhân RTT ping để suy ra số gói trong hàng đợi TGW.**
 
+Cập nhật 13/10: đã có timestamp vào, bắt đầu phục vụ và thoát của từng lời
+gọi tại worker C/D trong ứng dụng. [Tài liệu 33](33-hang-doi-va-dinh-luat-little.md)
+chứng minh đẳng thức cho cohort hữu hạn chứa trọn các lời gọi, định nghĩa
+từng ký hiệu và thế số từ raw. Đẳng thức hữu hạn này không cần trạng thái
+dừng; chuyển sang trung bình dài hạn vẫn cần điều kiện tồn tại giới hạn.
+Đó là hàng đợi ứng dụng đã đo, không phải hàng đợi nội bộ TGW.
+
 Nếu minh họa lý thuyết M/M/1:
 
 \[

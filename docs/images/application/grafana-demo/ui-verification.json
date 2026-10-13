@@ -1,0 +1,40 @@
+{
+  "reviewed_local": "2026-10-13T19:27:06.036238+07:00",
+  "method": "Manual inspection through browser automation after user login; original browser screenshots",
+  "dashboard_uid": "nt531-study-demo",
+  "dashboard_result_table_visible": true,
+  "little_formula_visible": true,
+  "trace_list_loaded": true,
+  "trace_link_opened": true,
+  "selected_trace_id": "2d6ab3013099ca64a169b001dbc70081",
+  "selected_trace_spans_visible": 10,
+  "selected_trace_duration_ms": 12.31,
+  "selected_trace_queue_us": [
+    14,
+    13
+  ],
+  "selected_trace_process_ms": [
+    10.11,
+    10.12
+  ],
+  "parallel_c_d_visible": true,
+  "screenshot_trace_timezone": "Asia/Saigon (UTC+7)",
+  "data_kind": "Preserved smoke trace replay and frozen study results; not a new live measurement",
+  "runtime_proof": {
+    "path": "results/observability-demo/current-demo.json",
+    "sha256": "f5c7fc1d318d6418daa61aa116b9e3fdea6c85fe28d05f02b943862cf3e2cde4"
+  },
+  "no_AWS_calls": true,
+  "images": [
+    {
+      "path": "docs/images/application/grafana-demo/01-study-dashboard.jpg",
+      "bytes": 99497,
+      "sha256": "1d1f63ec7887231792e9c94dd1a7d098f3f046ac261a9cfbe75857f12eb39edc"
+    },
+    {
+      "path": "docs/images/application/grafana-demo/02-trace-waterfall.jpg",
+      "bytes": 85133,
+      "sha256": "1d5a4a28420b7c9c389ba9a742c90c2b0dfd9d71731835b50e15bb5d8861f8d1"
+    }
+  ]
+}

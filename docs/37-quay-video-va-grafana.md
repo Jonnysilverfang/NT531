@@ -29,13 +29,25 @@ Kết quả script in URL có thời gian cụ thể, cũng lưu trong current-d
 
 ## Kịch bản quay 4–5 phút
 
+### Ảnh đã kiểm tra trên Grafana ngày 13/10/2026
+
+Đã đăng nhập và kiểm tra giao diện: bảng kết quả hiển thị đúng, danh sách trace tải được, nhấp Trace ID mở timeline với đủ 10 span. Các ảnh dưới đây chụp trực tiếp từ Grafana local; không phải mô phỏng màn hình.
+
+![Bảng kết quả đã chốt và phạm vi phép đo](images/application/grafana-demo/01-study-dashboard.jpg)
+
+![Timeline của một trace smoke thật: B gọi C và D song song](images/application/grafana-demo/02-trace-waterfall.jpg)
+
+Trace minh họa có ID `2d6ab3013099ca64a169b001dbc70081`, tổng thời gian 12,31 ms. Hai span `worker.queue` khoảng 14 và 13 µs; `worker.process` khoảng 10,11 và 10,12 ms. Đây là một yêu cầu smoke tải nhẹ, không phải P95 hoặc giá trị trung bình của workload 800 rps. Hai nhánh có thanh thời gian chồng nhau, thể hiện lời gọi song song. Ảnh timeline hiển thị giờ địa phương UTC+7 (22:36 ngày 12/10), tương ứng 15:36 UTC trong bộ lọc dashboard.
+
+Nhấp Trace ID có thể mở Explore với bộ lọc “Last 1 hour”; truy vấn trực tiếp bằng ID vẫn mở trace cũ. Khi tìm danh sách bằng TraceQL, dùng khoảng thời gian tuyệt đối của dashboard. [Bằng chứng kiểm tra giao diện và SHA ảnh](images/application/grafana-demo/ui-verification.json).
+
 | Thời lượng | Cảnh quay | Nói điều gì? |
 |---|---|---|
 | 0:00–0:40 | Sơ đồ bốn VPC Peering và TGW | Cùng bốn EC2, sáu Peering hoặc một TGW/bốn attachment; tải dùng IP private |
 | 0:40–1:20 | Bảng RTT và topology/route proof đã lưu | Trong 5 block, TGW trừ Peering trung bình +0,3119 ms; đây là kết quả đo có phạm vi |
 | 1:20–2:20 | Dashboard bảng 800 rps, 8/16 slots | Hai mode ở 8 slots chỉ khoảng 3% đúng hạn; 16 slots đạt 100% trong các cửa sổ đã đo |
 | 2:20–3:05 | Hàng đợi/Little trên dashboard và đồ thị block 3 | Giải thích tốc độ × thời gian chờ = số lời gọi chờ trung bình; thế ví dụ 732 × 0,701 ≈ 513 |
-| 3:05–4:05 | Chọn một Trace ID, mở chi tiết trên Grafana | A → B → C/D; hai lời gọi song song; worker.queue và worker.service; phân biệt trace, span và RTT mạng |
+| 3:05–4:05 | Chọn một Trace ID, mở chi tiết trên Grafana | A → B → C/D; hai lời gọi song song; worker.queue và worker.process; phân biệt trace, span và RTT mạng |
 | 4:05–4:40 | Bảng kết luận và file raw | Network và khả năng phục vụ đều quan trọng; cho thấy file kết quả có nguồn và phép tính tái tạo |
 
 Những cảnh dùng dữ liệu cũ ghi **“Kết quả đã đo”** hoặc **“Trace thật đã lưu — replay”**. Có thể cắt đoạn chờ/nghỉ; không chỉnh số liệu hoặc dựng màn hình như một phiên live. Nếu giảng viên yêu cầu thao tác trực tiếp AWS, mới chuẩn bị phiên demo riêng có giới hạn thời gian; không đưa request demo vào dataset đã chốt.
@@ -46,7 +58,7 @@ Những cảnh dùng dữ liệu cũ ghi **“Kết quả đã đo”** hoặc *
 - Span: một đoạn công việc có mốc bắt đầu/kết thúc và parent. A là `nt531-load`, B là `nt531-gateway`; C/D đều là `nt531-worker`, phân biệt bằng `service.instance.id`.
 - B gọi C và D song song: không cộng thời gian hai nhánh như chúng chạy nối tiếp. Tổng thời gian chịu ảnh hưởng nhánh kết thúc muộn và overhead gateway/đường đi.
 - Span RPC gồm truyền thông và xử lý ở phía kia, không phải phép đo độ trễ mạng thuần. Không dùng trace để phân rã hàng đợi nội bộ TGW.
-- `worker.queue` là chờ lấy slot ở ứng dụng; `worker.service` là phần phục vụ mô phỏng. Trace smoke tải nhẹ có thể chờ rất ít; dùng log của block chính để trình bày hàng đợi ở tải 800 rps.
+- `worker.queue` là chờ lấy slot ở ứng dụng; `worker.process` là phần phục vụ mô phỏng. Trace smoke tải nhẹ có thể chờ rất ít; dùng log của block chính để trình bày hàng đợi ở tải 800 rps.
 
 Liên hệ trực tiếp slide Internet Performance, trang 31/34/39: metrics cho cái nhìn tổng hợp, logs cho sự kiện cụ thể, traces nối hành trình qua dịch vụ. Nhóm đã dùng raw logs, trace và dashboard; chưa triển khai Loki hoặc hostmetrics EC2, nên không ghi đã triển khai toàn bộ mọi thành phần trên slide.
 

@@ -1,6 +1,6 @@
 {
-  "created_local": "2026-10-13T19:12:48.932449+07:00",
-  "report_sha256": "6c6190309dd6d63e168804829ebdecd32f3fa14b4bcdc46698476c61634833a5",
+  "created_local": "2026-10-13T19:27:07.299805+07:00",
+  "report_sha256": "af58eecede1b97f59a809cd4b403342cd5344c39e0169b7f88019a2cfdcddd2d",
   "rtt_blocks": 5,
   "slots_blocks": 3,
   "raw_source_hash_checks": 525,
@@ -36,7 +36,7 @@
     },
     {
       "path": "docs/37-quay-video-va-grafana.md",
-      "sha256": "8f8632f110f88efd9a10e1beda059188bfd42e4473b80f070dec3f86bc93ae01"
+      "sha256": "f1127335edfad0243a529f8ddefb4e2cd61cbc571a58db0defe23669726f14f8"
     },
     {
       "path": "results/observability-demo/current-demo.json",

@@ -1,6 +1,6 @@
 # Đánh giá VPC Peering và Transit Gateway từ RTT đến chất lượng ứng dụng
 
-Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 19:12 giờ Việt Nam.
+Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 19:27 giờ Việt Nam.
 Các bảng được tạo từ analysis và đối chiếu SHA với file nguồn; không dùng
 ảnh chụp để thay raw. Báo cáo này ghép phần đã thực hiện; kết luận suy diễn
 chỉ xuất hiện sau khi analyzer xác nhận đủ thiết kế.

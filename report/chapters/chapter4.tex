@@ -35,3 +35,25 @@ nghiên cứu còn quan sát fan-in, CPU và ENA, đồng thời giữ raw artif
 lại. Thiết kế này giảm một số confounder so với hai environment độc lập nhưng
 không loại bỏ biến thiên host, không thay thế benchmark đa region và không tạo
 cơ sở để tuyên bố đây là nghiên cứu đầu tiên về chủ đề này.
+
+\section{Độ trễ đuôi và hàng đợi ứng dụng}
+
+Dean và Barroso chỉ ra rằng latency đuôi trở nên quan trọng khi một request
+phụ thuộc nhiều thành phần; chậm ở một nhánh có thể kéo dài toàn bộ request
+\cite{tail-at-scale}. Workload của đồ án chỉ có hai worker nên không tái tạo
+quy mô hệ thống trong nghiên cứu đó, nhưng cùng nguyên lý ``chờ nhánh chậm''
+giải thích vì sao cần P95 thay vì chỉ nhìn mean.
+
+Định luật Little liên hệ số đối tượng trung bình trong hệ thống, tốc độ đến và
+thời gian lưu \cite{little-proof,sigman-little}. Đồ án không áp công thức
+M/M/1 để dự đoán AWS vì chưa kiểm tra giả định Poisson/exponential. Thay vào đó,
+nhóm dùng sample path hữu hạn của cùng cohort request ID để kiểm tra
+$L_q=\lambda_C\overline W_q$ trực tiếp từ timestamp.
+
+\section{Observability và giới hạn của công cụ}
+
+OpenTelemetry cung cấp API/SDK và Collector trung lập để truyền traces,
+metrics và logs \cite{otel-docs}. Trong đồ án, Collector--Tempo--Grafana giúp
+minh họa đường gọi và thời gian của span. Công cụ quan sát không thay thiết kế
+lấy mẫu: replay 12 trace smoke không được dùng như hàng nghìn request độc lập
+hoặc như bằng chứng của benchmark tải cao.

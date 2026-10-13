@@ -38,6 +38,9 @@ nối rồi kiểm tra lại trước khi đo.
   \item tổng receiver goodput xấp xỉ trong kịch bản fan-in;
   \item CPU busy tại endpoint gửi và nhận;
   \item thay đổi các network allowance counter do ENA cung cấp.
+  \item P95 latency và tỷ lệ request hoàn thành trong deadline 50 ms;
+  \item ảnh hưởng của giới hạn đồng thời 8/16 slots tại worker;
+  \item số request chờ trung bình theo định luật Little và trace phân tán.
 \end{itemize}
 
 Mục tiêu phân tích không chỉ là xếp hạng hai giá trị throughput. Báo cáo còn
@@ -52,14 +55,18 @@ liệu chưa đủ để suy ra năng lực tối đa của dịch vụ AWS.
   \item Khi A, C và D cùng gửi tới B, tổng goodput thay đổi như thế nào?
   \item Endpoint EC2/ENA ảnh hưởng ra sao tới cách diễn giải kết quả fan-in?
   \item Trade-off giữa performance và khả năng mở rộng kiến trúc là gì?
+  \item Khi tải ứng dụng tiến gần công suất phục vụ, đường mạng hay giới hạn
+        worker chi phối khả năng đáp ứng deadline?
 \end{enumerate}
 
 \section{Phạm vi}
 
 Hệ thống thực nghiệm đặt tại region \texttt{us-east-1}, Availability Zone
 \texttt{us-east-1a}; gồm bốn VPC và bốn EC2 \texttt{c6i.large}. Traffic đo đi
-qua private IP, dùng TCP và MTU 1500 byte cho baseline. RTT dùng ICMP. Mỗi bộ
-đo chính có năm lượt.
+qua private IP, dùng TCP và MTU 1500 byte cho baseline. RTT dùng ICMP. Phần
+lịch sử có năm lượt cho mỗi bài; đợt xác nhận mới có năm block RTT và ba block
+ứng dụng. Thiết kế 16 block ban đầu được rút ngắn vì ngân sách AWS và không
+được trình bày như đã hoàn thành.
 
 Phạm vi này không đại diện cho mọi region, Availability Zone, loại instance,
 MTU, số luồng hay quy mô VPC. Kết quả không phải benchmark năng lực tối đa của
@@ -77,6 +84,10 @@ số liệu hóa đơn của phiên đo.
   \item Script độc lập tính lại số liệu và kiểm tra tính nhất quán của nguồn.
   \item Phân tích tách kết quả thực nghiệm khỏi đặc tính kiến trúc và nêu rõ
         ảnh hưởng của bottleneck tại máy nhận.
+  \item Workload HTTP có kiểm soát cho phép thay 8/16 slots và đo trực tiếp
+        P95, tỷ lệ đúng hạn, queue time và service time.
+  \item Kiểm tra nhất quán hàng đợi bằng $L_q=\lambda_C\overline W_q$ trên
+        cùng cohort request ID; dùng OpenTelemetry để minh họa đường đi request.
 \end{itemize}
 
 \section{Cấu trúc báo cáo}

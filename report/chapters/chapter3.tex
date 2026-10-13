@@ -92,7 +92,7 @@ benchmark dùng private IP và route liên VPC. Vì vậy EIP không nằm trên
 dữ liệu được so sánh; Hình \ref{fig:management-path} chỉ mô tả control path
 giúp chuẩn bị và thu thập kết quả.
 
-\section{Điều kiện benchmark}
+\section{Điều kiện benchmark mạng}
 
 \begin{table}[H]
 \centering
@@ -133,6 +133,38 @@ không phải chi tiết có thể bỏ qua.
   \item Python: kiểm tra checksum, parse raw data, tính metric và đối chiếu
         giữa JSON, Markdown và figures.
 \end{itemize}
+
+\section{Workload ứng dụng và thiết kế slots}
+
+Để kiểm tra liệu network latency có phải yếu tố quyết định chất lượng dịch vụ,
+nhóm triển khai một workload HTTP nhỏ trên cùng endpoint. A tạo request theo
+lịch đến gateway B. B gọi C và D song song; mỗi worker thực hiện I/O mô phỏng
+10 ms và trả payload JSON 4.096 byte. Hai worker có cùng giới hạn slots, lần
+lượt 8 và 16. Mỗi điều kiện dùng rate 600 hoặc 800 request/s, deadline 50 ms,
+timeout 2 s, warm-up 5 s, đo 15 s và drain 15 s. Mỗi block có đủ bốn điều kiện
+Peering/TGW $\times$ 8/16 slots tại một mức tải; server mới được tạo cho từng
+điều kiện để tránh carry-over.
+
+\begin{table}[H]
+\centering
+\caption{Thiết kế workload ứng dụng}
+\label{tab:application-conditions}
+\begin{tabularx}{\textwidth}{p{0.26\textwidth}XX}
+\toprule
+\textbf{Thuộc tính} & \textbf{Giá trị} & \textbf{Ý nghĩa} \\
+\midrule
+Request rate & 600/800 request/s & 600 là tải dưới danh nghĩa; 800 là tải sát 8 slots \\
+Worker slots & 8/16 mỗi worker & Giới hạn đồng thời của ứng dụng, không phải vCPU \\
+Service/I/O & 10 ms, 4.096 byte & Workload mô phỏng có kiểm soát \\
+Deadline/timeout & 50 ms/2 s & Tách đúng hạn khỏi hoàn thành muộn \\
+Chỉ số & P95, SLI, queue/service time & Đo tail latency và cơ chế chờ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Một request A gọi C và D song song nên 800 request/s tạo khoảng 800 lời gọi/s
+trên mỗi worker, tức 1.600 lời gọi/s khi cộng hai worker. Bảng này không gán
+queue ở B cho AWS TGW; B là gateway ứng dụng.
 
 \section{Quan sát CPU và ENA}
 
@@ -187,7 +219,24 @@ ba mean được gọi là tổng xấp xỉ.
   \item Chạy script verify và build báo cáo kết quả.
 \end{enumerate}
 
+\section{Experiment 4: HTTP deadline và hàng đợi}
+
+Loader A gửi request duy nhất có request ID. Gateway B truyền context ID tới C
+và D, chờ cả hai worker rồi trả response. Mỗi request lưu timestamp scheduled,
+entry, service start, service end và exit. Từ các timestamp này, script tính
+đúng hạn, P95 hoàn thành, thời gian chờ và thời gian phục vụ. Hàng đợi được
+kiểm tra lại bằng sample-path Little trên cùng cohort.
+
+\section{OpenTelemetry và Grafana}
+
+Collector nhận OTLP từ workload demo và chuyển trace sang Tempo; Grafana hiển
+thị bảng study và waterfall. Trace được gắn nhãn smoke/historical, gồm 12 trace
+và 120 span đã lưu. Pipeline chứng minh khả năng quan sát queue/service, nhưng
+không được dùng để thay thế kết quả 800 request/s vì full tracing tắt trong
+primary benchmark.
+
 \input{chapters/chapter3-results}
+\input{chapters/chapter3-confirmation}
 
 \section{Khả năng tái tạo}
 

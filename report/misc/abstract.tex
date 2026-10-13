@@ -20,3 +20,12 @@ Peering có lợi thế về latency và single-flow trong cấu hình đã đo,
 lợi thế về topology, định tuyến tập trung và khả năng mở rộng quản trị. Phạm
 vi kết luận bị giới hạn bởi số lượt nhỏ, phép đo hai mode nối tiếp, đặc tính
 burst của EC2 và cửa sổ fan-in chưa đồng bộ tuyệt đối.
+
+Để nối kết metric mạng với chất lượng dịch vụ, nhóm bổ sung workload HTTP mô
+phỏng hai worker được gọi song song. Ở 800 request/s, 8 slots chỉ đạt 3,044\%
+đúng hạn qua Peering và 3,272\% qua TGW; 16 slots đạt 100\% trong ba block quan
+sát của mỗi điều kiện. P95 hoàn thành của 8 slots tăng lên khoảng
+1,226--1,499 s, trong khi 16 slots giữ quanh 12,7 ms. Log request còn cho phép
+kiểm tra định luật Little; Grafana/Tempo được dùng để minh họa trace smoke đã
+lưu, không gắn nhãn trace đó là benchmark 800 request/s. Kết quả cho thấy lựa
+chọn đường mạng không thể tách khỏi khả năng phục vụ và deadline của ứng dụng.

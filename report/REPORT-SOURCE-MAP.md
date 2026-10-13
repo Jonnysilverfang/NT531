@@ -22,8 +22,9 @@ một thứ tự duy nhất cho kiến trúc, phương pháp và số liệu.
 
 ### Thông tin lớp, giảng viên và sinh viên
 
-- Chưa có nguồn trong repository; source giữ ba comment chờ người dùng cung
-  cấp. PDF hiển thị `CHƯA CUNG CẤP` và được đánh dấu rõ là bản chưa hoàn thiện.
+- Thông tin do nhóm xác nhận trực tiếp: Nguyễn Ngọc Minh -- 24521068; Nguyễn
+  Huy Nhật -- 24521253; Nguyễn Trung Kiên -- 24520885; giảng viên Đặng Lê Bảo
+  Chương. Mã lớp chưa được cung cấp nên không suy đoán.
 
 `misc/abstract.tex`, `misc/ack.tex` và `misc/council.tex` là front matter tùy
 chọn. Các file được giữ nhưng không bật trong `main.tex` do chưa có yêu cầu môn
@@ -175,15 +176,14 @@ không chỉ từ tên thư mục lịch sử.
 
 ### Appendix A - Bảng phân công công việc
 
-- Repository chưa có thông tin thành viên/MSSV/phân công đã xác nhận; giữ
-  placeholder rõ ràng, không suy đoán.
+- Thành viên và MSSV do nhóm xác nhận trực tiếp. Phân công phản ánh các hạng
+  mục có trong repository và cần được cả nhóm duyệt trước khi nộp.
 
 ### Appendix B - Câu hỏi phản biện và giải trình
 
-- Repository chưa có câu hỏi phản biện chính thức; giữ placeholder rõ ràng,
-  không tạo câu hỏi hoặc câu trả lời giả định.
+- Không đưa vào bản PDF trước phản biện vì chưa có câu hỏi chính thức.
 
 ### Appendix C - Minh bạch trong việc sử dụng AI
 
 - `appendix/appendix_c.tex` mô tả đúng phạm vi hỗ trợ AI và cách kiểm chứng.
-- Không bật trong `main.tex` khi chưa có yêu cầu môn học đã xác minh.
+- Được bật trong `main.tex` để công khai cách nhóm kiểm chứng nội dung.

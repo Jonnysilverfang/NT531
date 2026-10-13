@@ -56,8 +56,8 @@ EC2 network performance phụ thuộc loại instance, kích thước, loại tr
 chính sách allowance. Tài liệu AWS phân biệt baseline bandwidth với khả năng
 burst ở một số instance; mức công bố không đồng nghĩa một TCP flow luôn đạt
 mức đó \cite{aws-ec2-bandwidth}. ENA xuất các counter như
-\texttt{bw\_in\_allowance\_exceeded} và
-\texttt{pps\_allowance\_exceeded}. Counter tăng cho biết traffic đã gặp giới
+\nolinkurl{bw_in_allowance_exceeded} và
+\nolinkurl{pps_allowance_exceeded}. Counter tăng cho biết traffic đã gặp giới
 hạn tương ứng tại interface; không được cộng các counter để suy ra packet loss
 \cite{aws-ena-metrics}.
 
@@ -116,3 +116,67 @@ J=\frac{(\sum_{i=1}^{3}g_i)^2}{3\sum_{i=1}^{3}g_i^2}.
 
 $J$ gần 1 chỉ mô tả mức chia đều trong các cửa sổ đã ghi; không chứng minh
 max-min fairness hoặc năng lực tối đa của dịch vụ.
+
+\section{Phân vị và chỉ số đúng hạn}
+
+Mean có thể che giấu một nhóm request rất chậm. Báo cáo vì vậy dùng phân vị
+P95 theo quy tắc nearest rank. Với $n$ độ trễ đã sắp tăng dần,
+
+\begin{equation}
+k=\lceil0{,}95n\rceil,\qquad P95=x_{(k)}.
+\end{equation}
+
+P95 trong nghiên cứu ứng dụng chỉ tính trên request hoàn thành thành công.
+Để không loại request lỗi hoặc trễ khỏi mẫu số chất lượng dịch vụ, nhóm định
+nghĩa SLI đúng hạn:
+
+\begin{equation}
+\widehat p=\frac{N_{\mathrm{good}}}{N_{\mathrm{scheduled}}},
+\qquad SLI_{\%}=100\widehat p.
+\end{equation}
+
+$N_{\mathrm{good}}$ là request thành công và kết thúc không quá 50 ms kể từ
+lịch gửi; $N_{\mathrm{scheduled}}$ gồm toàn bộ request theo lịch. Ngưỡng 50 ms
+là lựa chọn của thí nghiệm, không phải SLA của AWS. P50/P95/P99 và SLI/SLO được
+liên hệ với bài giảng NT531 về Internet Performance và QoS
+\cite{nt531-qos-lecture}.
+
+\section{Công suất phục vụ danh nghĩa và giới hạn đồng thời}
+
+Mỗi worker có $M$ slots. Một lời gọi chiếm một slot trong thời gian cấu hình
+$s=0{,}010$ s. Với tải theo lịch $\lambda_{\mathrm{cfg}}$, công suất và mức tải
+danh nghĩa được dùng để chọn điều kiện thử:
+
+\begin{equation}
+\mu_{\mathrm{nom}}=\frac{M}{s},\qquad
+\rho_{\mathrm{nom}}=\frac{\lambda_{\mathrm{cfg}}s}{M}.
+\end{equation}
+
+Với 8 slots, $\mu_{\mathrm{nom}}=800$ lời gọi/s; 800 request/s làm
+$\rho_{\mathrm{nom}}=1$. Với 16 slots, công suất danh nghĩa là 1.600 lời gọi/s
+và $\rho_{\mathrm{nom}}=0{,}5$. Đây là mô hình chọn tải, không phải giới hạn AWS,
+không phải phần trăm CPU và không giả định quá trình đến Poisson.
+
+\section{Định luật Little cho hàng đợi quan sát}
+
+Bài giảng Arrival Processes and Queuing Systems trình bày quan hệ
+$L=\lambda W$ và ví dụ thread pool \cite{nt531-queue-lecture}. Nhóm áp dụng cho
+phần request đang chờ:
+
+\begin{equation}
+\overline L_{q,C}=\frac{1}{T_C}\sum_{i=1}^{N}W_{q,i}
+=\underbrace{\frac{N}{T_C}}_{\lambda_C}
+ \underbrace{\frac{1}{N}\sum_{i=1}^{N}W_{q,i}}_{\overline W_q}.
+\end{equation}
+
+$T_C$ bao phủ từ lần vào đầu tiên đến lần thoát cuối cùng của cùng cohort, kể
+cả đuôi xử lý. Vì vậy $\lambda_C=N/T_C$ có thể khác rate cấu hình. Hai vế được
+tính từ cùng log để kiểm tra nhất quán, không phải hai mẫu thống kê độc lập.
+
+\section{Quan sát phân tán}
+
+OpenTelemetry mô hình hóa một request bằng trace và các span; Collector nhận
+telemetry, Tempo lưu trace, còn Grafana dùng để truy vấn và hiển thị
+\cite{otel-docs}. Pipeline này giúp nhìn vị trí queue/service trong đường gọi
+A $\rightarrow$ B $\rightarrow$ C,D. Trace smoke được dùng làm minh họa cơ chế;
+benchmark chính tắt full tracing để tránh thay đổi workload cần so sánh.

@@ -1,5 +1,9 @@
 \section{Trả lời câu hỏi nghiên cứu}
 
+Hai lớp kết quả được tách rõ. Phần lịch sử mô tả RTT/TCP/fan-in; phần xác nhận
+mới dùng cùng cohort và block cân bằng để đánh giá RTT, sau đó dùng workload
+HTTP để kiểm tra ảnh hưởng của khả năng phục vụ ứng dụng.
+
 \subsection{RQ1: RTT khác nhau như thế nào?}
 
 Trong môi trường thử nghiệm hiện tại, RTT mean qua Peering là 0,2078 ms và qua
@@ -34,6 +38,16 @@ phù hợp khi số VPC nhỏ và cần kết nối trực tiếp. TGW đổi l�
 hub-and-spoke, định tuyến tập trung và số attachment tăng tuyến tính. Lựa chọn
 phụ thuộc latency target, quy mô VPC, governance, cost và khả năng vận hành.
 
+\subsection{RQ6: Network hay worker chi phối deadline?}
+
+Ở 600 request/s, mọi điều kiện đạt 100\% đúng hạn trong ba block. Ở 800
+request/s, cả Peering và TGW đều chỉ đạt khoảng 3\% đúng hạn với 8 slots, nhưng
+đạt 100\% trong dữ liệu quan sát với 16 slots. Mean hiệu ứng 16 trừ 8 slots là
+96,8417 điểm phần trăm. Queue audit cho thấy 8 slots tạo hàng trăm lời gọi chờ
+trung bình, trong khi 16 slots gần như không có backlog. Vì vậy, trong workload
+này, giới hạn đồng thời của worker là yếu tố chi phối deadline tại tải 800
+request/s; chênh lệch route vẫn tồn tại nhưng nhỏ hơn hiệu ứng hàng đợi.
+
 \section{Đánh giá trade-off kiến trúc}
 
 Peering không bắc cầu. Full mesh bốn VPC cần sáu connection; khi thêm VPC, số
@@ -49,6 +63,8 @@ chứng TGW có throughput hoặc latency tốt hơn.
 
 \begin{itemize}
   \item Mỗi bộ dữ liệu chính chỉ có năm lượt trong một phiên.
+  \item Đợt xác nhận dừng ở năm block RTT và ba block ứng dụng do ngân sách;
+        thiết kế 16 block ban đầu chưa hoàn thành.
   \item Peering và TGW được đo nối tiếp, chưa counterbalance/randomize đầy đủ.
   \item Burst bandwidth, placement và nhiễu nền của EC2 có thể ảnh hưởng.
   \item Fan-in cộng mean từ các cửa sổ riêng, chưa căn common overlap window.
@@ -56,6 +72,12 @@ chứng TGW có throughput hoặc latency tốt hơn.
   \item Receiver B có dấu hiệu bandwidth/PPS allowance bottleneck.
   \item Phạm vi chỉ gồm một Region, một AZ và một loại/kích thước instance.
   \item Workload chỉ gồm idle RTT, TCP single-flow và TCP fan-in baseline.
+  \item Workload HTTP dùng I/O mô phỏng 10 ms và hai worker; chưa đại diện cho
+        database, cache hoặc microservice sản xuất.
+  \item P95 tính trên request thành công; SLI deadline dùng toàn bộ request theo
+        lịch. Request trong cùng phiên có thể phụ thuộc nhau.
+  \item Trace Grafana là smoke lịch sử, không phải trace benchmark 800 rps;
+        host metrics OpenTelemetry trên EC2 chưa được triển khai.
   \item Kết quả chưa xác định performance tối đa hoặc equivalence của dịch vụ.
 \end{itemize}
 
@@ -64,11 +86,12 @@ chứng TGW có throughput hoặc latency tốt hơn.
 Các hạng mục sau là future work, chưa có kết quả thực nghiệm trong báo cáo:
 
 \begin{itemize}
-  \item thực hiện repeated balanced trials và đảo thứ tự mode theo đợt;
+  \item nếu ngân sách cho phép, hoàn thành repeated balanced trials nhiều ngày;
   \item đo RTT idle và RTT under load, báo cáo P50/P95 và ECDF;
   \item phân tích TCP congestion window và RTT theo thời gian;
   \item tính fan-in trên common overlapping window;
   \item thử receiver lớn hơn để kiểm tra giả thuyết endpoint bottleneck;
+  \item trace lấy mẫu có kiểm soát ở tải cao và bổ sung host metrics;
   \item xây dựng cost/performance analysis bằng bảng giá chốt theo ngày.
 \end{itemize}
 
@@ -84,3 +107,11 @@ cả hai mode. Kết quả phù hợp với khả năng endpoint chi phối aggr
 throughput, không đủ để tuyên bố Peering và TGW có performance giống nhau.
 Lựa chọn giải pháp cần xét đồng thời latency, scale, governance, cost và
 workload; không nên dựa riêng vào một giá trị throughput.
+
+Đợt workload ứng dụng bổ sung một kết luận quan trọng: network path có RTT thấp
+không tự bảo đảm request đúng hạn. Khi 8 slots vận hành sát công suất danh
+nghĩa, backlog làm P95 tăng lên hơn một giây qua cả hai route; tăng lên 16 slots
+đưa P95 về khoảng 13 ms và toàn bộ request quan sát trở lại deadline. Vì vậy
+quyết định kiến trúc phải xét đồng thời đường mạng, khả năng phục vụ, hàng đợi
+và SLI của ứng dụng. Đây là kết luận có điều kiện trong cấu hình đã đo, không
+phải tuyên bố Peering hoặc TGW thắng tổng quát.

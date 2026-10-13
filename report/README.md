@@ -29,17 +29,9 @@ File đầu ra: `main.pdf`.
 
 ## Trạng thái nộp bài
 
-PDF hiện build được và nội dung thực nghiệm đã được đối chiếu, nhưng
-**chưa sẵn sàng để nộp**. Repository chưa có nguồn đáng tin cậy cho:
+Nội dung, số liệu, bìa, phân công, kiến trúc, công thức, kết luận và phụ lục
+minh bạch AI đã được cập nhật. Phụ lục câu hỏi phản biện chưa được đưa vào PDF
+vì nhóm chưa nhận câu hỏi chính thức. Mã lớp được bỏ trống thay vì suy đoán.
 
-- mã lớp, giảng viên, họ tên và MSSV trên trang bìa;
-- thành viên, phân công và tỷ lệ đóng góp tại Phụ lục A;
-- câu hỏi phản biện và giải trình chính thức tại Phụ lục B.
-
-Source giữ comment đánh dấu các trường chờ người dùng cung cấp; PDF hiển thị
-`CHƯA CUNG CẤP` và đánh dấu rõ là bản chưa hoàn thiện. Không thay placeholder
-bằng dữ liệu suy đoán.
-
-TeX Live 2026 vẫn phát cảnh báo tổng quát yêu cầu chạy lại BibTeX dù đã chạy
-đủ chu kỳ với `backend=bibtex`. Audit PDF và source không phát hiện citation,
-label hoặc reference thiếu; giữ backend theo `uit-report.sty`.
+Trước khi nộp, nhóm chỉ cần điền mã lớp nếu giảng viên yêu cầu và kiểm tra lại
+PDF cuối sau khi biên dịch trên máy nộp bài.

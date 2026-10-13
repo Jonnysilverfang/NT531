@@ -1,0 +1,122 @@
+{
+  "title": "VPC Peering và Transit Gateway",
+  "subtitle": "Độ trễ mạng, chất lượng ứng dụng và hàng đợi",
+  "course": "NT531 · Đánh giá hiệu năng mạng máy tính",
+  "teacher": "Đặng Lê Bảo Chương",
+  "members": [
+    {"name": "Nguyễn Ngọc Minh", "student_id": "24521068"},
+    {"name": "Nguyễn Huy Nhật", "student_id": "24521253"},
+    {"name": "Nguyễn Trung Kiên", "student_id": "24520885"}
+  ],
+  "main_slides": 14,
+  "slides": [
+    {
+      "title": "VPC Peering và Transit Gateway",
+      "layout": "cover", "seconds": 25,
+      "script": "Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Huy Nhật và Nguyễn Trung Kiên. Đồ án đánh giá VPC Peering và Transit Gateway trên AWS, đồng thời xem khả năng phục vụ của ứng dụng ảnh hưởng thế nào đến chất lượng dịch vụ. Chúng em trình bày kiến trúc, kết quả đo và cách dùng định luật Little để giải thích hàng đợi.",
+      "sources": ["docs/34-bao-cao-tong-hop.md"]
+    },
+    {
+      "title": "Câu hỏi nghiên cứu",
+      "layout": "question", "seconds": 40,
+      "script": "Ban đầu nhóm muốn biết Peering hay Transit Gateway có hiệu năng tốt hơn. Nhưng một câu trả lời chung như vậy dễ bỏ qua ứng dụng. Vì vậy nhóm tách thành hai câu hỏi cụ thể. Thứ nhất, trên cùng cặp máy, RTT khác nhau bao nhiêu khi đổi đường mạng? Thứ hai, khi ứng dụng gần công suất phục vụ, giảm độ trễ mạng hay tăng khả năng xử lý sẽ cải thiện deadline rõ hơn? Hai câu hỏi dẫn đến hai nhóm thí nghiệm, đo mạng và can thiệp slots tại worker.",
+      "sources": ["docs/34-bao-cao-tong-hop.md", "docs/35-pham-vi-rut-gon-va-ket-luan.md"]
+    },
+    {
+      "title": "Kiến trúc mạng trên cùng bốn VPC",
+      "layout": "network", "seconds": 50,
+      "script": "Mỗi VPC có một EC2. Để bốn VPC liên lạc trực tiếp với nhau bằng Peering, nhóm tạo sáu kết nối cặp. Với Transit Gateway, bốn VPC gắn vào một hub bằng bốn attachment. Hai cách đều phục vụ cùng tập máy và cùng các chiều liên lạc. Khi đo, nhóm đổi đích route sang Peering hoặc TGW, không thay loại EC2. Lưu lượng đo dùng IP private. Elastic IP chỉ giúp nhóm SSH từ máy cá nhân, nên không nằm trên đường truyền benchmark.",
+      "sources": ["infra/terraform/full-mesh.tf", "infra/terraform/transit-gateway.tf", "https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html", "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html"]
+    },
+    {
+      "title": "Ứng dụng gọi hai worker song song",
+      "layout": "application", "seconds": 50,
+      "script": "Máy A tạo tải theo lịch và gửi HTTP đến gateway B. B gọi C và D song song, chờ cả hai kết quả rồi trả về A. Mỗi worker có hàng đợi trước một bộ slots. Một slot cho phép một lời gọi đang phục vụ, không phải một vCPU. Phần phục vụ mô phỏng chờ I/O mười mili giây và trả bốn KiB. Ở mức tám trăm yêu cầu mỗi giây tại A, mỗi worker nhận khoảng tám trăm lời gọi mỗi giây. Tổng C và D mới là một nghìn sáu trăm, không được nhầm thành tải trên từng worker.",
+      "sources": ["experiments/application-qos/app.py", "results/application-slots-confirmation-v1/protocol.json"]
+    },
+    {
+      "title": "Thiết kế và dữ liệu đã chốt",
+      "layout": "design", "seconds": 50,
+      "script": "Nhóm giữ cùng loại c6i.large, cùng Availability Zone us-east-1a và MTU một nghìn năm trăm. Đợt RTT có năm block, mỗi block chứa cả hai mode và mỗi mode có ba lượt, mỗi lượt một trăm gói. Đợt ứng dụng có ba block. Mỗi block thử đủ hai đường mạng, hai mức slots và hai mức tải, tức tám điều kiện. Nhóm đổi thứ tự các điều kiện theo lịch đã khóa. Kế hoạch xác nhận ban đầu là mười sáu block nhưng đã rút gọn vì ngân sách. Vì vậy kết quả hôm nay là thống kê mô tả, không trình bày p-value xác nhận.",
+      "sources": ["results/confirmation-rtt-v1/protocol.json", "results/application-slots-confirmation-v1/protocol.json", "results/study-scope-decision-20261013.json"]
+    },
+    {
+      "title": "Chỉ số gắn với chất lượng dịch vụ",
+      "layout": "metrics", "seconds": 55,
+      "script": "RTT là thời gian gói đi đến đích và phản hồi về máy gửi, đơn vị mili giây. Với ứng dụng, nhóm dùng P95 để nhìn các yêu cầu chậm, thay vì chỉ nhìn trung bình. Nhóm sắp độ trễ tăng dần và lấy vị trí làm tròn lên của không phẩy chín mươi lăm nhân số mẫu. SLI đúng hạn là số yêu cầu thành công trong năm mươi mili giây chia toàn bộ yêu cầu theo lịch. Năm mươi mili giây là ngưỡng thí nghiệm của nhóm. Yêu cầu HTTP thành công nhưng trả chậm vẫn không đạt deadline. P95 chỉ dùng các yêu cầu hoàn thành thành công, còn mẫu số SLI vẫn gồm cả lỗi và trễ.",
+      "sources": ["docs/36-cong-thuc-bam-bai-giang.md", "NT531 - Internet Performance, QoS and Cloud-Native Metrics.pdf, trang PDF 4, 26, 41–42"]
+    },
+    {
+      "title": "RTT Peering thấp hơn trong cả 5 block",
+      "layout": "rtt", "seconds": 50,
+      "script": "Biểu đồ cho thấy RTT trung bình của hai mode trong từng block. Để so sánh, nhóm lấy TGW trừ Peering trong cùng block. Cả năm chênh lệch đều dương, với trung bình khoảng không phẩy ba một hai mili giây và khoảng từng block từ không phẩy hai ba không đến không phẩy bốn hai sáu. Không ghi nhận thiếu phản hồi trong ba nghìn probe được phân tích. Kết luận là Peering có RTT thấp hơn trong cấu hình và những block này. Nhóm không gọi phần chênh lệch là thời gian xử lý nội bộ của TGW, vì RTT còn gồm endpoint và toàn bộ đường đi.",
+      "sources": ["results/confirmation-rtt-v1/analysis.json"]
+    },
+    {
+      "title": "16 slots cải thiện rõ tỷ lệ đúng hạn",
+      "layout": "deadline", "seconds": 55,
+      "script": "Đây là kết quả tại tám trăm yêu cầu mỗi giây, tổng hợp ba block. Khi chỉ có tám slots, tỷ lệ đúng hạn khoảng ba phẩy không bốn phần trăm qua Peering và ba phẩy hai bảy phần trăm qua TGW. Khi tăng lên mười sáu slots, cả hai mode đạt đủ ba mươi sáu nghìn yêu cầu đúng hạn trên ba mươi sáu nghìn yêu cầu theo lịch. Hiệu ứng tăng slots, tính trong cùng block và mode rồi trung bình, là chín mươi sáu phẩy tám bốn điểm phần trăm. Đây là điểm phần trăm, không phải phần trăm tăng tốc. Một trăm phần trăm trong cửa sổ đo cũng không bảo đảm mọi phiên tương lai đều như vậy.",
+      "sources": ["results/analysis/reduced-study-summary.json", "results/application-slots-confirmation-v1/analysis.json"]
+    },
+    {
+      "title": "P95 cho thấy độ trễ tăng mạnh ở 8 slots",
+      "layout": "p95", "seconds": 40,
+      "script": "Bảng này bổ sung ý nghĩa cho tỷ lệ deadline. Qua Peering, tám slots có P95 khoảng một phẩy ba năm đến một phẩy năm giây, còn mười sáu slots chỉ khoảng mười hai phẩy bảy mili giây. TGW có cùng hiện tượng tăng mạnh ở tám slots và giảm về khoảng mười ba mili giây ở mười sáu slots. Các khoảng là giá trị nhỏ nhất và lớn nhất của P95 từng block, không phải khoảng tin cậy. Tại sáu trăm yêu cầu mỗi giây, cả bốn điều kiện đều đạt một trăm phần trăm đúng hạn trong dữ liệu đã đo.",
+      "sources": ["results/analysis/reduced-study-summary.json"]
+    },
+    {
+      "title": "Định luật Little giải thích số lời gọi chờ",
+      "layout": "little", "seconds": 65,
+      "script": "Định luật Little trong bài giảng liên hệ số công việc trung bình, tốc độ và thời gian. Với phần hàng đợi, nhóm viết L q bằng lambda nhân W q. L q là số lời gọi chờ trung bình, lambda là lời gọi mỗi giây và W q là thời gian chờ trung bình tính bằng giây. Ví dụ worker C, Peering, tám slots, block ba: bảy trăm ba mươi hai phẩy hai tám bảy nhân không phẩy bảy không không chín năm một cho khoảng năm trăm mười ba phẩy hai chín bảy lời gọi chờ. Tốc độ này tính trên cửa sổ chứa trọn nhóm lời gọi và đuôi xử lý, nên khác tám trăm cấu hình. Hai vế cùng lấy từ log để kiểm tra nhất quán, không phải một kiểm định thống kê độc lập.",
+      "sources": ["results/analysis/queue-occupancy-audit.json", "docs/36-cong-thuc-bam-bai-giang.md", "NT531 - Lecture 02 - Arrival Processes and Queuing Systems.pdf, trang PDF 62–66"]
+    },
+    {
+      "title": "8 slots gần công suất phục vụ danh nghĩa",
+      "layout": "capacity", "seconds": 45,
+      "script": "Nhóm dùng một ước lượng đơn giản để đọc cơ chế. Nếu M slots và mỗi lời gọi giữ slot s giây, công suất danh nghĩa là M chia s. Với tám slots và mười mili giây, công suất là tám trăm lời gọi mỗi giây. Tải tám trăm vì thế gần công suất danh nghĩa, ít dư địa cho overhead. Mười sáu slots cho công suất danh nghĩa một nghìn sáu trăm, tức mức tải chỉ bằng một nửa. Đây là mô hình slots và I/O giả lập, không phải giới hạn AWS, không phải phần trăm CPU, và nhóm không giả định traffic Poisson để dùng công thức M/M/1.",
+      "sources": ["docs/36-cong-thuc-bam-bai-giang.md", "NT531 - Lecture 02 - Arrival Processes and Queuing Systems.pdf, trang PDF 3, 66"]
+    },
+    {
+      "title": "OpenTelemetry theo dõi một yêu cầu",
+      "layout": "trace", "seconds": 45,
+      "script": "Nhóm giữ trace của hai phiên smoke thật, tổng cộng mười hai trace và một trăm hai mươi span. Collector nhận trace, Tempo lưu và Grafana hiển thị. Ảnh cho thấy một yêu cầu có mười span, tổng khoảng mười hai phẩy ba mili giây. Hai nhánh gọi C và D chồng thời gian nhau, thể hiện chạy song song. Worker queue khoảng mười ba đến mười bốn micro giây trong yêu cầu tải nhẹ này. Đây là trace nhập lại giữ nguyên ID và thời gian, không phải trace của phiên tám trăm rps. Log của thí nghiệm chính mới giải thích backlog khi tải, còn trace giúp hiểu luồng dịch vụ.",
+      "sources": ["docs/images/application/grafana-demo/ui-verification.json", "results/observability-demo/current-demo.json", "NT531 - Internet Performance, QoS and Cloud-Native Metrics.pdf, trang PDF 31, 34, 39"]
+    },
+    {
+      "title": "Lựa chọn mạng và phạm vi kết luận",
+      "layout": "choice", "seconds": 55,
+      "script": "Hai phương án có ưu điểm ở những khía cạnh khác nhau. Trong phép đo của nhóm, Peering có RTT thấp hơn. Với topology cần kết nối nhiều VPC, TGW cung cấp hub và quản lý định tuyến tập trung, nhưng nhóm chưa đo công sức quản trị để lượng hóa lợi ích đó. Với bốn VPC, Peering full mesh cần sáu kết nối, TGW cần bốn attachment. Kết quả ứng dụng cho thấy ở tám trăm rps, đổi đường mạng vẫn không giải quyết deadline thấp khi worker có tám slots. Tăng khả năng phục vụ mới tạo cải thiện lớn trong workload này. Kết luận có cấu hình và điều kiện rõ ràng, không suy thành một phương án thắng mọi hệ thống.",
+      "sources": ["docs/35-pham-vi-rut-gon-va-ket-luan.md", "https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html", "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html"]
+    },
+    {
+      "title": "Kết luận và minh chứng demo",
+      "layout": "closing", "seconds": 35,
+      "script": "Đóng góp của nhóm là một quy trình so sánh trên cùng hạ tầng, có can thiệp slots để làm rõ điểm nghẽn ứng dụng, và có log hàng đợi kiểm tra bằng Little. Raw, code, số liệu tổng hợp và các bước demo đã lưu trong repository. Trong video, nhóm sẽ cho thấy bốn máy, route hoặc kết quả đo đã lưu, rồi mở một trace trên Grafana. Dữ liệu lịch sử được ghi rõ là kết quả đã đo. Nhóm không cần đo lại toàn bộ chỉ để quay màn hình. Em cảm ơn thầy và xin nhận câu hỏi.",
+      "sources": ["docs/34-bao-cao-tong-hop.md", "docs/37-quay-video-va-grafana.md", "https://github.com/Jonnysilverfang/NT531/tree/minh-work"]
+    },
+    {
+      "title": "Phụ lục · TCP và fan-in lịch sử",
+      "layout": "historical", "seconds": 0,
+      "script": "Nếu thầy hỏi phần TCP: mỗi bộ lịch sử có năm lượt. TCP một luồng phía nhận trung bình khoảng bốn phẩy bảy tám ba Gbps qua Peering và bốn phẩy sáu không tám qua TGW. Tổng fan-in ba nguồn về B khoảng mười một phẩy sáu một một và mười một phẩy năm chín một Gbps, là tổng xấp xỉ các trung bình luồng. Hai cặp độc lập dùng để quan sát tổng hoạt động đồng thời, không tạo chung một receiver. Fan-in dùng chung B nên phù hợp hơn để xem chia sẻ endpoint. Bộ đếm ENA phải đọc chênh trước và sau, không đọc giá trị tích lũy thành số lỗi của một lượt. Không gộp cohort lịch sử này vào đợt RTT mới.",
+      "sources": ["results/analysis/report-metrics.json", "results/analysis/fanin-common-window-audit.json"]
+    },
+    {
+      "title": "Phụ lục · Đủ 8 điều kiện ứng dụng",
+      "layout": "all_conditions", "seconds": 0,
+      "script": "Bảng có đầy đủ hai mode, hai mức slots và hai mức tải. Sáu trăm rps có hai mươi bảy nghìn yêu cầu mỗi điều kiện qua ba block. Tám trăm rps có ba mươi sáu nghìn. Tổng tất cả điều kiện là hai trăm năm mươi hai nghìn yêu cầu theo lịch. Không có lỗi HTTP/JSON được ghi nhận, nhưng nhiều yêu cầu ở tám slots, tám trăm rps hoàn thành quá deadline. Số request lớn không biến thành số block độc lập lớn. Đơn vị lặp để so sánh điều kiện vẫn là block.",
+      "sources": ["results/analysis/reduced-study-summary.json"]
+    },
+    {
+      "title": "Phụ lục · Câu hỏi thường gặp",
+      "layout": "faq", "seconds": 0,
+      "script": "Nếu hỏi vì sao không kiểm định với hàng trăm nghìn request: các request cùng một phiên chia sẻ tài nguyên và phụ thuộc nhau, nên không coi tất cả là lần lặp độc lập. Nếu hỏi một trăm phần trăm đúng hạn có chắc chắn không: đó là tần suất trong cửa sổ đã quan sát. Nếu hỏi Little có chứng minh hệ thống Poisson không: không, quan hệ hữu hạn của cohort đầy đủ không cần giả định đó. Nếu hỏi có chứng minh giới hạn TGW không: không, nhóm chỉ quan sát hiệu năng end-to-end và hàng đợi ứng dụng. Nếu hỏi Grafana CPU: hostmetrics EC2 chưa triển khai, CPU nghiên cứu lấy từ mpstat, không diễn giải dashboard trống thành CPU bằng không.",
+      "sources": ["docs/35-pham-vi-rut-gon-va-ket-luan.md", "docs/36-cong-thuc-bam-bai-giang.md", "docs/37-quay-video-va-grafana.md"]
+    },
+    {
+      "title": "Phụ lục · Nguồn và liên hệ bài giảng",
+      "layout": "sources", "seconds": 0,
+      "script": "Nguồn chính gồm hai bài giảng giảng viên cung cấp, tài liệu chính thức AWS và raw do nhóm thu. Little liên hệ trang PDF sáu mươi hai đến sáu mươi sáu của bài Arrival Processes. SLI, trace và phân vị liên hệ bài Internet Performance tại các trang được ghi trên slide. Thuật toán nearest rank là lựa chọn triển khai của nhóm. Nhóm chưa có slide Xác suất thống kê UIT để tự gán chương học cho các kiểm định nâng cao. Phần AI hỗ trợ và phân công thực tế cần nhóm khai đúng yêu cầu môn học.",
+      "sources": ["docs/36-cong-thuc-bam-bai-giang.md", "https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html", "https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html", "https://github.com/Jonnysilverfang/NT531/tree/minh-work"]
+    }
+  ]
+}

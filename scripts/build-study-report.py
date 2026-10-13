@@ -47,6 +47,14 @@ def main():
     for source in fanin['sources'] + fanin['figures']:
         assert sha(ROOT / source['path']) == source['sha256']
     paths.append(fanin_path)
+    teaching_paths = ['docs/36-cong-thuc-bam-bai-giang.md', 'docs/37-quay-video-va-grafana.md',
+                      'results/observability-demo/current-demo.json']
+    if all((ROOT / p).exists() for p in teaching_paths):
+        paths.extend(teaching_paths)
+        demo = read(ROOT / teaching_paths[-1])
+        assert demo['runtime_verified'] and demo['unique_spans_verified'] == 120
+        for source in demo['sources']:
+            assert sha(ROOT / source['path']) == source['sha256']
     assert sha(ROOT / paths[0]) == 'c8537ae84c0bf528b12a65edb53fc06dd4132e0966a3a6db1bfc4577ba42d94d'
     assert not rtt['issues'] and not slots['issues']
     for source in historical['sources'] + rtt['sources']:
@@ -349,6 +357,13 @@ Grafana bằng replay 12 traces thật/120 spans; không tuyên bố OTLP live
 hoặc hostmetrics EC2 đã triển khai. Tracing đầy đủ tắt trong primary.
 Thêm công cụ không thay thiết kế lấy mẫu hay kiểm định.
 
+Để bảo vệ, ưu tiên [công thức bám bài giảng và ví dụ thật](36-cong-thuc-bam-bai-giang.md):
+Little ở Arrival trang 62–66, P95 ở QoS trang 41–42, SLI ở trang 26.
+Phần tích phân và kế hoạch kiểm định 16 block được giữ trong phụ lục,
+không trình bày như kết quả kiểm định đã hoàn thành. [Hướng dẫn video và Grafana](37-quay-video-va-grafana.md)
+có kịch bản 4–5 phút. Dashboard `nt531-study-demo` phân biệt bảng kết quả đã chốt
+với trace smoke nhập lại; trace smoke không phải trace của điều kiện tải 800 rps.
+
 ## Tái tạo và việc còn lại
 
 Nguồn tổng hợp: [metrics lịch sử](../results/analysis/report-metrics.json),
@@ -393,7 +408,9 @@ cáo này không khai thay tác giả hoặc việc nhóm chưa làm.
         report=report.replace('## Thiết kế xác nhận được khóa trước khi đo','## Thiết kế xác nhận ban đầu được khóa trước khi đo',1)
         start=report.index('Hoàn tất các block còn lại theo protocol,')
         end=report.index('Lịch tự tiếp tục,',start)
-        report=report[:start]+'Theo phạm vi mới, chỉ chốt phiên cuối đang xếp, kiểm chứng raw và tổng hợp báo cáo/Word một lần. Không thu các block còn lại hoặc RTT khi tải. Sao lưu và dừng workload; người dùng tự dừng EC2.\n\n'+report[end:]
+        report=report[:start]+'Dữ liệu đã chốt ở 5 block RTT/3 block ứng dụng. Không thu các block còn lại hoặc RTT khi tải. Raw, bảng thống kê và phụ lục Word đã kiểm tra; bước tiếp theo là hoàn thiện bản nộp, slide và video demo. Người dùng tự dừng EC2 theo lựa chọn cuối phiên.\n\n'+report[end:]
+        report=report.replace('Lịch tự tiếp tục, giới hạn ngày và trạng thái hiện hành ở',
+                              'Lịch đo tự động đã xóa; trạng thái hiện hành ở')
     out.write_text(report, encoding='utf-8')
     proof = dict(created_local=now.isoformat(), report_sha256=sha(out),
                  rtt_blocks=rtt['completed_blocks'], slots_blocks=slots['completed_blocks'],

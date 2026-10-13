@@ -22,7 +22,9 @@ panels = [{
         "Host metrics every 10 seconds. Use this dashboard to explain CPU and network load. "
         "RTT, TCP goodput and ENA allowance events remain in the raw experiment files. "
         "No data means no agent is reporting; it does not mean zero CPU or zero traffic. "
-        "Keep collectors stopped during all 16 confirmatory RTT blocks."},
+        "Hostmetrics agents have not been installed on EC2. The primary study is closed at "
+        "5 RTT blocks and 3 application blocks for budget. Use the NT531 study demo dashboard "
+        "for saved results and traces; do not read empty panels as zero activity."},
 }]
 panels.append(panel(2, "CPU busy by logical CPU",
     '100 * (1 - sum by (nt531_node, nt531_mode, cpu) '

@@ -1,6 +1,6 @@
 # Đánh giá VPC Peering và Transit Gateway từ RTT đến chất lượng ứng dụng
 
-Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 18:32 giờ Việt Nam.
+Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 19:12 giờ Việt Nam.
 Các bảng được tạo từ analysis và đối chiếu SHA với file nguồn; không dùng
 ảnh chụp để thay raw. Báo cáo này ghép phần đã thực hiện; kết luận suy diễn
 chỉ xuất hiện sau khi analyzer xác nhận đủ thiết kế.
@@ -296,6 +296,13 @@ Grafana bằng replay 12 traces thật/120 spans; không tuyên bố OTLP live
 hoặc hostmetrics EC2 đã triển khai. Tracing đầy đủ tắt trong primary.
 Thêm công cụ không thay thiết kế lấy mẫu hay kiểm định.
 
+Để bảo vệ, ưu tiên [công thức bám bài giảng và ví dụ thật](36-cong-thuc-bam-bai-giang.md):
+Little ở Arrival trang 62–66, P95 ở QoS trang 41–42, SLI ở trang 26.
+Phần tích phân và kế hoạch kiểm định 16 block được giữ trong phụ lục,
+không trình bày như kết quả kiểm định đã hoàn thành. [Hướng dẫn video và Grafana](37-quay-video-va-grafana.md)
+có kịch bản 4–5 phút. Dashboard `nt531-study-demo` phân biệt bảng kết quả đã chốt
+với trace smoke nhập lại; trace smoke không phải trace của điều kiện tải 800 rps.
+
 ## Tái tạo và việc còn lại
 
 Nguồn tổng hợp: [metrics lịch sử](../results/analysis/report-metrics.json),
@@ -312,9 +319,9 @@ tmp/application-venv/Scripts/python.exe scripts/plot-fanin-history.py
 py scripts/build-study-report.py
 ```
 
-Theo phạm vi mới, chỉ chốt phiên cuối đang xếp, kiểm chứng raw và tổng hợp báo cáo/Word một lần. Không thu các block còn lại hoặc RTT khi tải. Sao lưu và dừng workload; người dùng tự dừng EC2.
+Dữ liệu đã chốt ở 5 block RTT/3 block ứng dụng. Không thu các block còn lại hoặc RTT khi tải. Raw, bảng thống kê và phụ lục Word đã kiểm tra; bước tiếp theo là hoàn thiện bản nộp, slide và video demo. Người dùng tự dừng EC2 theo lựa chọn cuối phiên.
 
-Lịch tự tiếp tục, giới hạn ngày và trạng thái hiện hành ở
+Lịch đo tự động đã xóa; trạng thái hiện hành ở
 [tài liệu 32](32-trang-thai-xac-nhan.md). Phần code/raw đã rà soát công bố
 trên nhánh minh-work; state, credentials, SSH key và ZIP riêng không công bố.
 

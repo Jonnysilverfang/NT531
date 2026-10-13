@@ -18,6 +18,8 @@ Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
 
 ## Đọc theo thứ tự
 
+Để chuẩn bị bảo vệ, đọc [công thức bám slide và ví dụ từ log](docs/36-cong-thuc-bam-bai-giang.md) và [kịch bản quay video, mở Grafana](docs/37-quay-video-va-grafana.md). Dashboard local [NT531: kết quả và công thức](http://localhost:3000/d/nt531-study-demo) có bảng dữ liệu đã chốt và trace thật đã lưu; [hướng dẫn bật/replay](monitoring/README.md). Phần Little, phân vị và SLI liên hệ trực tiếp bài giảng. Kiểm định 16 block chưa hoàn thành và phần chứng minh dài để phụ lục.
+
 Đọc [báo cáo tổng hợp hiện hành](docs/34-bao-cao-tong-hop.md) để xem kiến trúc,
 kịch bản, công thức, kết quả theo block và phạm vi kết luận trong một tài liệu.
 [Trạng thái xác nhận](docs/32-trang-thai-xac-nhan.md) ghi số block đã kiểm tra
@@ -61,9 +63,11 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 24. [Kết quả engineering: can thiệp slots, chờ hàng đợi và deadline](docs/29-ket-qua-engineering-slots.md).
 25. [Bằng chứng, tiêu chí hoàn thành và cách kết luận thống kê](docs/30-bang-chung-va-tieu-chi-hoan-thanh.md).
 26. [Phụ lục Word có công thức và bằng chứng xác nhận đã kiểm tra từng trang](docs/31-phu-luc-bang-chung-thong-ke.docx).
-27. [Trạng thái xác nhận, số block còn thiếu và lịch tự tiếp tục](docs/32-trang-thai-xac-nhan.md).
+27. [Trạng thái dữ liệu đã chốt và lịch đo đã kết thúc](docs/32-trang-thai-xac-nhan.md).
 28. [Hàng đợi ứng dụng, chứng minh công thức Little trong cửa sổ hữu hạn và thế số từ raw](docs/33-hang-doi-va-dinh-luat-little.md).
 29. [Báo cáo tổng hợp kiến trúc, kịch bản, kết quả và thiết kế thống kê từ nguồn đã kiểm tra](docs/34-bao-cao-tong-hop.md).
+30. [Công thức dễ thuyết trình, đối chiếu slide, ký hiệu và thế số thật](docs/36-cong-thuc-bam-bai-giang.md).
+31. [Video demo 4–5 phút và cách đọc trace trên Grafana](docs/37-quay-video-va-grafana.md).
 
 Snapshot buổi trưa 13/10: RTT có **3/16 block hợp lệ trên hai ngày**; block 3 có
 Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.

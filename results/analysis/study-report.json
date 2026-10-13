@@ -1,6 +1,6 @@
 {
-  "created_local": "2026-10-13T18:32:37.384599+07:00",
-  "report_sha256": "72c21f20180fb3f3a06912023d675eef04883bf15ff1cfc294deeaf3722517c3",
+  "created_local": "2026-10-13T19:12:48.932449+07:00",
+  "report_sha256": "6c6190309dd6d63e168804829ebdecd32f3fa14b4bcdc46698476c61634833a5",
   "rtt_blocks": 5,
   "slots_blocks": 3,
   "raw_source_hash_checks": 525,
@@ -29,6 +29,18 @@
     {
       "path": "results/analysis/fanin-sender-interval-figures.json",
       "sha256": "8f7cdbea67244c0c0b611ff40cce4cea9f750588baf4edf935b91919119f3ac7"
+    },
+    {
+      "path": "docs/36-cong-thuc-bam-bai-giang.md",
+      "sha256": "08dd9daeb0f92f103e6b361211be9c47b902bee325c1012b2cabeb9b0e1b9fe4"
+    },
+    {
+      "path": "docs/37-quay-video-va-grafana.md",
+      "sha256": "8f8632f110f88efd9a10e1beda059188bfd42e4473b80f070dec3f86bc93ae01"
+    },
+    {
+      "path": "results/observability-demo/current-demo.json",
+      "sha256": "f5c7fc1d318d6418daa61aa116b9e3fdea6c85fe28d05f02b943862cf3e2cde4"
     }
   ]
 }

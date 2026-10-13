@@ -1,5 +1,7 @@
 # Đối chiếu đồ án Peering TGW với bài giảng NT531
 
+**Cập nhật cuối ngày 13/10:** thu dữ liệu đã kết thúc ở 5 block RTT/3 block slots do ngân sách. Những mục đo tiếp/16 block bên dưới là kế hoạch lịch sử, không phải việc còn phải chạy. Xem [phạm vi đã chốt](35-pham-vi-rut-gon-va-ket-luan.md), [công thức dễ giải thích và trang slide](36-cong-thuc-bam-bai-giang.md), [demo Grafana/video](37-quay-video-va-grafana.md). Pipeline trace local đã kiểm tra runtime; hostmetrics EC2 chưa triển khai.
+
 Ngày đối chiếu ban đầu: 06/10/2026. Cập nhật 12/10 sau khi khôi phục hạ tầng và hoàn tất block RTT xác nhận đầu tiên.
 
 ## Kết luận về mô hình và công cụ

@@ -1,11 +1,36 @@
 # NT531: OpenTelemetry, Prometheus và Grafana
 
+## Mở demo kết quả đã chốt
+
+Ngày 13/10 đã bổ sung dashboard `nt531-study-demo`: bảng kết quả thật từ 5 block RTT/3 block ứng dụng, công thức Little thế số từ log và danh sách trace smoke. Đây là snapshot dữ liệu đã chốt, không phải metric live. [Công thức bám slide](../docs/36-cong-thuc-bam-bai-giang.md) và [kịch bản video](../docs/37-quay-video-va-grafana.md) giải thích cách trình bày.
+
+```powershell
+docker compose -f monitoring/compose.yaml up -d
+& 'C:/Users/MSI/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 monitoring/prepare-demo.py --replay
+```
+
+Mở [NT531: kết quả và công thức](http://localhost:3000/d/nt531-study-demo), user `nt531`, mật khẩu riêng trong `.env`. Script kiểm tra 12 trace/120 span thật qua Grafana proxy, giữ nguyên timestamp/ID, dùng khoảng thời gian gốc và ghi [bằng chứng runtime riêng](../results/observability-demo/current-demo.json). Không ghi lại kết quả smoke gốc, không gọi AWS hay thu block mới. Chỉ tuyên bố pipeline hoạt động khi `runtime_verified=true` trong bằng chứng.
+
+### Hai nhánh quan sát và mức triển khai
+
+```mermaid
+flowchart LR
+    R["JSONL span thật đã lưu từ A/B/C/D"] -->|"replay giữ timestamp/ID"| C["Collector local"]
+    C --> T["Tempo"] --> G["Grafana · trace đã kiểm tra"]
+    S["Snapshot kết quả đã chốt"] --> D["Dashboard kết quả/công thức"]
+    D --> G
+    A["Hostmetrics EC2 · chưa triển khai"] -. "tunnel OTLP dự kiến" .-> C
+    C -. "metrics · chưa có nguồn EC2" .-> P["Prometheus"] -.-> G
+```
+
+Trace smoke tải nhẹ minh họa parent/child và lời gọi song song; không phải trace của block tải 800 rps. C/D có cùng `service.name=nt531-worker`, phân biệt bằng `service.instance.id`. Bảng kết quả/độ dài hàng đợi trên dashboard lấy từ raw của block chính, không suy ra chúng từ smoke. Hướng dẫn agent bên dưới là phương án demo tùy chọn chưa triển khai.
+
 Đây là bộ cấu hình cho **phiên demo observability riêng**. Chưa bật hostmetrics agent trên
 EC2. Phiên trace ứng dụng được tách khỏi phép đo so sánh; tất cả server/agent
 phải tắt trước mỗi block RTT xác nhận. Dashboard giúp giải thích tài nguyên endpoint; sức mạnh
 thống kê đến từ thiết kế lấy mẫu, effect size và độ bất định của số đo.
 
-## Kiến trúc
+## Kiến trúc hostmetrics dự kiến · chưa triển khai agent EC2
 
 ```mermaid
 flowchart LR
@@ -26,7 +51,7 @@ Stack dùng phiên bản cố định: Collector 0.135.0, Prometheus 3.5.0, Graf
 ## Traces ứng dụng A → B → C/D
 
 Collector có thêm pipeline traces → Tempo → Grafana datasource `NT531 traces`.
-Tempo lưu 24 giờ trên named volume local. Cổng 3200 chỉ bind localhost.
+Tempo lưu 30 ngày (720 giờ) trên named volume local để giữ trace gốc ngày 12/10 tới buổi báo cáo 26/10. Cổng 3200 chỉ bind localhost.
 Các trace thật từ phiên smoke được lưu JSONL bốn EC2; có thể nhập lại:
 
 ```powershell
@@ -154,7 +179,7 @@ qua Grafana datasource và tìm đủ 12 traces. Xem
 [bằng chứng kiểm tra](../results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/observability-validation.json).
 Script `experiments/application-qos/verify_observability.py` tái kiểm tra
 đường proxy mà dashboard sử dụng; đây là replay trace đã lưu, không phải
-OTLP live từ EC2. Tempo giữ dữ liệu 24 giờ; raw JSONL vẫn nằm trong repo
+OTLP live từ EC2. Tempo hiện giữ dữ liệu 30 ngày; raw JSONL vẫn nằm trong repo
 để nhập lại khi demo. Máy hiện dùng Prometheus local port 19090 vì 9090
 đã có dịch vụ khác; cấu hình `.env` local không công bố.
 

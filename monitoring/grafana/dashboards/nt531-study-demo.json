@@ -1,0 +1,93 @@
+{
+  "uid": "nt531-study-demo",
+  "title": "NT531 · Kết quả và công thức trong bài giảng",
+  "schemaVersion": 41,
+  "version": 1,
+  "tags": [
+    "NT531",
+    "teaching-demo",
+    "saved-results"
+  ],
+  "timezone": "utc",
+  "refresh": "",
+  "editable": false,
+  "time": {
+    "from": "2026-10-12T15:23:06+00:00",
+    "to": "2026-10-12T15:37:38+00:00"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "Demo NT531 · kết quả và hành trình yêu cầu",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 5
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**A tạo yêu cầu → B gọi C và D song song → trả kết quả về A.**\n\nBảng bên dưới là kết quả đã chốt; trace là từ hai phiên smoke thật, nhập lại giữ nguyên thời gian/ID. Smoke minh họa luồng gọi, không chứng minh hàng đợi khi tải 800 rps. Hostmetrics EC2 chưa bật.\n\nĐối chiếu slide: QoS trang 26 (SLI), 34 (trace), 39 (stack), 41–42 (phân vị). Tracing đã tắt trong phép đo chính."
+      }
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "title": "800 yêu cầu/s · hiệu ứng mạng và khả năng phục vụ",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 24,
+        "h": 12
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "| Đường mạng | Slots | Đúng hạn / theo lịch | Đúng hạn ≤ 50 ms | P95 từng block (ms) |\n|---|---:|---:|---:|---:|\n| peering | 8 | 1,096 / 36,000 | 3.044% | 1350.096–1499.226 |\n| peering | 16 | 36,000 / 36,000 | 100.000% | 12.651–12.698 |\n| tgw | 8 | 1,178 / 36,000 | 3.272% | 1225.784–1327.874 |\n| tgw | 16 | 36,000 / 36,000 | 100.000% | 12.875–13.248 |\n\nRTT: **5 block**, TGW − Peering trung bình **0.3119 ms**.\nỨng dụng: **3 block**; 8 → 16 slots tại 800 rps tăng đúng hạn trung bình **96.8417 điểm phần trăm** qua hai mode.\n\n**Snapshot từ raw đã chốt; không phải số liệu live.** Khoảng P95 là min–max giữa các block, không phải khoảng tin cậy hay P95 gộp. Thiết kế 16 block đã rút gọn vì ngân sách; kết luận mô tả trong cấu hình thử nghiệm, không có p-value xác nhận."
+      }
+    },
+    {
+      "id": 3,
+      "type": "text",
+      "title": "Little · thế số từ log đã đo",
+      "gridPos": {
+        "x": 0,
+        "y": 17,
+        "w": 24,
+        "h": 7
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Lq = λ × Wq** — Arrival Processes and Queuing Systems, trang 62–66.\n\nLq: số lời gọi chờ trung bình; λ: lời gọi/s; Wq: thời gian chờ trung bình, giây.\n\nWorker C, Peering, 8 slots, cấu hình 800 rps, block 3: **732.287 × 0.700951 = 513.297 lời gọi chờ**.\n\nCửa sổ gồm toàn bộ đuôi xử lý của cùng nhóm request ID trên một worker. λ tính từ số lời gọi / thời lượng cửa sổ đó, khác 800 rps cấu hình. Đây là quan hệ kiểm tra sổ ghi hàng đợi ứng dụng; không đo hàng đợi TGW, không cần giả định Poisson và không dùng P95 thay cho Wq."
+      }
+    },
+    {
+      "id": 4,
+      "type": "table",
+      "title": "12 trace thật · chọn Trace ID để xem 10 span",
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 24,
+        "h": 11
+      },
+      "datasource": {
+        "type": "tempo",
+        "uid": "nt531-tempo"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "queryType": "traceql",
+          "query": "{ resource.service.name = \"nt531-load\" }",
+          "limit": 20,
+          "tableType": "traces",
+          "filters": []
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    }
+  ]
+}

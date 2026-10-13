@@ -11,7 +11,9 @@ ingester:
   max_block_duration: 5m
 compactor:
   compaction:
-    block_retention: 24h
+    # Preserve the October 12 smoke timestamps through the October 26 seminar.
+    # Local demo data only; replay never re-dates the original AWS spans.
+    block_retention: 720h
 storage:
   trace:
     backend: local

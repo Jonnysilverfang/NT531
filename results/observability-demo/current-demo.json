@@ -1,0 +1,122 @@
+{
+  "created_utc": "2026-10-13T12:12:10.588210+00:00",
+  "no_AWS_calls": true,
+  "traces_in_saved_sources": 12,
+  "spans_in_saved_sources": 120,
+  "trace_window_utc": {
+    "start": 1791818586,
+    "end": 1791819458
+  },
+  "dashboard_url": "http://localhost:3000/d/nt531-study-demo?from=1791818586000&to=1791819458000",
+  "sources": [
+    {
+      "path": "results/analysis/reduced-study-summary.json",
+      "sha256": "b00f4207a868394a67d9e9bce63d122e1cf70a3b10ccc6515581ad3a87e99d33"
+    },
+    {
+      "path": "results/analysis/queue-occupancy-audit.json",
+      "sha256": "bed2c80e42275504e1aab605ae3dcacdf1df364f10508c32adc19553de613301"
+    },
+    {
+      "path": "monitoring/compose.yaml",
+      "sha256": "9d01e77a405525d75815eb0e06b234af8db895fbe231207ec5168906cfe592d8"
+    },
+    {
+      "path": "monitoring/tempo.yaml",
+      "sha256": "18841394c620e35e961ced5e99b3d4e9ee8ded795ee38e36bd43651566f89858"
+    },
+    {
+      "path": "monitoring/collector-gateway.yaml",
+      "sha256": "968e5b7dd872b04dc69841535f672f49d362db80d06c9676c621119cb4e969ef"
+    },
+    {
+      "path": "monitoring/grafana/provisioning/datasources/tempo.yaml",
+      "sha256": "25aa745aa8b591aa71324a8d75664963d6458d3b84b3009c1acdb43fcacc2eea"
+    },
+    {
+      "path": "experiments/application-qos/replay_traces.py",
+      "sha256": "707bfafc87b06dc98454191bde6ab2e9d93deae3a587275cd3bcbc9b731ceaf5"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/analysis.json",
+      "sha256": "40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/analysis.json",
+      "sha256": "8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2"
+    },
+    {
+      "path": "results/application-qos-pilot-v1/ad93e8d202154733a165eee896fd5e50/trace-smoke/a.jsonl",
+      "sha256": "d54bd7bf80d17ee88e1c47d9cd23c5c2eaf72b228b97f9574f08f90119e01cc5"
+    },
+    {
+      "path": "results/application-qos-pilot-v1/ad93e8d202154733a165eee896fd5e50/trace-smoke/b.jsonl",
+      "sha256": "be35264a45e68079150e6e47ec9d52f56636ead9699e842d95cbea3d83ce1eb8"
+    },
+    {
+      "path": "results/application-qos-pilot-v1/ad93e8d202154733a165eee896fd5e50/trace-smoke/c.jsonl",
+      "sha256": "15f672290515392bd25ab26e6f18ceaa79b531d5437b35718a5e68ebafb2a749"
+    },
+    {
+      "path": "results/application-qos-pilot-v1/ad93e8d202154733a165eee896fd5e50/trace-smoke/d.jsonl",
+      "sha256": "742977999ea0b29dd57915f37ebfe7d21d813b6223d7ce212cb731c815ce8a5c"
+    },
+    {
+      "path": "results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/trace-smoke/a.jsonl",
+      "sha256": "bdba1f4ac31d9f634ea32b442a035947f523e0b744c176010b6c4cd6b77a8f0c"
+    },
+    {
+      "path": "results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/trace-smoke/b.jsonl",
+      "sha256": "773c4c4b965faf55a322703ee1ce7f8d9213190a5e944496cc68c37693b1269b"
+    },
+    {
+      "path": "results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/trace-smoke/c.jsonl",
+      "sha256": "875ed2e14683323f79130c0e9a6a8f950ebed6ad595882d676a5b54ce104a56c"
+    },
+    {
+      "path": "results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/trace-smoke/d.jsonl",
+      "sha256": "b4dddaa84ccf66a4ff1e5291f92c4a23e25929f8be23b56441632c11a8ae42e7"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/block-03/e28fd7f72be5415cbf11670863f7ae16/peering/slots-8-rate-800/requests.jsonl.gz",
+      "sha256": "e1b7f73214ca5f1838102f3c1120d0917e236c33790487cea453b1175ae3dd9c"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/block-03/e28fd7f72be5415cbf11670863f7ae16/peering/slots-8-rate-800/queue-c.jsonl.gz",
+      "sha256": "c872792182e1c5265b89fbd0f8cfb89e3e2633c2bc92939a88d0637edea5decd"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/block-03/e28fd7f72be5415cbf11670863f7ae16/peering/slots-8-rate-800/queue-d.jsonl.gz",
+      "sha256": "267bc822cb5536e29761a0cf76fea89ab7347846fe67ebfe57461fbc64195574"
+    },
+    {
+      "path": "monitoring/grafana/dashboards/nt531-study-demo.json",
+      "sha256": "6a1e9d231eb6af7680b2e56872b46e248dfe5b01631a0c64b022e7966d21dfb8"
+    }
+  ],
+  "primary_results_unchanged": true,
+  "runtime_verified": true,
+  "pipeline_verified": true,
+  "dashboard_uid": "nt531-study-demo",
+  "traces_found": 12,
+  "spans_by_trace": {
+    "0bea648e44e4c42d819872ed3eafaf71": 10,
+    "12b1248f2ee1e3bc52e754b19126e0c9": 10,
+    "210001d92c8a3360737e901538bbdf58": 10,
+    "2d6ab3013099ca64a169b001dbc70081": 10,
+    "6b43c8e57384fc93cbaf457f2192c98f": 10,
+    "7e2e2bf3598da2ae80551550d63ea439": 10,
+    "9373589f0b3fc25ceb205a47e6e5359f": 10,
+    "9fd874a716d2c4c6c8945460e54b4818": 10,
+    "d7387259054d4028b48e59712a232b0c": 10,
+    "f28dd39e9c48a32f9fbdc6540f483613": 10,
+    "f709c2c6f69fbc0f50758ee6daccc456": 10,
+    "fce57e437e92801267a1e612b7b92605": 10
+  },
+  "unique_spans_verified": 120,
+  "original_ids_timestamps_preserved": true,
+  "not_live_measurement": true,
+  "hostmetrics_series_now": 0,
+  "hostmetrics_agents_installed": false,
+  "local_prometheus_port": 19090
+}

@@ -1,5 +1,7 @@
 # Công thức và ký hiệu dùng trong phân tích NT531
 
+**Phạm vi tài liệu:** chương kết quả lịch sử ngày 05–06/10, gồm cả phần mở rộng tham khảo. Để bảo vệ bộ dữ liệu đã chốt ngày 13/10, ưu tiên [công thức bám bài giảng](36-cong-thuc-bam-bai-giang.md): Little, phân vị, SLI và chênh lệch với ví dụ từ log. Phần vật lý với tham số giả định không phải giải thích định lượng AWS; công thức hàng đợi ứng dụng mới ở [tài liệu 33](33-hang-doi-va-dinh-luat-little.md), khác cohort TCP lịch sử dưới đây.
+
 Tài liệu này đi kèm mục 7 của chương kết quả Word. Các phép tính sử dụng dữ liệu thực nghiệm đã kiểm tra; giữ nguyên dữ liệu gốc.
 
 ## 7 Phương pháp tính và giải thích công thức

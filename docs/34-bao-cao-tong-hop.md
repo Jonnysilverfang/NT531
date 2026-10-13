@@ -1,11 +1,13 @@
 # Đánh giá VPC Peering và Transit Gateway từ RTT đến chất lượng ứng dụng
 
-Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 17:19 giờ Việt Nam.
+Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 18:32 giờ Việt Nam.
 Các bảng được tạo từ analysis và đối chiếu SHA với file nguồn; không dùng
 ảnh chụp để thay raw. Báo cáo này ghép phần đã thực hiện; kết luận suy diễn
 chỉ xuất hiện sau khi analyzer xác nhận đủ thiết kế.
 
 **Phạm vi rút gọn ngày 13/10 vì ngân sách:** chỉ giữ phiên cuối, tối đa 5 block RTT/3 block slots. Xác nhận 16 block/bốn ngày chưa hoàn thành; chỉ kết luận mô tả, không công bố p-value xác nhận. [Quyết định và cách kết luận](35-pham-vi-rut-gon-va-ket-luan.md).
+
+**Kết quả quan sát:** trong 5 block RTT, chênh TGW trừ Peering trung bình 0,3119 ms. Trong 3 block ứng dụng, tăng 8 lên 16 slots nâng tỷ lệ đúng hạn tại 800 rps trung bình 96,8417 điểm phần trăm qua hai mode. Can thiệp khả năng phục vụ và log hàng đợi giải thích điểm nghẽn của workload thử nghiệm. Các con số là hiệu ứng đã đo, không chứng minh mọi hệ thống AWS có cùng hiệu ứng.
 
 ## Câu hỏi và đóng góp
 
@@ -99,10 +101,10 @@ thời lượng thực; không biến thành phần trăm mất gói. Các lư�
 hai mode không là cặp ghép thời gian. [SHA và audit interval](../results/analysis/fanin-sender-interval-figures.json).
 
 
-## Thiết kế xác nhận được khóa trước khi đo
+## Thiết kế xác nhận ban đầu được khóa trước khi đo
 
-RTT hiện có **4/16 block** trên 2 ngày;
-slots có **2/16 block** trên 1 ngày.
+RTT hiện có **5/16 block** trên 2 ngày;
+slots có **3/16 block** trên 1 ngày.
 Mỗi nghiên cứu cần 16 block hợp lệ, ít nhất bốn ngày địa phương và start
 cách nhau ít nhất hai giờ. Slots yêu cầu uptime tối thiểu 30 phút.
 
@@ -163,46 +165,67 @@ về quá trình lấy mẫu và tương quan block.
 | 2 | 12/10 21:26 | tgw → peering | 0,2067 | 0,4463 | 0,2397 | 0 |
 | 3 | 13/10 11:10 | peering → tgw | 0,1900 | 0,6157 | 0,4257 | 0 |
 | 4 | 13/10 15:58 | tgw → peering | 0,1243 | 0,4300 | 0,3057 | 0 |
+| 5 | 13/10 18:04 | peering → tgw | 0,1343 | 0,4923 | 0,3580 | 0 |
 
 ![RTT ghép cặp theo block](images/application/confirmation-progress/rtt-blocks.png)
 
 ## Kết quả xác nhận slots mới nhất
 
-Block 2, bắt đầu UTC 2026-10-13T09:03:57.465557+00:00.
+Block 3, bắt đầu UTC 2026-10-13T11:09:26.935632+00:00.
 
 | Mạng | Slots | rps | Theo lịch | Đúng hạn % | P95 thành công ms | Lỗi |
 |---|---|---|---|---|---|---|
-| PEERING | 8 | 600 | 9000 | 100,000 | 12,684 | 0 |
-| PEERING | 16 | 600 | 9000 | 100,000 | 12,699 | 0 |
-| TGW | 8 | 600 | 9000 | 100,000 | 12,879 | 0 |
-| TGW | 16 | 600 | 9000 | 100,000 | 12,981 | 0 |
-| PEERING | 8 | 800 | 12000 | 3,708 | 1499,226 | 0 |
-| PEERING | 16 | 800 | 12000 | 100,000 | 12,660 | 0 |
-| TGW | 8 | 800 | 12000 | 2,967 | 1324,103 | 0 |
-| TGW | 16 | 800 | 12000 | 100,000 | 12,875 | 0 |
+| PEERING | 8 | 600 | 9000 | 100,000 | 12,649 | 0 |
+| PEERING | 16 | 600 | 9000 | 100,000 | 12,681 | 0 |
+| TGW | 8 | 600 | 9000 | 100,000 | 13,146 | 0 |
+| TGW | 16 | 600 | 9000 | 100,000 | 13,103 | 0 |
+| PEERING | 8 | 800 | 12000 | 3,342 | 1350,096 | 0 |
+| PEERING | 16 | 800 | 12000 | 100,000 | 12,651 | 0 |
+| TGW | 8 | 800 | 12000 | 3,567 | 1225,784 | 0 |
+| TGW | 16 | 800 | 12000 | 100,000 | 12,916 | 0 |
 
-Hiệu ứng dj của block này là **96,6625 điểm phần trăm**.
+Hiệu ứng dj của block này là **96,5458 điểm phần trăm**.
 Giữ mọi block trong bảng hiệu ứng sau; không chỉ trình bày block thuận lợi nhất.
 
 | Block | Giờ Việt Nam | Tăng đúng hạn mean hai route điểm % |
 |---|---|---|
 | 1 | 13/10 11:39 | 97,3167 |
 | 2 | 13/10 16:03 | 96,6625 |
+| 3 | 13/10 18:09 | 96,5458 |
 
 ![Đúng hạn và hiệu ứng slots theo block](images/application/confirmation-progress/slots-blocks.png)
+
+## Thống kê mô tả qua toàn bộ block ứng dụng
+
+| Mạng | Slots | rps | Theo lịch | Đúng hạn % | Khoảng P95 từng block ms | Lỗi |
+|---|---|---|---|---|---|---|
+| PEERING | 8 | 600 | 27000 | 100,0000 | 12,109–12,684 | 0 |
+| PEERING | 16 | 600 | 27000 | 100,0000 | 12,085–12,699 | 0 |
+| TGW | 8 | 600 | 27000 | 100,0000 | 12,879–13,146 | 0 |
+| TGW | 16 | 600 | 27000 | 100,0000 | 12,981–13,243 | 0 |
+| PEERING | 8 | 800 | 36000 | 3,0444 | 1350,096–1499,226 | 0 |
+| PEERING | 16 | 800 | 36000 | 100,0000 | 12,651–12,698 | 0 |
+| TGW | 8 | 800 | 36000 | 3,2722 | 1225,784–1327,874 | 0 |
+| TGW | 16 | 800 | 36000 | 100,0000 | 12,875–13,248 | 0 |
+
+Tỷ lệ bằng tổng yêu cầu đúng hạn chia tổng theo lịch; là tần suất thực nghiệm trong các cửa sổ đã đo. Khoảng P95 là min–max của P95 từng block, không phải P95 gộp hoặc trung bình P95. Request tương quan trong cùng phiên không tạo thêm block độc lập.
+
+
+Ở 800 rps, tỷ lệ đúng hạn từng block/mode với 8 slots nằm trong 2,0833–3,7083%; với 16 slots là 100,0000–100,0000%. Các quan sát này đối chiếu trực tiếp hai quyết định trong workload thử nghiệm: đổi đường mạng khi giữ nguyên khả năng phục vụ và tăng khả năng phục vụ trong từng đường mạng. Log thời gian chờ/phục vụ bên dưới giúp giải thích kết quả; không gán mọi trễ hạn cho dịch vụ mạng AWS.
+
 
 ## Giải thích cơ chế bằng hàng đợi ứng dụng
 
 | Mạng | Slots | Worker | Mean chờ ms | Mean số chờ | Peak số chờ | N/T lời gọi mỗi s |
 |---|---|---|---|---|---|---|
-| PEERING | 8 | C | 788,478039 | 571,720753 | 1154 | 725,094 |
-| PEERING | 8 | D | 694,959334 | 509,207780 | 1036 | 732,716 |
-| PEERING | 16 | C | 0,005685 | 0,004545 | 1 | 799,545 |
-| PEERING | 16 | D | 0,005116 | 0,004090 | 1 | 799,551 |
-| TGW | 8 | C | 676,555388 | 495,994692 | 1024 | 733,118 |
-| TGW | 8 | D | 635,779538 | 469,369275 | 944 | 738,258 |
-| TGW | 16 | C | 0,005709 | 0,004565 | 1 | 799,630 |
-| TGW | 16 | D | 0,005004 | 0,004001 | 1 | 799,571 |
+| PEERING | 8 | C | 700,951126 | 513,297103 | 1044 | 732,287 |
+| PEERING | 8 | D | 697,539675 | 511,877841 | 1020 | 733,833 |
+| PEERING | 16 | C | 0,005239 | 0,004189 | 1 | 799,531 |
+| PEERING | 16 | D | 0,004912 | 0,003927 | 1 | 799,533 |
+| TGW | 8 | C | 623,637550 | 460,119105 | 950 | 737,799 |
+| TGW | 8 | D | 620,956974 | 458,305314 | 951 | 738,063 |
+| TGW | 16 | C | 0,005126 | 0,004099 | 1 | 799,610 |
+| TGW | 16 | D | 0,004866 | 0,003891 | 1 | 799,597 |
 
 Mỗi worker dùng cửa sổ chứa trọn entry/exit của request ID đo, gồm đuôi
 xử lý; không bỏ các lời gọi hủy. Với N lời gọi, T là thời lượng cửa sổ,
@@ -223,17 +246,17 @@ Hai cách tính trên cùng timestamp kiểm tra nhất quán, không tạo bằ
 chứng thống kê độc lập hoặc chứng minh clock/logger luôn đúng.
 [Chứng minh, ký hiệu và ví dụ đầy đủ](33-hang-doi-va-dinh-luat-little.md).
 
-![Hàng đợi block 2](images/application/queue-occupancy/block-02-queue.png)
+![Hàng đợi block 3](images/application/queue-occupancy/block-03-queue.png)
 
 
 ## Kết luận theo mức bằng chứng
 
 
 
-**RTT:** 4/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.
+**RTT:** 5 block hợp lệ; mean hiệu ứng **0,3119 ms (TGW trừ Peering)**, median 0,3057, khoảng từng block 0,2303–0,4257. Kết luận mô tả trong các block quan sát; không công bố p-value xác nhận cho thiết kế rút ngắn.
 
 
-**Slots:** 2/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.
+**Slots:** 3 block hợp lệ; mean hiệu ứng **96,8417 điểm phần trăm (16 trừ 8 slots, mean hai route tại 800 rps)**, median 96,6625, khoảng từng block 96,5458–97,3167. Kết luận mô tả trong các block quan sát; không công bố p-value xác nhận cho thiết kế rút ngắn.
 
 
 

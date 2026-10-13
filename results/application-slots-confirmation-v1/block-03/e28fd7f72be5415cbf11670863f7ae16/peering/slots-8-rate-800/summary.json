@@ -1,0 +1,49 @@
+{
+  "started_utc": "2026-10-13T11:24:55.913397+00:00",
+  "ended_utc": "2026-10-13T11:25:12.540574+00:00",
+  "mode": "peering",
+  "rate_rps": 800,
+  "duration_seconds": 15.0,
+  "tracing": false,
+  "summary": {
+    "scheduled": 12000,
+    "sent": 12000,
+    "successful": 12000,
+    "failed": 0,
+    "deadline_ms": 50.0,
+    "deadline_success_count": 401,
+    "deadline_success_fraction": 0.033416666666666664,
+    "successful_completion_p50_ms": 723.4146670002701,
+    "successful_completion_p95_ms": 1350.0955560002694,
+    "successful_completion_p99_ms": 1384.7298170003342,
+    "dispatch_lag_p95_ms": 1.047199000367982,
+    "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+  },
+  "config": {
+    "role": "load",
+    "node": "a",
+    "mode": "peering",
+    "bind": "127.0.0.1",
+    "port": 8081,
+    "workers": [
+      "http://10.30.10.212:8081",
+      "http://10.40.10.155:8081"
+    ],
+    "url": "http://10.20.10.155:8080",
+    "worker_delay_ms": 10,
+    "worker_slots": 8,
+    "response_bytes": 4096,
+    "rate": 800,
+    "duration": 15.0,
+    "deadline_ms": 50.0,
+    "timeout": 2.0,
+    "maximum_inflight": 4000,
+    "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-peering-s8-r800",
+    "trace_file": null,
+    "queue_file": null,
+    "run_id": "e28fd7f72be5415cbf11670863f7ae16-peering-s8-r800",
+    "otlp_endpoint": null,
+    "test_shutdown": false
+  },
+  "generator_valid": true
+}

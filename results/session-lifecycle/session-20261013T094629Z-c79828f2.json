@@ -1,0 +1,53 @@
+{
+  "status": "validated_report_review_passed",
+  "pid": 18912,
+  "started_utc": "2026-10-13T09:46:29.190834+00:00",
+  "cleanup_mode": "manual_EC2_stop",
+  "jobs": [
+    {
+      "study": "confirmation-rtt-v1",
+      "block": 5,
+      "earliest_utc": "2026-10-13T10:58:29.050020+00:00",
+      "due": true
+    },
+    {
+      "study": "application-slots-confirmation-v1",
+      "block": 3,
+      "earliest_utc": "2026-10-13T11:03:57.465557+00:00",
+      "due": true
+    }
+  ],
+  "not_before_utc": "2026-10-13T11:03:57.465557+00:00",
+  "prewarm_not_before_utc": "2026-10-13T10:32:52.465557+00:00",
+  "cleanup": {
+    "method": "user_selected_manual_EC2_stop",
+    "stopped_verified": false,
+    "states": {
+      "i-089bae0de9ec6bc4e": "running",
+      "i-0484f42b82795f765": "running",
+      "i-0abcc8853cee750e7": "running",
+      "i-0a3f3e2e9d7185970": "running"
+    },
+    "backup": {
+      "private_backup": "D:\\NT531-DanhGiaHieuNang\\backups\\nt531-private-session-20261013T113119Z.zip",
+      "payload_files": 1564,
+      "bytes": 49991667,
+      "sha256": "73a4617aefeb87a98d4ea673ae6eec904abcf0fdf4edc987dccb1760937e6cce",
+      "verified": true,
+      "scope": "All local results/docs/scripts/experiments plus Terraform code, lock and current state; no credentials, keys, tfvars, tmp or monitoring password. Keep ZIP private."
+    },
+    "workloads_stopped": true,
+    "temporary_download_key_removed": true
+  },
+  "ended_utc": "2026-10-13T11:31:37.440568+00:00",
+  "report_review": {
+    "reviewed_local": "2026-10-13T18:35:29.729107+07:00",
+    "rtt_blocks": 5,
+    "slots_blocks": 3,
+    "word_reviewed_pages": 7,
+    "word_sha256": "03c98ef4c3ceaf1b7bbddf7df750d936ddaf69c8a444d08744e11ac2e2676192",
+    "heartbeat_id": "ho-n-t-t-x-c-nh-n-nt531",
+    "heartbeat_deleted": true,
+    "additional_measurements_allowed": false
+  }
+}

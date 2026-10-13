@@ -1,12 +1,13 @@
 # Trạng thái xác nhận và công việc tiếp theo
 
 **Phạm vi mới ngày 13/10:** bỏ lịch bốn ngày vì ngân sách; chỉ giữ phiên cuối, tối đa 5 RTT/3 slots. Không tính p-value xác nhận. [Quyết định và kết luận mô tả](35-pham-vi-rut-gon-va-ket-luan.md).
-Snapshot 13/10/2026 17:19 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
+**Đã kết thúc thu dữ liệu:** 5 block RTT và 3 block slots hợp lệ. Không mở thêm phiên hoặc tự đo lại; phần còn lại là rà soát và bàn giao báo cáo.
+Snapshot 13/10/2026 18:36 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
 
-| Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |
+| Nghiên cứu | Block hợp lệ | Ngày địa phương | So với trần ngân sách |
 |---|---:|---:|---:|
-| RTT khi rảnh | 4/5 | 2 | 1 block tối đa |
-| Can thiệp slots | 2/3 | 1 | 1 block tối đa |
+| RTT khi rảnh | 5/5 | 2 | 0 block tối đa |
+| Can thiệp slots | 3/3 | 1 | 0 block tối đa |
 
 Thiết kế gốc 16 block/bốn ngày được rút ngắn vì ngân sách, giữ nguyên protocol để kiểm chứng; không coi xác nhận đã hoàn thành. Engineering/pilot giữ riêng.
 
@@ -18,6 +19,7 @@ Thiết kế gốc 16 block/bốn ngày được rút ngắn vì ngân sách, gi
 | 2 | 12/10 21:26:56 | tgw → peering | 0.206667 | 0.446333 | +0.239667 | 0 |
 | 3 | 13/10 11:10:24 | peering → tgw | 0.190000 | 0.615667 | +0.425667 | 0 |
 | 4 | 13/10 15:58:29 | tgw → peering | 0.124333 | 0.430000 | +0.305667 | 0 |
+| 5 | 13/10 18:04:03 | peering → tgw | 0.134333 | 0.492333 | +0.358000 | 0 |
 
 ## Slots từng block đã kiểm tra
 
@@ -25,12 +27,13 @@ Thiết kế gốc 16 block/bốn ngày được rút ngắn vì ngân sách, gi
 |---|---|---:|---|
 | 1 | 13/10 11:39:03 | 97.3167 điểm phần trăm | Có |
 | 2 | 13/10 16:03:57 | 96.6625 điểm phần trăm | Có |
+| 3 | 13/10 18:09:26 | 96.5458 điểm phần trăm | Có |
 
 Các giá trị trên là mô tả các block đã có, không phải p-value tạm thời để quyết định dừng. Tăng đúng hạn là hiệu tỷ lệ với mẫu số mọi request theo lịch, trung bình qua hai mode.
 
 ## Lịch và vận hành đã được người dùng chấp thuận
 
-Lịch tám lần/ngày đã hủy; chỉ chốt phiên cuối. Heartbeat rà soát lúc 19:00 ngày 13/10 rồi xóa sau bàn giao. Không mở thêm block hoặc RTT khi tải.
+Lịch đo tự động đã xóa sau phiên cuối và rà soát Word. Không mở thêm block hoặc RTT khi tải; người dùng tự dừng EC2.
 
 Quy trình: kiểm tra protocol/cohort và phiên đang chạy → bật đúng bốn máy cũ → SSM Online, dừng workload cũ và đủ uptime → RTT rồi slots → phân tích raw → cập nhật báo cáo/GitHub → sao lưu ZIP riêng → dừng workload. Chỉ dẫn mới lúc 16:43 ngày 13/10: người dùng tự dừng EC2, runner dùng `--leave-ec2-running` và không ghi stopped_verified khi máy vẫn running. Chế độ mặc định vẫn tự stop nếu được chọn lại. Giữ EBS/EIP/TGW theo quyết định người dùng; các tài nguyên này vẫn có thể phát sinh phí.
 
@@ -42,7 +45,7 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 
 ## Việc để chốt kết luận và bàn giao
 
-1. Để phiên cuối kết thúc; giữ dữ liệu hợp lệ và mọi lỗi, không tự retry.
+1. Phiên cuối đã kết thúc; giữ dữ liệu hợp lệ và mọi lỗi, không tự retry.
 2. RTT khi tải được hoãn, không ghi là đã đo.
 3. Công bố mean/median/range và số block thực; không dùng kiểm định 16 block cho mẫu rút ngắn.
 4. Ghép kết quả mới vào báo cáo chung, kiến trúc, công thức, bài giảng và related work; rà soát slide/demo.
@@ -52,6 +55,6 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 
 ## Dữ liệu nguồn
 
-- `results/confirmation-rtt-v1/analysis.json` — SHA256 `ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66`
-- `results/application-slots-confirmation-v1/analysis.json` — SHA256 `ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81`
+- `results/confirmation-rtt-v1/analysis.json` — SHA256 `40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c`
+- `results/application-slots-confirmation-v1/analysis.json` — SHA256 `8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2`
 - `results/study-scope-decision-20261013.json` — SHA256 `fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45`

@@ -1,6 +1,6 @@
 """Rebuild the Word evidence appendix from verified offline analyses."""
 from pathlib import Path
-import json, hashlib, datetime as dt
+import json, hashlib, datetime as dt, statistics as stats
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -17,6 +17,9 @@ def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def build():
     sources=[ROOT/'results/confirmation-rtt-v1/analysis.json',ROOT/'results/application-slots-confirmation-v1/analysis.json',ENG/'analysis.json']
     rtt,slots,eng=map(read,sources)
+    scope_path=ROOT/'results/study-scope-decision-20261013.json'
+    scope=read(scope_path) if scope_path.exists() else None
+    targets=scope['maximum_completed_blocks'] if scope else {}
     assert all(not j['issues'] for j in [rtt,slots,eng])
     expected={'confirmation-rtt-v1':'741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89',
         'application-slots-confirmation-v1':'65c69162a62cfd81c8531b9e9fea8480cd664bcddc4d1c78c4bb2b09e46cda0b'}
@@ -80,13 +83,12 @@ def build():
     text('Trong một phiên kỹ thuật, tăng khả năng xử lý đồng thời của worker đã khắc phục phần lớn trễ hạn ở 800 yêu cầu/giây trên cả Peering và TGW. Đợt xác nhận kiểm tra khả năng lặp lại của hiệu ứng này và chênh lệch RTT qua nhiều thời điểm. Phụ lục trình bày bằng chứng và phương pháp; chưa thay thế báo cáo toàn bộ đồ án.')
     doc.add_heading('Câu hỏi và tiến độ xác nhận',2)
     text('RTT: TGW có RTT khi rảnh cao hơn Peering trên 0,1 ms trong đa số block của cùng cohort hay không? Slots: tại 800 rps, tăng 8 lên 16 slots trên mỗi worker có nâng tỷ lệ đúng hạn trên 10 điểm phần trăm, trung bình qua hai mode, trong đa số block hay không?')
-    table(['Nghiên cứu','Block hợp lệ','Ngày đã đo','Mục tiêu'],[
-        ['RTT',f"{rtt['completed_blocks']}/16",len(rtt['local_dates']),'16 block ≥4 ngày'],
-        ['Slots',f"{slots['completed_blocks']}/16",len(slots['local_dates']),'16 block ≥4 ngày']],[1.6,1.4,1.3,2.6])
-    scope_path=ROOT/'results/study-scope-decision-20261013.json'
-    if scope_path.exists():
+    table(['Nghiên cứu','Block hợp lệ','Ngày đã đo','Phạm vi hiện hành'],[
+        ['RTT',rtt['completed_blocks'],len(rtt['local_dates']),f"Tối đa {targets.get('confirmation-rtt-v1',16)} block"],
+        ['Slots',slots['completed_blocks'],len(slots['local_dates']),f"Tối đa {targets.get('application-slots-confirmation-v1',16)} block"]],[1.6,1.4,1.3,2.6])
+    if scope:
         sources.append(scope_path)
-        text('Ngày 13/10 người dùng rút gọn vì ngân sách: tối đa 5 block RTT/3 slots, không tiếp tục bốn ngày. Bảng trên ghi mục tiêu gốc chưa hoàn thành; không công bố p-value xác nhận. Xem phạm vi hiện hành ở tài liệu 35.')
+        text('Ngày 13/10 rút gọn vì ngân sách: tối đa 5 block RTT/3 slots. Thiết kế gốc 16 block/bốn ngày giữ nguyên để kiểm chứng nhưng chưa hoàn thành; không công bố p-value xác nhận. Kết quả hiện hành là thống kê mô tả, xem tài liệu 35.')
     text('Mỗi nghiên cứu chỉ công bố kết luận suy diễn khi đủ số block, ngày và tiêu chí chất lượng. Engineering/pilot không nhập vào đợt xác nhận. Trạng thái mới nhất nằm trong analysis.json của dự án; bản Word là snapshot tại thời điểm ghi trên.')
     doc.add_heading('Kiến trúc và đường đo',2)
     text('Bốn VPC, mỗi VPC một EC2 c6i.large tại us-east-1a, MTU 1500. Peering full mesh có 6 kết nối; TGW có 1 gateway và 4 VPC attachment. EIP dùng quản trị; các phép đo dùng private IP.')
@@ -121,7 +123,7 @@ def build():
     text('λ là yêu cầu/giây vào mỗi worker; s = 0,010 giây là delay cấu hình; c là slots. 800 rps cho ρnom = 1 ở 8 slots, 0,5 ở 16 slots. Đây là tải danh nghĩa, không phải công suất AWS đã đo. Arrival đều theo lịch, không giả định Poisson/M/M/1; backlog tăng chưa ở trạng thái dừng.')
     text('ENA allowance delta bằng 0 ở bốn node/tám tổ hợp chỉ nói không quan sát counter này tăng trong cửa sổ ghi. CPU/ENA là chẩn đoán endpoint; không thay queue logs hoặc loại trừ mọi giới hạn/mất gói.')
 
-    page('Kiểm định xác nhận và các ký hiệu')
+    page('Thiết kế kiểm định gốc và các ký hiệu')
     equation(doc,[sub('Δ','j'),' = ',sub('RTT̄','TGW,j'),' − ',sub('RTT̄','Peering,j')],4)
     # Word ignores a combining overbar in a plain math run. Use native accents.
     for token in doc.paragraphs[-1]._p.xpath('.//m:t'):
@@ -138,11 +140,15 @@ def build():
     equation(doc,['K = ',sigma('j = 1','16'),sub('Z','j'),';  θ = P(',sub('Z','j'),' = 1)'],7)
     text('Trong từng nghiên cứu: H₀: θ ≤ 0,5; H₁: θ > 0,5; α = 0,05. Cỡ mẫu suy diễn là block, không phải request/gói tương quan trong phiên.')
     equation(doc,[sub('p','exact'),' = ',sup('2','−16'),sigma('k = K','16'),frac('16!','k! (16 − k)!')],8)
-    text('Ngưỡng K ≥ 12/16 có pexact tại K = 12 bằng 0,0384063721. Đây là phép tính thiết kế, không phải p-value thực nghiệm hiện tại. Vẫn thu cả 16 block, ≥4 ngày, start cách nhau ≥2 giờ; slots yêu cầu uptime ≥30 phút.')
+    text('Ngưỡng K ≥ 12/16 có pexact tại K = 12 bằng 0,0384063721. Đây là phép tính thiết kế, không phải p-value thực nghiệm hiện tại. Thiết kế gốc yêu cầu 16 block, ≥4 ngày, start cách nhau ≥2 giờ và uptime slots ≥30 phút; phạm vi rút gọn không áp dụng kiểm định này.')
     text('Giữ cohort, mã ứng dụng, protocol và thứ tự đã cân bằng. Khoảng cách không tự chứng minh độc lập. Hai kiểm định dùng α = 0,05 riêng, không bảo đảm đồng thời 95% cho tất cả phát biểu.')
 
     page('Diễn giải và khả năng kiểm chứng')
     doc.add_heading('Kết luận phù hợp với bằng chứng',2)
+    if scope:
+        delta=[r['difference_ms'] for r in rtt['rows']]
+        effects=[100*float(r['improvement']) for r in slots['rows']]
+        text(f"Trong {len(delta)} block RTT đã kiểm tra, TGW cao hơn Peering trung bình {stats.mean(delta):.4f} ms, khoảng từng block {min(delta):.4f}–{max(delta):.4f} ms. Trong {len(effects)} block slots, cải thiện đúng hạn trung bình là {stats.mean(effects):.4f} điểm phần trăm, khoảng {min(effects):.4f}–{max(effects):.4f}. Đây là độ lớn hiệu ứng đã quan sát, không phải xác suất hiệu ứng sẽ lặp lại.")
     text('Engineering hỗ trợ vai trò của giới hạn đồng thời worker trong workload mô phỏng: đổi mạng ở 8 slots/800 rps vẫn để phần lớn yêu cầu trễ hạn; tăng slots trong từng mode làm đúng hạn tăng và chờ giảm. Xác nhận qua các block mới kiểm tra tính lặp lại. Không suy ra 16 slots tối ưu hoặc một dịch vụ mạng thắng mọi workload.')
     text('Khi đủ dữ liệu, báo cáo effect size, K, p-value exact và cận dưới xác suất một phía 95%; slots có CI bootstrap toàn block cho hiệu ứng trung bình phụ trợ. Không đạt kiểm định không chứng minh tương đương. 100% đúng hạn ở một phiên không bảo đảm 100% trong tương lai.')
     doc.add_heading('Liên hệ nghiên cứu và bài giảng',2)
@@ -158,7 +164,7 @@ def build():
     if slots['rows']:
         block=slots['rows'][-1]
         page('Kết quả block xác nhận slots mới nhất')
-        text(f"Block {block['block']} bắt đầu UTC {block['started_utc']}. Đã kiểm tra raw, route, môi trường và log theo request ID; phiên này thuộc mẫu xác nhận, không nhập engineering. Tổng tiến độ {slots['completed_blocks']}/16; chưa có kết luận kiểm định hoặc CI liên block.")
+        text(f"Block {block['block']} bắt đầu UTC {block['started_utc']}. Đã kiểm tra raw, route, môi trường và log theo request ID; phiên này thuộc mẫu xác nhận, không nhập engineering. Đã thu {slots['completed_blocks']} block; giới hạn hiện hành {targets.get('application-slots-confirmation-v1',16)}. Không công bố kiểm định hoặc CI liên block của mẫu rút gọn.")
         rows=[]
         for rate in [600,800]:
             for mode in ['peering','tgw']:

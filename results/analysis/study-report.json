@@ -1,9 +1,9 @@
 {
-  "created_local": "2026-10-13T17:19:25.560650+07:00",
-  "report_sha256": "de1b046b4744cc007840e974e4eafc4f4218881c81fd6a6f0765c120aeb9ad0b",
-  "rtt_blocks": 4,
-  "slots_blocks": 2,
-  "raw_source_hash_checks": 375,
+  "created_local": "2026-10-13T18:32:37.384599+07:00",
+  "report_sha256": "72c21f20180fb3f3a06912023d675eef04883bf15ff1cfc294deeaf3722517c3",
+  "rtt_blocks": 5,
+  "slots_blocks": 3,
+  "raw_source_hash_checks": 525,
   "no_AWS_calls": true,
   "sources": [
     {
@@ -12,15 +12,15 @@
     },
     {
       "path": "results/confirmation-rtt-v1/analysis.json",
-      "sha256": "ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66"
+      "sha256": "40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c"
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
+      "sha256": "8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2"
     },
     {
       "path": "results/analysis/queue-occupancy-audit.json",
-      "sha256": "2675c564bb2437749313455c4216660b2ef3928c047b7be33568128db3a9335e"
+      "sha256": "bed2c80e42275504e1aab605ae3dcacdf1df364f10508c32adc19553de613301"
     },
     {
       "path": "results/study-scope-decision-20261013.json",

@@ -1,6 +1,6 @@
 # Đồ án NT531 — Đánh giá hiệu năng AWS VPC Peering và Transit Gateway
 
-**Phạm vi mới ngày 13/10:** giảm credit, bỏ lịch bốn ngày; chỉ giữ phiên cuối đã xếp, tối đa 5 block RTT/3 slots, rồi chốt báo cáo một lần. Xác nhận 16 block gốc được rút ngắn, chưa hoàn thành; không công bố p-value xác nhận. [Quyết định và kết luận mô tả](docs/35-pham-vi-rut-gon-va-ket-luan.md) thay thế lịch nhiều ngày và danh sách đo tiếp trong kế hoạch cũ dưới đây.
+**Đã chốt dữ liệu ngày 13/10:** 5 block RTT và 3 block ứng dụng hợp lệ, gồm 252.000 request ứng dụng trong cửa sổ đo. TGW trừ Peering có RTT trung bình +0,3119 ms; tăng 8 lên 16 slots cải thiện đúng hạn tại 800 rps trung bình 96,8417 điểm phần trăm qua hai mode. Đây là kết quả mô tả trong cấu hình đã thử. Thiết kế 16 block gốc được rút ngắn vì ngân sách; không công bố kiểm định xác nhận của thiết kế đó. Lịch đo tự động đã xóa, không mở thêm phiên. [Phạm vi và bảng thống kê](docs/35-pham-vi-rut-gon-va-ket-luan.md) thay thế danh sách đo tiếp trong kế hoạch cũ dưới đây.
 
 ## Đồ án trả lời câu hỏi gì?
 
@@ -21,7 +21,7 @@ Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
 Đọc [báo cáo tổng hợp hiện hành](docs/34-bao-cao-tong-hop.md) để xem kiến trúc,
 kịch bản, công thức, kết quả theo block và phạm vi kết luận trong một tài liệu.
 [Trạng thái xác nhận](docs/32-trang-thai-xac-nhan.md) ghi số block đã kiểm tra
-và lịch tiếp tục. Các cập nhật theo ngày bên dưới là snapshot lịch sử.
+và trạng thái đã kết thúc thu dữ liệu. [Phụ lục Word đã kiểm tra 7 trang](docs/31-phu-luc-bang-chung-thong-ke.docx) có bảng kết quả, 10 công thức chỉnh sửa được, ký hiệu và phạm vi diễn giải. Các cập nhật theo ngày bên dưới là snapshot lịch sử.
 
 Xem [trạng thái bản công bố ngày 07/10/2026 và việc tiếp theo](docs/19-trang-thai-ban-cong-bo.md).
 Bản này gồm Terraform bốn VPC, script đo, sáu bộ kết quả chính đã kiểm chứng,

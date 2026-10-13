@@ -26,6 +26,10 @@ def main():
     sources = [ROOT / 'results/confirmation-rtt-v1/analysis.json',
                ROOT / 'results/application-slots-confirmation-v1/analysis.json']
     rtt, slots = [json.loads(p.read_text(encoding='utf-8-sig')) for p in sources]
+    decision = ROOT / 'results/study-scope-decision-20261013.json'
+    reduced = decision.exists()
+    if reduced:
+        sources.append(decision)
     assert not rtt['issues'] and not slots['issues']
     out = ROOT / 'docs/images/application/confirmation-progress'
     out.mkdir(parents=True, exist_ok=True)
@@ -48,7 +52,7 @@ def main():
         axes[0].set_ylim(bottom=0)
         minimum_difference = min(b['difference_ms'] for b in rtt['rows'])
         axes[1].set_ylim(bottom=min(0, minimum_difference - .05))
-        fig.suptitle(f"RTT confirmation: {len(blocks)}/16 blocks — paired points within each block\nDescriptive snapshot; dates, order and missing replies reported separately", fontsize=12)
+        fig.suptitle(f"RTT: {len(blocks)} validated blocks — paired points within each block\nDescriptive snapshot; dates, order and missing replies reported separately", fontsize=12)
         save(fig, out, 'rtt-blocks')
     if slots['rows']:
         fig, axes = plt.subplots(1, 2, figsize=(11, 4.2), layout='constrained')
@@ -74,10 +78,10 @@ def main():
             ax.set_xticks(blocks); ax.set_xlabel('Validated block'); ax.grid(alpha=.2)
             ax.set_xlim(min(blocks) - .5, max(blocks) + .5)
         axes[0].set_ylim(-3, 104); axes[1].set_ylim(-103, 104)
-        fig.suptitle(f"Slots confirmation: {len(blocks)}/16 blocks — 50 ms deadline\nPoints shifted horizontally for visibility; whole blocks are the inferential units", fontsize=12)
+        fig.suptitle(f"Slots: {len(blocks)} validated blocks — 50 ms deadline\nPoints shifted horizontally for visibility; descriptive block effects", fontsize=12)
         save(fig, out, 'slots-blocks')
     proof = dict(rtt_blocks=rtt['completed_blocks'], slots_blocks=slots['completed_blocks'],
-                 scope='Descriptive block plots; no interim p-values, confidence intervals or early stopping',
+                 scope='Descriptive block plots; original design curtailed for budget, no confirmatory inference' if reduced else 'Descriptive block plots; no interim inference',
                  sources=[dict(path=p.relative_to(ROOT).as_posix(), sha256=sha(p)) for p in sources],
                  figures=[dict(path=p.relative_to(ROOT).as_posix(), sha256=sha(p)) for p in sorted(out.glob('*'))])
     (ROOT / 'results/analysis/confirmation-progress-figures.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf-8')

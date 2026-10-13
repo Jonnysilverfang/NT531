@@ -1,6 +1,6 @@
 {
   "protocol_hash": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
-  "completed_blocks": 4,
+  "completed_blocks": 5,
   "required_blocks": 16,
   "local_dates": [
     "2026-10-12",
@@ -73,6 +73,24 @@
       "peering_ms": 0.12433333333333334,
       "tgw_ms": 0.43,
       "difference_ms": 0.30566666666666664,
+      "missing_replies": 0,
+      "cohort_ids": [
+        "i-0484f42b82795f765",
+        "i-089bae0de9ec6bc4e"
+      ],
+      "tgw_id": "tgw-036e551008b8c0805"
+    },
+    {
+      "block": 5,
+      "order": [
+        "peering",
+        "tgw"
+      ],
+      "started_utc": "2026-10-13T11:04:03.947706+00:00",
+      "span_seconds": 300.792455,
+      "peering_ms": 0.13433333333333333,
+      "tgw_ms": 0.49233333333333335,
+      "difference_ms": 0.358,
       "missing_replies": 0,
       "cohort_ids": [
         "i-0484f42b82795f765",
@@ -193,6 +211,34 @@
     {
       "path": "results/confirmation-rtt-v1/block-04/04078b4aa07c43a0b4e3fdbc3f4be64e/complete.json",
       "sha256": "0c884fd44703a6bde25fb7c0790254aaa9b4c0b63f780c5735eb9f4630b05cc4"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/peering/routes-before.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/peering/routes-after.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/peering/capture.json",
+      "sha256": "eff6abcc85e619989a4e50f8860ca99114e2d998aa988bd60518009db4eba882"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/tgw/routes-before.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/tgw/routes-after.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/tgw/capture.json",
+      "sha256": "36d5115d135726f1611efbaf94d93346a0bf354ceb34f59e15c6406a9108ad2f"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-05/f8ac4576985e4687b0c6e69d1289f074/complete.json",
+      "sha256": "66d1730b993355259bb698e1506ba5a3534332197b8a7517bae6b6e92c8ec8d5"
     }
   ],
   "inferential_result": null,

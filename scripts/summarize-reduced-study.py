@@ -37,17 +37,39 @@ def main():
             inferential_result=None)
     lifecycle = read(ROOT/decision['final_session_lifecycle'])
     ended = 'ended_utc' in lifecycle
+    slot_analysis=read(ROOT/'results/application-slots-confirmation-v1/analysis.json')
+    conditions=[]
+    for rate in [600,800]:
+        for mode in ['peering','tgw']:
+            for count in [8,16]:
+                records=[next(r for r in b['rows'] if (r['rate_rps'],r['mode'],r['slots'])==(rate,mode,count)) for b in slot_analysis['rows']]
+                if not records:
+                    continue
+                scheduled=sum(r['scheduled'] for r in records)
+                deadline=sum(r['deadline_success_count'] for r in records)
+                p95=[r['successful_completion_p95_ms'] for r in records]
+                conditions.append(dict(mode=mode,slots=count,rate_rps=rate,blocks=len(records),
+                    scheduled=scheduled,deadline_success_count=deadline,
+                    observed_deadline_success_percent=100*deadline/scheduled,
+                    failed=sum(r['failed'] for r in records),
+                    minimum_block_successful_completion_p95_ms=min(p95),
+                    maximum_block_successful_completion_p95_ms=max(p95)))
     snapshot = dict(created_local=dt.datetime.now(dt.timezone(dt.timedelta(hours=7))).isoformat(),
         status='closed_for_budget' if ended else 'awaiting_one_final_session',
         decision_sha256=sha(decision_path), final_session_status=lifecycle['status'], studies=studies,
+        slot_conditions=conditions,
         inference=None, scope='Descriptive observed blocks only; original 16-block confirmation curtailed for budget, not completed. No post-hoc confirmatory p-values.',
         no_AWS_calls=True)
     out = ROOT/'results/analysis/reduced-study-summary.json'
     out.write_text(json.dumps(snapshot, indent=2)+'\n', encoding='utf-8')
-    rows = ['| Nghiên cứu | Block đã kiểm tra | Mean hiệu ứng | Khoảng từng block |',
-            '|---|---:|---:|---:|']
+    rows = ['| Nghiên cứu | Block đã kiểm tra | Mean hiệu ứng | Median | Khoảng từng block |',
+            '|---|---:|---:|---:|---:|']
     for name, s in studies.items():
-        rows.append(f"| {'RTT' if name == 'confirmation-rtt-v1' else 'Slots'} | {s['completed_blocks']} | {s['mean']:.6f} {s['unit']} | {s['minimum']:.6f}–{s['maximum']:.6f} {s['unit']} |")
+        rows.append(f"| {'RTT' if name == 'confirmation-rtt-v1' else 'Slots'} | {s['completed_blocks']} | {s['mean']:.6f} {s['unit']} | {s['median']:.6f} | {s['minimum']:.6f}–{s['maximum']:.6f} {s['unit']} |")
+    condition_lines=['| Mạng | Slots | rps | Request theo lịch | Đúng hạn % | Khoảng P95 từng block ms |',
+        '|---|---:|---:|---:|---:|---:|']
+    for r in conditions:
+        condition_lines.append(f"| {r['mode'].upper()} | {r['slots']} | {r['rate_rps']} | {r['scheduled']} | {r['observed_deadline_success_percent']:.4f} | {r['minimum_block_successful_completion_p95_ms']:.3f}–{r['maximum_block_successful_completion_p95_ms']:.3f} |")
     text = '''# Phạm vi rút gọn và cách chốt kết luận
 
 Ngày 13/10/2026, người dùng yêu cầu giảm credit và không tiếp tục yêu cầu
@@ -101,6 +123,15 @@ thế**, không còn là danh sách bắt buộc phải đo tiếp. Phương ph�
 [Snapshot mô tả](../results/analysis/reduced-study-summary.json) ·
 [Báo cáo tổng hợp](34-bao-cao-tong-hop.md)
 '''
+    pooled='## Thống kê mô tả toàn bộ request đã đo\n\n'+'\n'.join(condition_lines)+'\n\nTỷ lệ đúng hạn bằng tổng request đúng hạn chia tổng request theo lịch. Đây là tần suất thực nghiệm trong dữ liệu đã thu, không coi mọi request độc lập. Cột P95 là min–max của P95 từng block; không phải P95 gộp hoặc trung bình P95.\n\n'
+    text=text.replace('## Đồ án vẫn đóng góp gì?',pooled+'## Đồ án vẫn đóng góp gì?')
+    if ended:
+        text=text.replace('Chỉ để phiên cuối đang xếp kết thúc, kiểm chứng raw, rồi tổng hợp báo cáo,\nbiểu đồ và Word **một lần**.',
+            'Phiên đo cuối đã kết thúc; không mở phiên mới. Kiểm chứng raw và tổng hợp báo cáo,\nbiểu đồ và Word **một lần**, rồi kiểm tra trực quan và công bố bản bàn giao.')
+    if lifecycle.get('report_review',{}).get('heartbeat_deleted'):
+        begin=text.index('Heartbeat được đổi')
+        finish=text.index('RTT khi tải được',begin)
+        text=text[:begin]+'Báo cáo và Word đã qua rà soát; lịch đo tự động đã xóa sau phiên cuối. Không mở nghiên cứu mới. '+text[finish:]
     (ROOT/'docs/35-pham-vi-rut-gon-va-ket-luan.md').write_text(text, encoding='utf-8')
     print(json.dumps(snapshot))
 

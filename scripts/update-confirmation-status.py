@@ -59,6 +59,12 @@ def main():
             '2. Sau đủ RTT':'2. RTT khi tải được hoãn, không ghi là đã đo.',
             '3. Công bố độ lớn':'3. Công bố mean/median/range và số block thực; không dùng kiểm định 16 block cho mẫu rút ngắn.'}
         lines=[next((v for k,v in changes.items() if line.startswith(k)),line) for line in lines]
+        lifecycle=read(ROOT/scope['final_session_lifecycle'])
+        if 'ended_utc' in lifecycle:
+            lines.insert(3,f"**Đã kết thúc thu dữ liệu:** {rtt['completed_blocks']} block RTT và {slots['completed_blocks']} block slots hợp lệ. Không mở thêm phiên hoặc tự đo lại; phần còn lại là rà soát và bàn giao báo cáo.")
+            lines=[line.replace('Còn thiếu','So với trần ngân sách').replace('1. Để phiên cuối kết thúc;','1. Phiên cuối đã kết thúc;') for line in lines]
+        if lifecycle.get('report_review',{}).get('heartbeat_deleted'):
+            lines=[('Lịch đo tự động đã xóa sau phiên cuối và rà soát Word. Không mở thêm block hoặc RTT khi tải; người dùng tự dừng EC2.' if line.startswith('Lịch tám lần/ngày') else line) for line in lines]
         lines+=[f"- `{scope_path.relative_to(ROOT).as_posix()}` — SHA256 `{sha(scope_path)}`"]
     out=ROOT/'docs/32-trang-thai-xac-nhan.md' ;out.write_text('\n'.join(lines)+'\n',encoding='utf-8')
     print(json.dumps(dict(snapshot=str(out),rtt_blocks=rtt['completed_blocks'],slots_blocks=slots['completed_blocks'],issues=[])))

@@ -13,12 +13,12 @@ thành thiết kế**; kết luận mới chỉ mô tả các block đã quan s�
 
 ## Dữ liệu hiện có
 
-Snapshot 2026-10-13T17:17:18.234161+07:00. Trạng thái: `awaiting_one_final_session`; phiên cuối: `waiting_for_spacing`.
+Snapshot 2026-10-13T18:36:02.008715+07:00. Trạng thái: `closed_for_budget`; phiên cuối: `validated_report_review_passed`.
 
-| Nghiên cứu | Block đã kiểm tra | Mean hiệu ứng | Khoảng từng block |
-|---|---:|---:|---:|
-| RTT | 4 | 0.300333 ms | 0.230333–0.425667 ms |
-| Slots | 2 | 96.989583 percentage points | 96.662500–97.316667 percentage points |
+| Nghiên cứu | Block đã kiểm tra | Mean hiệu ứng | Median | Khoảng từng block |
+|---|---:|---:|---:|---:|
+| RTT | 5 | 0.311867 ms | 0.305667 | 0.230333–0.425667 ms |
+| Slots | 3 | 96.841667 percentage points | 96.662500 | 96.545833–97.316667 percentage points |
 
 RTT: mỗi hiệu ứng là trung bình RTT TGW trừ trung bình RTT Peering trong
 cùng block, đơn vị ms. Slots: hiệu tỷ lệ đúng hạn 16 trừ 8 slots tại
@@ -27,6 +27,21 @@ Mean/median/range tổng hợp các block; request hoặc probe không biến th
 block độc lập. Với rất ít block, không công bố p-value xác nhận hay CI
 liên block có vẻ chính xác giả; mean và range không chứng minh hiệu ứng
 đúng trong mọi ngày, mọi cấu hình hoặc mọi hệ thống AWS.
+
+## Thống kê mô tả toàn bộ request đã đo
+
+| Mạng | Slots | rps | Request theo lịch | Đúng hạn % | Khoảng P95 từng block ms |
+|---|---:|---:|---:|---:|---:|
+| PEERING | 8 | 600 | 27000 | 100.0000 | 12.109–12.684 |
+| PEERING | 16 | 600 | 27000 | 100.0000 | 12.085–12.699 |
+| TGW | 8 | 600 | 27000 | 100.0000 | 12.879–13.146 |
+| TGW | 16 | 600 | 27000 | 100.0000 | 12.981–13.243 |
+| PEERING | 8 | 800 | 36000 | 3.0444 | 1350.096–1499.226 |
+| PEERING | 16 | 800 | 36000 | 100.0000 | 12.651–12.698 |
+| TGW | 8 | 800 | 36000 | 3.2722 | 1225.784–1327.874 |
+| TGW | 16 | 800 | 36000 | 100.0000 | 12.875–13.248 |
+
+Tỷ lệ đúng hạn bằng tổng request đúng hạn chia tổng request theo lịch. Đây là tần suất thực nghiệm trong dữ liệu đã thu, không coi mọi request độc lập. Cột P95 là min–max của P95 từng block; không phải P95 gộp hoặc trung bình P95.
 
 ## Đồ án vẫn đóng góp gì?
 
@@ -41,10 +56,8 @@ liên block có vẻ chính xác giả; mean và range không chứng minh hiệ
 
 ## Việc còn lại trong phạm vi mới
 
-Chỉ để phiên cuối đang xếp kết thúc, kiểm chứng raw, rồi tổng hợp báo cáo,
-biểu đồ và Word **một lần**. Heartbeat được đổi từ tám lần/ngày sang một
-lần chốt lúc 19:00 ngày 13/10; sau bàn giao xóa heartbeat. Nếu runner còn
-chạy, chỉ theo dõi đến hoàn tất, không mở nghiên cứu mới. RTT khi tải được
+Phiên đo cuối đã kết thúc; không mở phiên mới. Kiểm chứng raw và tổng hợp báo cáo,
+biểu đồ và Word **một lần**, rồi kiểm tra trực quan và công bố bản bàn giao. Báo cáo và Word đã qua rà soát; lịch đo tự động đã xóa sau phiên cuối. Không mở nghiên cứu mới. RTT khi tải được
 hoãn và không ghi là đã đo. Không thêm tool hoặc đổi workload để làm đồ án
 trông lớn hơn. Người dùng tự dừng EC2; runner sao lưu và dừng workload.
 

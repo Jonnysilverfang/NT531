@@ -1,42 +1,36 @@
 {
-  "created_local": "2026-10-13T16:26:51.542137+07:00",
-  "docx_sha256": "3dc30d5f34f53cbc7d811f753de585330ca0efb70de86a60cb7075ea1d860de1",
-  "rtt_blocks": 4,
-  "slots_blocks": 2,
+  "created_local": "2026-10-13T18:32:54.723763+07:00",
+  "docx_sha256": "03c98ef4c3ceaf1b7bbddf7df750d936ddaf69c8a444d08744e11ac2e2676192",
+  "rtt_blocks": 5,
+  "slots_blocks": 3,
   "sources": [
     {
       "path": "results/confirmation-rtt-v1/analysis.json",
-      "sha256": "ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66"
+      "sha256": "40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c"
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
+      "sha256": "8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2"
     },
     {
       "path": "results/application-slots-engineering-v1/9e45c8058c6942ef9805ab65cc2f8ab9/analysis.json",
       "sha256": "0e7dd92b20b7b96261cbd0e7d1b713302da98cb12e15c7dfc80db26e1f23c9ed"
     },
     {
+      "path": "results/study-scope-decision-20261013.json",
+      "sha256": "fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45"
+    },
+    {
       "path": "results/analysis/queue-occupancy-audit.json",
-      "sha256": "2675c564bb2437749313455c4216660b2ef3928c047b7be33568128db3a9335e"
+      "sha256": "bed2c80e42275504e1aab605ae3dcacdf1df364f10508c32adc19553de613301"
     }
   ],
   "engineering_raw_sources_verified": 79,
-  "formal_slot_raw_sources_verified": 286,
+  "formal_slot_raw_sources_verified": 429,
   "native_equations": 10,
   "render_review": "passed_all_pages",
   "reviewed_pages": 7,
-  "renderer": "Microsoft Word 16 via PowerShell 7 disposable copy",
-  "packaged_renderer_limitation": "Bundled LibreOffice soffice.exe unavailable on this Windows host",
-  "pdf_sha256": "dd744652bdec620ec4a37e28fa1f46ef8f93f892b6d53b2dbb2e1034d91f7c96",
-  "page_image_sha256": [
-    "e8c97b5d17c9158a80732ca4864cc30beff70dd058eb966d8077c21269f6e1d8",
-    "67c5e231ecc1b52f575707a61cecf0e929567629432ecce33aae92720407a5be",
-    "1669fc2a93edb7e635d0d5502d0f9d4392364a68366725e5515f4c87f091e094",
-    "d82b3767b4bc08d765ff2be8d572ff0540ad2dd3e07b84a0ff8679ba0438c8ed",
-    "159a8cd02d7bec06758f18b04e7804bb79468c6e56f8e71687fadb3d8c94917b",
-    "f97576f2bebe29f49e8fa62527baaadaf6bd380ea91caccba302f3b721178e60",
-    "a4eafbb2f0a9fc397a3582f968bb2e1fbe2637b844d276c38ebef77813c1777a"
-  ],
-  "visual_review": "All seven pages inspected; page3 table labels additionally checked in a crop and PDF text. Native equations, Vietnamese, tables and block2 queue figure readable, no clipped content or orphan reference page."
+  "renderer": "Microsoft Word 16.0",
+  "reviewed_local": "2026-10-13T18:34:33.842218+07:00",
+  "render_pdf_sha256": "8120dcb357cc0a01ec17ca26b96d04d6b67fc6aaddb5e4995e1a8683407a6386"
 }

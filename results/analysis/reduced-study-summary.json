@@ -1,41 +1,139 @@
 {
-  "created_local": "2026-10-13T17:17:18.234161+07:00",
-  "status": "awaiting_one_final_session",
+  "created_local": "2026-10-13T18:36:02.008715+07:00",
+  "status": "closed_for_budget",
   "decision_sha256": "fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45",
-  "final_session_status": "waiting_for_spacing",
+  "final_session_status": "validated_report_review_passed",
   "studies": {
     "confirmation-rtt-v1": {
-      "completed_blocks": 4,
+      "completed_blocks": 5,
       "local_dates": [
         "2026-10-12",
         "2026-10-13"
       ],
       "maximum_after_final_session": 5,
-      "analysis_sha256": "ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66",
+      "analysis_sha256": "40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c",
       "quantity": "TGW minus Peering RTT",
       "unit": "ms",
-      "mean": 0.30033333333333334,
-      "median": 0.27266666666666667,
+      "mean": 0.3118666666666667,
+      "median": 0.30566666666666664,
       "minimum": 0.23033333333333333,
       "maximum": 0.4256666666666667,
       "inferential_result": null
     },
     "application-slots-confirmation-v1": {
-      "completed_blocks": 2,
+      "completed_blocks": 3,
       "local_dates": [
         "2026-10-13"
       ],
       "maximum_after_final_session": 3,
-      "analysis_sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81",
+      "analysis_sha256": "8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2",
       "quantity": "16 minus 8 slots deadline success",
       "unit": "percentage points",
-      "mean": 96.98958333333333,
-      "median": 96.98958333333333,
-      "minimum": 96.6625,
+      "mean": 96.84166666666667,
+      "median": 96.6625,
+      "minimum": 96.54583333333333,
       "maximum": 97.31666666666666,
       "inferential_result": null
     }
   },
+  "slot_conditions": [
+    {
+      "mode": "peering",
+      "slots": 8,
+      "rate_rps": 600,
+      "blocks": 3,
+      "scheduled": 27000,
+      "deadline_success_count": 27000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.10940066675903,
+      "maximum_block_successful_completion_p95_ms": 12.683583666785125
+    },
+    {
+      "mode": "peering",
+      "slots": 16,
+      "rate_rps": 600,
+      "blocks": 3,
+      "scheduled": 27000,
+      "deadline_success_count": 27000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.0847456669253,
+      "maximum_block_successful_completion_p95_ms": 12.698820667083055
+    },
+    {
+      "mode": "tgw",
+      "slots": 8,
+      "rate_rps": 600,
+      "blocks": 3,
+      "scheduled": 27000,
+      "deadline_success_count": 27000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.878740000360267,
+      "maximum_block_successful_completion_p95_ms": 13.146242667062324
+    },
+    {
+      "mode": "tgw",
+      "slots": 16,
+      "rate_rps": 600,
+      "blocks": 3,
+      "scheduled": 27000,
+      "deadline_success_count": 27000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.981143666820572,
+      "maximum_block_successful_completion_p95_ms": 13.24297100018157
+    },
+    {
+      "mode": "peering",
+      "slots": 8,
+      "rate_rps": 800,
+      "blocks": 3,
+      "scheduled": 36000,
+      "deadline_success_count": 1096,
+      "observed_deadline_success_percent": 3.0444444444444443,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 1350.0955560002694,
+      "maximum_block_successful_completion_p95_ms": 1499.2264080001405
+    },
+    {
+      "mode": "peering",
+      "slots": 16,
+      "rate_rps": 800,
+      "blocks": 3,
+      "scheduled": 36000,
+      "deadline_success_count": 36000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.65105200036487,
+      "maximum_block_successful_completion_p95_ms": 12.698036000074353
+    },
+    {
+      "mode": "tgw",
+      "slots": 8,
+      "rate_rps": 800,
+      "blocks": 3,
+      "scheduled": 36000,
+      "deadline_success_count": 1178,
+      "observed_deadline_success_percent": 3.272222222222222,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 1225.7837010001822,
+      "maximum_block_successful_completion_p95_ms": 1327.8736370002662
+    },
+    {
+      "mode": "tgw",
+      "slots": 16,
+      "rate_rps": 800,
+      "blocks": 3,
+      "scheduled": 36000,
+      "deadline_success_count": 36000,
+      "observed_deadline_success_percent": 100.0,
+      "failed": 0,
+      "minimum_block_successful_completion_p95_ms": 12.87503999992623,
+      "maximum_block_successful_completion_p95_ms": 13.24807100036196
+    }
+  ],
   "inference": null,
   "scope": "Descriptive observed blocks only; original 16-block confirmation curtailed for budget, not completed. No post-hoc confirmatory p-values.",
   "no_AWS_calls": true

@@ -1,33 +1,37 @@
 {
-  "rtt_blocks": 4,
-  "slots_blocks": 2,
-  "scope": "Descriptive block plots; no interim p-values, confidence intervals or early stopping",
+  "rtt_blocks": 5,
+  "slots_blocks": 3,
+  "scope": "Descriptive block plots; original design curtailed for budget, no confirmatory inference",
   "sources": [
     {
       "path": "results/confirmation-rtt-v1/analysis.json",
-      "sha256": "ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66"
+      "sha256": "40a68e1647a54511a6747151ffdd8d3ac84f377e752130321aece36884173e7c"
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
+      "sha256": "8598caa32e5df0d904ca4650f295069652de1ec8fe8da2a6b76efe238b0564e2"
+    },
+    {
+      "path": "results/study-scope-decision-20261013.json",
+      "sha256": "fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45"
     }
   ],
   "figures": [
     {
       "path": "docs/images/application/confirmation-progress/rtt-blocks.png",
-      "sha256": "583ab66245223ce4b261a193a27cfec6e3462f7521763032fc8da7c5ab820f1f"
+      "sha256": "6ae42bf7458c5baf9b63656b9597808ea19214bae21f379b2687e5c763dcb487"
     },
     {
       "path": "docs/images/application/confirmation-progress/rtt-blocks.svg",
-      "sha256": "62a16613bb1570deac0960e846ffe9bd22eb494b6966d85cfb64de2c8565d267"
+      "sha256": "2e78614d3e6a695a9248d8cf8e415d5865b37304ea8c5a1f05a442f9e89f8113"
     },
     {
       "path": "docs/images/application/confirmation-progress/slots-blocks.png",
-      "sha256": "982e0f2fcd387227867120b2fa7cc90ac262b3e1a5730b617abb30e992ca6974"
+      "sha256": "0a150f270e745bb21f4750a9e76e5689f249498cd650df1d2496c85744cd04fd"
     },
     {
       "path": "docs/images/application/confirmation-progress/slots-blocks.svg",
-      "sha256": "893655bb9163745d2bf58e271c38518d41dc5870eaebe8b3a7bde1a127acd32a"
+      "sha256": "cef9db67e0bc47df621f50abd0e003042825838038ee4a7a134fd18e8f628e41"
     }
   ]
 }

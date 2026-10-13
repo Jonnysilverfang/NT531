@@ -2,6 +2,7 @@
 import datetime as dt
 import hashlib
 import json
+import statistics as st
 from decimal import Decimal
 from pathlib import Path
 
@@ -250,6 +251,23 @@ về quá trình lấy mẫu và tương quan block.
                 [[b['block'], dt.datetime.fromisoformat(b['started_utc']).astimezone(ZONE).strftime('%d/%m %H:%M'),
                   number(Decimal(b['improvement']) * 100)] for b in slots['rows']]))
         sections.append('![Đúng hạn và hiệu ứng slots theo block](images/application/confirmation-progress/slots-blocks.png)')
+        pooled=[]
+        for rate in [600,800]:
+            for mode in ['peering','tgw']:
+                for count in [8,16]:
+                    records=[next(r for r in b['rows'] if (r['rate_rps'],r['mode'],r['slots'])==(rate,mode,count)) for b in slots['rows']]
+                    scheduled=sum(r['scheduled'] for r in records)
+                    deadline=sum(r['deadline_success_count'] for r in records)
+                    p95=[r['successful_completion_p95_ms'] for r in records]
+                    pooled.append([mode.upper(),count,rate,scheduled,number(100*deadline/scheduled,4),
+                        number(min(p95),3)+'–'+number(max(p95),3),sum(r['failed'] for r in records)])
+        sections.append('## Thống kê mô tả qua toàn bộ block ứng dụng\n\n'+table(
+            ['Mạng','Slots','rps','Theo lịch','Đúng hạn %','Khoảng P95 từng block ms','Lỗi'],pooled)+
+            '\n\nTỷ lệ bằng tổng yêu cầu đúng hạn chia tổng theo lịch; là tần suất thực nghiệm trong các cửa sổ đã đo. Khoảng P95 là min–max của P95 từng block, không phải P95 gộp hoặc trung bình P95. Request tương quan trong cùng phiên không tạo thêm block độc lập.\n')
+        low=[100*r['deadline_success_count']/r['scheduled'] for b in slots['rows'] for r in b['rows'] if r['rate_rps']==800 and r['slots']==8]
+        high=[100*r['deadline_success_count']/r['scheduled'] for b in slots['rows'] for r in b['rows'] if r['rate_rps']==800 and r['slots']==16]
+        sections.append(f"Ở 800 rps, tỷ lệ đúng hạn từng block/mode với 8 slots nằm trong {number(min(low))}–{number(max(low))}%; với 16 slots là {number(min(high))}–{number(max(high))}%. "
+            'Các quan sát này đối chiếu trực tiếp hai quyết định trong workload thử nghiệm: đổi đường mạng khi giữ nguyên khả năng phục vụ và tăng khả năng phục vụ trong từng đường mạng. Log thời gian chờ/phục vụ bên dưới giúp giải thích kết quả; không gán mọi trễ hạn cho dịch vụ mạng AWS.\n')
         q_rows = []
         for condition in sorted(q_latest['conditions'], key=lambda c: (c['mode'], c['slots'])):
             if condition['configured_arrival_rps'] != 800:
@@ -284,7 +302,12 @@ chứng thống kê độc lập hoặc chứng minh clock/logger luôn đúng.
     for label, study, flag in [('RTT', rtt, 'reject_primary_null'), ('Slots', slots, 'majority_improvement_supported')]:
         result = study['inferential_result']
         if result is None:
-            sections.append(f"**{label}:** {study['completed_blocks']}/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.\n")
+            if scope:
+                values=[r['difference_ms'] for r in study['rows']] if label=='RTT' else [100*float(r['improvement']) for r in study['rows']]
+                unit='ms (TGW trừ Peering)' if label=='RTT' else 'điểm phần trăm (16 trừ 8 slots, mean hai route tại 800 rps)'
+                sections.append(f"**{label}:** {len(values)} block hợp lệ; mean hiệu ứng **{number(st.mean(values))} {unit}**, median {number(st.median(values))}, khoảng từng block {number(min(values))}–{number(max(values))}. Kết luận mô tả trong các block quan sát; không công bố p-value xác nhận cho thiết kế rút ngắn.\n")
+            else:
+                sections.append(f"**{label}:** {study['completed_blocks']}/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.\n")
         else:
             assert study['completed_blocks'] == 16 and len(study['local_dates']) >= 4
             sections.append(f"**{label}:** đủ 16 block, K={result['above_margin_blocks']}, p exact={number(result['one_sided_exact_p'], 8)}, cận θ một phía 95%={number(result['probability_lower_one_sided_95'], 6)}. " +
@@ -361,6 +384,13 @@ cáo này không khai thay tác giả hoặc việc nhóm chưa làm.
     if scope:
         notice='**Phạm vi rút gọn ngày 13/10 vì ngân sách:** chỉ giữ phiên cuối, tối đa 5 block RTT/3 block slots. Xác nhận 16 block/bốn ngày chưa hoàn thành; chỉ kết luận mô tả, không công bố p-value xác nhận. [Quyết định và cách kết luận](35-pham-vi-rut-gon-va-ket-luan.md).\n\n'
         report=report.replace('## Câu hỏi và đóng góp',notice+'## Câu hỏi và đóng góp',1)
+        deltas=[r['difference_ms'] for r in rtt['rows']]
+        effects=[100*float(r['improvement']) for r in slots['rows']]
+        outcome=(f"**Kết quả quan sát:** trong {len(deltas)} block RTT, chênh TGW trừ Peering trung bình {number(st.mean(deltas))} ms. "
+            f"Trong {len(effects)} block ứng dụng, tăng 8 lên 16 slots nâng tỷ lệ đúng hạn tại 800 rps trung bình {number(st.mean(effects))} điểm phần trăm qua hai mode. "
+            'Can thiệp khả năng phục vụ và log hàng đợi giải thích điểm nghẽn của workload thử nghiệm. Các con số là hiệu ứng đã đo, không chứng minh mọi hệ thống AWS có cùng hiệu ứng.\n\n')
+        report=report.replace('## Câu hỏi và đóng góp',outcome+'## Câu hỏi và đóng góp',1)
+        report=report.replace('## Thiết kế xác nhận được khóa trước khi đo','## Thiết kế xác nhận ban đầu được khóa trước khi đo',1)
         start=report.index('Hoàn tất các block còn lại theo protocol,')
         end=report.index('Lịch tự tiếp tục,',start)
         report=report[:start]+'Theo phạm vi mới, chỉ chốt phiên cuối đang xếp, kiểm chứng raw và tổng hợp báo cáo/Word một lần. Không thu các block còn lại hoặc RTT khi tải. Sao lưu và dừng workload; người dùng tự dừng EC2.\n\n'+report[end:]

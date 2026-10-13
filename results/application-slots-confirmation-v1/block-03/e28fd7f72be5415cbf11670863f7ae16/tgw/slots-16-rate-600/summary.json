@@ -1,0 +1,49 @@
+{
+  "started_utc": "2026-10-13T11:17:05.888709+00:00",
+  "ended_utc": "2026-10-13T11:17:21.101857+00:00",
+  "mode": "tgw",
+  "rate_rps": 600,
+  "duration_seconds": 15.0,
+  "tracing": false,
+  "summary": {
+    "scheduled": 9000,
+    "sent": 9000,
+    "successful": 9000,
+    "failed": 0,
+    "deadline_ms": 50.0,
+    "deadline_success_count": 9000,
+    "deadline_success_fraction": 1.0,
+    "successful_completion_p50_ms": 12.389629000153946,
+    "successful_completion_p95_ms": 13.102963666824508,
+    "successful_completion_p99_ms": 13.489775000380178,
+    "dispatch_lag_p95_ms": 1.0160850001739163,
+    "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+  },
+  "config": {
+    "role": "load",
+    "node": "a",
+    "mode": "tgw",
+    "bind": "127.0.0.1",
+    "port": 8081,
+    "workers": [
+      "http://10.30.10.212:8081",
+      "http://10.40.10.155:8081"
+    ],
+    "url": "http://10.20.10.155:8080",
+    "worker_delay_ms": 10,
+    "worker_slots": 8,
+    "response_bytes": 4096,
+    "rate": 600,
+    "duration": 15.0,
+    "deadline_ms": 50.0,
+    "timeout": 2.0,
+    "maximum_inflight": 4000,
+    "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r600",
+    "trace_file": null,
+    "queue_file": null,
+    "run_id": "e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r600",
+    "otlp_endpoint": null,
+    "test_shutdown": false
+  },
+  "generator_valid": true
+}

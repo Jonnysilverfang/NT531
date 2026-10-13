@@ -1,0 +1,1005 @@
+{
+  "attempt": "e28fd7f72be5415cbf11670863f7ae16",
+  "block": 3,
+  "phase": "confirmatory_block",
+  "started_utc": "2026-10-13T11:09:26.935632+00:00",
+  "protocol_sha256": "65c69162a62cfd81c8531b9e9fea8480cd664bcddc4d1c78c4bb2b09e46cda0b",
+  "application_sha256": "80375466aff90524ca01f030ba96f31f2449b06813762acfda413043dc6d54ef",
+  "runner_sha256": "e48fb6e9110154279127b7f2c1133efc47a4fa2d13d98bd4e5ebbd5fc12405c3",
+  "deployment_sha256": "1a75cf6c4ab9ccdb8a9c01cede0e360c1c0ddc87fd13e7c898c46b0918de48e7",
+  "cohort_ids": [
+    "i-089bae0de9ec6bc4e",
+    "i-0484f42b82795f765",
+    "i-0a3f3e2e9d7185970",
+    "i-0abcc8853cee750e7"
+  ],
+  "tgw_id": "tgw-036e551008b8c0805",
+  "original_mode": "tgw",
+  "instances": {
+    "a": {
+      "id": "i-089bae0de9ec6bc4e",
+      "key_name": "nt531-key",
+      "private_ip": "10.10.10.212",
+      "public_ip": "18.215.76.235",
+      "security_group_id": "sg-04dc2df4181f005c1",
+      "subnet_id": "subnet-03bd2733d5b1749da"
+    },
+    "b": {
+      "id": "i-0484f42b82795f765",
+      "key_name": "nt531-key",
+      "private_ip": "10.20.10.155",
+      "public_ip": "44.193.132.188",
+      "security_group_id": "sg-0429ec1bc76b99ba8",
+      "subnet_id": "subnet-0e92a1e819eb87fc3"
+    },
+    "c": {
+      "id": "i-0a3f3e2e9d7185970",
+      "key_name": "nt531-key",
+      "private_ip": "10.30.10.212",
+      "public_ip": "44.195.220.184",
+      "security_group_id": "sg-0ef3f78f36cb4b5a9",
+      "subnet_id": "subnet-03f4d7bb22778a927"
+    },
+    "d": {
+      "id": "i-0abcc8853cee750e7",
+      "key_name": "nt531-key",
+      "private_ip": "10.40.10.155",
+      "public_ip": "34.199.47.71",
+      "security_group_id": "sg-0e61ff5174a592093",
+      "subnet_id": "subnet-049a464ed7039817e"
+    }
+  },
+  "routing_context": {
+    "cross_peering_ids": {
+      "ac": "pcx-0c8fcb7017a95dde9",
+      "ad": "pcx-07063d5268c85a96d",
+      "bc": "pcx-0034d25ba224e4fff",
+      "bd": "pcx-041ac960ba525e905"
+    },
+    "mode": "tgw",
+    "peering_cd_id": "pcx-064bd54dd4b044bda",
+    "peering_id": "pcx-00fb47a60a956e36b",
+    "route_table_a_id": "rtb-079cc4f5cccbb1b81",
+    "route_table_b_id": "rtb-0b1bd8f37ac6649e2",
+    "route_table_c_id": "rtb-0494ead75dcfa4cca",
+    "route_table_d_id": "rtb-002a20655274d4a71",
+    "transit_gateway_id": "tgw-036e551008b8c0805"
+  },
+  "protocol": {
+    "id": "application-slots-confirmation-v1",
+    "created_utc": "2026-10-12T16:01:38.292628+00:00",
+    "question": "Does 8->16 worker slots improve deadline success at 800 rps by over 10 percentage points, averaged over both routes, in a majority of paired blocks?",
+    "primary": "P(block mean_over_routes(p16-p8) > 0.10) > 0.5",
+    "alpha": 0.05,
+    "improvement_margin_fraction": 0.1,
+    "blocks": 16,
+    "minimum_distinct_local_dates": 4,
+    "minimum_gap_seconds": 7200,
+    "maximum_block_span_seconds": 3600,
+    "expected_instance_type": "c6i.large",
+    "expected_ami": "ami-0d27e0fb3bac4d724",
+    "expected_az": "us-east-1a",
+    "minimum_uptime_seconds": 1800,
+    "worker_delay_ms": 10,
+    "worker_response_bytes": 4096,
+    "worker_slots": 8,
+    "deadline_ms": 50,
+    "request_timeout_seconds": 2,
+    "maximum_inflight": 4000,
+    "queue_logging": true,
+    "warmup_seconds": 5,
+    "duration_seconds": 15,
+    "settle_seconds": 20,
+    "seed": 8442733443886244480,
+    "stopping_rule": "All 16 valid blocks, no significance-based stop; technical failures retained, no automatic retry",
+    "randomization": "Balanced mode-first and four condition-order cyclic rotations; each condition has fresh servers, same order in the paired modes",
+    "primary_critical_successes": 12,
+    "primary_null_tail_at_12": 0.0384063720703125,
+    "power_if_block_success_probability_0_8": 0.7982454417653762,
+    "precision_note": "Power refers to binary block success under assumed 0.8, not known empirical effect; no promised CI width",
+    "queue_measurement": "All entered worker calls buffered, timestamps from one monotonic worker clock; handler completion is not client receipt; cancelled and missing calls retained",
+    "scope": "Same EC2/TGW cohort across confirmation; stop/start allowed with boot ID and uptime recorded, >=30min uptime. New identities require a separate study, never pooling.",
+    "secondary": "Paired network differences and queue/service diagnostics are descriptive with whole-block bootstrap CIs; no equivalence claim or additional confirmatory tests",
+    "independence": "Blocks are not requests; spacing/randomization do not prove independence. Engineering/pilot/calibration excluded.",
+    "application_sha256": "80375466aff90524ca01f030ba96f31f2449b06813762acfda413043dc6d54ef",
+    "runtime_requirements_sha256": "0d021e662fc5dc77aaac96045a95bc9e61e065d66f9a37a22300e6b3a97c41e7",
+    "schedule": [
+      {
+        "block": 1,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 2,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 3,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 4,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 5,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 6,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 7,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 8,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 9,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 10,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 11,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 12,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 13,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 14,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          }
+        ]
+      },
+      {
+        "block": 15,
+        "mode_order": [
+          "peering",
+          "tgw"
+        ],
+        "conditions": [
+          {
+            "slots": 8,
+            "rate": 800
+          },
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          }
+        ]
+      },
+      {
+        "block": 16,
+        "mode_order": [
+          "tgw",
+          "peering"
+        ],
+        "conditions": [
+          {
+            "slots": 16,
+            "rate": 600
+          },
+          {
+            "slots": 16,
+            "rate": 800
+          },
+          {
+            "slots": 8,
+            "rate": 600
+          },
+          {
+            "slots": 8,
+            "rate": 800
+          }
+        ]
+      }
+    ]
+  },
+  "schedule": {
+    "block": 3,
+    "mode_order": [
+      "tgw",
+      "peering"
+    ],
+    "conditions": [
+      {
+        "slots": 8,
+        "rate": 600
+      },
+      {
+        "slots": 8,
+        "rate": 800
+      },
+      {
+        "slots": 16,
+        "rate": 600
+      },
+      {
+        "slots": 16,
+        "rate": 800
+      }
+    ]
+  },
+  "status": "complete",
+  "runs": [
+    {
+      "condition": {
+        "slots": 8,
+        "rate": 600
+      },
+      "mode": "tgw",
+      "summary": {
+        "started_utc": "2026-10-13T11:11:59.800720+00:00",
+        "ended_utc": "2026-10-13T11:12:15.013665+00:00",
+        "mode": "tgw",
+        "rate_rps": 600,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 9000,
+          "sent": 9000,
+          "successful": 9000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 9000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 12.565057000756497,
+          "successful_completion_p95_ms": 13.146242667062324,
+          "successful_completion_p99_ms": 13.292233000356646,
+          "dispatch_lag_p95_ms": 1.0371326670792769,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "tgw",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 600,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-tgw-s8-r600",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-tgw-s8-r600",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 8,
+        "rate": 800
+      },
+      "mode": "tgw",
+      "summary": {
+        "started_utc": "2026-10-13T11:14:37.460212+00:00",
+        "ended_utc": "2026-10-13T11:14:53.959726+00:00",
+        "mode": "tgw",
+        "rate_rps": 800,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 12000,
+          "sent": 12000,
+          "successful": 12000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 428,
+          "deadline_success_fraction": 0.035666666666666666,
+          "successful_completion_p50_ms": 635.3175660001398,
+          "successful_completion_p95_ms": 1225.7837010001822,
+          "successful_completion_p99_ms": 1260.2451770003427,
+          "dispatch_lag_p95_ms": 1.047579000442056,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "tgw",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 800,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-tgw-s8-r800",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-tgw-s8-r800",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 16,
+        "rate": 600
+      },
+      "mode": "tgw",
+      "summary": {
+        "started_utc": "2026-10-13T11:17:05.888709+00:00",
+        "ended_utc": "2026-10-13T11:17:21.101857+00:00",
+        "mode": "tgw",
+        "rate_rps": 600,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 9000,
+          "sent": 9000,
+          "successful": 9000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 9000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 12.389629000153946,
+          "successful_completion_p95_ms": 13.102963666824508,
+          "successful_completion_p99_ms": 13.489775000380178,
+          "dispatch_lag_p95_ms": 1.0160850001739163,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "tgw",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 600,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r600",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r600",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 16,
+        "rate": 800
+      },
+      "mode": "tgw",
+      "summary": {
+        "started_utc": "2026-10-13T11:19:24.771513+00:00",
+        "ended_utc": "2026-10-13T11:19:39.985006+00:00",
+        "mode": "tgw",
+        "rate_rps": 800,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 12000,
+          "sent": 12000,
+          "successful": 12000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 12000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 12.288106000141852,
+          "successful_completion_p95_ms": 12.915903000248363,
+          "successful_completion_p99_ms": 13.218939000125829,
+          "dispatch_lag_p95_ms": 1.0407570002826105,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "tgw",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 800,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r800",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-tgw-s16-r800",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 8,
+        "rate": 600
+      },
+      "mode": "peering",
+      "summary": {
+        "started_utc": "2026-10-13T11:22:37.163811+00:00",
+        "ended_utc": "2026-10-13T11:22:52.375837+00:00",
+        "mode": "peering",
+        "rate_rps": 600,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 9000,
+          "sent": 9000,
+          "successful": 9000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 9000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 11.611825999807479,
+          "successful_completion_p95_ms": 12.649118333229126,
+          "successful_completion_p99_ms": 13.07950933369284,
+          "dispatch_lag_p95_ms": 1.0372180004196707,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "peering",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 600,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-peering-s8-r600",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-peering-s8-r600",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 8,
+        "rate": 800
+      },
+      "mode": "peering",
+      "summary": {
+        "started_utc": "2026-10-13T11:24:55.913397+00:00",
+        "ended_utc": "2026-10-13T11:25:12.540574+00:00",
+        "mode": "peering",
+        "rate_rps": 800,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 12000,
+          "sent": 12000,
+          "successful": 12000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 401,
+          "deadline_success_fraction": 0.033416666666666664,
+          "successful_completion_p50_ms": 723.4146670002701,
+          "successful_completion_p95_ms": 1350.0955560002694,
+          "successful_completion_p99_ms": 1384.7298170003342,
+          "dispatch_lag_p95_ms": 1.047199000367982,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "peering",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 800,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-peering-s8-r800",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-peering-s8-r800",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 16,
+        "rate": 600
+      },
+      "mode": "peering",
+      "summary": {
+        "started_utc": "2026-10-13T11:27:09.645780+00:00",
+        "ended_utc": "2026-10-13T11:27:24.858550+00:00",
+        "mode": "peering",
+        "rate_rps": 600,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 9000,
+          "sent": 9000,
+          "successful": 9000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 9000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 11.629586666913383,
+          "successful_completion_p95_ms": 12.681246333613672,
+          "successful_completion_p99_ms": 13.072294000266993,
+          "dispatch_lag_p95_ms": 1.0365263337916986,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "peering",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 600,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-peering-s16-r600",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-peering-s16-r600",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    },
+    {
+      "condition": {
+        "slots": 16,
+        "rate": 800
+      },
+      "mode": "peering",
+      "summary": {
+        "started_utc": "2026-10-13T11:29:16.150766+00:00",
+        "ended_utc": "2026-10-13T11:29:31.364359+00:00",
+        "mode": "peering",
+        "rate_rps": 800,
+        "duration_seconds": 15.0,
+        "tracing": false,
+        "summary": {
+          "scheduled": 12000,
+          "sent": 12000,
+          "successful": 12000,
+          "failed": 0,
+          "deadline_ms": 50.0,
+          "deadline_success_count": 12000,
+          "deadline_success_fraction": 1.0,
+          "successful_completion_p50_ms": 11.792449000040506,
+          "successful_completion_p95_ms": 12.65105200036487,
+          "successful_completion_p99_ms": 12.82829700039656,
+          "dispatch_lag_p95_ms": 1.0215700003755046,
+          "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+        },
+        "config": {
+          "role": "load",
+          "node": "a",
+          "mode": "peering",
+          "bind": "127.0.0.1",
+          "port": 8081,
+          "workers": [
+            "http://10.30.10.212:8081",
+            "http://10.40.10.155:8081"
+          ],
+          "url": "http://10.20.10.155:8080",
+          "worker_delay_ms": 10,
+          "worker_slots": 8,
+          "response_bytes": 4096,
+          "rate": 800,
+          "duration": 15.0,
+          "deadline_ms": 50.0,
+          "timeout": 2.0,
+          "maximum_inflight": 4000,
+          "out": "/opt/nt531-application/results/e28fd7f72be5415cbf11670863f7ae16-peering-s16-r800",
+          "trace_file": null,
+          "queue_file": null,
+          "run_id": "e28fd7f72be5415cbf11670863f7ae16-peering-s16-r800",
+          "otlp_endpoint": null,
+          "test_shutdown": false
+        },
+        "generator_valid": true
+      }
+    }
+  ],
+  "cleanup_errors": [],
+  "boots": {
+    "a": {
+      "boot_id": "7a6b1a71-e46a-40c4-bb54-e4a857186dbf",
+      "uptime": 2212.78
+    },
+    "b": {
+      "boot_id": "15d318d7-7e86-4655-98ed-959aeae21ca7",
+      "uptime": 2217.86
+    },
+    "c": {
+      "boot_id": "2753b152-cc69-4c44-b3f1-8d82e1a512db",
+      "uptime": 2215.07
+    },
+    "d": {
+      "boot_id": "0ad6adab-76c4-4e74-a591-ed92aecbd6dc",
+      "uptime": 2220.77
+    }
+  },
+  "ended_utc": "2026-10-13T11:31:11.435894+00:00"
+}

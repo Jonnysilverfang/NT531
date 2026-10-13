@@ -1,5 +1,7 @@
 # Lời thoại bảo vệ đồ án NT531
 
+Nếu chưa hiểu nội dung, đọc [bản giải thích chi tiết ghép đúng ảnh từng slide](Kich-ban-chi-tiet-cho-nguoi-moi.md) trước. File này là lời thoại ngắn để canh 10–12 phút; Notes trong PowerPoint cũng là bản ngắn.
+
 Giảng viên: Đặng Lê Bảo Chương.
 24521068 – Nguyễn Ngọc Minh
 24521253 – Nguyễn Huy Nhật

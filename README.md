@@ -18,7 +18,9 @@ Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
 
 ## Đọc theo thứ tự
 
-**Bộ bảo vệ:** [PowerPoint 18 slide](docs/presentation/NT531-thuyet-trinh.pptx), [lời thoại từng trang](docs/presentation/Loi-thoai-NT531.md) và [kịch bản quay demo 5 phút](docs/presentation/Kich-ban-quay-demo-NT531.md). Có 14 slide chính khoảng 11 phút, 4 trang phụ lục, mô hình kiến trúc và biểu đồ chỉnh sửa được. PowerPoint chứa lời thoại và nguồn trong Notes. Nhóm tập trình bày rồi điều chỉnh theo thời lượng giảng viên giao.
+**Nếu chưa hiểu slide, đọc trước [kịch bản chi tiết cho người mới](docs/presentation/Kich-ban-chi-tiet-cho-nguoi-moi.md).** Tài liệu ghép ảnh đúng 18 slide, giải thích khái niệm từ đầu, ví dụ công thức, lời nói trên lớp, vị trí cần chỉ và câu trả lời thường gặp. Phần học và phần nói được tách để dễ tập.
+
+**Bộ bảo vệ:** [PowerPoint 18 slide](docs/presentation/NT531-thuyet-trinh.pptx), [lời thoại ngắn từng trang](docs/presentation/Loi-thoai-NT531.md) và [kịch bản quay demo 5 phút](docs/presentation/Kich-ban-quay-demo-NT531.md). Có 14 slide chính khoảng 11 phút theo bản ngắn, 4 trang phụ lục, mô hình kiến trúc và biểu đồ chỉnh sửa được. PowerPoint chứa lời thoại ngắn và nguồn trong Notes. Bản giải thích chi tiết để học và có thể trình bày 15–18 phút, nhóm tập canh lại theo thời lượng giảng viên giao.
 
 Để chuẩn bị bảo vệ, đọc [công thức bám slide và ví dụ từ log](docs/36-cong-thuc-bam-bai-giang.md) và [kịch bản quay video, mở Grafana](docs/37-quay-video-va-grafana.md). Dashboard local [NT531: kết quả và công thức](http://localhost:3000/d/nt531-study-demo) có bảng dữ liệu đã chốt và trace thật đã lưu; [hướng dẫn bật/replay](monitoring/README.md). Phần Little, phân vị và SLI liên hệ trực tiếp bài giảng. Kiểm định 16 block chưa hoàn thành và phần chứng minh dài để phụ lục.
 

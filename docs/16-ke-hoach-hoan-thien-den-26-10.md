@@ -1,6 +1,6 @@
 # Kế hoạch hoàn thiện đồ án trước ngày 26 tháng 10 năm 2026
 
-Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 13/10 sau ba block RTT và một block slots hợp lệ. [Trạng thái và lịch tự tiếp tục](32-trang-thai-xac-nhan.md) ghi rõ việc còn thiếu.
+Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10; các số đếm trong bản này là snapshot buổi trưa 13/10 sau ba block RTT và một block slots hợp lệ. [Trạng thái và lịch tự tiếp tục](32-trang-thai-xac-nhan.md) ghi số mới nhất; [báo cáo tổng hợp](34-bao-cao-tong-hop.md) ghép kiến trúc, kịch bản, công thức và kết quả từ raw.
 
 ## Phần đã có và phần còn thiếu
 

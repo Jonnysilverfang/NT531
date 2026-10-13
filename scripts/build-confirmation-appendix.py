@@ -148,7 +148,9 @@ def build():
     text('Raw và analysis nằm trong results/confirmation-rtt-v1, results/application-slots-confirmation-v1 và results/application-slots-engineering-v1. Script kiểm tra source hash, route, môi trường, từng request và queue logs. Lỗi/recovery được giữ; state, credentials, SSH key và ZIP riêng không công bố.')
     text('[1] Dean J và Barroso LA. The Tail at Scale. Communications of the ACM 56, 2013, 74–80. https://research.google/pubs/the-tail-at-scale/')
     text('[2] ASA. Statement on Statistical Significance and P Values, 2016. https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf')
+    text('[3] Sigman K. Notes on Little’s Law, 2009, phần 1–1.1. https://www.columbia.edu/~ks20/stochastic-I/stochastic-I-LL.pdf')
     text('Công thức và tiêu chí bàn giao đầy đủ: tài liệu 27 và 30 trong thư mục docs. Chương kết quả vận chuyển cũ giữ nguyên dữ liệu lịch sử và không nhập vào cohort xác nhận mới.')
+    native_equations=8
     if slots['rows']:
         block=slots['rows'][-1]
         page('Kết quả block xác nhận slots mới nhất')
@@ -166,10 +168,37 @@ def build():
             high=next(r for r in block['rows'] if (r['mode'],r['slots'],r['rate_rps'])==(mode,16,800))
             text(f"{mode.upper()}: P95 chờ C/D ở 8 slots là "+' / '.join(f"{w['queue_wait_p95_ms']:.3f}" for w in low['workers'])+' ms; ở 16 slots là '+' / '.join(f"{w['queue_wait_p95_ms']:.4f}" for w in high['workers'])+' ms. Các số này là quantile từng worker, không cộng thành P95 phía A.')
         text('Mỗi điều kiện dùng fresh server, warm-up và drain; cùng mã ứng dụng/MTU/cohort. SCP chỉ tải sau capture, host key pin qua SSM, đối chiếu size/SHA. Trước block này có attempt kỹ thuật bị guard uptime chặn: giữ lỗi và quyết định retry, chưa thu outcome; không chọn lại vì kết quả.')
+        queue_source=ROOT/'results/analysis/queue-occupancy-audit.json'
+        queue_audit=read(queue_source)
+        cohort=next(q for q in queue_audit['study_results'] if q['phase']=='confirmatory_block'
+            and (q['block'],q['attempt'])==(block['block'],block['attempt']))
+        folder=ROOT/'results/application-slots-confirmation-v1'/f"block-{block['block']:02d}"/block['attempt']
+        assert sha(folder/'analysis.json')==cohort['validated_analysis_sha256']
+        for condition in cohort['conditions']:
+            for source in condition['sources']:assert sha(ROOT/source['path'])==source['sha256']
+        sources.append(queue_source)
+        page('Số lời gọi đang chờ và định luật Little')
+        text(f"Phân tích mô tả từ block slots {block['block']}, không tạo thêm mẫu xác nhận. Ghép request ID đo, loại warm-up và giữ lời gọi hủy. Mỗi worker có cửa sổ riêng chứa trọn từ entry đầu đến exit cuối, gồm đuôi backlog.")
+        equation(doc,[sub('λ','C'),' = ',frac('N','T')],9)
+        equation(doc,[sub('L','q,C'),' = ',frac([sigma('i = 1','N'),sub('W','q,i')],'T'),
+            ' = ',sub('λ','C'),' × ',sub('W','q,mean')],10)
+        native_equations=10
+        text('N là số lời gọi vào worker; T là độ dài cửa sổ theo giây; Wq,i là thời gian chờ của lời gọi i, giây; Wq,mean là mean của N thời gian chờ. Lq,C là số lời gọi trung bình đang chờ, λC là N/T, lời gọi/s. Không thay mean bằng P95 hoặc N/T bằng rate gửi 800 khi cửa sổ có đuôi.')
+        rows=[]
+        for mode in ['peering','tgw']:
+            for c in [8,16]:
+                condition=next(r for r in cohort['conditions'] if (r['mode'],r['slots'],r['configured_arrival_rps'])==(mode,c,800))
+                w=next(w for w in condition['workers'] if w['node']=='c')
+                rows.append([mode.upper(),c,f"{w['cohort_count_rate_per_second']:.3f}",f"{w['mean_wait_ms']:.6f}",f"{w['mean_queue_occupancy']:.6f}"])
+        table(['Mạng','Slots','N/T mỗi s','Mean chờ ms','Mean số chờ C'],rows,[1.25,.65,1.3,1.8,1.9])
+        image=ROOT/'docs/images/application/queue-occupancy'/f"block-{block['block']:02d}-queue.png"
+        doc.add_paragraph().add_run().add_picture(str(image),width=Inches(6.2))
+        doc.add_paragraph('Hình 2  Mean số chờ trong bin 100 ms tại 800 rps',style='Caption')
+        text('Hai hàng dùng thang dọc khác nhau; gốc thời gian riêng mỗi worker. Đẳng thức hữu hạn do tích phân hàm chỉ thị bằng tổng khoảng chờ; không cần trạng thái dừng. Kiểm tra bằng event sweep và tổng thời gian cùng raw là nhất quán đại số, không kiểm định độc lập hoặc bằng chứng hàng đợi AWS. Chứng minh và số liệu hai worker ở tài liệu 33.')
     out=ROOT/'docs/31-phu-luc-bang-chung-thong-ke.docx';doc.save(out)
     proof=dict(created_local=now.isoformat(),docx_sha256=sha(out),rtt_blocks=rtt['completed_blocks'],slots_blocks=slots['completed_blocks'],
         sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=sha(p)) for p in sources],
-        engineering_raw_sources_verified=len(eng['sources']),formal_slot_raw_sources_verified=formal_verified,native_equations=8,render_review='pending')
+        engineering_raw_sources_verified=len(eng['sources']),formal_slot_raw_sources_verified=formal_verified,native_equations=native_equations,render_review='pending')
     (ROOT/'results/analysis/confirmation-appendix.json').write_text(json.dumps(proof,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(proof))
 

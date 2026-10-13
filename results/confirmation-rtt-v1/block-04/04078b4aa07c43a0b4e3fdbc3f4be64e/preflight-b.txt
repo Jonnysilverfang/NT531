@@ -1,0 +1,13 @@
+6.18.51-120.163.amzn2023.x86_64
+2: ens5    inet 10.20.10.155/24 metric 512 brd 10.20.10.255 scope global dynamic ens5\       valid_lft 3567sec preferred_lft 3567sec
+Linux 6.18.51-120.163.amzn2023.x86_64 (ip-10-20-10-155.ec2.internal) 	10/13/26 	_x86_64_	(2 CPU)
+
+08:58:41     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+08:58:42     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+08:58:42       0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+08:58:42       1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+
+Average:     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+Average:     all    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+Average:       0    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00
+Average:       1    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00  100.00

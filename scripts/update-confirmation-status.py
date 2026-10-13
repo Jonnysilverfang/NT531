@@ -44,7 +44,7 @@ def main():
         '3. Công bố độ lớn hiệu ứng, CI/cận xác suất và kiểm định đã chốt, kể cả nếu không đạt giả thuyết.',
         '4. Ghép kết quả mới vào báo cáo chung, kiến trúc, công thức, bài giảng và related work; rà soát slide/demo.',
         '5. Khi mọi việc hoàn tất, stop máy và xóa heartbeat; không tiếp tục đo tự động vô hạn.','',
-        '[Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx)','',
+        '[Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx) · [Báo cáo tổng hợp](34-bao-cao-tong-hop.md)','',
         '## Dữ liệu nguồn','']
     for p in paths:lines+=[f"- `{p.relative_to(ROOT).as_posix()}` — SHA256 `{sha(p)}`"]
     out=ROOT/'docs/32-trang-thai-xac-nhan.md';out.write_text('\n'.join(lines)+'\n',encoding='utf-8')

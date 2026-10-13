@@ -1,0 +1,26 @@
+{
+  "created_local": "2026-10-13T16:05:23.731432+07:00",
+  "report_sha256": "3e0c73c85a162c8a3e59f40cbec127224a35143dae57ed44e15137bed7b87b31",
+  "rtt_blocks": 4,
+  "slots_blocks": 1,
+  "raw_source_hash_checks": 178,
+  "no_AWS_calls": true,
+  "sources": [
+    {
+      "path": "results/analysis/report-metrics.json",
+      "sha256": "c8537ae84c0bf528b12a65edb53fc06dd4132e0966a3a6db1bfc4577ba42d94d"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/analysis.json",
+      "sha256": "ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/analysis.json",
+      "sha256": "829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0"
+    },
+    {
+      "path": "results/analysis/queue-occupancy-audit.json",
+      "sha256": "ad2db55072042ce0edfee80e7a8e8672c79c691c48aed9f8377c05b0eea01d71"
+    }
+  ]
+}

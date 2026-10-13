@@ -42,7 +42,7 @@ Block 2 bắt đầu `2026-10-12T14:26:56Z`, đo TGW rồi Peering: Peering 0,20
 TGW 0,4463 ms, chênh +0,2397 ms, không mất packet. Cả hai block vượt margin
 đã chốt `δ=0,1 ms`, nên `Z₁=Z₂=1`. Block 3 bắt đầu 11:10:24 ngày 13/10:
 Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.
-Hiện có 3/16 block trên hai ngày; không tính p-value kết luận và không dừng
+Snapshot buổi trưa 13/10 có 3/16 block trên hai ngày; không tính p-value kết luận và không dừng
 sớm. [Trạng thái và lịch](32-trang-thai-xac-nhan.md) lấy từ analysis mới nhất. Cohort phải giữ hai
 instance ID `i-089bae0de9ec6bc4e`, `i-0484f42b82795f765` và TGW
 `tgw-036e551008b8c0805` trong toàn đợt.
@@ -246,7 +246,7 @@ agent trong cửa sổ primary sẽ tạo thêm một biến gây nhiễu. Thi�
 
 | Câu kết luận | Bằng chứng tối thiểu | Trạng thái |
 |---|---|---|
-| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | 3/16, chưa kết luận |
+| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | Số block/kết luận mới nhất xem [trạng thái](32-trang-thai-xac-nhan.md) |
 | TGW dễ mở rộng topology full mesh hơn Peering | công thức 6 Peering vs 4 attachment và tài liệu AWS | đủ bằng chứng kiến trúc |
 | RTT TGW cao hơn đi kèm đường đi có thêm hop | TTL, route snapshot, số đo paired và tài liệu AWS | bằng chứng bước đầu; không phân lập được chi phí riêng của hop |
 | TGW/Peering chịu tải tốt hơn | loaded RTT lặp theo block, goodput/loss/CPU/ENA | chưa đủ; bài tải hiện chỉ khám phá |

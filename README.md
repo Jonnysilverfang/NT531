@@ -16,6 +16,11 @@ Bảng lớp ghi nhóm 21, thứ tự báo cáo 9, lịch 26/10.
 
 ## Đọc theo thứ tự
 
+Đọc [báo cáo tổng hợp hiện hành](docs/34-bao-cao-tong-hop.md) để xem kiến trúc,
+kịch bản, công thức, kết quả theo block và phạm vi kết luận trong một tài liệu.
+[Trạng thái xác nhận](docs/32-trang-thai-xac-nhan.md) ghi số block đã kiểm tra
+và lịch tiếp tục. Các cập nhật theo ngày bên dưới là snapshot lịch sử.
+
 Xem [trạng thái bản công bố ngày 07/10/2026 và việc tiếp theo](docs/19-trang-thai-ban-cong-bo.md).
 Bản này gồm Terraform bốn VPC, script đo, sáu bộ kết quả chính đã kiểm chứng,
 chương kết quả DOCX, sơ đồ, biểu đồ, công thức và kế hoạch trước 26/10.
@@ -56,8 +61,9 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 26. [Phụ lục Word có công thức và bằng chứng xác nhận đã kiểm tra từng trang](docs/31-phu-luc-bang-chung-thong-ke.docx).
 27. [Trạng thái xác nhận, số block còn thiếu và lịch tự tiếp tục](docs/32-trang-thai-xac-nhan.md).
 28. [Hàng đợi ứng dụng, chứng minh công thức Little trong cửa sổ hữu hạn và thế số từ raw](docs/33-hang-doi-va-dinh-luat-little.md).
+29. [Báo cáo tổng hợp kiến trúc, kịch bản, kết quả và thiết kế thống kê từ nguồn đã kiểm tra](docs/34-bao-cao-tong-hop.md).
 
-Cập nhật 13/10: RTT có **3/16 block hợp lệ trên hai ngày**; block 3 có
+Snapshot buổi trưa 13/10: RTT có **3/16 block hợp lệ trên hai ngày**; block 3 có
 Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.
 Slots có **1/16 block hợp lệ**, 84.000 yêu cầu đo: ở 800 rps, 8 → 16 slots
 nâng đúng hạn **2,083% → 100% qua Peering**, **3,283% → 100% qua TGW**;

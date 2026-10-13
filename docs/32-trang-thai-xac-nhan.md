@@ -1,10 +1,10 @@
 # Trạng thái xác nhận và công việc tiếp theo
 
-Snapshot 13/10/2026 15:29 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
+Snapshot 13/10/2026 16:13 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
 
 | Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |
 |---|---:|---:|---:|
-| RTT khi rảnh | 3/16 | 2 | 13 block |
+| RTT khi rảnh | 4/16 | 2 | 12 block |
 | Can thiệp slots | 1/16 | 1 | 15 block |
 
 Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm định chính sau đủ 16 block và các tiêu chí chất lượng. Engineering 84.000 requests và pilot/calibration 62.200 requests không nhập vào số block này.
@@ -16,6 +16,7 @@ Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm địn
 | 1 | 12/10 16:41:00 | peering → tgw | 0.211333 | 0.441667 | +0.230333 | 0 |
 | 2 | 12/10 21:26:56 | tgw → peering | 0.206667 | 0.446333 | +0.239667 | 0 |
 | 3 | 13/10 11:10:24 | peering → tgw | 0.190000 | 0.615667 | +0.425667 | 0 |
+| 4 | 13/10 15:58:29 | tgw → peering | 0.124333 | 0.430000 | +0.305667 | 0 |
 
 ## Slots từng block đã kiểm tra
 
@@ -45,9 +46,9 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 4. Ghép kết quả mới vào báo cáo chung, kiến trúc, công thức, bài giảng và related work; rà soát slide/demo.
 5. Khi mọi việc hoàn tất, stop máy và xóa heartbeat; không tiếp tục đo tự động vô hạn.
 
-[Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx)
+[Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx) · [Báo cáo tổng hợp](34-bao-cao-tong-hop.md)
 
 ## Dữ liệu nguồn
 
-- `results/confirmation-rtt-v1/analysis.json` — SHA256 `41c92fd0a47533722260d0d530c5074a6ec6fbf353546b6b77417466009d99f7`
+- `results/confirmation-rtt-v1/analysis.json` — SHA256 `ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66`
 - `results/application-slots-confirmation-v1/analysis.json` — SHA256 `829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0`

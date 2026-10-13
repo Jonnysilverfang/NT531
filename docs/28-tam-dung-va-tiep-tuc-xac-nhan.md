@@ -64,7 +64,7 @@ RTT và slots đều cần 16 block hợp lệ, trên ít nhất bốn ngày; c�
 cùng nghiên cứu cách nhau ít nhất hai giờ. Có thể bố trí bốn block/ngày
 trong bốn ngày, nhưng phải kiểm tra khoảng cách, thời lượng và chất lượng
 thực tế. Ngày 13/10 người dùng đã cho phép heartbeat tiếp tục trong chat
-lúc 08:00, 11:00, 14:00, 17:00, 20:00 và 23:00 giờ Việt Nam theo yêu cầu
+lúc 00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15 giờ Việt Nam theo yêu cầu
 đẩy nhanh sau khi tiếp tục, stop bốn máy cuối mỗi phiên. Bộ lập kế hoạch
 giữ đủ block cho ít nhất bốn ngày; không dùng hết block cuối ở ngày thứ ba.
 Lịch phụ thuộc ứng dụng/máy đang hoạt động và phiên đăng nhập AWS còn hạn;

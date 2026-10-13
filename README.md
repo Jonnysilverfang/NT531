@@ -73,7 +73,7 @@ Chưa công bố suy luận trước khi đủ 16 block và tiêu chí ngày/ch�
 Attempt uptime bị chặn trước outcome được giữ cùng quyết định retry.
 
 Theo yêu cầu đẩy nhanh ngày 13/10, lịch tự tiếp tục là
-08:00, 11:00, 14:00, 17:00, 20:00 và 23:00 giờ Việt Nam
+00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15 giờ Việt Nam
 qua heartbeat trong chat; mỗi phiên kiểm tra, sao lưu rồi stop bốn EC2,
 giữ hạ tầng. Lịch phụ thuộc ứng dụng đang hoạt động và AWS còn đăng nhập.
 Xem tài liệu 32 để biết phạm vi, điều kiện và việc còn thiếu.

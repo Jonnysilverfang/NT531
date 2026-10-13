@@ -74,8 +74,9 @@ Attempt uptime bị chặn trước outcome được giữ cùng quyết định
 
 Theo yêu cầu đẩy nhanh ngày 13/10, lịch tự tiếp tục là
 00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15 giờ Việt Nam
-qua heartbeat trong chat; mỗi phiên kiểm tra, sao lưu rồi stop bốn EC2,
-giữ hạ tầng. Lịch phụ thuộc ứng dụng đang hoạt động và AWS còn đăng nhập.
+qua heartbeat trong chat; mỗi phiên kiểm tra và sao lưu. Quyết định mới lúc
+16:43 ngày 13/10: **người dùng tự dừng EC2**, runner dừng workload nhưng
+giữ EC2 running sau phiên. Lịch phụ thuộc ứng dụng đang hoạt động và AWS còn đăng nhập.
 Xem tài liệu 32 để biết phạm vi, điều kiện và việc còn thiếu.
 Phiên buổi trưa 13/10 đã xác nhận bốn máy `stopped` lúc 12:05 giờ Việt Nam;
 [bằng chứng stop và checksum backup riêng](results/session-lifecycle/20261013T050449Z-stop.json).
@@ -83,7 +84,10 @@ Phiên buổi trưa 13/10 đã xác nhận bốn máy `stopped` lúc 12:05 giờ
 
 Sau đó người dùng yêu cầu tiếp tục. Mỗi phiên dùng wrapper
 `scripts/run-confirmation-session.py` có khóa chống chạy chồng và cleanup
-sao lưu/stop trong finally. Bộ lập kế hoạch giữ block cuối cho đủ bốn ngày;
+sao lưu trong finally; mặc định stop EC2, còn `--leave-ec2-running` thực hiện
+lựa chọn dừng máy thủ công. `--wait-until-due --prewarm-before-due` chờ và
+chuẩn bị cohort khoảng 31 phút trước eligibility; chỉ đo khi đủ spacing và
+uptime. Bộ lập kế hoạch giữ block cuối cho đủ bốn ngày;
 tăng số phiên/ngày không thay đổi protocol hoặc tăng giả số mẫu độc lập.
 Trạng thái máy hiện tại phải đọc bằng chứng phiên mới nhất hoặc AWS;
 bằng chứng stop buổi trưa là trạng thái tại thời điểm đó.
@@ -91,7 +95,8 @@ bằng chứng stop buổi trưa là trạng thái tại thời điểm đó.
 Đợt slots có protocol riêng đã khóa: **16 block, ít nhất bốn ngày**, tỷ lệ
 đúng hạn 50 ms là outcome chính; request trong một phiên không thay cho
 block độc lập. Engineering được loại khỏi suy luận xác nhận. Người dùng
-chọn stop bốn EC2 cuối phiên và giữ EBS/EIP/TGW để tiếp tục cùng cohort.
+trước đây chọn stop bốn EC2 cuối phiên và giữ EBS/EIP/TGW; lựa chọn dừng
+thủ công ngày 13/10 ở trên thay thế việc tự động stop.
 Trạng thái dừng phải đối chiếu bằng chứng tại `results/session-lifecycle/`.
 Cuối phiên đã xác nhận cả bốn EC2 `stopped` lúc 23:38–23:39 ngày 12/10;
 [bằng chứng và checksum backup](results/session-lifecycle/20261012T163804Z-stop.json).

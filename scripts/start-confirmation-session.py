@@ -1,7 +1,7 @@
 """Start only the retained cohort after offline protocol and overlap guards.
 
 Does not collect outcomes, change routes, retry measurements, or allocate resources.
-Run with the user's AWS/network permission. Caller must stop the cohort in finally.
+Run with the user's AWS/network permission. Caller handles the user's selected cleanup.
 """
 import argparse
 import datetime as dt
@@ -54,8 +54,9 @@ def plan(require_due=True):
     if require_due:assert all(job['due'] for job in jobs),'Not yet two hours since preceding block; wait for a later scheduled session'
     return jobs
 
-def start(profile):
-    jobs=plan()
+def start(profile, require_due=True):
+    # Early boot is preparation only; the runner revalidates due before collecting.
+    jobs=plan(require_due=require_due)
     def aws(args):return confirmation.cli(['aws',*args,'--profile',profile,'--region','us-east-1','--output','json','--no-cli-pager'],True)
     assert aws(['sts','get-caller-identity'])['Account']=='620306387033'
     outputs=confirmation.cli(['terraform','-chdir='+str(ROOT/'infra/terraform'),'output','-json'],True)

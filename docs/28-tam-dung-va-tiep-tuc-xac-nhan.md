@@ -1,6 +1,10 @@
 # Tạm dừng EC2 và tiếp tục đợt xác nhận
 
-Quyết định của người dùng cuối phiên 12/10: **stop bốn EC2, giữ hạ tầng**.
+Quyết định cuối phiên 12/10: **stop bốn EC2, giữ hạ tầng**. Chỉ dẫn mới lúc
+16:43 ngày 13/10 thay thế chế độ tự stop: **tiếp tục đo, người dùng tự dừng EC2**.
+Runner sao lưu, dừng workload và xóa bản sao khóa tạm; không gửi lệnh stop
+EC2 với `--leave-ec2-running`. Bằng chứng phiên ghi `manual_EC2_stop`, không
+ghi `stopped_verified` khi máy vẫn running. Các bằng chứng stop cũ là lịch sử.
 Thu và kiểm tra raw trước khi stop. Không terminate EC2, không destroy
 Terraform, không xóa EIP/TGW. File bằng chứng thao tác nằm trong
 `results/session-lifecycle/`; chỉ khi ghi `stopped_verified` mới tính đã dừng.
@@ -65,7 +69,8 @@ cùng nghiên cứu cách nhau ít nhất hai giờ. Có thể bố trí bốn b
 trong bốn ngày, nhưng phải kiểm tra khoảng cách, thời lượng và chất lượng
 thực tế. Ngày 13/10 người dùng đã cho phép heartbeat tiếp tục trong chat
 lúc 00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15 giờ Việt Nam theo yêu cầu
-đẩy nhanh sau khi tiếp tục, stop bốn máy cuối mỗi phiên. Bộ lập kế hoạch
+đẩy nhanh sau khi tiếp tục. Chế độ dừng cuối phiên theo chỉ dẫn mới ở đầu
+tài liệu. Bộ lập kế hoạch
 giữ đủ block cho ít nhất bốn ngày; không dùng hết block cuối ở ngày thứ ba.
 Lịch phụ thuộc ứng dụng/máy đang hoạt động và phiên đăng nhập AWS còn hạn;
 không phải tác vụ chạy độc lập trên AWS. Xem [trạng thái và lịch](32-trang-thai-xac-nhan.md).
@@ -73,9 +78,9 @@ không phải tác vụ chạy độc lập trên AWS. Xem [trạng thái và l�
 Phiên có thể dùng `py scripts/start-confirmation-session.py` để kiểm tra
 protocol, cohort/tag, khoảng cách và attempt đang chạy trước khi bật đúng
 bốn máy cũ, chờ Online, đặt MTU 1500 và đủ uptime. `--check` chỉ đọc dữ liệu
-offline, không gọi AWS. Helper không tự đo hay retry; người điều phối phải
-stop máy bằng `scripts/pause-ec2.py` ở cuối phiên, kể cả khi đo lỗi.
-Khóa tải raw tạm được bảo vệ ACL và xóa sau khi máy đã stop; khóa gốc giữ nguyên.
+offline, không gọi AWS. Helper không tự đo hay retry; chỉ dừng EC2 bằng
+`scripts/pause-ec2.py` khi người dùng yêu cầu hoặc đã chọn chế độ tự stop.
+Khóa tải raw tạm được bảo vệ ACL và xóa khi không còn truyền file; khóa gốc giữ nguyên.
 
 Wrapper `py scripts/run-confirmation-session.py` thực hiện cả chuẩn bị, đo,
 kiểm chứng raw, cập nhật trạng thái, sao lưu và stop trong finally. Trước khi
@@ -84,6 +89,21 @@ hay stop giữa phép đo đang hoạt động. Khi runner kết thúc, heartbea
 raw, phụ lục Word và công bố GitHub. Lỗi đo không tự retry. Lỗi cleanup không
 được ghi nhận thành `stopped`; nếu SSM không dùng được, fallback chỉ stop
 qua EC2 sau khi xác minh account và đúng bốn ID/tag.
+
+Chế độ được chọn ngày 13/10:
+
+```powershell
+py scripts/run-confirmation-session.py --wait-until-due --prewarm-before-due --leave-ec2-running --profile nt533-lab
+```
+
+`--wait-until-due` giữ khóa phiên và chờ tại máy người dùng; trong lúc chờ
+dài không gọi AWS. `--prewarm-before-due` chuẩn bị đúng cohort khoảng 31
+phút trước eligibility để đủ uptime 30 phút. Kiểm tra lại plan trước bật
+máy và trước thu dữ liệu; không thu trước khoảng cách hai giờ. Nếu phiên
+AWS hết hạn, lưu lỗi và báo cần đăng nhập; không tự retry phép đo.
+`--leave-ec2-running` giữ EC2 để người dùng tự dừng cả khi đo lỗi; backup
+được tạo trước cleanup qua AWS. Các lựa chọn này chỉ đổi vận hành, không
+đổi protocol, ứng dụng, sample size, thứ tự hay công thức phân tích.
 
 Stop/start giữ instance ID và EIP, nhưng có thể đổi host vật lý. Boot ID,
 uptime và môi trường được lưu; không tuyên bố mọi phiên cùng host vật lý.

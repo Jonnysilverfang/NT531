@@ -59,4 +59,14 @@ with tempfile.TemporaryDirectory(dir=ROOT/'tmp', prefix='cleanup-tests-') as tem
     records = [json.loads(p.read_text()) for p in (m.ROOT/'results/session-lifecycle').glob('session-*.json')]
     assert sum(r['status']=='stop_unverified_requires_attention' for r in records) == 1
     checks.append('cleanup_failure_reported_without_false_stopped_claim')
+    calls.clear()
+    m.retain_running = lambda p: calls.append('backup_without_EC2_stop') or {'stopped_verified': False}
+    m.finish = lambda p: calls.append('forbidden_EC2_stop')
+    m.run('synthetic', planner=planner, prepare=lambda p: calls.append('prepare'),
+          collect=lambda p,j: calls.append('collect'), leave_ec2_running=True)
+    assert calls == ['prepare', 'collect', 'backup_without_EC2_stop']
+    records = [json.loads(p.read_text()) for p in (m.ROOT/'results/session-lifecycle').glob('session-*.json')]
+    manual = [r for r in records if r['cleanup_mode'] == 'manual_EC2_stop']
+    assert len(manual) == 1 and manual[0]['cleanup']['stopped_verified'] is False
+    checks.append('explicit_manual_stop_saves_without_calling_EC2_stop')
 print(json.dumps({'offline_cleanup_checks':'passed','checks':checks,'AWS_calls':0,'synthetic_inputs_not_measurements':True}))

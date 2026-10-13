@@ -1,6 +1,6 @@
 # Trạng thái xác nhận và công việc tiếp theo
 
-Snapshot 13/10/2026 16:34 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
+Snapshot 13/10/2026 16:54 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
 
 | Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |
 |---|---:|---:|---:|
@@ -31,11 +31,11 @@ Các giá trị trên là mô tả các block đã có, không phải p-value t�
 
 Người dùng yêu cầu tiếp tục và đẩy nhanh ngày 13/10. Heartbeat trong chat chạy lúc **00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15** giờ Việt Nam; ID `ho-n-t-t-x-c-nh-n-nt531`. Mỗi phiên thu tối đa một block kế tiếp của từng nghiên cứu, tuần tự; giữ start cách nhau ít nhất hai giờ và uptime slots ít nhất 30 phút. Bộ lập kế hoạch giữ đủ block cho ít nhất bốn ngày, không thu block cuối quá sớm. Nếu vận hành thông suốt, slots có thể đủ sớm nhất 16/10; đây không phải cam kết ngày hoàn tất toàn đồ án. Lịch có thể bị gián đoạn nếu ứng dụng/máy người dùng không hoạt động hoặc đăng nhập AWS hết hạn.
 
-Quy trình: kiểm tra protocol/cohort và phiên đang chạy → bật đúng bốn máy cũ → SSM Online, dừng workload cũ và đủ uptime → RTT rồi slots → phân tích raw → cập nhật báo cáo/GitHub → sao lưu ZIP riêng → stop bốn EC2, xác nhận `stopped`. Giữ EBS/EIP/TGW theo quyết định người dùng; các tài nguyên này vẫn có thể phát sinh phí.
+Quy trình: kiểm tra protocol/cohort và phiên đang chạy → bật đúng bốn máy cũ → SSM Online, dừng workload cũ và đủ uptime → RTT rồi slots → phân tích raw → cập nhật báo cáo/GitHub → sao lưu ZIP riêng → dừng workload. Chỉ dẫn mới lúc 16:43 ngày 13/10: người dùng tự dừng EC2, runner dùng `--leave-ec2-running` và không ghi stopped_verified khi máy vẫn running. Chế độ mặc định vẫn tự stop nếu được chọn lại. Giữ EBS/EIP/TGW theo quyết định người dùng; các tài nguyên này vẫn có thể phát sinh phí.
 
-`scripts/start-confirmation-session.py --check` chỉ kiểm tra điều kiện offline; không khởi động tài nguyên. Lệnh không có `--check` bật cohort đã xác minh, không thu kết quả. Script từ chối attempt chưa hoàn tất và lỗi chưa được phân xử của block sắp đo. Không tự retry phép đo. Người điều phối chịu trách nhiệm stop máy kể cả khi bước chuẩn bị/đo lỗi.
+`scripts/start-confirmation-session.py --check` chỉ kiểm tra điều kiện offline; không khởi động tài nguyên. Lệnh không có `--check` bật cohort đã xác minh, không thu kết quả. Script từ chối attempt chưa hoàn tất và lỗi chưa được phân xử của block sắp đo. Không tự retry phép đo. Người điều phối thực hiện lựa chọn cleanup hiện hành, kể cả khi chuẩn bị/đo lỗi; không tự stop EC2 trong chế độ dừng thủ công.
 
-`scripts/run-confirmation-session.py` chạy một phiên trọn vẹn với khóa `tmp/confirmation-session.lock`: chuẩn bị → RTT → slots → kiểm chứng truyền file/raw → cập nhật trạng thái → sao lưu và stop trong finally. Khi một phiên còn chạy, heartbeat chỉ đọc tiến độ; không mở phiên khác hay stop giữa phép đo. Nếu SSM không khả dụng, cleanup kiểm tra account, đúng bốn ID/tag trước khi stop qua EC2 API. Lỗi đăng nhập không được báo thành công giả. Phụ lục Word và GitHub vẫn cần bước rà soát của heartbeat sau khi raw đã hợp lệ.
+`scripts/run-confirmation-session.py` chạy một phiên trọn vẹn với khóa `tmp/confirmation-session.lock`: chuẩn bị → RTT → slots → kiểm chứng truyền file/raw → cập nhật trạng thái → sao lưu trong finally; mặc định stop EC2, còn `--leave-ec2-running` dừng workload và để người dùng tự dừng máy. `--wait-until-due --prewarm-before-due` giữ khóa khi chờ, bật cohort khoảng 31 phút trước eligibility và revalidate đầy đủ trước collect; không đo trước spacing. Khi một phiên còn chạy, heartbeat chỉ đọc tiến độ; không mở phiên khác hay stop giữa phép đo. Trong chế độ tự stop, nếu SSM không khả dụng, cleanup kiểm tra account, đúng bốn ID/tag trước khi stop qua EC2 API. Trong chế độ thủ công, sao lưu local trước cleanup AWS; lỗi cleanup được báo cần xử lý, không giả nhận đã dừng. Lỗi đăng nhập không được báo thành công giả. Phụ lục Word và GitHub vẫn cần bước rà soát của heartbeat sau khi raw đã hợp lệ.
 
 Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host key lấy qua SSM đã xác thực, bật kiểm tra nghiêm ngặt; size/SHA đối chiếu và `.transport.json` giữ bằng chứng. Mã ứng dụng và protocol giữ nguyên. Khóa tạm trong `tmp/` không nằm trong ZIP công bố/GitHub; xóa bản sao tạm khi cuối phiên không còn tải file.
 
@@ -45,7 +45,7 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 2. Sau đủ RTT, đo RTT khi tải theo phần thăm dò đã định; không nhập vào kiểm định RTT idle.
 3. Công bố độ lớn hiệu ứng, CI/cận xác suất và kiểm định đã chốt, kể cả nếu không đạt giả thuyết.
 4. Ghép kết quả mới vào báo cáo chung, kiến trúc, công thức, bài giảng và related work; rà soát slide/demo.
-5. Khi mọi việc hoàn tất, stop máy và xóa heartbeat; không tiếp tục đo tự động vô hạn.
+5. Khi mọi việc hoàn tất, xóa heartbeat và báo người dùng tự dừng máy theo lựa chọn hiện hành; không tiếp tục đo tự động vô hạn.
 
 [Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx) · [Báo cáo tổng hợp](34-bao-cao-tong-hop.md)
 

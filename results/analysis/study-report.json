@@ -1,6 +1,6 @@
 {
-  "created_local": "2026-10-13T16:26:51.374202+07:00",
-  "report_sha256": "5f204fa87daa74ef107bb10922aac823250a021a7127a9fc08570a2cdc854695",
+  "created_local": "2026-10-13T17:19:25.560650+07:00",
+  "report_sha256": "de1b046b4744cc007840e974e4eafc4f4218881c81fd6a6f0765c120aeb9ad0b",
   "rtt_blocks": 4,
   "slots_blocks": 2,
   "raw_source_hash_checks": 375,
@@ -21,6 +21,10 @@
     {
       "path": "results/analysis/queue-occupancy-audit.json",
       "sha256": "2675c564bb2437749313455c4216660b2ef3928c047b7be33568128db3a9335e"
+    },
+    {
+      "path": "results/study-scope-decision-20261013.json",
+      "sha256": "fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45"
     },
     {
       "path": "results/analysis/fanin-sender-interval-figures.json",

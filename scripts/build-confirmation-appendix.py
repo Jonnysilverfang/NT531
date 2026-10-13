@@ -83,6 +83,10 @@ def build():
     table(['Nghiên cứu','Block hợp lệ','Ngày đã đo','Mục tiêu'],[
         ['RTT',f"{rtt['completed_blocks']}/16",len(rtt['local_dates']),'16 block ≥4 ngày'],
         ['Slots',f"{slots['completed_blocks']}/16",len(slots['local_dates']),'16 block ≥4 ngày']],[1.6,1.4,1.3,2.6])
+    scope_path=ROOT/'results/study-scope-decision-20261013.json'
+    if scope_path.exists():
+        sources.append(scope_path)
+        text('Ngày 13/10 người dùng rút gọn vì ngân sách: tối đa 5 block RTT/3 slots, không tiếp tục bốn ngày. Bảng trên ghi mục tiêu gốc chưa hoàn thành; không công bố p-value xác nhận. Xem phạm vi hiện hành ở tài liệu 35.')
     text('Mỗi nghiên cứu chỉ công bố kết luận suy diễn khi đủ số block, ngày và tiêu chí chất lượng. Engineering/pilot không nhập vào đợt xác nhận. Trạng thái mới nhất nằm trong analysis.json của dự án; bản Word là snapshot tại thời điểm ghi trên.')
     doc.add_heading('Kiến trúc và đường đo',2)
     text('Bốn VPC, mỗi VPC một EC2 c6i.large tại us-east-1a, MTU 1500. Peering full mesh có 6 kết nối; TGW có 1 gateway và 4 VPC attachment. EIP dùng quản trị; các phép đo dùng private IP.')

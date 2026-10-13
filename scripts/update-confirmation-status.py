@@ -13,12 +13,15 @@ def local(s):return dt.datetime.fromisoformat(s.replace('Z','+00:00')).astimezon
 def main():
     paths=[ROOT/'results/confirmation-rtt-v1/analysis.json',ROOT/'results/application-slots-confirmation-v1/analysis.json']
     rtt,slots=map(read,paths);assert not rtt['issues'] and not slots['issues']
+    scope_path=ROOT/'results/study-scope-decision-20261013.json'
+    scope=read(scope_path) if scope_path.exists() else None
+    targets=[scope['maximum_completed_blocks'][n] if scope else 16 for n in ['confirmation-rtt-v1','application-slots-confirmation-v1']]
     now=dt.datetime.now(ZONE)
     lines=['# Trạng thái xác nhận và công việc tiếp theo','',
         'Snapshot '+now.strftime('%d/%m/%Y %H:%M')+' giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.','',
         '| Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |','|---|---:|---:|---:|',
-        f"| RTT khi rảnh | {rtt['completed_blocks']}/16 | {len(rtt['local_dates'])} | {16-rtt['completed_blocks']} block |",
-        f"| Can thiệp slots | {slots['completed_blocks']}/16 | {len(slots['local_dates'])} | {16-slots['completed_blocks']} block |",'',
+        f"| RTT khi rảnh | {rtt['completed_blocks']}/{targets[0]} | {len(rtt['local_dates'])} | {targets[0]-rtt['completed_blocks']} block tối đa |",
+        f"| Can thiệp slots | {slots['completed_blocks']}/{targets[1]} | {len(slots['local_dates'])} | {targets[1]-slots['completed_blocks']} block tối đa |",'',
         'Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm định chính sau đủ 16 block và các tiêu chí chất lượng. Engineering 84.000 requests và pilot/calibration 62.200 requests không nhập vào số block này.','',
         '## RTT từng block đã kiểm tra','',
         '| Block | Bắt đầu giờ Việt Nam | Thứ tự | Peering ms | TGW ms | Chênh ms | Missing replies |',
@@ -47,7 +50,17 @@ def main():
         '[Tiêu chí bằng chứng và kết luận](30-bang-chung-va-tieu-chi-hoan-thanh.md) · [Protocol slots và công thức](27-can-thiep-slots-va-hang-doi.md) · [Phụ lục Word](31-phu-luc-bang-chung-thong-ke.docx) · [Báo cáo tổng hợp](34-bao-cao-tong-hop.md)','',
         '## Dữ liệu nguồn','']
     for p in paths:lines+=[f"- `{p.relative_to(ROOT).as_posix()}` — SHA256 `{sha(p)}`"]
-    out=ROOT/'docs/32-trang-thai-xac-nhan.md';out.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+    if scope:
+        lines.insert(2,'**Phạm vi mới ngày 13/10:** bỏ lịch bốn ngày vì ngân sách; chỉ giữ phiên cuối, tối đa 5 RTT/3 slots. Không tính p-value xác nhận. [Quyết định và kết luận mô tả](35-pham-vi-rut-gon-va-ket-luan.md).')
+        changes={
+            'Mỗi nghiên cứu cần ít nhất bốn ngày.':'Thiết kế gốc 16 block/bốn ngày được rút ngắn vì ngân sách, giữ nguyên protocol để kiểm chứng; không coi xác nhận đã hoàn thành. Engineering/pilot giữ riêng.',
+            'Người dùng yêu cầu tiếp tục và đẩy nhanh ngày 13/10.':'Lịch tám lần/ngày đã hủy; chỉ chốt phiên cuối. Heartbeat rà soát lúc 19:00 ngày 13/10 rồi xóa sau bàn giao. Không mở thêm block hoặc RTT khi tải.',
+            '1. Thu các block còn thiếu':'1. Để phiên cuối kết thúc; giữ dữ liệu hợp lệ và mọi lỗi, không tự retry.',
+            '2. Sau đủ RTT':'2. RTT khi tải được hoãn, không ghi là đã đo.',
+            '3. Công bố độ lớn':'3. Công bố mean/median/range và số block thực; không dùng kiểm định 16 block cho mẫu rút ngắn.'}
+        lines=[next((v for k,v in changes.items() if line.startswith(k)),line) for line in lines]
+        lines+=[f"- `{scope_path.relative_to(ROOT).as_posix()}` — SHA256 `{sha(scope_path)}`"]
+    out=ROOT/'docs/32-trang-thai-xac-nhan.md' ;out.write_text('\n'.join(lines)+'\n',encoding='utf-8')
     print(json.dumps(dict(snapshot=str(out),rtt_blocks=rtt['completed_blocks'],slots_blocks=slots['completed_blocks'],issues=[])))
 
 if __name__=='__main__':main()

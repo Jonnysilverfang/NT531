@@ -1,9 +1,11 @@
 # Đánh giá VPC Peering và Transit Gateway từ RTT đến chất lượng ứng dụng
 
-Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 16:26 giờ Việt Nam.
+Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 17:19 giờ Việt Nam.
 Các bảng được tạo từ analysis và đối chiếu SHA với file nguồn; không dùng
 ảnh chụp để thay raw. Báo cáo này ghép phần đã thực hiện; kết luận suy diễn
 chỉ xuất hiện sau khi analyzer xác nhận đủ thiết kế.
+
+**Phạm vi rút gọn ngày 13/10 vì ngân sách:** chỉ giữ phiên cuối, tối đa 5 block RTT/3 block slots. Xác nhận 16 block/bốn ngày chưa hoàn thành; chỉ kết luận mô tả, không công bố p-value xác nhận. [Quyết định và cách kết luận](35-pham-vi-rut-gon-va-ket-luan.md).
 
 ## Câu hỏi và đóng góp
 
@@ -287,12 +289,8 @@ tmp/application-venv/Scripts/python.exe scripts/plot-fanin-history.py
 py scripts/build-study-report.py
 ```
 
-Hoàn tất các block còn lại theo protocol, rồi RTT khi tải thuộc phần thăm
-dò đã định. Chốt effect/cận xác suất/CI từ analyzer; ghép vào phụ lục Word,
-kiểm tra từng trang và chuẩn bị demo từ dữ liệu đã lưu. Không cần dựng
-thêm VPC hay công cụ để hoàn thành hai giả thuyết chính.
+Theo phạm vi mới, chỉ chốt phiên cuối đang xếp, kiểm chứng raw và tổng hợp báo cáo/Word một lần. Không thu các block còn lại hoặc RTT khi tải. Sao lưu và dừng workload; người dùng tự dừng EC2.
 
-Mỗi phiên AWS sao lưu và stop bốn EC2; giữ EBS/EIP/TGW theo yêu cầu.
 Lịch tự tiếp tục, giới hạn ngày và trạng thái hiện hành ở
 [tài liệu 32](32-trang-thai-xac-nhan.md). Phần code/raw đã rà soát công bố
 trên nhánh minh-work; state, credentials, SSH key và ZIP riêng không công bố.

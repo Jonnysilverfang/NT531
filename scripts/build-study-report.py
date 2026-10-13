@@ -33,6 +33,11 @@ def main():
              'results/application-slots-confirmation-v1/analysis.json',
              'results/analysis/queue-occupancy-audit.json']
     historical, rtt, slots, queues = [read(ROOT / p) for p in paths]
+    scope_path = 'results/study-scope-decision-20261013.json'
+    scope = read(ROOT/scope_path) if (ROOT/scope_path).exists() else None
+    if scope:
+        paths.append(scope_path)
+        assert rtt['inferential_result'] is None and slots['inferential_result'] is None
     fanin_path = 'results/analysis/fanin-sender-interval-figures.json'
     fanin = read(ROOT / fanin_path)
     assert fanin['files'] == 30 and fanin['total_non_omitted_sender_intervals'] == 900
@@ -352,7 +357,14 @@ thành viên phải tự giải thích thiết kế, công thức, code và kế
 cáo này không khai thay tác giả hoặc việc nhóm chưa làm.
 ''')
     out = ROOT / 'docs/34-bao-cao-tong-hop.md'
-    out.write_text('\n\n'.join(sections).rstrip() + '\n', encoding='utf-8')
+    report='\n\n'.join(sections).rstrip()+'\n'
+    if scope:
+        notice='**Phạm vi rút gọn ngày 13/10 vì ngân sách:** chỉ giữ phiên cuối, tối đa 5 block RTT/3 block slots. Xác nhận 16 block/bốn ngày chưa hoàn thành; chỉ kết luận mô tả, không công bố p-value xác nhận. [Quyết định và cách kết luận](35-pham-vi-rut-gon-va-ket-luan.md).\n\n'
+        report=report.replace('## Câu hỏi và đóng góp',notice+'## Câu hỏi và đóng góp',1)
+        start=report.index('Hoàn tất các block còn lại theo protocol,')
+        end=report.index('Lịch tự tiếp tục,',start)
+        report=report[:start]+'Theo phạm vi mới, chỉ chốt phiên cuối đang xếp, kiểm chứng raw và tổng hợp báo cáo/Word một lần. Không thu các block còn lại hoặc RTT khi tải. Sao lưu và dừng workload; người dùng tự dừng EC2.\n\n'+report[end:]
+    out.write_text(report, encoding='utf-8')
     proof = dict(created_local=now.isoformat(), report_sha256=sha(out),
                  rtt_blocks=rtt['completed_blocks'], slots_blocks=slots['completed_blocks'],
                  raw_source_hash_checks=len(verified_paths), no_AWS_calls=True,

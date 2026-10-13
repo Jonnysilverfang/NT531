@@ -1,5 +1,7 @@
 # Tạm dừng EC2 và tiếp tục đợt xác nhận
 
+**Phạm vi mới ngày 13/10:** giảm credit, bỏ lịch bốn ngày; chỉ giữ phiên cuối đã xếp, tối đa 5 block RTT/3 slots, rồi chốt báo cáo một lần. Xác nhận 16 block gốc được rút ngắn, chưa hoàn thành; không công bố p-value xác nhận. [Quyết định và kết luận mô tả](35-pham-vi-rut-gon-va-ket-luan.md) thay thế lịch nhiều ngày và danh sách đo tiếp trong kế hoạch cũ dưới đây.
+
 Quyết định cuối phiên 12/10: **stop bốn EC2, giữ hạ tầng**. Chỉ dẫn mới lúc
 16:43 ngày 13/10 thay thế chế độ tự stop: **tiếp tục đo, người dùng tự dừng EC2**.
 Runner sao lưu, dừng workload và xóa bản sao khóa tạm; không gửi lệnh stop

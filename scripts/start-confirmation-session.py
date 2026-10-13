@@ -24,6 +24,8 @@ def utc(value):return dt.datetime.fromisoformat(value.replace('Z','+00:00')).ast
 
 def plan(require_due=True):
     now=dt.datetime.now(dt.timezone.utc);jobs=[]
+    scope_path=ROOT/'results/study-scope-decision-20261013.json'
+    scope=read(scope_path) if scope_path.exists() else None
     for name,digest in PROTOCOLS.items():
         folder=ROOT/'results'/name
         assert hashlib.sha256((folder/'protocol.json').read_bytes()).hexdigest()==digest,'Protocol changed'
@@ -32,6 +34,9 @@ def plan(require_due=True):
             attempt=read(file)
             assert attempt['status']!='started' or (file.parent/'complete.json').exists(), 'Unfinished attempt: inspect before starting another session'
         count=analysis['completed_blocks']
+        if scope and count>=scope['maximum_completed_blocks'][name]:
+            assert analysis['inferential_result'] is None, 'Curtailed study is descriptive only'
+            continue
         if count==16:
             assert analysis['inferential_result'] is not None,'All blocks collected but eligibility unmet; no extra unplanned blocks'
             continue
@@ -50,7 +55,8 @@ def plan(require_due=True):
             next_date=dt.datetime.combine(today+dt.timedelta(days=1),dt.time.min,tzinfo=zone)
             due=max(due,next_date.astimezone(dt.timezone.utc))
         jobs.append(dict(study=name,block=count+1,earliest_utc=due.isoformat(),due=due<=now))
-    assert jobs,'Confirmation complete; do not start EC2 for this phase'
+    assert jobs,('Budget-limited final session finished; do not start EC2 or collect more blocks' if scope
+                else 'Confirmation complete; do not start EC2 for this phase')
     if require_due:assert all(job['due'] for job in jobs),'Not yet two hours since preceding block; wait for a later scheduled session'
     return jobs
 

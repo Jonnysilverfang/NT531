@@ -1,13 +1,14 @@
 # Trạng thái xác nhận và công việc tiếp theo
 
-Snapshot 13/10/2026 16:54 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
+**Phạm vi mới ngày 13/10:** bỏ lịch bốn ngày vì ngân sách; chỉ giữ phiên cuối, tối đa 5 RTT/3 slots. Không tính p-value xác nhận. [Quyết định và kết luận mô tả](35-pham-vi-rut-gon-va-ket-luan.md).
+Snapshot 13/10/2026 17:19 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
 
 | Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |
 |---|---:|---:|---:|
-| RTT khi rảnh | 4/16 | 2 | 12 block |
-| Can thiệp slots | 2/16 | 1 | 14 block |
+| RTT khi rảnh | 4/5 | 2 | 1 block tối đa |
+| Can thiệp slots | 2/3 | 1 | 1 block tối đa |
 
-Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm định chính sau đủ 16 block và các tiêu chí chất lượng. Engineering 84.000 requests và pilot/calibration 62.200 requests không nhập vào số block này.
+Thiết kế gốc 16 block/bốn ngày được rút ngắn vì ngân sách, giữ nguyên protocol để kiểm chứng; không coi xác nhận đã hoàn thành. Engineering/pilot giữ riêng.
 
 ## RTT từng block đã kiểm tra
 
@@ -29,7 +30,7 @@ Các giá trị trên là mô tả các block đã có, không phải p-value t�
 
 ## Lịch và vận hành đã được người dùng chấp thuận
 
-Người dùng yêu cầu tiếp tục và đẩy nhanh ngày 13/10. Heartbeat trong chat chạy lúc **00:15, 03:15, 06:15, 09:15, 12:15, 15:15, 18:15 và 21:15** giờ Việt Nam; ID `ho-n-t-t-x-c-nh-n-nt531`. Mỗi phiên thu tối đa một block kế tiếp của từng nghiên cứu, tuần tự; giữ start cách nhau ít nhất hai giờ và uptime slots ít nhất 30 phút. Bộ lập kế hoạch giữ đủ block cho ít nhất bốn ngày, không thu block cuối quá sớm. Nếu vận hành thông suốt, slots có thể đủ sớm nhất 16/10; đây không phải cam kết ngày hoàn tất toàn đồ án. Lịch có thể bị gián đoạn nếu ứng dụng/máy người dùng không hoạt động hoặc đăng nhập AWS hết hạn.
+Lịch tám lần/ngày đã hủy; chỉ chốt phiên cuối. Heartbeat rà soát lúc 19:00 ngày 13/10 rồi xóa sau bàn giao. Không mở thêm block hoặc RTT khi tải.
 
 Quy trình: kiểm tra protocol/cohort và phiên đang chạy → bật đúng bốn máy cũ → SSM Online, dừng workload cũ và đủ uptime → RTT rồi slots → phân tích raw → cập nhật báo cáo/GitHub → sao lưu ZIP riêng → dừng workload. Chỉ dẫn mới lúc 16:43 ngày 13/10: người dùng tự dừng EC2, runner dùng `--leave-ec2-running` và không ghi stopped_verified khi máy vẫn running. Chế độ mặc định vẫn tự stop nếu được chọn lại. Giữ EBS/EIP/TGW theo quyết định người dùng; các tài nguyên này vẫn có thể phát sinh phí.
 
@@ -41,9 +42,9 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 
 ## Việc để chốt kết luận và bàn giao
 
-1. Thu các block còn thiếu qua đủ ngày; giữ mọi block/lỗi, không chọn dữ liệu thuận lợi.
-2. Sau đủ RTT, đo RTT khi tải theo phần thăm dò đã định; không nhập vào kiểm định RTT idle.
-3. Công bố độ lớn hiệu ứng, CI/cận xác suất và kiểm định đã chốt, kể cả nếu không đạt giả thuyết.
+1. Để phiên cuối kết thúc; giữ dữ liệu hợp lệ và mọi lỗi, không tự retry.
+2. RTT khi tải được hoãn, không ghi là đã đo.
+3. Công bố mean/median/range và số block thực; không dùng kiểm định 16 block cho mẫu rút ngắn.
 4. Ghép kết quả mới vào báo cáo chung, kiến trúc, công thức, bài giảng và related work; rà soát slide/demo.
 5. Khi mọi việc hoàn tất, xóa heartbeat và báo người dùng tự dừng máy theo lựa chọn hiện hành; không tiếp tục đo tự động vô hạn.
 
@@ -53,3 +54,4 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 
 - `results/confirmation-rtt-v1/analysis.json` — SHA256 `ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66`
 - `results/application-slots-confirmation-v1/analysis.json` — SHA256 `ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81`
+- `results/study-scope-decision-20261013.json` — SHA256 `fcdeae7fb4ff237e34d8bb9485b09517a5439ecd4cef2bd914fe98a06479ef45`

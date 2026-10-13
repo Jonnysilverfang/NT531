@@ -38,6 +38,12 @@ with tempfile.TemporaryDirectory(dir=ROOT/'tmp',prefix='planning-tests-') as t:
     assert not reserved['due'] and m.utc(reserved['earliest_utc']).astimezone(zone).date()>today
     checks.append('final_block_reserved_for_fourth_local_date')
     (rtt/'analysis.json').write_text(json.dumps(dict(completed_blocks=0,issues=[],rows=[],inferential_result=None)))
+    scope=m.ROOT/'results/study-scope-decision-20261013.json'
+    scope.write_text(json.dumps({'maximum_completed_blocks':{name:0 for name in m.PROTOCOLS}}))
+    try:m.plan();raise RuntimeError('Budget cap ignored')
+    except AssertionError as e:assert 'Budget-limited' in str(e)
+    checks.append('budget_closure_prevents_new_blocks_without_fake_inference')
+    scope.unlink()
     (rtt/'protocol.json').write_text('{}')
     try:m.plan();raise RuntimeError('Protocol edit accepted')
     except AssertionError as e:assert 'Protocol changed' in str(e)

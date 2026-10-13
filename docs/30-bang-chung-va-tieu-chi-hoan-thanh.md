@@ -1,5 +1,7 @@
 # Bằng chứng, kết luận và tiêu chí hoàn thành
 
+**Phạm vi mới ngày 13/10:** giảm credit, bỏ lịch bốn ngày; chỉ giữ phiên cuối đã xếp, tối đa 5 block RTT/3 slots, rồi chốt báo cáo một lần. Xác nhận 16 block gốc được rút ngắn, chưa hoàn thành; không công bố p-value xác nhận. [Quyết định và kết luận mô tả](35-pham-vi-rut-gon-va-ket-luan.md) thay thế lịch nhiều ngày và danh sách đo tiếp trong kế hoạch cũ dưới đây.
+
 Đồ án có hai câu hỏi xác nhận riêng: đường mạng ảnh hưởng RTT khi rảnh
 thế nào, và tăng khả năng xử lý đồng thời của worker có khắc phục trễ hạn
 ứng dụng trong workload đã đặt hay không. Hoàn thành nghĩa là thu đủ dữ liệu

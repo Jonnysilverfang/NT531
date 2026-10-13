@@ -1,0 +1,20 @@
+{
+  "created_local": "2026-10-13T17:17:18.172066+07:00",
+  "authority": "User instruction: reduce credit usage; no need for four days",
+  "reason": "budget_constraint_after_observing_initial_blocks",
+  "decision_after_observed_outcomes": true,
+  "original_design_status": "curtailed_not_completed",
+  "maximum_completed_blocks": {
+    "confirmation-rtt-v1": 5,
+    "application-slots-confirmation-v1": 3
+  },
+  "original_protocol_sha256": {
+    "confirmation-rtt-v1": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
+    "application-slots-confirmation-v1": "65c69162a62cfd81c8531b9e9fea8480cd664bcddc4d1c78c4bb2b09e46cda0b"
+  },
+  "final_session_lifecycle": "results/session-lifecycle/session-20261013T094629Z-c79828f2.json",
+  "additional_sessions_allowed": false,
+  "loaded_RTT": "deferred_not_collected",
+  "inference_policy": "Descriptive only; no confirmatory p-value for truncated original studies",
+  "EC2_cleanup": "User stops EC2 manually; runner saves evidence and stops workloads"
+}

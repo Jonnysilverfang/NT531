@@ -1,0 +1,35 @@
+{
+  "c": {
+    "role": "worker",
+    "node": "c",
+    "tracing": false,
+    "worker_delay_ms": 10.0,
+    "worker_slots": 8,
+    "response_bytes": 4096,
+    "queued": 0,
+    "active": 0,
+    "queue_logging": true
+  },
+  "d": {
+    "role": "worker",
+    "node": "d",
+    "tracing": false,
+    "worker_delay_ms": 10.0,
+    "worker_slots": 8,
+    "response_bytes": 4096,
+    "queued": 0,
+    "active": 0,
+    "queue_logging": true
+  },
+  "b": {
+    "role": "gateway",
+    "node": "b",
+    "tracing": false,
+    "worker_delay_ms": 10.0,
+    "worker_slots": 8,
+    "response_bytes": 4096,
+    "queued": 0,
+    "active": 0,
+    "queue_logging": false
+  }
+}

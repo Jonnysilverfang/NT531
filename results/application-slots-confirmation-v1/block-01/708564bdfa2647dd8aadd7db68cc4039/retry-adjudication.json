@@ -1,0 +1,10 @@
+{
+  "reviewed_utc": "2026-10-13T04:21:29.042054+00:00",
+  "failed_attempt_sha256": "c0bb06bd8a55a77094c8ce986e85028e2e28faa7d9320a34d7f9159f49685ec3",
+  "reason": "PowerShell converted the JSON ISO UTC value to DateTime; reparsing its locale string lost the UTC offset. The external wait ended early.",
+  "measurements_captured": 0,
+  "cleanup_verified": true,
+  "decision": "Repeat whole block 1 after documented uptime guard failure; no outcomes available for selection.",
+  "correction": "Use explicit UTC ISO input with scripts/wait-utc.py; preserve protocol and application source.",
+  "not_before_utc": "2026-10-13T04:39:00+00:00"
+}

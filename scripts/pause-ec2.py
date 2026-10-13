@@ -35,6 +35,14 @@ def main(profile):
     assert set(record['states'])==set(ids) and set(record['states'].values())=={'stopped'}
     record.update(status='stopped_verified',ended_utc=dt.datetime.now(dt.timezone.utc).isoformat(),
         scope='No terminate/destroy/delete calls. EBS, EIP and TGW retained and may continue to incur fees.')
+    # No transfer can be active after the cohort is stopped. Delete only our
+    # temporary ACL-protected copy; the user's original SSH key is untouched.
+    key=ROOT/'tmp/ssh-download-private/nt531.pem'
+    try:
+        if key.exists():key.unlink()
+        record['temporary_download_key_removed']=not key.exists()
+    except OSError as e:
+        record['temporary_key_cleanup_error']=str(e)
     out.write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(dict(proof=str(out),status=record['status'],instances=record['states'],backup=backup)))
 

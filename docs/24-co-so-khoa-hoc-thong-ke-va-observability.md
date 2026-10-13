@@ -40,9 +40,10 @@ nhận đủ 300/300 phản hồi và không có lỗi kiểm soát.
 
 Block 2 bắt đầu `2026-10-12T14:26:56Z`, đo TGW rồi Peering: Peering 0,2067 ms,
 TGW 0,4463 ms, chênh +0,2397 ms, không mất packet. Cả hai block vượt margin
-đã chốt `δ=0,1 ms`, nên `Z₁=Z₂=1`. Đây mới là 2/16 block; không tính p-value
-kết luận và không dừng sớm. Block 3 chỉ được bắt đầu từ 23:26:57 giờ Việt Nam
-ngày 12/10 hoặc muộn hơn. Cohort phải giữ hai
+đã chốt `δ=0,1 ms`, nên `Z₁=Z₂=1`. Block 3 bắt đầu 11:10:24 ngày 13/10:
+Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.
+Hiện có 3/16 block trên hai ngày; không tính p-value kết luận và không dừng
+sớm. [Trạng thái và lịch](32-trang-thai-xac-nhan.md) lấy từ analysis mới nhất. Cohort phải giữ hai
 instance ID `i-089bae0de9ec6bc4e`, `i-0484f42b82795f765` và TGW
 `tgw-036e551008b8c0805` trong toàn đợt.
 
@@ -205,8 +206,10 @@ chứng chính của 16 block RTT.**
 Bộ cấu hình agent/gateway, Prometheus và Grafana đã được chuẩn bị trong
 [`monitoring`](../monitoring/README.md), có sơ đồ, dashboard provision tự động,
 SSH tunnel và hướng dẫn dừng agent. Compose schema, JSON dashboard và tag
-image đã được kiểm tra; chưa chạy pipeline với agent EC2. Docker daemon trên
-laptop hiện chưa bật. Không ghi phần này là một phép đo đã hoàn thành.
+image đã được kiểm tra. Tối 12/10 stack local đã chạy và replay 12 traces thật
+/120 spans qua Collector → Tempo → Grafana; xem [bằng chứng runtime](../results/application-qos-calibration-v2/1c0d1fb25e544fb0bee95078cbfc265c/observability-validation.json).
+Chưa chạy hostmetrics agent hoặc OTLP live từ EC2. Không mô tả replay như
+đợt xác nhận hiệu năng hoặc dữ liệu CPU/network đã gửi trực tiếp lên dashboard.
 
 OpenTelemetry Collector có thể chạy dạng agent hoặc gateway. Host Metrics
 receiver đọc CPU, memory, disk, network và TCP connection theo chu kỳ; mặc
@@ -243,7 +246,7 @@ agent trong cửa sổ primary sẽ tạo thêm một biến gây nhiễu. Thi�
 
 | Câu kết luận | Bằng chứng tối thiểu | Trạng thái |
 |---|---|---|
-| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | 2/16, chưa kết luận |
+| Peering có RTT idle thấp hơn TGW trên 0,1 ms trong đa số block của cohort | 16 block, `K≥12`, cận exact `π_L>0,5`, không lỗi chất lượng | 3/16, chưa kết luận |
 | TGW dễ mở rộng topology full mesh hơn Peering | công thức 6 Peering vs 4 attachment và tài liệu AWS | đủ bằng chứng kiến trúc |
 | RTT TGW cao hơn đi kèm đường đi có thêm hop | TTL, route snapshot, số đo paired và tài liệu AWS | bằng chứng bước đầu; không phân lập được chi phí riêng của hop |
 | TGW/Peering chịu tải tốt hơn | loaded RTT lặp theo block, goodput/loss/CPU/ENA | chưa đủ; bài tải hiện chỉ khám phá |

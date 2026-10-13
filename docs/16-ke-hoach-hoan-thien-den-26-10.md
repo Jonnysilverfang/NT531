@@ -1,6 +1,6 @@
 # Kế hoạch hoàn thiện đồ án trước ngày 26 tháng 10 năm 2026
 
-Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 12/10 sau khi khôi phục hạ tầng và hoàn tất hai block xác nhận.
+Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file gốc, kết luận lựa chọn có căn cứ và demo tái lập. Không cần mở rộng mọi kịch bản hoặc tuyên bố kết luận đúng với mọi hệ thống. Kế hoạch lập ngày 06/10 và cập nhật ngày 13/10 sau ba block RTT và một block slots hợp lệ. [Trạng thái và lịch tự tiếp tục](32-trang-thai-xac-nhan.md) ghi rõ việc còn thiếu.
 
 ## Phần đã có và phần còn thiếu
 
@@ -10,12 +10,12 @@ Mục tiêu là một đồ án có câu hỏi rõ, số liệu truy về file g
 | RTT khi rảnh và TCP một luồng | Có 5 lượt mỗi mode mỗi bài |
 | Fan-in A C D tới B | Có 5 lượt mỗi mode; 146 file gốc mỗi phiên đã sao lưu và đối chiếu |
 | Báo cáo kết quả | Có bảng, biểu đồ, CPU ENA, công thức, khái niệm và kết luận lựa chọn |
-| Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 2/16 block hợp lệ |
+| Tái lập giữa các thời điểm | Protocol 16 block đã khóa; hoàn tất 3/16 block RTT hợp lệ trên hai ngày |
 | RTT khi có tải | Chưa tính là hoàn thành |
 | Ứng dụng HTTP fan-out, P95 và tỷ lệ đúng hạn | Pilot/calibration 12/10 đã kiểm tra 62.200 requests; chưa suy luận xác nhận |
 | Distributed tracing ứng dụng | 12 traces thật/120 spans; replay Collector → Tempo → Grafana local, chưa OTLP live |
-| Can thiệp slots và log hàng đợi | Engineering 84.000 requests đã kiểm tra, có dấu vết recovery tải log; 0/16 block xác nhận; thiết kế đã khóa |
-| Tổng fan-in theo cùng cửa sổ thời gian | Hiện vẫn là tổng xấp xỉ; cần kiểm tra interval và mốc thời gian gốc |
+| Can thiệp slots và log hàng đợi | Engineering 84.000 requests tách biệt; 1/16 block xác nhận với 84.000 requests mới đã kiểm tra; thiết kế đã khóa |
+| Tổng fan-in theo cùng cửa sổ thời gian | Đã audit 30 JSON: interval phía gửi, tổng phía nhận và server text; thiếu receiver interval bytes/timestamp để tính chính xác; giữ tổng xấp xỉ |
 | Báo cáo toàn bộ slide demo repo nộp | Cần hoàn thiện và rà soát; chương kết quả không thay cho báo cáo đầy đủ |
 
 Sáu bộ đo chính đã đủ cho phạm vi tối thiểu đã chọn. Ngày 06/10 đã đối chiếu slide 15 của Introduction1: demo được ghi 60–70%, có tiêu chí mã nguồn/related work và hướng chi phí/so sánh, với tỷ lệ phối hợp theo hướng đề tài. Chưa xác nhận cách áp dụng các hướng cho đề tài AWS nên không cộng tỷ lệ hoặc quy đổi thành phần trăm hoàn thành/điểm số. Xem [đối chiếu bài giảng và công cụ](17-doi-chieu-bai-giang-va-cong-cu.md).
@@ -51,11 +51,11 @@ R_i(W): byte payload nhận từ nguồn i trong đúng W; T_0,T_1 tính bằng 
 
 ## Ưu tiên 2 Đo lặp RTT và TCP một luồng
 
-Cập nhật 12/10 theo hướng người dùng chọn: RTT xác nhận dùng
+Cập nhật 13/10 theo hướng người dùng chọn: RTT xác nhận dùng
 [protocol 16 block](23-thiet-ke-xac-nhan-rtt.md), thay cho mức khởi đầu bốn
-đợt RTT trước đây. Hạ tầng mới đã dựng và **2/16 block** đã hoàn tất:
-`d₁=+0,2303 ms`, `d₂=+0,2397 ms`, hai thứ tự khác nhau, không mất packet.
-Block 3 chỉ được bắt đầu từ 23:26:57 giờ Việt Nam ngày 12/10; toàn bộ 16 block phải trải trên
+đợt RTT trước đây. Hạ tầng mới đã dựng và **3/16 block** đã hoàn tất:
+`d₁=+0,2303 ms`, `d₂=+0,2397 ms`, `d₃=+0,4257 ms`, có hai thứ tự,
+không mất phản hồi. Block 3 bắt đầu 11:10:24 ngày 13/10; toàn bộ 16 block phải trải trên
 ít nhất bốn ngày và start cách nhau ít nhất hai giờ.
 
 Thiết kế bốn đợt và CI Student t cũ được thay thế trước khi thu dữ liệu xác

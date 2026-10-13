@@ -1,0 +1,37 @@
+{
+  "created_local": "2026-10-13T12:00:54.192490+07:00",
+  "docx_sha256": "f8c3af342b7c412d12dfcceef042474c09313642d43b06e4ea19efd58397c669",
+  "rtt_blocks": 3,
+  "slots_blocks": 1,
+  "sources": [
+    {
+      "path": "results/confirmation-rtt-v1/analysis.json",
+      "sha256": "41c92fd0a47533722260d0d530c5074a6ec6fbf353546b6b77417466009d99f7"
+    },
+    {
+      "path": "results/application-slots-confirmation-v1/analysis.json",
+      "sha256": "829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0"
+    },
+    {
+      "path": "results/application-slots-engineering-v1/9e45c8058c6942ef9805ab65cc2f8ab9/analysis.json",
+      "sha256": "0e7dd92b20b7b96261cbd0e7d1b713302da98cb12e15c7dfc80db26e1f23c9ed"
+    }
+  ],
+  "engineering_raw_sources_verified": 79,
+  "formal_slot_raw_sources_verified": 143,
+  "native_equations": 8,
+  "render_review": "passed_all_pages",
+  "reviewed_pages": 6,
+  "renderer": "Microsoft Word 16 via PowerShell 7 disposable copy",
+  "packaged_renderer_limitation": "Bundled LibreOffice soffice.exe unavailable on this Windows host",
+  "pdf_sha256": "9e8bbc9d873a2923450bfde1df0937bd58002d0afb73698280cafd898e6e9486",
+  "page_image_sha256": [
+    "5555ae96676398504b2bb55ad0e93a6fc27135ead167f99f9bfe467da25c34ad",
+    "a77f98268321cf1079a0ec7a60e95f41e792730dc7f1fdd8fbc36b2b659c20e5",
+    "9971724bfe2edf7dad68dc8c78c046365fec44bfc16b0caea8307f2411dad718",
+    "e9026b187c9a2bd2f14277e136860cdc320e8afa7e9d69c71ea1e112dafd607b",
+    "6d8c90b1bb6f9cf6bcb7368edcf5aa319712dbc92d7fded111b53bf622ce918e",
+    "4c51cf67762e3762a2a074b9d57d48c55d43e35bd90529e7e04218aa24d8acb4"
+  ],
+  "visual_review": "All six pages inspected: readable Vietnamese, native equations and overbars, table wrapping, no title border or clipped content"
+}

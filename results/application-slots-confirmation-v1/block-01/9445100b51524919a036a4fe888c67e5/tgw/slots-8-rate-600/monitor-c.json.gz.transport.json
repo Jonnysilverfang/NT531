@@ -1,0 +1,11 @@
+{
+  "transport": "scp_after_capture",
+  "node": "c",
+  "remote_file": "/opt/nt531-application/results/9445100b51524919a036a4fe888c67e5-tgw-c-monitor/monitor.json.gz",
+  "verified_size": 2899,
+  "verified_sha256": "dbb0527bd4b829314c8352911aa8e695211b08a58fc69deda0d389b7fddc280b",
+  "host_key_source": "Authenticated SSM /etc/ssh/ssh_host_ed25519_key.pub",
+  "known_hosts_sha256": "e9d7cdd92e0db89dcf88196f180a18b77371f41c58572b0f20b38267a8efc220",
+  "strict_host_key_checking": true,
+  "collected_utc": "2026-10-13T04:49:30.876957+00:00"
+}

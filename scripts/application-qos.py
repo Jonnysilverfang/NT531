@@ -12,8 +12,10 @@ import gzip
 import hashlib
 import importlib.util
 import json
+import ipaddress
 from pathlib import Path
 import secrets
+import re
 import shlex
 import shutil
 import subprocess
@@ -189,6 +191,10 @@ class Experiment:
 
     def fetch(self, node, filename, destination):
         """SSM output is capped: fetch independent 18000-byte base64 chunks, hash verify."""
+        key = ROOT / 'tmp/ssh-download-private/nt531.pem'
+        scp = shutil.which('scp')
+        if key.is_file() and scp and 'denybin' not in scp:
+            return self.fetch_scp(node, filename, destination, key)
         info = json.loads(self.remote(node, ["python3 -c " + shlex.quote(
             f"import pathlib,hashlib,json; p=pathlib.Path({filename!r}); b=p.read_bytes(); print(json.dumps(dict(size=len(b),sha256=hashlib.sha256(b).hexdigest())))")]))
         assert info['size'] < 20_000_000, 'Bounded pilot artifact size exceeded'
@@ -200,6 +206,33 @@ class Experiment:
             content = b''.join(pool.map(chunk, range(0, info['size'], 17000)))
         assert len(content) == info['size'] and hashlib.sha256(content).hexdigest() == info['sha256']
         destination.write_bytes(content)
+
+    def fetch_scp(self, node, filename, destination, key):
+        """Read-only bulk transfer after capture, with SSM-pinned host key and byte hash."""
+        assert filename.startswith(REMOTE + '/') and re.fullmatch(r'[A-Za-z0-9_./-]+', filename)
+        info = json.loads(self.remote(node, ['python3 -c ' + shlex.quote(
+            f"import pathlib,hashlib,json; p=pathlib.Path({filename!r}); b=p.read_bytes(); print(json.dumps(dict(size=len(b),sha256=hashlib.sha256(b).hexdigest())))")]))
+        assert 0 <= info['size'] < 20000000
+        host = self.instances[node]['public_ip']
+        ipaddress.ip_address(host)
+        known = self.temp / ('known-hosts-' + node)
+        if not known.exists():
+            pub = self.remote(node, ['cat /etc/ssh/ssh_host_ed25519_key.pub']).split()
+            assert len(pub) >= 2 and pub[0] == 'ssh-ed25519'
+            known.write_text(host + ' ' + pub[0] + ' ' + pub[1] + '\n', encoding='utf-8')
+        command = ['scp', '-q', '-i', str(key), '-o', 'BatchMode=yes', '-o', 'IdentitiesOnly=yes',
+            '-o', 'StrictHostKeyChecking=yes', '-o', 'UserKnownHostsFile=' + str(known),
+            '-o', 'ConnectTimeout=10', 'ec2-user@' + host + ':' + filename, str(destination)]
+        reply = subprocess.run(command, capture_output=True, text=True, timeout=90)
+        if reply.returncode:
+            raise RuntimeError('Read-only SCP download failed: ' + reply.stderr[-1800:])
+        assert destination.stat().st_size == info['size'] and sha(destination) == info['sha256'], 'SCP checksum mismatch'
+        proof = dict(transport='scp_after_capture', node=node, remote_file=filename,
+            verified_size=info['size'], verified_sha256=info['sha256'],
+            host_key_source='Authenticated SSM /etc/ssh/ssh_host_ed25519_key.pub',
+            known_hosts_sha256=sha(known), strict_host_key_checking=True,
+            collected_utc=dt.datetime.now(dt.timezone.utc).isoformat())
+        destination.with_suffix(destination.suffix + '.transport.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf-8')
 
 
 def setup(experiment):

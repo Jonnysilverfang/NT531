@@ -1,0 +1,11 @@
+{
+  "transport": "scp_after_capture",
+  "node": "c",
+  "remote_file": "/opt/nt531-application/queue-9445100b51524919a036a4fe888c67e5-c.jsonl.gz",
+  "verified_size": 341914,
+  "verified_sha256": "ff3831d010b375566b66bbbc997b77b6d32a473fd24210211b43bc353e7bb5b4",
+  "host_key_source": "Authenticated SSM /etc/ssh/ssh_host_ed25519_key.pub",
+  "known_hosts_sha256": "e9d7cdd92e0db89dcf88196f180a18b77371f41c58572b0f20b38267a8efc220",
+  "strict_host_key_checking": true,
+  "collected_utc": "2026-10-13T04:45:30.238163+00:00"
+}

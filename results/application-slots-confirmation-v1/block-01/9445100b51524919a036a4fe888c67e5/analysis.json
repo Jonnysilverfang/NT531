@@ -1,0 +1,1009 @@
+{
+  "phase": "confirmatory_block",
+  "issues": [],
+  "rows": [
+    {
+      "mode": "tgw",
+      "slots": 8,
+      "rate_rps": 800,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 688.876190999963,
+          "queue_wait_p95_ms": 1314.0517490001002,
+          "service_p50_ms": 10.524762999921222,
+          "service_p95_ms": 11.192610999842145,
+          "peak_queued_before": 1026,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 683.099649000269,
+          "queue_wait_p95_ms": 1293.3512879999398,
+          "service_p50_ms": 10.542051999891555,
+          "service_p95_ms": 11.172816999987845,
+          "peak_queued_before": 1013,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 12000,
+      "sent": 12000,
+      "successful": 12000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 394,
+      "deadline_success_fraction": 0.03283333333333333,
+      "successful_completion_p50_ms": 707.6505580002959,
+      "successful_completion_p95_ms": 1327.8736370002662,
+      "successful_completion_p99_ms": 1363.8494130004801,
+      "dispatch_lag_p95_ms": 1.04928300015672,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "tgw",
+      "slots": 16,
+      "rate_rps": 600,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004840999736188678,
+          "queue_wait_p95_ms": 0.0067459995989338495,
+          "service_p50_ms": 10.55011700009345,
+          "service_p95_ms": 10.928506000254856,
+          "peak_queued_before": 0,
+          "peak_active_before": 7,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004772000011143973,
+          "queue_wait_p95_ms": 0.00930500027607195,
+          "service_p50_ms": 10.53693599988037,
+          "service_p95_ms": 10.951465000289318,
+          "peak_queued_before": 0,
+          "peak_active_before": 7,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 9000,
+      "sent": 9000,
+      "successful": 9000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 9000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 12.626077667391655,
+      "successful_completion_p95_ms": 13.24297100018157,
+      "successful_completion_p99_ms": 13.49217266715641,
+      "dispatch_lag_p95_ms": 1.0289763336004398,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "tgw",
+      "slots": 16,
+      "rate_rps": 800,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.0047909998102113605,
+          "queue_wait_p95_ms": 0.010256999757984886,
+          "service_p50_ms": 10.710019999805809,
+          "service_p95_ms": 11.028380999960063,
+          "peak_queued_before": 0,
+          "peak_active_before": 11,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004598000032274285,
+          "queue_wait_p95_ms": 0.008440999863523757,
+          "service_p50_ms": 10.728743999607104,
+          "service_p95_ms": 11.035732999971515,
+          "peak_queued_before": 0,
+          "peak_active_before": 11,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 12000,
+      "sent": 12000,
+      "successful": 12000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 12000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 12.5875530002304,
+      "successful_completion_p95_ms": 13.24807100036196,
+      "successful_completion_p99_ms": 13.524951999897894,
+      "dispatch_lag_p95_ms": 1.0356540001339454,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "tgw",
+      "slots": 8,
+      "rate_rps": 600,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004832999820791883,
+          "queue_wait_p95_ms": 0.010852999821509002,
+          "service_p50_ms": 10.36939200002962,
+          "service_p95_ms": 10.716379000314191,
+          "peak_queued_before": 0,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004723000074591255,
+          "queue_wait_p95_ms": 0.00902700003280188,
+          "service_p50_ms": 10.36729599991304,
+          "service_p95_ms": 10.700874000121985,
+          "peak_queued_before": 0,
+          "peak_active_before": 7,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 9000,
+      "sent": 9000,
+      "successful": 9000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 9000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 12.23819300003015,
+      "successful_completion_p95_ms": 12.909480000416806,
+      "successful_completion_p99_ms": 13.082467999993241,
+      "dispatch_lag_p95_ms": 0.9995700002036756,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "slots": 8,
+      "rate_rps": 800,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 807.5480130000869,
+          "queue_wait_p95_ms": 1450.151024999741,
+          "service_p50_ms": 10.64808000000994,
+          "service_p95_ms": 11.195478999979969,
+          "peak_queued_before": 1128,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 748.8383919999251,
+          "queue_wait_p95_ms": 1355.4432930000075,
+          "service_p50_ms": 10.609423000005336,
+          "service_p95_ms": 11.16332700030398,
+          "peak_queued_before": 1058,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 12000,
+      "sent": 12000,
+      "successful": 12000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 250,
+      "deadline_success_fraction": 0.020833333333333332,
+      "successful_completion_p50_ms": 822.1233970002686,
+      "successful_completion_p95_ms": 1468.7981040001432,
+      "successful_completion_p99_ms": 1511.2804010004766,
+      "dispatch_lag_p95_ms": 1.0531660000197007,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "slots": 16,
+      "rate_rps": 600,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004797000201506307,
+          "queue_wait_p95_ms": 0.007030000233498868,
+          "service_p50_ms": 10.186672000145336,
+          "service_p95_ms": 10.29875299991545,
+          "peak_queued_before": 0,
+          "peak_active_before": 7,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004712999725597911,
+          "queue_wait_p95_ms": 0.00567600000067614,
+          "service_p50_ms": 10.189697999976488,
+          "service_p95_ms": 10.298785000031785,
+          "peak_queued_before": 0,
+          "peak_active_before": 6,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 9000,
+      "sent": 9000,
+      "successful": 9000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 9000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 11.581554666918237,
+      "successful_completion_p95_ms": 12.0847456669253,
+      "successful_completion_p99_ms": 12.196635666896327,
+      "dispatch_lag_p95_ms": 1.0333953337067214,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "slots": 16,
+      "rate_rps": 800,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004751000233227387,
+          "queue_wait_p95_ms": 0.009660000159783522,
+          "service_p50_ms": 10.28862500015748,
+          "service_p95_ms": 11.00924299998951,
+          "peak_queued_before": 0,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 12000,
+          "not_entered": 0,
+          "handler_completed": 12000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004720000106317457,
+          "queue_wait_p95_ms": 0.009435000265511917,
+          "service_p50_ms": 10.28904099985084,
+          "service_p95_ms": 11.010388000158855,
+          "peak_queued_before": 0,
+          "peak_active_before": 8,
+          "raw_count_including_warmup": 16000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 12000,
+      "sent": 12000,
+      "successful": 12000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 12000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 11.759898000491376,
+      "successful_completion_p95_ms": 12.698036000074353,
+      "successful_completion_p99_ms": 12.945787000262499,
+      "dispatch_lag_p95_ms": 1.0172580000471498,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    },
+    {
+      "mode": "peering",
+      "slots": 8,
+      "rate_rps": 600,
+      "workers": [
+        {
+          "node": "c",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004902000000583939,
+          "queue_wait_p95_ms": 0.007330999778787373,
+          "service_p50_ms": 10.202733999904012,
+          "service_p95_ms": 10.313937000319129,
+          "peak_queued_before": 0,
+          "peak_active_before": 6,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        },
+        {
+          "node": "d",
+          "entered": 9000,
+          "not_entered": 0,
+          "handler_completed": 9000,
+          "cancelled": 0,
+          "incomplete_or_error": 0,
+          "client_failed_but_handler_completed": 0,
+          "queue_wait_p50_ms": 0.004687999989982927,
+          "queue_wait_p95_ms": 0.006553999810421374,
+          "service_p50_ms": 10.205726999629405,
+          "service_p95_ms": 10.314345000097092,
+          "peak_queued_before": 0,
+          "peak_active_before": 6,
+          "raw_count_including_warmup": 12000,
+          "scope": "Matched measured request IDs; all worker calls including client failures retained. Handler completion is not receipt by A."
+        }
+      ],
+      "scheduled": 9000,
+      "sent": 9000,
+      "successful": 9000,
+      "failed": 0,
+      "deadline_ms": 50.0,
+      "deadline_success_count": 9000,
+      "deadline_success_fraction": 1.0,
+      "successful_completion_p50_ms": 11.598601000059716,
+      "successful_completion_p95_ms": 12.10940066675903,
+      "successful_completion_p99_ms": 12.20412466682319,
+      "dispatch_lag_p95_ms": 1.0344706665819103,
+      "quantile_scope": "successful requests only; failures separately retained in deadline denominator"
+    }
+  ],
+  "collection_recovery": null,
+  "primary_slot_improvement_fraction": "0.9731666666666666666666666665",
+  "primary_block_above_margin": true,
+  "inferential_result": null,
+  "sources": [
+    {
+      "path": "app.py",
+      "sha256": "80375466aff90524ca01f030ba96f31f2449b06813762acfda413043dc6d54ef"
+    },
+    {
+      "path": "attempt.json",
+      "sha256": "2a3702f4eb04915000e5d6beac043dfbc213d5371c989c85a37f7bfc5f95d535"
+    },
+    {
+      "path": "deployment-source.py",
+      "sha256": "1a75cf6c4ab9ccdb8a9c01cede0e360c1c0ddc87fd13e7c898c46b0918de48e7"
+    },
+    {
+      "path": "peering/routes-after.json",
+      "sha256": "0f26724c700ae0b0b6d42d900d645d18edc29bdb1f07a23133b788b9d5f75cec"
+    },
+    {
+      "path": "peering/routes-before.json",
+      "sha256": "0f26724c700ae0b0b6d42d900d645d18edc29bdb1f07a23133b788b9d5f75cec"
+    },
+    {
+      "path": "peering/slots-16-rate-600/health-before.json",
+      "sha256": "4e922be449ab717718ae0f0796de33a55fa77f6b7ac7d72fd5439b75b50eeee1"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-a.json.gz",
+      "sha256": "dcbfee44d799b167d20538a3786637f7daee88b5dd4abc4270a1e957b49ed7e6"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-a.json.gz.transport.json",
+      "sha256": "fdd65e61db19d8efb972bef193a71582086ee15a111c848091e68357e6607458"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-b.json.gz",
+      "sha256": "670be8343b0b3b41ba42495ef1838ea905b5f89b939e8c2c845d28cf833c2177"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-b.json.gz.transport.json",
+      "sha256": "8e5ab2795e7a8dd3a332c4e3e337122a96bf3cad2db7f4635ff3be54f9886fba"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-c.json.gz",
+      "sha256": "8834ca2f6701fee4d7eaebf9c05d5c3239a5ee139b57bc977dcb8afb243a14dd"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-c.json.gz.transport.json",
+      "sha256": "78a042d4554f87cd787b8b84e2b0b1eb4ed049ae4cdc80bc4db4972f03d927f3"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-d.json.gz",
+      "sha256": "696d842dfcc6c0fcf7b337c9d930545e2fda8304b913832a75e57855ff00fa40"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-d.json.gz.transport.json",
+      "sha256": "e9f03a5232739df38ae8249327ee8fe4c67de9a6fe24c6ab8bb899aa29c30bfa"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-c.jsonl.gz",
+      "sha256": "d2de07f58535de54236fc2ee130b6e3822d6c8671dfa2855541ecc6113387ad5"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-c.jsonl.gz.transport.json",
+      "sha256": "c664256cca046504456f7245c863531e8fb57e5fe9ee09710e932a769b3d2bd4"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-d.jsonl.gz",
+      "sha256": "0dbc03540e7695a8e4bf7ea3a713aa9616838ad11d90a01aa2b68a6ddf7be58b"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-d.jsonl.gz.transport.json",
+      "sha256": "420d1d707a348562ce96af48a58ec40e9ef7e2d4ba00837b52dde9f12dafea3e"
+    },
+    {
+      "path": "peering/slots-16-rate-600/requests.jsonl.gz",
+      "sha256": "081ad939f1c8daf92932c8a938e0425af521c26895823b113a98f2cb62dcbf3c"
+    },
+    {
+      "path": "peering/slots-16-rate-600/requests.jsonl.gz.transport.json",
+      "sha256": "2ad4e8bb26df87fab14df196b3b2671cd10db7a2e7bc7d3868ef08e65ee81657"
+    },
+    {
+      "path": "peering/slots-16-rate-600/summary.json",
+      "sha256": "10e994a47056004ca445707fc8cd5d8dc05150e10afdc7f9ec3034666371ef2f"
+    },
+    {
+      "path": "peering/slots-16-rate-800/health-before.json",
+      "sha256": "4e922be449ab717718ae0f0796de33a55fa77f6b7ac7d72fd5439b75b50eeee1"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-a.json.gz",
+      "sha256": "ab69a38e86291d7e173f6a49923656d32aaea450353622d12e350deef64cf831"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-a.json.gz.transport.json",
+      "sha256": "8154b72ee9fbabe7364650f4ac15a52eaf89560238eab4933f7edfe11dbf6099"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-b.json.gz",
+      "sha256": "9b77b1e49a8d3bfc78592d4f0fd1f230ab55c244a1327b494140f80c339d9ad9"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-b.json.gz.transport.json",
+      "sha256": "2eb741280249170fa5319560ad1d51633102303dea88f912c3ea996e16f8afb5"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-c.json.gz",
+      "sha256": "d1255bf3d65f829a9f5f43f9da64ee3f87d4bb0a622834eadefe694ef60a4691"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-c.json.gz.transport.json",
+      "sha256": "5f5369d90839a837e3b7dc51ff415cb657fc034f7363abd60905bb6fe53c376d"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-d.json.gz",
+      "sha256": "9e58f3a4b412d8367c34366ad75d45826f9b7ee5f284212812db88aa75960752"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-d.json.gz.transport.json",
+      "sha256": "d21c1ff9182630d22d92a544cf8b87986f441df45e3a2b683a36baa013ab4742"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-c.jsonl.gz",
+      "sha256": "09de3ff82f5bd7e5603c38c5deeee05a071ea8aa7f913e03504a90bce6550415"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-c.jsonl.gz.transport.json",
+      "sha256": "033959c7bc7e52697db4baa74d1fb4e87d3838f42da6a644849c38f5fb401a13"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-d.jsonl.gz",
+      "sha256": "355aa70069ece9eabb4721934cab77494a75b21cf2ff010fa6452b0c9f2251b1"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-d.jsonl.gz.transport.json",
+      "sha256": "bb473451054c3b457864751f76e46c3f01113ee69fc43ffcf094da2ef57ab682"
+    },
+    {
+      "path": "peering/slots-16-rate-800/requests.jsonl.gz",
+      "sha256": "e1130075e4c3e8d5fbc22aaec026a8bc9d3f20f6c3ada850324d7abe8c3a6930"
+    },
+    {
+      "path": "peering/slots-16-rate-800/requests.jsonl.gz.transport.json",
+      "sha256": "864ec69d2b2d943f0c6d3b4ccba2bd1374bd895bbeb39ab65bc2630c86c895ee"
+    },
+    {
+      "path": "peering/slots-16-rate-800/summary.json",
+      "sha256": "9b6a847e4115842146f28f9907711be93a09d11977868b1d04d39afd29fb2bc4"
+    },
+    {
+      "path": "peering/slots-8-rate-600/health-before.json",
+      "sha256": "0136b79830157528c17cdec5224ad3521b48eac85c150e892941e2bfac93ac5d"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-a.json.gz",
+      "sha256": "fa1ba77a0e8f1cb42e3e08d4dfeda4449db0bae59206d9a25e4c0caa7b9c204d"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-a.json.gz.transport.json",
+      "sha256": "b75d021fddfb87bcb0da1f3e1ffa2271fff27ac06cd6de3d0986840ecba136e1"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-b.json.gz",
+      "sha256": "1ea4c0a7656e9faa08442fd0efc1d8595ac5ba88abe8985415e72c6502b226aa"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-b.json.gz.transport.json",
+      "sha256": "c6a5e8fdf490f2672662fa2f65045b23d3a3e920acd3571a9f8050165e178c2f"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-c.json.gz",
+      "sha256": "d185419407bfe2167c76a8e9446632573f21d14f0cd5645a4ceabbab713867e8"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-c.json.gz.transport.json",
+      "sha256": "6fe3c837dce15f3c6e5cdd6fd18e9ecfba6853307da8cf7a7eb38a5f629cf9b9"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-d.json.gz",
+      "sha256": "7373d64a8f1c2f7b7d360f2993d929d09de8127dd6f2648edb5d800425a2e5f3"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-d.json.gz.transport.json",
+      "sha256": "e2365009572f3d587652e6010b2b8ffb8a8817bc25b7164668a8bbc41b34e558"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-c.jsonl.gz",
+      "sha256": "994c1ceca30495b963e1ca7afae7222b917bdb1a76c7230dcc310934dde4d55c"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-c.jsonl.gz.transport.json",
+      "sha256": "d3526ae00c4905a24f51fa83eed1d1328fd48c69720a0b111083763fbf7e23ed"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-d.jsonl.gz",
+      "sha256": "87e0e8a85157b25e59d1eda85a12aee5de1a2bd08b04bb0537d4e1a3b4792fde"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-d.jsonl.gz.transport.json",
+      "sha256": "bc1aa3de9b9b6e2e582c0adf46f80315dcdcd6cda373d4ca7ba9ccbd7785b1ae"
+    },
+    {
+      "path": "peering/slots-8-rate-600/requests.jsonl.gz",
+      "sha256": "de564f385a4499c5441e660b1cf285589a73bfd4837633996b0f812d9af400ee"
+    },
+    {
+      "path": "peering/slots-8-rate-600/requests.jsonl.gz.transport.json",
+      "sha256": "100003e4dfa7d1bec5dabaae33b222134193228ff59c05e93f427142f42b7fae"
+    },
+    {
+      "path": "peering/slots-8-rate-600/summary.json",
+      "sha256": "a1df77ff2ab38d414e57c474837e6bcd21ea3c8d4ae10d3ed3ec28181ce5fbd3"
+    },
+    {
+      "path": "peering/slots-8-rate-800/health-before.json",
+      "sha256": "0136b79830157528c17cdec5224ad3521b48eac85c150e892941e2bfac93ac5d"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-a.json.gz",
+      "sha256": "eb6a938a9d5b9d46fdeae8c095237e55593ba5449d83f7712444e1d8b3291c6c"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-a.json.gz.transport.json",
+      "sha256": "f506a08d4891609a0c5bd1ac443e86cbf68f25eff4173298712e0177db952806"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-b.json.gz",
+      "sha256": "ad40167775f587e5371fdf3df426be866a9600c5000d99451dbd4ab0147a52c5"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-b.json.gz.transport.json",
+      "sha256": "11da12230480e91d2bfeb2a1effdf49db750ff569b9c0db1122361b388ce8318"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-c.json.gz",
+      "sha256": "b364b4c9aedb89ac816e3ca3d780e6ba444beb86a8e4ab361757b63b29824bfc"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-c.json.gz.transport.json",
+      "sha256": "ffe6ca18a1cd90c97e4e4ec10da3c84da7c6ac70fdb3f893c33b19d653e0c8f7"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-d.json.gz",
+      "sha256": "9f66fb5defb8abd93a1bb677ca5cfd69285414514a1f4e0f599d9540dec6b433"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-d.json.gz.transport.json",
+      "sha256": "6fb26dc8faa7e64a2ae6f9d53530d006298c919f1edb53666b232bff62fbe166"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-c.jsonl.gz",
+      "sha256": "0ec816a86e0690051d0c5912462c102439763459f35ef706c92fb6dea92dd5de"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-c.jsonl.gz.transport.json",
+      "sha256": "2172fccdf870e56fe4fb2226a75d1bc4930ebda732728527b2afaf9238be0195"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-d.jsonl.gz",
+      "sha256": "8bcb451d8609e6dda4eb6246588c5255211dc2efb8fdc37b14a82c802c3f34ba"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-d.jsonl.gz.transport.json",
+      "sha256": "9e7c7724f8f7c85812caccfb6a7fc5804e87df46cf4191aa78da6c3eff53f7be"
+    },
+    {
+      "path": "peering/slots-8-rate-800/requests.jsonl.gz",
+      "sha256": "4eaf336cc90df97c74e7217fc36c30c412d1f01a9a4bd12af5b05b5ac2d2a5f8"
+    },
+    {
+      "path": "peering/slots-8-rate-800/requests.jsonl.gz.transport.json",
+      "sha256": "8bd355bedad93948d1597e136082d8fd298e2ec1eb5b0bb7b3297c3973e245e0"
+    },
+    {
+      "path": "peering/slots-8-rate-800/summary.json",
+      "sha256": "8d850009d934f2404897cd0bd5b5d84600c902089690d592a9fe8b509d2b790f"
+    },
+    {
+      "path": "preflight-a.txt",
+      "sha256": "c97df09694f0134d2f56f1953a9fb67d13a5646f813d354df5d9b47a0d83504b"
+    },
+    {
+      "path": "preflight-b.txt",
+      "sha256": "de1f1cdf800f68f1aa931327bd61717c9451da50fc63fc8bc03851ec55634079"
+    },
+    {
+      "path": "preflight-c.txt",
+      "sha256": "3b8aefcf30005d5eef019442a243d90a4f36792c8b870a13c427e876502dcbb5"
+    },
+    {
+      "path": "preflight-d.txt",
+      "sha256": "dc35e84036393505c2d8e2b6cfdd67dfddfcdeb04636d978710e2699ec70f265"
+    },
+    {
+      "path": "protocol.json",
+      "sha256": "65c69162a62cfd81c8531b9e9fea8480cd664bcddc4d1c78c4bb2b09e46cda0b"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "0d021e662fc5dc77aaac96045a95bc9e61e065d66f9a37a22300e6b3a97c41e7"
+    },
+    {
+      "path": "runner-source.py",
+      "sha256": "e48fb6e9110154279127b7f2c1133efc47a4fa2d13d98bd4e5ebbd5fc12405c3"
+    },
+    {
+      "path": "tgw/routes-after.json",
+      "sha256": "87d480d28b75b458a7b04da6b1623611fff90a8ddd9ee31e13eab736c7052056"
+    },
+    {
+      "path": "tgw/routes-before.json",
+      "sha256": "87d480d28b75b458a7b04da6b1623611fff90a8ddd9ee31e13eab736c7052056"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/health-before.json",
+      "sha256": "4e922be449ab717718ae0f0796de33a55fa77f6b7ac7d72fd5439b75b50eeee1"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-a.json.gz",
+      "sha256": "55fa3c069707239844ae6692f1ee96c7bdfe05707cb5b4cb1911be8b2e619c21"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-a.json.gz.transport.json",
+      "sha256": "180aa0d57305421b41e1d683f41d4591b12c93491c96aa24e046bd799079b7ce"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-b.json.gz",
+      "sha256": "b0696ad4a6384f241879a4c810e14309d5f3f33bf95a896fb197a32d90333c1b"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-b.json.gz.transport.json",
+      "sha256": "4b11cd4386930e94a0d99ec64823955bf0be37e683cf93c18972c1a54e2b968a"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-c.json.gz",
+      "sha256": "3200eeb71953b51e1d3a43065ad90b5caf5f08663aceb87530d5102c12fab13f"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-c.json.gz.transport.json",
+      "sha256": "7f81c5fa3529905dba4250a71dc39470c84c11384ca2ef75f86932ed3d9f2489"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-d.json.gz",
+      "sha256": "92b4281b5f942f7a15436dc982bd361bf7c984039c3158a8846ef4c94fe4ce9f"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-d.json.gz.transport.json",
+      "sha256": "1a2085a9a864e2f565d3e75eb1c6574c1dcf22cbd0bf4aadd1435e993d3ecc75"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-c.jsonl.gz",
+      "sha256": "ff3831d010b375566b66bbbc997b77b6d32a473fd24210211b43bc353e7bb5b4"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-c.jsonl.gz.transport.json",
+      "sha256": "ab4e60ab96b4b67cfec779a3f6f98013ce75f10cdb3410ba88bdae8c126a27b0"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-d.jsonl.gz",
+      "sha256": "52fa5733beea7212d088f4346eadfccd6a97bacfda38e24f185330145826575e"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-d.jsonl.gz.transport.json",
+      "sha256": "530d0a22988d7f2df5d34838c297361dbb16388ea7efddbbb515975014e0e523"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/requests.jsonl.gz",
+      "sha256": "2fb0ca7d8051716f9211a761fb69ab74ec445bd3d6b5d2ee1ff3766cb3afe6e4"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/requests.jsonl.gz.transport.json",
+      "sha256": "53b8d2cdef7474dcbd6303c0d62b78b5cb6ad962a478c4a6a617e0115b861808"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/summary.json",
+      "sha256": "e57f2cf341172fed91c4b5aa76a8d2773a22ee9db1afb7c9c2c222f8fba33c34"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/health-before.json",
+      "sha256": "4e922be449ab717718ae0f0796de33a55fa77f6b7ac7d72fd5439b75b50eeee1"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-a.json.gz",
+      "sha256": "df4f63bcec966f98e767960146e923ef514e77ad54b3adff0cab3e94714755cd"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-a.json.gz.transport.json",
+      "sha256": "242ff9b3e84a626609bee454ded57b38c9d8d25a4a5bbc761587f1cf469693d0"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-b.json.gz",
+      "sha256": "043528d46b90fd2cb327eeabeecab9e1f67cc0e86959630bde6c937ea791e27e"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-b.json.gz.transport.json",
+      "sha256": "2dea0f6c99601072c1f96037dfd2e37ac662eea1e88bca31c61bede35441aabd"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-c.json.gz",
+      "sha256": "0028c81301cf3848bbf34fb273ba8ab9160ffcf34a937f4f097858205112e82d"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-c.json.gz.transport.json",
+      "sha256": "4282a4eaedbf4687ebdafa603ec686eb45944693debc463480be4b382048d263"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-d.json.gz",
+      "sha256": "82fa7c123dd6486c35ae05b2a8bb66b3b2e711c9141935332667007ae19cb093"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-d.json.gz.transport.json",
+      "sha256": "fee0824e065bcdec8dbf3a8889a899774d2880554c3dbcfe0681a4d29ac67214"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-c.jsonl.gz",
+      "sha256": "4d82426ebc374ec540a2b28e48bb8f333e836c0499631add5e9ce0872f9e81a1"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-c.jsonl.gz.transport.json",
+      "sha256": "23f32caae5ddb8b5af6b03719f458464fa6ca9619ad7cae31991840812c4ca23"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-d.jsonl.gz",
+      "sha256": "d3586b5a54504201e86f4258c7d0e69d4a19d973ef5ff1821a62eb00ee302d14"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-d.jsonl.gz.transport.json",
+      "sha256": "bf782fdd37f858bbf5fcb8ba6bdad7569242a95460e56fab4b4c723f19c22481"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/requests.jsonl.gz",
+      "sha256": "b64d7dee8ecb109e13aa4e1a49f9ed7554c9d3c638ccf654b095ac46428cbae7"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/requests.jsonl.gz.transport.json",
+      "sha256": "8fb772f7df2f4ca4dd9ec84abee5535e830555e760ac4f22d8767d7efce83e8f"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/summary.json",
+      "sha256": "53d9f407cfac44c864d57e50b421af903beeaabd62babb55d9cec7052db7c371"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/health-before.json",
+      "sha256": "0136b79830157528c17cdec5224ad3521b48eac85c150e892941e2bfac93ac5d"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-a.json.gz",
+      "sha256": "2e5fdb04e71859eb1eee765e746681b32c990d37ccfbe9bd1e6390edf5dc79ec"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-a.json.gz.transport.json",
+      "sha256": "e3ab78470275cb08e2a4bc52dcde00f7d1f9ace3e1412dcb083b4a25237237e8"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-b.json.gz",
+      "sha256": "84591089dbb61fd73acb6b00160e6b1254e3a175bd1e751435972b0c9535d1e9"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-b.json.gz.transport.json",
+      "sha256": "6bca4f0a6522511ae0132a14e97296543b4f28b6a535ab9f4584872f475e80b2"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-c.json.gz",
+      "sha256": "dbb0527bd4b829314c8352911aa8e695211b08a58fc69deda0d389b7fddc280b"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-c.json.gz.transport.json",
+      "sha256": "9b1ec5571f9e22b04cfdb758217d710303de26c1582257adfddfd7965a80ad3c"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-d.json.gz",
+      "sha256": "5310913b6f14577afcd14d899e91d4fef52edcf8e95ea0d832aeae3ebe9d0ed6"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-d.json.gz.transport.json",
+      "sha256": "d5be054b3ebbd7eb4eb89930e25f9cc2d7b1ccb16c5aa1960935b55e09649eb1"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-c.jsonl.gz",
+      "sha256": "96f6cec6fbd4bbc392dcd70b5fdf51b8916e0d5491a0a1e4bafcbc0f75618f83"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-c.jsonl.gz.transport.json",
+      "sha256": "171590de7917e4b699d9a9c992617c14495c0304832d27c5b6df40d4a0fec5da"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-d.jsonl.gz",
+      "sha256": "95d6e70e08b7038060fa6a5d0b9e43f15394492a65dd42067c6741da74964cdf"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-d.jsonl.gz.transport.json",
+      "sha256": "5efa888b09dc0fbc56440c47a13ff39cbd175262215761ad8ac5fb95ef43b439"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/requests.jsonl.gz",
+      "sha256": "62a694b88b1ee84ccc05d41e9d28d5b1fc1fa57a48ddc24b92d28aa1873f04a8"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/requests.jsonl.gz.transport.json",
+      "sha256": "9038fb7194c46a2e15b064b74f36b8a2d38186ba4af46006709f05f728e48d3b"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/summary.json",
+      "sha256": "48b18caa2f30c689aaf405d6278fe77581e06588bd668ff0e0c0649c32173e47"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/health-before.json",
+      "sha256": "0136b79830157528c17cdec5224ad3521b48eac85c150e892941e2bfac93ac5d"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-a.json.gz",
+      "sha256": "ad8e8a1323d4bbef6dd9936bbdc168445f155a8d46d213b8cd2be6035c023a86"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-a.json.gz.transport.json",
+      "sha256": "c3a03ac69da32d45d33eba0ba8e5edf9d00d5c66062d9afc4dbbdf8564676c07"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-b.json.gz",
+      "sha256": "308d398d2991d131aedf228111b2f0e9e5f2f63c80173d2ab528d48907c5ba81"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-b.json.gz.transport.json",
+      "sha256": "4ab46876daf544b6ab826a0a8b3a4ba3a71358069efc46bc6962d59a10c475ab"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-c.json.gz",
+      "sha256": "26a491e2a5215c0abda480a72ad9b38cd3215466053a6c50946e07d916e7233e"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-c.json.gz.transport.json",
+      "sha256": "cf3239ddc9fe183e86fd5cfaa77a7c9154b2f78071eaf6ac2c6e24050ed92893"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-d.json.gz",
+      "sha256": "bc87211751694a50d15149b5c2698c3d511afbdd6c9c0a9d850d7fc5a7111f4a"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-d.json.gz.transport.json",
+      "sha256": "470938db52048ada2af03da426bdb70db63eff476507c70911a6de93545cde3a"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-c.jsonl.gz",
+      "sha256": "dfc29fa2facc7b836c95dbef2fac5d11ee2f975d6a4abd37f3089c476e6732f0"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-c.jsonl.gz.transport.json",
+      "sha256": "711e6bb641372ae3166477a6c9989da14af09e8658b61986899bf9ee2c955cec"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-d.jsonl.gz",
+      "sha256": "dde8a03931cee7701a84ad558bbf4aab882161befd85d4568641c238a48f9b8c"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-d.jsonl.gz.transport.json",
+      "sha256": "b101a175fcf3bb77548d2862374ce7e98fe4e29b85ebca1cda71ae5fe2d25ba7"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/requests.jsonl.gz",
+      "sha256": "473d567bf028ebc55bd3bb0407a83a019155e38946d2de94ea202296ce4eb76d"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/requests.jsonl.gz.transport.json",
+      "sha256": "9dd1e48eba7f5075377419816dde8bb9c33631340f490d5a66af89c95a63cc8d"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/summary.json",
+      "sha256": "f1c0b5e99302673b308b0fe1f93d0129f684650b6ce6abce795efa1320c1cb44"
+    },
+    {
+      "path": "transport-validation.json",
+      "sha256": "7675bc68ed9cb5049320a4be54600efd9c59e02b32843965a051a3ad62f46bf6"
+    }
+  ],
+  "scope": "One block; no inferential conclusion. Engineering validation excluded from confirmatory study."
+}

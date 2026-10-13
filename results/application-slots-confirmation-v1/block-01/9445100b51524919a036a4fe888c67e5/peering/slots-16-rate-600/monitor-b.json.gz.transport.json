@@ -1,0 +1,11 @@
+{
+  "transport": "scp_after_capture",
+  "node": "b",
+  "remote_file": "/opt/nt531-application/results/9445100b51524919a036a4fe888c67e5-peering-b-monitor/monitor.json.gz",
+  "verified_size": 3032,
+  "verified_sha256": "670be8343b0b3b41ba42495ef1838ea905b5f89b939e8c2c845d28cf833c2177",
+  "host_key_source": "Authenticated SSM /etc/ssh/ssh_host_ed25519_key.pub",
+  "known_hosts_sha256": "f97190c2117083df952311fa2d3bb6dbc9d5691be0f16452d5ca8ddcbf0aae65",
+  "strict_host_key_checking": true,
+  "collected_utc": "2026-10-13T04:54:52.341643+00:00"
+}

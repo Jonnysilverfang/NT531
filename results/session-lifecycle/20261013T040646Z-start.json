@@ -1,0 +1,53 @@
+{
+  "action": "start",
+  "requested_utc": "2026-10-13T04:06:44.2842968Z",
+  "account": "620306387033",
+  "response": {
+    "StartingInstances": [
+      {
+        "InstanceId": "i-089bae0de9ec6bc4e",
+        "CurrentState": {
+          "Code": 0,
+          "Name": "pending"
+        },
+        "PreviousState": {
+          "Code": 80,
+          "Name": "stopped"
+        }
+      },
+      {
+        "InstanceId": "i-0a3f3e2e9d7185970",
+        "CurrentState": {
+          "Code": 0,
+          "Name": "pending"
+        },
+        "PreviousState": {
+          "Code": 80,
+          "Name": "stopped"
+        }
+      },
+      {
+        "InstanceId": "i-0484f42b82795f765",
+        "CurrentState": {
+          "Code": 0,
+          "Name": "pending"
+        },
+        "PreviousState": {
+          "Code": 80,
+          "Name": "stopped"
+        }
+      },
+      {
+        "InstanceId": "i-0abcc8853cee750e7",
+        "CurrentState": {
+          "Code": 0,
+          "Name": "pending"
+        },
+        "PreviousState": {
+          "Code": 80,
+          "Name": "stopped"
+        }
+      }
+    ]
+  }
+}

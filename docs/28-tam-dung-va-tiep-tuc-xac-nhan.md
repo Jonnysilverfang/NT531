@@ -63,7 +63,17 @@ py scripts/rtt-confirmation.py --analyze
 RTT và slots đều cần 16 block hợp lệ, trên ít nhất bốn ngày; các block trong
 cùng nghiên cứu cách nhau ít nhất hai giờ. Có thể bố trí bốn block/ngày
 trong bốn ngày, nhưng phải kiểm tra khoảng cách, thời lượng và chất lượng
-thực tế. Không có timer tự động chạy phiên sau trong thiết lập này.
+thực tế. Ngày 13/10 người dùng đã cho phép heartbeat tiếp tục trong chat
+lúc 08:00, 11:00, 14:00 và 17:00 giờ Việt Nam, stop bốn máy cuối mỗi phiên.
+Lịch phụ thuộc ứng dụng/máy đang hoạt động và phiên đăng nhập AWS còn hạn;
+không phải tác vụ chạy độc lập trên AWS. Xem [trạng thái và lịch](32-trang-thai-xac-nhan.md).
+
+Phiên có thể dùng `py scripts/start-confirmation-session.py` để kiểm tra
+protocol, cohort/tag, khoảng cách và attempt đang chạy trước khi bật đúng
+bốn máy cũ, chờ Online, đặt MTU 1500 và đủ uptime. `--check` chỉ đọc dữ liệu
+offline, không gọi AWS. Helper không tự đo hay retry; người điều phối phải
+stop máy bằng `scripts/pause-ec2.py` ở cuối phiên, kể cả khi đo lỗi.
+Khóa tải raw tạm được bảo vệ ACL và xóa sau khi máy đã stop; khóa gốc giữ nguyên.
 
 Stop/start giữ instance ID và EIP, nhưng có thể đổi host vật lý. Boot ID,
 uptime và môi trường được lưu; không tuyên bố mọi phiên cùng host vật lý.

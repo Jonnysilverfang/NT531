@@ -1,9 +1,10 @@
 {
   "protocol_hash": "741d20c14d7fec43f58615c09ba84e8ae982d85e42d965cf648a7830e2f21f89",
-  "completed_blocks": 2,
+  "completed_blocks": 3,
   "required_blocks": 16,
   "local_dates": [
-    "2026-10-12"
+    "2026-10-12",
+    "2026-10-13"
   ],
   "issues": [],
   "rows": [
@@ -36,6 +37,24 @@
       "peering_ms": 0.20666666666666667,
       "tgw_ms": 0.44633333333333336,
       "difference_ms": 0.23966666666666667,
+      "missing_replies": 0,
+      "cohort_ids": [
+        "i-0484f42b82795f765",
+        "i-089bae0de9ec6bc4e"
+      ],
+      "tgw_id": "tgw-036e551008b8c0805"
+    },
+    {
+      "block": 3,
+      "order": [
+        "peering",
+        "tgw"
+      ],
+      "started_utc": "2026-10-13T04:10:24.233660+00:00",
+      "span_seconds": 287.984922,
+      "peering_ms": 0.19,
+      "tgw_ms": 0.6156666666666667,
+      "difference_ms": 0.4256666666666667,
       "missing_replies": 0,
       "cohort_ids": [
         "i-0484f42b82795f765",
@@ -100,6 +119,34 @@
     {
       "path": "results/confirmation-rtt-v1/block-02/3392ffe33eac4cfa9d2d0de76313bdaa/complete.json",
       "sha256": "b3bb4b4fac6d2b689928cf8a7ff3a8f225ba8927a1d74f812646bbb308195f77"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/peering/routes-before.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/peering/routes-after.json",
+      "sha256": "50a3421494ccd9750f8c3f2079df1e1c056a0a6ba0b067f586c0f5817c9eb8d3"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/peering/capture.json",
+      "sha256": "d940fd67ed293b7ec0ff38886759679748eb4c9b77af3d25317cf7089448278c"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/tgw/routes-before.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/tgw/routes-after.json",
+      "sha256": "6f706aa953c48fbdae5697fdd35b210692ae48db7260d75fffc50244cb8884c6"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/tgw/capture.json",
+      "sha256": "09c52fe94f0c0f15af9415ef08caaccb14359f4e6a505f3fd62874c2a5dc9010"
+    },
+    {
+      "path": "results/confirmation-rtt-v1/block-03/46f664b7cca34073b8f8ef620fd08dda/complete.json",
+      "sha256": "fb8c8ae4a9c9ad34a1b9eefe6b65a6fae7d75b782616733072663ae23bed896b"
     }
   ],
   "inferential_result": null,

@@ -52,6 +52,26 @@ Thư mục này chỉ có trong bản Git công bố; thư mục vận hành gi�
 22. [Can thiệp 8 → 16 slots, đo hàng đợi và thiết kế xác nhận](docs/27-can-thiep-slots-va-hang-doi.md).
 23. [Sao lưu, stop EC2 và cách tiếp tục cùng cohort](docs/28-tam-dung-va-tiep-tuc-xac-nhan.md).
 24. [Kết quả engineering: can thiệp slots, chờ hàng đợi và deadline](docs/29-ket-qua-engineering-slots.md).
+25. [Bằng chứng, tiêu chí hoàn thành và cách kết luận thống kê](docs/30-bang-chung-va-tieu-chi-hoan-thanh.md).
+26. [Phụ lục Word có công thức và bằng chứng xác nhận đã kiểm tra từng trang](docs/31-phu-luc-bang-chung-thong-ke.docx).
+27. [Trạng thái xác nhận, số block còn thiếu và lịch tự tiếp tục](docs/32-trang-thai-xac-nhan.md).
+
+Cập nhật 13/10: RTT có **3/16 block hợp lệ trên hai ngày**; block 3 có
+Peering 0,1900 ms, TGW 0,6157 ms, chênh +0,4257 ms, không mất phản hồi.
+Slots có **1/16 block hợp lệ**, 84.000 yêu cầu đo: ở 800 rps, 8 → 16 slots
+nâng đúng hạn **2,083% → 100% qua Peering**, **3,283% → 100% qua TGW**;
+tăng trung bình hai mode **97,3167 điểm phần trăm**. Raw không có issue
+theo analyzer, 56 file tải sau capture đã đối chiếu size/SHA và host key.
+Chưa công bố suy luận trước khi đủ 16 block và tiêu chí ngày/chất lượng.
+Attempt uptime bị chặn trước outcome được giữ cùng quyết định retry.
+
+Người dùng đã chọn tự tiếp tục lúc 08:00, 11:00, 14:00, 17:00 giờ Việt Nam
+qua heartbeat trong chat; mỗi phiên kiểm tra, sao lưu rồi stop bốn EC2,
+giữ hạ tầng. Lịch phụ thuộc ứng dụng đang hoạt động và AWS còn đăng nhập.
+Xem tài liệu 32 để biết phạm vi, điều kiện và việc còn thiếu.
+Cuối phiên 13/10 đã xác nhận bốn máy `stopped` lúc 12:05 giờ Việt Nam;
+[bằng chứng stop và checksum backup riêng](results/session-lifecycle/20261013T050449Z-stop.json).
+Đã xóa bản sao khóa tải raw tạm; khóa SSH gốc giữ nguyên.
 
 Đợt slots có protocol riêng đã khóa: **16 block, ít nhất bốn ngày**, tỷ lệ
 đúng hạn 50 ms là outcome chính; request trong một phiên không thay cho
@@ -65,7 +85,7 @@ Giữ EBS/EIP/TGW; xem tài liệu 28 về phí và quy trình mở lại.
 Engineering slots 12/10 đã thu và kiểm tra **84.000 yêu cầu**: tại 800 rps,
 8 → 16 slots nâng tỷ lệ đúng hạn từ **3,6% → 100% (Peering)** và
 **3,2% → 100% (TGW)**; P95 chờ worker giảm từ cỡ giây xuống cỡ 0,01 ms.
-Đây là một phiên kỹ thuật, **0/16 block xác nhận slots**, chưa có CI liên
+Đây là một phiên kỹ thuật, đóng góp **0 block xác nhận slots**, chưa có CI liên
 block. Lỗi AWS OAuth 429 khi tải log cuối đã được phục hồi bằng đọc lại
 file còn thiếu, không đo lại; giữ dấu vết lỗi và phạm vi route snapshot.
 Xem tài liệu 29 để kiểm chứng mọi số liệu và hạn chế.

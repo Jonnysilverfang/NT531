@@ -33,7 +33,7 @@ RTT khi có tải là phần bổ sung trực tiếp cho câu hỏi thứ hai. K
 Thực hiện trước khi chạy tải mới:
 
 - Rà metadata, route mode, thời gian UTC và nơi lưu raw của sáu bộ. Giữ dữ liệu hủy hoặc lỗi nhưng đánh dấu lý do không đưa vào tổng hợp.
-- Tận dụng log cũ: kiểm tra ngày 06/10 xác nhận 40 JSON TCP có cwnd, cửa sổ nhận, RTT TCP, retransmission và 30 interval sau warm-up mỗi file. Lập đồ thị theo thời gian; tính P50/P95/ECDF từ phiên ping chuẩn. Đây là phân tích bổ sung chưa thực hiện, không yêu cầu thêm tải AWS.
+- Tận dụng log cũ: kiểm tra ngày 06/10 xác nhận 40 JSON TCP có cwnd, cửa sổ nhận, RTT TCP, retransmission và 30 interval sau warm-up mỗi file. P50/P95/ECDF và đồ thị TCP một luồng đã hoàn thành; ngày 13/10 đã thêm đồ thị thông lượng gửi, RTT TCP và truyền lại của 30 JSON fan-in / 900 interval, xem [báo cáo tổng hợp](34-bao-cao-tong-hop.md). Đồ thị fan-in dùng đồng hồ riêng từng nguồn, không phải tổng goodput phía nhận chung cửa sổ.
 - Bổ sung related work, phần giải thích mã iperf3 phiên bản đang dùng và chi phí vận hành để liên hệ tiêu chí trong bài giảng. Không coi mã Terraform/iperf3 là mã nguồn nội bộ Peering/TGW.
 - Kiểm tra JSON interval phía nhận, thời điểm bắt đầu nội bộ, đồng bộ đồng hồ và khoảng bỏ 5 giây để xác định có căn chỉnh được các nguồn fan-in hay không. Chỉ dùng wrapper start/end thì phải ghi là ước lượng, không đổi tên thành cửa sổ chính xác.
 - Nếu đủ thông tin, tổng hợp byte nhận trong cửa sổ chung của mỗi lượt, công bố quy tắc với interval cắt biên. Nội suy theo tỷ lệ thời lượng là một giả định và phải ghi rõ. Nếu thiếu mốc, giữ tổng xấp xỉ hiện có; không dựng độ chính xác giả.
@@ -132,8 +132,8 @@ và đồ thị TCP một luồng đã hoàn thành; xem [phần thống kê](20
 Bốn đợt đề xuất không bảo đảm đủ công suất thống kê. Phần mới giải thích
 giả thuyết/CI theo đợt và giới hạn exact sign test với B nhỏ. Trước khi đo,
 chốt đầu ra chính, số đợt, độ chính xác mong muốn, phương pháp và ngân sách;
-không dừng lấy mẫu ngay khi p-value nhỏ. Hai block đã hoàn tất nhưng chưa đủ để
-đưa ra kết luận suy diễn.
+không dừng lấy mẫu ngay khi p-value nhỏ. Số block đã hoàn tất cập nhật ở
+[tài liệu 32](32-trang-thai-xac-nhan.md); chỉ suy luận khi đủ điều kiện protocol.
 
 Chuẩn bị câu trả lời có trỏ nguồn cho các câu: vì sao chọn bốn VPC; sáu Peering so với bốn attachment có công bằng không; route nào chứng minh mode; RTT khác độ trễ một chiều thế nào; vì sao throughput không phải năng lực dịch vụ; ENA tăng có phải packet loss không; vì sao chưa kết luận tương đương; tác động credits; lựa chọn theo chi phí/quy mô ra sao.
 

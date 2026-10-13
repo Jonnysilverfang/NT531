@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-13T08:50:33.211056+00:00",
+  "created_utc": "2026-10-13T09:26:27.909002+00:00",
   "study_results": [
     {
       "phase": "confirmatory_block",
@@ -588,6 +588,598 @@
             {
               "path": "results/application-slots-confirmation-v1/block-01/9445100b51524919a036a4fe888c67e5/peering/slots-8-rate-600/queue-d.jsonl.gz",
               "sha256": "87e0e8a85157b25e59d1eda85a12aee5de1a2bd08b04bb0537d4e1a3b4792fde"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "confirmatory_block",
+      "block": 2,
+      "attempt": "2241feb36163424c841041cbb2ce3b40",
+      "validated_analysis_sha256": "423a133892deb433af51da94ae439e63787990e406eaceae63d9479299bd5315",
+      "conditions": [
+        {
+          "mode": "peering",
+          "slots": 16,
+          "configured_arrival_rps": 800,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.008543863,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 799.5445867059195,
+              "mean_wait_ms": 0.005684522916666667,
+              "mean_worker_lifetime_ms": 10.4616600405,
+              "mean_service_completed_ms": 10.449505104,
+              "mean_queue_occupancy": 0.004545029526026578,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 8.354845239659078,
+              "peak_active_service_occupancy": 9,
+              "mean_system_occupancy": 8.364563653339406,
+              "peak_system_occupancy": 9,
+              "cohort_service_slot_fraction": 0.5221778274786923,
+              "queue_area_call_seconds": "0.068214275",
+              "system_area_call_seconds": "125.539920486",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "1E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.008427158,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 799.5508039364134,
+              "mean_wait_ms": 0.005115913416666667,
+              "mean_worker_lifetime_ms": 10.4588790045,
+              "mean_service_completed_ms": 10.448134710333333,
+              "mean_queue_occupancy": 0.004090432685164917,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 8.353814507282962,
+              "peak_active_service_occupancy": 9,
+              "mean_system_occupancy": 8.36240511632165,
+              "peak_system_occupancy": 9,
+              "cohort_service_slot_fraction": 0.5221134067051851,
+              "queue_area_call_seconds": "0.061390961",
+              "system_area_call_seconds": "125.506548054",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "0E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-800/requests.jsonl.gz",
+              "sha256": "5a526ed8d40289a62147efe9b1f76c99fc8cd2ccb6fe6d6cbe85c8443d2f4fc5"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-800/queue-c.jsonl.gz",
+              "sha256": "d897d723b12976f0130dfefe141734fc499973363bb80922fcc7805ddaec9a71"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-800/queue-d.jsonl.gz",
+              "sha256": "0d5b5c155c8f4d7475a80f7ff96c164edc488d17a4e2dc2daa9f36f2d0911e91"
+            }
+          ]
+        },
+        {
+          "mode": "peering",
+          "slots": 8,
+          "configured_arrival_rps": 600,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007616014,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6955140379566,
+              "mean_wait_ms": 0.005204842444444444,
+              "mean_worker_lifetime_ms": 10.319984568666667,
+              "mean_service_completed_ms": 10.308474467666667,
+              "mean_queue_occupancy": 0.0031213206652076857,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.181945894834513,
+              "peak_active_service_occupancy": 7,
+              "mean_system_occupancy": 6.188848450770337,
+              "peak_system_occupancy": 7,
+              "cohort_service_slot_fraction": 0.7727432368543141,
+              "queue_area_call_seconds": "0.046843582",
+              "system_area_call_seconds": "92.879861118",
+              "queue_identity_residual": "1E-30",
+              "system_identity_residual": "-2E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007568506,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6974124357197,
+              "mean_wait_ms": 0.005077654,
+              "mean_worker_lifetime_ms": 10.314733733555556,
+              "mean_service_completed_ms": 10.303642372222223,
+              "mean_queue_occupancy": 0.003045055965043882,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.1790676692847075,
+              "peak_active_service_occupancy": 7,
+              "mean_system_occupancy": 6.185719129976697,
+              "peak_system_occupancy": 7,
+              "cohort_service_slot_fraction": 0.7723834586605884,
+              "queue_area_call_seconds": "0.045698886",
+              "system_area_call_seconds": "92.832603602",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "-3E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-600/requests.jsonl.gz",
+              "sha256": "8c669928397edbee52eac7f314410c590f6df159714319c1171636683860f3aa"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-600/queue-c.jsonl.gz",
+              "sha256": "01c5bd0d991dc617fa66f1ac3b255565e0689273613f098b77cee386e07ded7e"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-600/queue-d.jsonl.gz",
+              "sha256": "fab41ea2b6b4eefbcdd44353c7d6b804c190a2d2cddbc2dbda1baca0fca1e0e4"
+            }
+          ]
+        },
+        {
+          "mode": "peering",
+          "slots": 8,
+          "configured_arrival_rps": 800,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 16.549576724,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 725.094073409004,
+              "mean_wait_ms": 788.4780385695833,
+              "mean_worker_lifetime_ms": 799.2161732203333,
+              "mean_service_completed_ms": 10.72980792125,
+              "mean_queue_occupancy": 571.720752779961,
+              "peak_queue_occupancy": 1154,
+              "mean_active_service_occupancy": 7.78012013251536,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 579.5069105746876,
+              "peak_system_occupancy": 1162,
+              "cohort_service_slot_fraction": 0.97251501656442,
+              "queue_area_call_seconds": "9461.736462835",
+              "system_area_call_seconds": "9590.594078644",
+              "queue_identity_residual": "0E-25",
+              "system_identity_residual": "0E-25",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 16.377424556,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 732.7159382702639,
+              "mean_wait_ms": 694.9593335990834,
+              "mean_worker_lifetime_ms": 705.6213145243333,
+              "mean_service_completed_ms": 10.65506778125,
+              "mean_queue_occupancy": 509.20778017772966,
+              "peak_queue_occupancy": 1036,
+              "mean_active_service_occupancy": 7.807137986671853,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 517.0199835351939,
+              "peak_system_occupancy": 1044,
+              "cohort_service_slot_fraction": 0.9758922483339816,
+              "queue_area_call_seconds": "8339.512003189",
+              "system_area_call_seconds": "8467.455774292",
+              "queue_identity_residual": "1E-25",
+              "system_identity_residual": "0E-25",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-800/requests.jsonl.gz",
+              "sha256": "ccfdc38cffba042dd9472bc658a0e4db576c1a1dfe4d4d82dfcac7feda10b2c6"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-800/queue-c.jsonl.gz",
+              "sha256": "ebce248e44f01b0a653c32a5c34a90f1614ddf536866a35c820242b5bc56da21"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-8-rate-800/queue-d.jsonl.gz",
+              "sha256": "9b218a44357b4b704707553c1ac879670926b8448cb57c30a84b64d0c8291396"
+            }
+          ]
+        },
+        {
+          "mode": "peering",
+          "slots": 16,
+          "configured_arrival_rps": 600,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007737433,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6906622453434,
+              "mean_wait_ms": 0.005233879666666667,
+              "mean_worker_lifetime_ms": 10.309253623777778,
+              "mean_service_completed_ms": 10.297802429111112,
+              "mean_queue_occupancy": 0.0031387087634157703,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.175495958385349,
+              "peak_active_service_occupancy": 7,
+              "mean_system_occupancy": 6.182363132898502,
+              "peak_system_occupancy": 7,
+              "cohort_service_slot_fraction": 0.3859684973990843,
+              "queue_area_call_seconds": "0.047104917",
+              "system_area_call_seconds": "92.783282614",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "-1E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007645213,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6943472653506,
+              "mean_wait_ms": 0.005011498,
+              "mean_worker_lifetime_ms": 10.295596988666667,
+              "mean_service_completed_ms": 10.28527817,
+              "mean_queue_occupancy": 0.0030053670219316103,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.168023178600711,
+              "peak_active_service_occupancy": 7,
+              "mean_system_occupancy": 6.174211315825567,
+              "peak_system_occupancy": 7,
+              "cohort_service_slot_fraction": 0.38550144866254443,
+              "queue_area_call_seconds": "0.045103482",
+              "system_area_call_seconds": "92.660372898",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "-2E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-600/requests.jsonl.gz",
+              "sha256": "ed9eab5b538f83c5f044aa6f702fd31b2b13d3af271f9c941964e31bd5e15b33"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-600/queue-c.jsonl.gz",
+              "sha256": "858deb20dbe486638576142f77e55a6507f3347a6a46772da89c2bd7a7cc715b"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/peering/slots-16-rate-600/queue-d.jsonl.gz",
+              "sha256": "68ac9d9021761455727d91d7fa025f8466f61d4d1dfe0eb4fd3a0fd00ccc8259"
+            }
+          ]
+        },
+        {
+          "mode": "tgw",
+          "slots": 16,
+          "configured_arrival_rps": 800,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.006943596,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 799.6298462265507,
+              "mean_wait_ms": 0.005708752666666666,
+              "mean_worker_lifetime_ms": 10.431800233666667,
+              "mean_service_completed_ms": 10.419609028083332,
+              "mean_queue_occupancy": 0.004564889016992078,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 8.331830364867056,
+              "peak_active_service_occupancy": 14,
+              "mean_system_occupancy": 8.341578816712973,
+              "peak_system_occupancy": 14,
+              "cohort_service_slot_fraction": 0.520739397804191,
+              "queue_area_call_seconds": "0.068505032",
+              "system_area_call_seconds": "125.181602804",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "-3E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.008055845,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 799.5705855530816,
+              "mean_wait_ms": 0.0050043855,
+              "mean_worker_lifetime_ms": 10.428619265333333,
+              "mean_service_completed_ms": 10.418125503,
+              "mean_queue_occupancy": 0.004001359444568351,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 8.330026708799204,
+              "peak_active_service_occupancy": 12,
+              "mean_system_occupancy": 8.338417212492722,
+              "peak_system_occupancy": 12,
+              "cohort_service_slot_fraction": 0.5206266692999503,
+              "queue_area_call_seconds": "0.060052626",
+              "system_area_call_seconds": "125.143431184",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "2E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-800/requests.jsonl.gz",
+              "sha256": "a3fd661a55720737b027f1ca05ef9be7ec399750ef3ac6287ba65502698ca886"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-800/queue-c.jsonl.gz",
+              "sha256": "976b726e96c1237d03cf5ff16b0cb34f23ecce7f73abaedfd3cd0cf3991a4fc4"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-800/queue-d.jsonl.gz",
+              "sha256": "a555513820ec1eff020c493d097a0ef24946b8879e8fe980f4275de694d7795f"
+            }
+          ]
+        },
+        {
+          "mode": "tgw",
+          "slots": 8,
+          "configured_arrival_rps": 600,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007625737,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6951255128438,
+              "mean_wait_ms": 0.006073084,
+              "mean_worker_lifetime_ms": 10.317360547111111,
+              "mean_service_completed_ms": 10.304585486222223,
+              "mean_queue_occupancy": 0.0036419988716300433,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.179609686517864,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 6.1872708282610605,
+              "peak_system_occupancy": 9,
+              "cohort_service_slot_fraction": 0.772451210814733,
+              "queue_area_call_seconds": "0.054657756",
+              "system_area_call_seconds": "92.856244924",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "0E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007478457,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.7010107851991,
+              "mean_wait_ms": 0.005461904777777778,
+              "mean_worker_lifetime_ms": 10.328796439555555,
+              "mean_service_completed_ms": 10.317529052555555,
+              "mean_queue_occupancy": 0.0032755098160458414,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.187432601623224,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 6.194189664996032,
+              "peak_system_occupancy": 9,
+              "cohort_service_slot_fraction": 0.773429075202903,
+              "queue_area_call_seconds": "0.049157143",
+              "system_area_call_seconds": "92.959167956",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "-3E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-600/requests.jsonl.gz",
+              "sha256": "040325f624785d56198f7d152e29cb82b1a00d5d594002627225279f4b9237e8"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-600/queue-c.jsonl.gz",
+              "sha256": "ce32d88c90e9a317d01fe3e6120ef4fcd818c65e7866c080759ee4bdcd1c8288"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-600/queue-d.jsonl.gz",
+              "sha256": "8f014e25bf97245e188013da9cd6a46cd232b4965ca543ef1a00b9e3953515a5"
+            }
+          ]
+        },
+        {
+          "mode": "tgw",
+          "slots": 8,
+          "configured_arrival_rps": 800,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 16.368450685,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 733.1176438706423,
+              "mean_wait_ms": 676.55538824125,
+              "mean_worker_lifetime_ms": 687.2143602821667,
+              "mean_service_completed_ms": 10.65074869225,
+              "mean_queue_occupancy": 495.9946921754128,
+              "peak_queue_occupancy": 1024,
+              "mean_active_service_occupancy": 7.8082517867206445,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 503.80897264413267,
+              "peak_system_occupancy": 1032,
+              "cohort_service_slot_fraction": 0.9760314733400806,
+              "queue_area_call_seconds": "8118.664658895",
+              "system_area_call_seconds": "8246.572323386",
+              "queue_identity_residual": "0E-25",
+              "system_identity_residual": "0E-25",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 12000,
+              "completed_handlers": 12000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 16.254482026,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 738.257914389723,
+              "mean_wait_ms": 635.7795375981667,
+              "mean_worker_lifetime_ms": 646.3811221484167,
+              "mean_service_completed_ms": 10.595121289833333,
+              "mean_queue_occupancy": 469.36927543888504,
+              "peak_queue_occupancy": 944,
+              "mean_active_service_occupancy": 7.821932146138509,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 477.1959791381789,
+              "peak_system_occupancy": 952,
+              "cohort_service_slot_fraction": 0.9777415182673136,
+              "queue_area_call_seconds": "7629.354451178",
+              "system_area_call_seconds": "7756.573465781",
+              "queue_identity_residual": "-1E-25",
+              "system_identity_residual": "0E-25",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-800/requests.jsonl.gz",
+              "sha256": "aaed164159cc34a3ad9a14d7c78ab57f6d1bc18fb6af16de87cc50883ff5c0ed"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-800/queue-c.jsonl.gz",
+              "sha256": "9eac85c62573039a8344d6f47e55e832377742783e87e4caaba2b0cd13f5fc76"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-8-rate-800/queue-d.jsonl.gz",
+              "sha256": "dda7898144fa5aef440744cdf6c0070e39b97bebe9245efe660185b82587d793"
+            }
+          ]
+        },
+        {
+          "mode": "tgw",
+          "slots": 16,
+          "configured_arrival_rps": 600,
+          "workers": [
+            {
+              "node": "c",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007790178,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.6885546276592,
+              "mean_wait_ms": 0.005120186111111111,
+              "mean_worker_lifetime_ms": 10.342564065333333,
+              "mean_service_completed_ms": 10.331033781,
+              "mean_queue_occupancy": 0.0030705170083968375,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.195402715937411,
+              "peak_active_service_occupancy": 7,
+              "mean_system_occupancy": 6.202317295483714,
+              "peak_system_occupancy": 7,
+              "cohort_service_slot_fraction": 0.3872126697460882,
+              "queue_area_call_seconds": "0.046081675",
+              "system_area_call_seconds": "93.083076588",
+              "queue_identity_residual": "-1E-30",
+              "system_identity_residual": "2E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            },
+            {
+              "node": "d",
+              "client_requests_without_entry": 0,
+              "entered_calls": 9000,
+              "completed_handlers": 9000,
+              "cancelled_calls": 0,
+              "cohort_window_seconds": 15.007610823,
+              "window_definition": "Earliest measured worker entry to latest measured worker exit, one worker clock; tail included",
+              "cohort_count_rate_per_second": 599.695721467337,
+              "mean_wait_ms": 0.0049100904444444446,
+              "mean_worker_lifetime_ms": 10.346084255333333,
+              "mean_service_completed_ms": 10.33573698388889,
+              "mean_queue_occupancy": 0.0029445602315509886,
+              "peak_queue_occupancy": 1,
+              "mean_active_service_occupancy": 6.198297247449885,
+              "peak_active_service_occupancy": 8,
+              "mean_system_occupancy": 6.20450246186398,
+              "peak_system_occupancy": 8,
+              "cohort_service_slot_fraction": 0.3873935779656178,
+              "queue_area_call_seconds": "0.044190814",
+              "system_area_call_seconds": "93.114758298",
+              "queue_identity_residual": "0E-30",
+              "system_identity_residual": "2E-27",
+              "identity_verified": true,
+              "scope": "Finite fully observed call cohort, descriptive algebra; count rate is not the configured arrival rate, not a steady-state estimate or end-to-end latency"
+            }
+          ],
+          "sources": [
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-600/requests.jsonl.gz",
+              "sha256": "967ba38acbdb6af59f493bbec9f7af087be8d4b6471a142a921681b95821a749"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-600/queue-c.jsonl.gz",
+              "sha256": "3700d145c6a852946a6e90bb462461c5436cfaaf1e02e3f10cf22a222d9ebad9"
+            },
+            {
+              "path": "results/application-slots-confirmation-v1/block-02/2241feb36163424c841041cbb2ce3b40/tgw/slots-16-rate-600/queue-d.jsonl.gz",
+              "sha256": "30af90bd7517b2059c0702f71bb438053bb89768d276bdd717869812476b8870"
             }
           ]
         }
@@ -1186,7 +1778,7 @@
       ]
     }
   ],
-  "worker_conditions": 32,
+  "worker_conditions": 48,
   "scope": "Descriptive secondary analysis only; no pooling phases, no additional primary test, no proof of queue stationarity or AWS capacity",
   "method": "Request-ID matched measured cohort; full monotonic entry-to-exit window; separate event sweep of waiting, service and lifetime intervals; exact Decimal area-duration agreement"
 }

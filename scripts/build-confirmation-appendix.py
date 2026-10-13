@@ -167,7 +167,7 @@ def build():
             low=next(r for r in block['rows'] if (r['mode'],r['slots'],r['rate_rps'])==(mode,8,800))
             high=next(r for r in block['rows'] if (r['mode'],r['slots'],r['rate_rps'])==(mode,16,800))
             text(f"{mode.upper()}: P95 chờ C/D ở 8 slots là "+' / '.join(f"{w['queue_wait_p95_ms']:.3f}" for w in low['workers'])+' ms; ở 16 slots là '+' / '.join(f"{w['queue_wait_p95_ms']:.4f}" for w in high['workers'])+' ms. Các số này là quantile từng worker, không cộng thành P95 phía A.')
-        text('Mỗi điều kiện dùng fresh server, warm-up và drain; cùng mã ứng dụng/MTU/cohort. SCP chỉ tải sau capture, host key pin qua SSM, đối chiếu size/SHA. Trước block này có attempt kỹ thuật bị guard uptime chặn: giữ lỗi và quyết định retry, chưa thu outcome; không chọn lại vì kết quả.')
+        text('Mỗi điều kiện dùng fresh server, warm-up và drain; cùng mã ứng dụng/MTU/cohort. SCP chỉ tải sau capture, host key pin qua SSM, đối chiếu size/SHA. Trước block 1 có attempt kỹ thuật bị guard uptime chặn: giữ lỗi và quyết định retry, chưa thu outcome; không chọn lại vì kết quả.')
         queue_source=ROOT/'results/analysis/queue-occupancy-audit.json'
         queue_audit=read(queue_source)
         cohort=next(q for q in queue_audit['study_results'] if q['phase']=='confirmatory_block'

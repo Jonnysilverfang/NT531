@@ -1,6 +1,6 @@
 # Đánh giá VPC Peering và Transit Gateway từ RTT đến chất lượng ứng dụng
 
-Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 16:05 giờ Việt Nam.
+Báo cáo tổng hợp đồ án NT531. Snapshot 13/10/2026 16:26 giờ Việt Nam.
 Các bảng được tạo từ analysis và đối chiếu SHA với file nguồn; không dùng
 ảnh chụp để thay raw. Báo cáo này ghép phần đã thực hiện; kết luận suy diễn
 chỉ xuất hiện sau khi analyzer xác nhận đủ thiết kế.
@@ -85,11 +85,22 @@ cặp cùng thời điểm. Chênh lệch mô tả không thay kiểm định qu
 Số liệu này không chứng minh băng thông tối đa dịch vụ; retransmission
 không trực tiếp bằng tỷ lệ mất gói. Xem [chương kết quả lịch sử](13-tong-hop-ket-qua.md).
 
+![Peering fan-in sender qua năm lượt](images/application/historical-fanin/peering-sender-intervals.png)
+
+![TGW fan-in sender qua năm lượt](images/application/historical-fanin/tgw-sender-intervals.png)
+
+Đồ thị từ 30 JSON cũ bỏ interval có `omitted=true`, giữ thời gian riêng của
+mỗi client sau khi iperf reset omit. Cột đầu là payload phía **gửi**, không
+đổi nhãn thành goodput nhận chung cửa sổ. RTT TCP là trạng thái socket tại
+interval, không phải ping khi rảnh. Truyền lại/s chia counter interval cho
+thời lượng thực; không biến thành phần trăm mất gói. Các lượt cùng số giữa
+hai mode không là cặp ghép thời gian. [SHA và audit interval](../results/analysis/fanin-sender-interval-figures.json).
+
 
 ## Thiết kế xác nhận được khóa trước khi đo
 
 RTT hiện có **4/16 block** trên 2 ngày;
-slots có **1/16 block** trên 1 ngày.
+slots có **2/16 block** trên 1 ngày.
 Mỗi nghiên cứu cần 16 block hợp lệ, ít nhất bốn ngày địa phương và start
 cách nhau ít nhất hai giờ. Slots yêu cầu uptime tối thiểu 30 phút.
 
@@ -155,25 +166,26 @@ về quá trình lấy mẫu và tương quan block.
 
 ## Kết quả xác nhận slots mới nhất
 
-Block 1, bắt đầu UTC 2026-10-13T04:39:03.677810+00:00.
+Block 2, bắt đầu UTC 2026-10-13T09:03:57.465557+00:00.
 
 | Mạng | Slots | rps | Theo lịch | Đúng hạn % | P95 thành công ms | Lỗi |
 |---|---|---|---|---|---|---|
-| PEERING | 8 | 600 | 9000 | 100,000 | 12,109 | 0 |
-| PEERING | 16 | 600 | 9000 | 100,000 | 12,085 | 0 |
-| TGW | 8 | 600 | 9000 | 100,000 | 12,909 | 0 |
-| TGW | 16 | 600 | 9000 | 100,000 | 13,243 | 0 |
-| PEERING | 8 | 800 | 12000 | 2,083 | 1468,798 | 0 |
-| PEERING | 16 | 800 | 12000 | 100,000 | 12,698 | 0 |
-| TGW | 8 | 800 | 12000 | 3,283 | 1327,874 | 0 |
-| TGW | 16 | 800 | 12000 | 100,000 | 13,248 | 0 |
+| PEERING | 8 | 600 | 9000 | 100,000 | 12,684 | 0 |
+| PEERING | 16 | 600 | 9000 | 100,000 | 12,699 | 0 |
+| TGW | 8 | 600 | 9000 | 100,000 | 12,879 | 0 |
+| TGW | 16 | 600 | 9000 | 100,000 | 12,981 | 0 |
+| PEERING | 8 | 800 | 12000 | 3,708 | 1499,226 | 0 |
+| PEERING | 16 | 800 | 12000 | 100,000 | 12,660 | 0 |
+| TGW | 8 | 800 | 12000 | 2,967 | 1324,103 | 0 |
+| TGW | 16 | 800 | 12000 | 100,000 | 12,875 | 0 |
 
-Hiệu ứng dj của block này là **97,3167 điểm phần trăm**.
+Hiệu ứng dj của block này là **96,6625 điểm phần trăm**.
 Giữ mọi block trong bảng hiệu ứng sau; không chỉ trình bày block thuận lợi nhất.
 
 | Block | Giờ Việt Nam | Tăng đúng hạn mean hai route điểm % |
 |---|---|---|
 | 1 | 13/10 11:39 | 97,3167 |
+| 2 | 13/10 16:03 | 96,6625 |
 
 ![Đúng hạn và hiệu ứng slots theo block](images/application/confirmation-progress/slots-blocks.png)
 
@@ -181,14 +193,14 @@ Giữ mọi block trong bảng hiệu ứng sau; không chỉ trình bày block 
 
 | Mạng | Slots | Worker | Mean chờ ms | Mean số chờ | Peak số chờ | N/T lời gọi mỗi s |
 |---|---|---|---|---|---|---|
-| PEERING | 8 | C | 790,634200 | 574,465294 | 1129 | 726,588 |
-| PEERING | 8 | D | 735,912114 | 537,768905 | 1059 | 730,752 |
-| PEERING | 16 | C | 0,005352 | 0,004279 | 1 | 799,529 |
-| PEERING | 16 | D | 0,005370 | 0,004294 | 1 | 799,532 |
-| TGW | 8 | C | 683,339376 | 500,979448 | 1027 | 733,134 |
-| TGW | 8 | D | 677,782949 | 497,727182 | 1014 | 734,346 |
-| TGW | 16 | C | 0,005378 | 0,004300 | 1 | 799,601 |
-| TGW | 16 | D | 0,005049 | 0,004037 | 1 | 799,597 |
+| PEERING | 8 | C | 788,478039 | 571,720753 | 1154 | 725,094 |
+| PEERING | 8 | D | 694,959334 | 509,207780 | 1036 | 732,716 |
+| PEERING | 16 | C | 0,005685 | 0,004545 | 1 | 799,545 |
+| PEERING | 16 | D | 0,005116 | 0,004090 | 1 | 799,551 |
+| TGW | 8 | C | 676,555388 | 495,994692 | 1024 | 733,118 |
+| TGW | 8 | D | 635,779538 | 469,369275 | 944 | 738,258 |
+| TGW | 16 | C | 0,005709 | 0,004565 | 1 | 799,630 |
+| TGW | 16 | D | 0,005004 | 0,004001 | 1 | 799,571 |
 
 Mỗi worker dùng cửa sổ chứa trọn entry/exit của request ID đo, gồm đuôi
 xử lý; không bỏ các lời gọi hủy. Với N lời gọi, T là thời lượng cửa sổ,
@@ -209,7 +221,7 @@ Hai cách tính trên cùng timestamp kiểm tra nhất quán, không tạo bằ
 chứng thống kê độc lập hoặc chứng minh clock/logger luôn đúng.
 [Chứng minh, ký hiệu và ví dụ đầy đủ](33-hang-doi-va-dinh-luat-little.md).
 
-![Hàng đợi block 1](images/application/queue-occupancy/block-01-queue.png)
+![Hàng đợi block 2](images/application/queue-occupancy/block-02-queue.png)
 
 
 ## Kết luận theo mức bằng chứng
@@ -219,7 +231,7 @@ chứng thống kê độc lập hoặc chứng minh clock/logger luôn đúng.
 **RTT:** 4/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.
 
 
-**Slots:** 1/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.
+**Slots:** 2/16 block; chưa công bố p-value hoặc kết luận xác nhận. Các bảng trên mô tả block đã kiểm chứng.
 
 
 
@@ -271,6 +283,7 @@ Nguồn tổng hợp: [metrics lịch sử](../results/analysis/report-metrics.j
 py scripts/audit-queue-occupancy.py
 tmp/application-venv/Scripts/python.exe scripts/plot-queue-occupancy.py
 tmp/application-venv/Scripts/python.exe scripts/plot-confirmation-progress.py
+tmp/application-venv/Scripts/python.exe scripts/plot-fanin-history.py
 py scripts/build-study-report.py
 ```
 

@@ -1,8 +1,8 @@
 {
-  "created_local": "2026-10-13T16:10:59.082009+07:00",
-  "docx_sha256": "5c795ae0e551bc626b615ca4e4189f3adc2269df6accd6fb465e192c3f33c32c",
+  "created_local": "2026-10-13T16:26:51.542137+07:00",
+  "docx_sha256": "3dc30d5f34f53cbc7d811f753de585330ca0efb70de86a60cb7075ea1d860de1",
   "rtt_blocks": 4,
-  "slots_blocks": 1,
+  "slots_blocks": 2,
   "sources": [
     {
       "path": "results/confirmation-rtt-v1/analysis.json",
@@ -10,7 +10,7 @@
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0"
+      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
     },
     {
       "path": "results/application-slots-engineering-v1/9e45c8058c6942ef9805ab65cc2f8ab9/analysis.json",
@@ -18,25 +18,25 @@
     },
     {
       "path": "results/analysis/queue-occupancy-audit.json",
-      "sha256": "ad2db55072042ce0edfee80e7a8e8672c79c691c48aed9f8377c05b0eea01d71"
+      "sha256": "2675c564bb2437749313455c4216660b2ef3928c047b7be33568128db3a9335e"
     }
   ],
   "engineering_raw_sources_verified": 79,
-  "formal_slot_raw_sources_verified": 143,
+  "formal_slot_raw_sources_verified": 286,
   "native_equations": 10,
   "render_review": "passed_all_pages",
   "reviewed_pages": 7,
   "renderer": "Microsoft Word 16 via PowerShell 7 disposable copy",
   "packaged_renderer_limitation": "Bundled LibreOffice soffice.exe unavailable on this Windows host",
-  "pdf_sha256": "cf048dcd402d9191cd3ce65f4b5a1da903337bf12bb20b5d25540ade42f4438f",
+  "pdf_sha256": "dd744652bdec620ec4a37e28fa1f46ef8f93f892b6d53b2dbb2e1034d91f7c96",
   "page_image_sha256": [
-    "d5982c0ea7e40d52349026252bdb5a359671ae3ce99b851721bcee66948d8cbd",
+    "e8c97b5d17c9158a80732ca4864cc30beff70dd058eb966d8077c21269f6e1d8",
     "67c5e231ecc1b52f575707a61cecf0e929567629432ecce33aae92720407a5be",
     "1669fc2a93edb7e635d0d5502d0f9d4392364a68366725e5515f4c87f091e094",
     "d82b3767b4bc08d765ff2be8d572ff0540ad2dd3e07b84a0ff8679ba0438c8ed",
     "159a8cd02d7bec06758f18b04e7804bb79468c6e56f8e71687fadb3d8c94917b",
-    "412483716f8f66c2ad303ec3330f132b474b84fef31835971389e7bc0fa3f229",
-    "5d06895ffba2fd0b8c67e9703ce1d22038e10c4702c57adce33ad400202239a0"
+    "f97576f2bebe29f49e8fa62527baaadaf6bd380ea91caccba302f3b721178e60",
+    "a4eafbb2f0a9fc397a3582f968bb2e1fbe2637b844d276c38ebef77813c1777a"
   ],
-  "visual_review": "All seven pages inspected, page3 label crop checked: Vietnamese, native equations, table wrapping and queue figure readable; no orphan reference page or clipped content"
+  "visual_review": "All seven pages inspected; page3 table labels additionally checked in a crop and PDF text. Native equations, Vietnamese, tables and block2 queue figure readable, no clipped content or orphan reference page."
 }

@@ -1,0 +1,24 @@
+{
+  "status": "validated_pending_report_review",
+  "pid": 26912,
+  "started_utc": "2026-10-13T08:27:49.349966+00:00",
+  "jobs": [
+    {
+      "study": "confirmation-rtt-v1",
+      "block": 4,
+      "earliest_utc": "2026-10-13T06:10:24.233660+00:00",
+      "due": true
+    },
+    {
+      "study": "application-slots-confirmation-v1",
+      "block": 2,
+      "earliest_utc": "2026-10-13T06:39:03.677810+00:00",
+      "due": true
+    }
+  ],
+  "cleanup": {
+    "stopped_verified": true,
+    "method": "pause-ec2.py"
+  },
+  "ended_utc": "2026-10-13T09:26:46.835645+00:00"
+}

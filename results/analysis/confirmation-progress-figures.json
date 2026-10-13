@@ -1,6 +1,6 @@
 {
   "rtt_blocks": 4,
-  "slots_blocks": 1,
+  "slots_blocks": 2,
   "scope": "Descriptive block plots; no interim p-values, confidence intervals or early stopping",
   "sources": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0"
+      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
     }
   ],
   "figures": [
@@ -19,15 +19,15 @@
     },
     {
       "path": "docs/images/application/confirmation-progress/rtt-blocks.svg",
-      "sha256": "a1bd892cee9784f9718393708d73ae6ee7a57cdbcd78b9b6965ca596c7f50426"
+      "sha256": "62a16613bb1570deac0960e846ffe9bd22eb494b6966d85cfb64de2c8565d267"
     },
     {
       "path": "docs/images/application/confirmation-progress/slots-blocks.png",
-      "sha256": "e15fb89cd54ac0b184ed35abf9de4590e784d4afad3567e906460e11cdec83d5"
+      "sha256": "982e0f2fcd387227867120b2fa7cc90ac262b3e1a5730b617abb30e992ca6974"
     },
     {
       "path": "docs/images/application/confirmation-progress/slots-blocks.svg",
-      "sha256": "aef4f935194266ed21d89f8a2e6fe19b51dafb7556732d17a63e5428203f9909"
+      "sha256": "893655bb9163745d2bf58e271c38518d41dc5870eaebe8b3a7bde1a127acd32a"
     }
   ]
 }

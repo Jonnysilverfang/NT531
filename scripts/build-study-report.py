@@ -33,22 +33,31 @@ def main():
              'results/application-slots-confirmation-v1/analysis.json',
              'results/analysis/queue-occupancy-audit.json']
     historical, rtt, slots, queues = [read(ROOT / p) for p in paths]
+    fanin_path = 'results/analysis/fanin-sender-interval-figures.json'
+    fanin = read(ROOT / fanin_path)
+    assert fanin['files'] == 30 and fanin['total_non_omitted_sender_intervals'] == 900
+    assert fanin['sender_retransmit_sums_match_summaries']
+    assert sha(ROOT / 'results/analysis/fanin-common-window-audit.json') == fanin['source_audit_sha256']
+    for source in fanin['sources'] + fanin['figures']:
+        assert sha(ROOT / source['path']) == source['sha256']
+    paths.append(fanin_path)
     assert sha(ROOT / paths[0]) == 'c8537ae84c0bf528b12a65edb53fc06dd4132e0966a3a6db1bfc4577ba42d94d'
     assert not rtt['issues'] and not slots['issues']
     for source in historical['sources'] + rtt['sources']:
         assert sha(ROOT / source['path']) == source['sha256']
-    verified = len(historical['sources']) + len(rtt['sources'])
+    verified_paths = {source['path'] for source in historical['sources'] + rtt['sources'] + fanin['sources']}
     for block in slots['rows']:
         folder = ROOT / 'results/application-slots-confirmation-v1' / f"block-{block['block']:02d}" / block['attempt']
         analysis = read(folder / 'analysis.json')
         assert not analysis['issues']
         for source in analysis['sources']:
             assert sha(folder / source['path']) == source['sha256']
-            verified += 1
+            verified_paths.add((folder / source['path']).relative_to(ROOT).as_posix())
     for study in queues['study_results']:
         for condition in study['conditions']:
             for source in condition['sources']:
                 assert sha(ROOT / source['path']) == source['sha256']
+                verified_paths.add(source['path'])
     # Keep the raw-derived tables synchronized; never invent an incomplete block.
     latest = slots['rows'][-1] if slots['rows'] else None
     q_latest = next((q for q in queues['study_results']
@@ -146,6 +155,17 @@ Peering/TGW đo nối tiếp nên các lượt cùng số thứ tự không mặ
 cặp cùng thời điểm. Chênh lệch mô tả không thay kiểm định qua nhiều ngày.
 Số liệu này không chứng minh băng thông tối đa dịch vụ; retransmission
 không trực tiếp bằng tỷ lệ mất gói. Xem [chương kết quả lịch sử](13-tong-hop-ket-qua.md).
+
+![Peering fan-in sender qua năm lượt](images/application/historical-fanin/peering-sender-intervals.png)
+
+![TGW fan-in sender qua năm lượt](images/application/historical-fanin/tgw-sender-intervals.png)
+
+Đồ thị từ 30 JSON cũ bỏ interval có `omitted=true`, giữ thời gian riêng của
+mỗi client sau khi iperf reset omit. Cột đầu là payload phía **gửi**, không
+đổi nhãn thành goodput nhận chung cửa sổ. RTT TCP là trạng thái socket tại
+interval, không phải ping khi rảnh. Truyền lại/s chia counter interval cho
+thời lượng thực; không biến thành phần trăm mất gói. Các lượt cùng số giữa
+hai mode không là cặp ghép thời gian. [SHA và audit interval](../results/analysis/fanin-sender-interval-figures.json).
 ''')
     sections.append(f'''## Thiết kế xác nhận được khóa trước khi đo
 
@@ -313,6 +333,7 @@ Nguồn tổng hợp: [metrics lịch sử](../results/analysis/report-metrics.j
 py scripts/audit-queue-occupancy.py
 tmp/application-venv/Scripts/python.exe scripts/plot-queue-occupancy.py
 tmp/application-venv/Scripts/python.exe scripts/plot-confirmation-progress.py
+tmp/application-venv/Scripts/python.exe scripts/plot-fanin-history.py
 py scripts/build-study-report.py
 ```
 
@@ -334,7 +355,7 @@ cáo này không khai thay tác giả hoặc việc nhóm chưa làm.
     out.write_text('\n\n'.join(sections).rstrip() + '\n', encoding='utf-8')
     proof = dict(created_local=now.isoformat(), report_sha256=sha(out),
                  rtt_blocks=rtt['completed_blocks'], slots_blocks=slots['completed_blocks'],
-                 raw_source_hash_checks=verified, no_AWS_calls=True,
+                 raw_source_hash_checks=len(verified_paths), no_AWS_calls=True,
                  sources=[dict(path=p, sha256=sha(ROOT / p)) for p in paths])
     (ROOT / 'results/analysis/study-report.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(proof))

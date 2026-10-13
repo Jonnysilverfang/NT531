@@ -1,9 +1,9 @@
 {
-  "created_local": "2026-10-13T16:05:23.731432+07:00",
-  "report_sha256": "3e0c73c85a162c8a3e59f40cbec127224a35143dae57ed44e15137bed7b87b31",
+  "created_local": "2026-10-13T16:26:51.374202+07:00",
+  "report_sha256": "5f204fa87daa74ef107bb10922aac823250a021a7127a9fc08570a2cdc854695",
   "rtt_blocks": 4,
-  "slots_blocks": 1,
-  "raw_source_hash_checks": 178,
+  "slots_blocks": 2,
+  "raw_source_hash_checks": 375,
   "no_AWS_calls": true,
   "sources": [
     {
@@ -16,11 +16,15 @@
     },
     {
       "path": "results/application-slots-confirmation-v1/analysis.json",
-      "sha256": "829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0"
+      "sha256": "ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81"
     },
     {
       "path": "results/analysis/queue-occupancy-audit.json",
-      "sha256": "ad2db55072042ce0edfee80e7a8e8672c79c691c48aed9f8377c05b0eea01d71"
+      "sha256": "2675c564bb2437749313455c4216660b2ef3928c047b7be33568128db3a9335e"
+    },
+    {
+      "path": "results/analysis/fanin-sender-interval-figures.json",
+      "sha256": "8f7cdbea67244c0c0b611ff40cce4cea9f750588baf4edf935b91919119f3ac7"
     }
   ]
 }

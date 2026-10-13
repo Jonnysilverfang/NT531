@@ -130,9 +130,15 @@ RTT tăng khi tải là kết quả end-to-end; chưa tách chính xác bao nhi�
 Cập nhật 12/10: [phần thống kê và xác suất](20-thong-ke-va-xac-suat.md)
 đã tính P50/P95/P99, ECDF và tần suất RTT vượt ngưỡng từ 1.000 phản hồi
 hai mode; đã vẽ RTT/cwnd/rate của 10 JSON TCP một luồng. Dữ liệu cũ được
-giữ nguyên. Phần đồ thị của 30 JSON fan-in và các đợt lặp mới vẫn chưa làm.
+giữ nguyên. Cập nhật 13/10: đã bổ sung đồ thị thông lượng gửi, RTT TCP và
+truyền lại theo giây từ **30 JSON fan-in / 900 interval sau warm-up**;
+xem [báo cáo tổng hợp](34-bao-cao-tong-hop.md) và
+[bằng chứng nguồn/SHA](../results/analysis/fanin-sender-interval-figures.json).
+Mỗi nguồn dùng đồng hồ iperf riêng; đồ thị không phải tổng goodput phía
+nhận căn chỉnh cùng cửa sổ và không tạo thêm mẫu độc lập. Các đợt xác nhận
+mới đang tiếp tục; trạng thái hiện hành ở [tài liệu 32](32-trang-thai-xac-nhan.md).
 
-1. **Offline trước:** đồ thị TCP từ 40 JSON và P50/P95/ECDF từ hai phiên ping chuẩn; bổ sung phần giải thích mã iperf3 3.19.1 và các giới hạn lấy mẫu.
+1. **Offline đã có:** đồ thị TCP một luồng và fan-in từ 40 JSON, P50/P95/ECDF từ hai phiên ping chuẩn. Khai thác thêm `snd_cwnd`/`snd_wnd` của fan-in chỉ khi cần giải đáp câu hỏi cơ chế cụ thể; đồ thị mới đã ghi rõ giới hạn lấy mẫu.
 2. **Củng cố kết luận:** thực hiện các đợt lặp cân bằng thứ tự theo kế hoạch 16 nếu ngân sách cho phép; giữ số liệu lỗi/outlier có lý do.
 3. **Một bài mới trực tiếp:** RTT khi có tải với mức pacing chung cho hai mode, goodput thực đạt, CPU và delta ENA. Chỉ chạy sau 16 block xác nhận.
 4. **Observability phụ trợ:** [cấu hình Collector/Prometheus/Grafana](../monitoring/README.md) đã chuẩn bị và kiểm tra tĩnh; chạy pipeline thật trong phiên demo riêng sau đợt xác nhận. Không chạy scrape/export trên A/B trong phép đo chính.

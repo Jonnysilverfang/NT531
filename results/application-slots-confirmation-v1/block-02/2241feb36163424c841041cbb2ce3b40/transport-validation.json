@@ -1,0 +1,413 @@
+{
+  "verified_utc": "2026-10-13T09:25:44.307455+00:00",
+  "status": "verified",
+  "files": [
+    {
+      "path": "peering/slots-16-rate-600/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 3012,
+      "sha256": "01282c8a518106e28d7de7247dfed67e44666d1860c3f947e11fe2cd96edeff6"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 2948,
+      "sha256": "c5678e0aebdd7f35eaad076dc10b998d6ca41a7f19b27cacff1044ae7c968f97"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2833,
+      "sha256": "528b72021d81a09260f064a0d2c579972b6afdddd63184b04b415fa3f59fe27f"
+    },
+    {
+      "path": "peering/slots-16-rate-600/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2818,
+      "sha256": "d93379ebaadc15beb18e70b15fbc997c02ab3b40a7c4fd531cb6987d734e999a"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 339963,
+      "sha256": "858deb20dbe486638576142f77e55a6507f3347a6a46772da89c2bd7a7cc715b"
+    },
+    {
+      "path": "peering/slots-16-rate-600/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 339044,
+      "sha256": "68ac9d9021761455727d91d7fa025f8466f61d4d1dfe0eb4fd3a0fd00ccc8259"
+    },
+    {
+      "path": "peering/slots-16-rate-600/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 357555,
+      "sha256": "ed9eab5b538f83c5f044aa6f702fd31b2b13d3af271f9c941964e31bd5e15b33"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 2995,
+      "sha256": "6d28fb4bd1ff80f2f164dff6d1aedeee9fb4a46d483968fca52af7c2e9d87688"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3067,
+      "sha256": "a662d56aef2b1020174dba89604d08730d5f7db7d12f3b0ba571c1cfb96aa569"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2917,
+      "sha256": "b621e4d4e8cf71c92184abee8213af10d81c4dc9fb04428f0b1fff8fb0dc4398"
+    },
+    {
+      "path": "peering/slots-16-rate-800/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2829,
+      "sha256": "1da5e13fee722578e24bc827d730c43c9e05c5d37af0871f0832fcc63fcd2780"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 451146,
+      "sha256": "d897d723b12976f0130dfefe141734fc499973363bb80922fcc7805ddaec9a71"
+    },
+    {
+      "path": "peering/slots-16-rate-800/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 449534,
+      "sha256": "0d5b5c155c8f4d7475a80f7ff96c164edc488d17a4e2dc2daa9f36f2d0911e91"
+    },
+    {
+      "path": "peering/slots-16-rate-800/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 467391,
+      "sha256": "5a526ed8d40289a62147efe9b1f76c99fc8cd2ccb6fe6d6cbe85c8443d2f4fc5"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 2890,
+      "sha256": "c6cce5000a83125adb497cfc55643bab983ce6f5b6c9659c07c435bd8670fd19"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3035,
+      "sha256": "668216b423f147d605baded7374bfd88228f5f9a3766113e870d75ed10388a98"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2839,
+      "sha256": "a50298d88dfe804ab625300b853cdf07eaec1035a8727e9c39f04b3495c99708"
+    },
+    {
+      "path": "peering/slots-8-rate-600/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2976,
+      "sha256": "1710c0eda68527e8aab079ac45dc64a0be60be1cca97a4d3787a448e5533aa75"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 340546,
+      "sha256": "01c5bd0d991dc617fa66f1ac3b255565e0689273613f098b77cee386e07ded7e"
+    },
+    {
+      "path": "peering/slots-8-rate-600/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 339626,
+      "sha256": "fab41ea2b6b4eefbcdd44353c7d6b804c190a2d2cddbc2dbda1baca0fca1e0e4"
+    },
+    {
+      "path": "peering/slots-8-rate-600/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 356958,
+      "sha256": "8c669928397edbee52eac7f314410c590f6df159714319c1171636683860f3aa"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 3082,
+      "sha256": "540c9c038a9ec9f86903bc3f6b215996e0f8d475281e28671979942e846de574"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3201,
+      "sha256": "1a0c06c9e27c60f7636206c27a792243df1a7f72e43a2a0f4117352346026cca"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 3136,
+      "sha256": "529dd9d7b4bf5157bf46c735ef378b50cdcc8ca7f7e5f7ffb0e616fe0f723046"
+    },
+    {
+      "path": "peering/slots-8-rate-800/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2973,
+      "sha256": "0c74465b66bf278344565fe580d249fced9019a3be267ac8c36a642a34fc04a4"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 457119,
+      "sha256": "ebce248e44f01b0a653c32a5c34a90f1614ddf536866a35c820242b5bc56da21"
+    },
+    {
+      "path": "peering/slots-8-rate-800/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 454782,
+      "sha256": "9b218a44357b4b704707553c1ac879670926b8448cb57c30a84b64d0c8291396"
+    },
+    {
+      "path": "peering/slots-8-rate-800/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 465298,
+      "sha256": "ccfdc38cffba042dd9472bc658a0e4db576c1a1dfe4d4d82dfcac7feda10b2c6"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 2997,
+      "sha256": "d2e36f44794dffc07d861231f57ab2ead0dda5cceade62973d4f1995f3864ec2"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3053,
+      "sha256": "4fc9885a4eafdf87d269bfc67dbb2940ed65376ca8fada54fa2c2a8d13968a77"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2833,
+      "sha256": "181b7630d4158937ebd2ef8989264a7fbfa2fe4d50ff3d58b5caf3e99f05a96b"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2810,
+      "sha256": "dd0c4e5299786a17445e6f167421deb92145754f7b568755a3458f29786a3fd3"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 341775,
+      "sha256": "3700d145c6a852946a6e90bb462461c5436cfaaf1e02e3f10cf22a222d9ebad9"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 340918,
+      "sha256": "30af90bd7517b2059c0702f71bb438053bb89768d276bdd717869812476b8870"
+    },
+    {
+      "path": "tgw/slots-16-rate-600/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 356658,
+      "sha256": "967ba38acbdb6af59f493bbec9f7af087be8d4b6471a142a921681b95821a749"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 2962,
+      "sha256": "de0874ddccd9c96573e939e29a1326e66faf05a69ba75e7bac3f2ee5b352a713"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3087,
+      "sha256": "295b7311fed6a106c69bed831e5e5718eb3b6a154349bd627cb4d59ec0e5f2d0"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2989,
+      "sha256": "c517aa59df52bc039a56c9661662157f705a32f0e5b986e3f60554f12e971674"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2960,
+      "sha256": "b60d762a51378d3ca84399894c3230174fcc831b6520e2354e129d531b72a57a"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 453319,
+      "sha256": "976b726e96c1237d03cf5ff16b0cb34f23ecce7f73abaedfd3cd0cf3991a4fc4"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 451744,
+      "sha256": "a555513820ec1eff020c493d097a0ef24946b8879e8fe980f4275de694d7795f"
+    },
+    {
+      "path": "tgw/slots-16-rate-800/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 465962,
+      "sha256": "a3fd661a55720737b027f1ca05ef9be7ec399750ef3ac6287ba65502698ca886"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 2914,
+      "sha256": "22b9b78d9bd92e53ac66f698d3a70bc39b56891e4b6451905f26b1c07d125728"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3095,
+      "sha256": "0943c12614082b23dfa1bd067140c811dae45815869145b7eccd972be1b1f4d2"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 2867,
+      "sha256": "8becf49aa38f849e41e5d11ae5fe5ec7866ef8b29c98808f4e1d5095e67ffb68"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2998,
+      "sha256": "50a65913bb02f3a613672dd8617f0e22266c0327bc19fb15d54d79bc748dedf8"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 341903,
+      "sha256": "ce32d88c90e9a317d01fe3e6120ef4fcd818c65e7866c080759ee4bdcd1c8288"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 341408,
+      "sha256": "8f014e25bf97245e188013da9cd6a46cd232b4965ca543ef1a00b9e3953515a5"
+    },
+    {
+      "path": "tgw/slots-8-rate-600/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 357082,
+      "sha256": "040325f624785d56198f7d152e29cb82b1a00d5d594002627225279f4b9237e8"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-a.json.gz",
+      "node": "a",
+      "bytes": 3177,
+      "sha256": "0fa13f04b8fa8a429207c1b1c7906b9be02e4c1301aa82e0416121f7dd596e18"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-b.json.gz",
+      "node": "b",
+      "bytes": 3389,
+      "sha256": "ea696037d1e5a72cba8ac7217fd6847629f8fbd71eed043fe14726fe7a865baf"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-c.json.gz",
+      "node": "c",
+      "bytes": 3038,
+      "sha256": "4a42bce3a77ea4a4ce8779181c775265fecc62480ee01e433e69a37b35da4ca7"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/monitor-d.json.gz",
+      "node": "d",
+      "bytes": 2980,
+      "sha256": "9a734a0c9cccebdc593824e1781bb204dfce0af73c866941c73a286800c48cdd"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-c.jsonl.gz",
+      "node": "c",
+      "bytes": 457469,
+      "sha256": "9eac85c62573039a8344d6f47e55e832377742783e87e4caaba2b0cd13f5fc76"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/queue-d.jsonl.gz",
+      "node": "d",
+      "bytes": 454320,
+      "sha256": "dda7898144fa5aef440744cdf6c0070e39b97bebe9245efe660185b82587d793"
+    },
+    {
+      "path": "tgw/slots-8-rate-800/requests.jsonl.gz",
+      "node": "a",
+      "bytes": 466318,
+      "sha256": "aaed164159cc34a3ad9a14d7c78ab57f6d1bc18fb6af16de87cc50883ff5c0ed"
+    }
+  ],
+  "host_key_provenance": {
+    "a": {
+      "instance_id": "i-089bae0de9ec6bc4e",
+      "public_ip": "18.215.76.235",
+      "public_host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAzxRPwJadMBWjtmhb6W+t26JSPJ/c2XO58wpTQxgyLU",
+      "known_hosts_sha256": "a68571bde8ba2e2b780d391b19e15614231cbeb3ce11b283912c5ac679a46245",
+      "ssm_result_sha256": "6853b4564a4bd2b6bbe0e8d64c70fb1de957b7281d96e535288dbfda1e721d72",
+      "ssm_result": {
+        "CommandId": "71dc4405-abea-4083-a277-bd1ac515da0b",
+        "InstanceId": "i-089bae0de9ec6bc4e",
+        "DocumentName": "AWS-RunShellScript",
+        "Status": "Success",
+        "ResponseCode": 0,
+        "ExecutionStartDateTime": "2026-10-13T09:07:52.577Z",
+        "ExecutionEndDateTime": "2026-10-13T09:07:52.577Z",
+        "StandardOutputContent": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAzxRPwJadMBWjtmhb6W+t26JSPJ/c2XO58wpTQxgyLU root@ip-10-10-10-212.ec2.internal\n"
+      }
+    },
+    "b": {
+      "instance_id": "i-0484f42b82795f765",
+      "public_ip": "44.193.132.188",
+      "public_host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHwcZJhmkvQ2vc7EDZKcWDSjyOMgpzwghevpfZ96a9qu",
+      "known_hosts_sha256": "f97190c2117083df952311fa2d3bb6dbc9d5691be0f16452d5ca8ddcbf0aae65",
+      "ssm_result_sha256": "9334adb029822ed99a2a5a10e1d0c38606a00e3cb55e1f99c983d518c10fe699",
+      "ssm_result": {
+        "CommandId": "e01db39b-a1b6-4967-bc1e-22b0b14a09ef",
+        "InstanceId": "i-0484f42b82795f765",
+        "DocumentName": "AWS-RunShellScript",
+        "Status": "Success",
+        "ResponseCode": 0,
+        "ExecutionStartDateTime": "2026-10-13T09:07:55.754Z",
+        "ExecutionEndDateTime": "2026-10-13T09:07:55.754Z",
+        "StandardOutputContent": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHwcZJhmkvQ2vc7EDZKcWDSjyOMgpzwghevpfZ96a9qu root@ip-10-20-10-155.ec2.internal\n"
+      }
+    },
+    "c": {
+      "instance_id": "i-0a3f3e2e9d7185970",
+      "public_ip": "44.195.220.184",
+      "public_host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFEpagHdTqKssJEWJX8h9suxZW1jXJQKLjIp2alEYF+3",
+      "known_hosts_sha256": "e9d7cdd92e0db89dcf88196f180a18b77371f41c58572b0f20b38267a8efc220",
+      "ssm_result_sha256": "88e6ed8b85ee5ce37dfb32d0092db460f6853fb298df81720050a2f206ab9215",
+      "ssm_result": {
+        "CommandId": "b4a4c921-78b6-44ba-b2ab-fcbc253170ee",
+        "InstanceId": "i-0a3f3e2e9d7185970",
+        "DocumentName": "AWS-RunShellScript",
+        "Status": "Success",
+        "ResponseCode": 0,
+        "ExecutionStartDateTime": "2026-10-13T09:07:58.680Z",
+        "ExecutionEndDateTime": "2026-10-13T09:07:58.680Z",
+        "StandardOutputContent": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFEpagHdTqKssJEWJX8h9suxZW1jXJQKLjIp2alEYF+3 root@ip-10-30-10-212.ec2.internal\n"
+      }
+    },
+    "d": {
+      "instance_id": "i-0abcc8853cee750e7",
+      "public_ip": "34.199.47.71",
+      "public_host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIKL30uq+jUxWfDh3A8ULrGCoDWYjlQPUMhhTY6S5Jf",
+      "known_hosts_sha256": "3388f576b1f3b4f53ba0f81614eed910363c7c0fdbacd7eeb23445e2c5183e52",
+      "ssm_result_sha256": "bb45c3beacc410a5cf3dfc47cd1f59af0f2993f2bc88b7541556ae69a398069b",
+      "ssm_result": {
+        "CommandId": "e70a02c1-a76d-44a5-8d50-0307e54665aa",
+        "InstanceId": "i-0abcc8853cee750e7",
+        "DocumentName": "AWS-RunShellScript",
+        "Status": "Success",
+        "ResponseCode": 0,
+        "ExecutionStartDateTime": "2026-10-13T09:07:49.617Z",
+        "ExecutionEndDateTime": "2026-10-13T09:07:49.617Z",
+        "StandardOutputContent": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIKL30uq+jUxWfDh3A8ULrGCoDWYjlQPUMhhTY6S5Jf root@ip-10-40-10-155.ec2.internal\n"
+      }
+    }
+  },
+  "scope": "56 after-capture files; hashes match remote SSM checks and pinned public host keys. No private key, credentials or original-key hash published."
+}

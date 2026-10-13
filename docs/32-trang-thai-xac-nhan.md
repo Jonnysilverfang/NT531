@@ -1,11 +1,11 @@
 # Trạng thái xác nhận và công việc tiếp theo
 
-Snapshot 13/10/2026 16:13 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
+Snapshot 13/10/2026 16:25 giờ Việt Nam, tái tạo từ hai `analysis.json`. Số block là số lần đo đạt kiểm tra raw; không phải phần trăm hoàn thành toàn đồ án.
 
 | Nghiên cứu | Block hợp lệ | Ngày địa phương | Còn thiếu |
 |---|---:|---:|---:|
 | RTT khi rảnh | 4/16 | 2 | 12 block |
-| Can thiệp slots | 1/16 | 1 | 15 block |
+| Can thiệp slots | 2/16 | 1 | 14 block |
 
 Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm định chính sau đủ 16 block và các tiêu chí chất lượng. Engineering 84.000 requests và pilot/calibration 62.200 requests không nhập vào số block này.
 
@@ -23,6 +23,7 @@ Mỗi nghiên cứu cần ít nhất bốn ngày. Chỉ công bố kiểm địn
 | Block | Bắt đầu giờ Việt Nam | Tăng đúng hạn trung bình tại 800 rps | Vượt 10 điểm phần trăm |
 |---|---|---:|---|
 | 1 | 13/10 11:39:03 | 97.3167 điểm phần trăm | Có |
+| 2 | 13/10 16:03:57 | 96.6625 điểm phần trăm | Có |
 
 Các giá trị trên là mô tả các block đã có, không phải p-value tạm thời để quyết định dừng. Tăng đúng hạn là hiệu tỷ lệ với mẫu số mọi request theo lịch, trung bình qua hai mode.
 
@@ -51,4 +52,4 @@ Raw tải sau cửa sổ đo qua SCP nếu có khóa tạm bảo vệ ACL. Host 
 ## Dữ liệu nguồn
 
 - `results/confirmation-rtt-v1/analysis.json` — SHA256 `ad3de2850636fd117832a9508768ae89bf971354ecd3b5c03c91e8d729309b66`
-- `results/application-slots-confirmation-v1/analysis.json` — SHA256 `829c9b30c39607b3554c1ae13844f8cb372ba59657f58ca5f9f8400f43ac30e0`
+- `results/application-slots-confirmation-v1/analysis.json` — SHA256 `ee912ee93a9f58221e1e25e906f06f28a39a9cc176bc99b338775497c0690b81`

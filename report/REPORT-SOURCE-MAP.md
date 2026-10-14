@@ -125,6 +125,28 @@ học đã xác minh.
 Mode của RTT Peering được xác định từ metadata/filename và independent review,
 không chỉ từ tên thư mục lịch sử.
 
+### RTT xác nhận cùng cohort: năm block
+
+- `results/confirmation-rtt-v1/analysis.json`
+- `results/confirmation-rtt-v1/block-*/**/capture.json`
+- `scripts/plot-report-primary.py`
+- `report/img/chapter3/primary/rtt-confirmation-dashboard.png`
+
+Hình chính dùng 1.500 probe mỗi mode và hiệu ứng ghép cặp của từng block. Số
+baseline lịch sử không được gộp vào cohort mới.
+
+### Workload ứng dụng: slots, deadline và hàng đợi
+
+- `results/application-slots-confirmation-v1/analysis.json`
+- `results/analysis/queue-occupancy-audit.json`
+- raw request/queue logs trong `results/application-slots-confirmation-v1/`
+- `scripts/plot-report-primary.py`
+- `report/img/chapter3/primary/application-deadline.png`
+- `report/img/chapter3/primary/application-latency-queue.png`
+
+Ba block mới gồm 252.000 request theo lịch. Biểu đồ deadline, P95, queue wait
+và service time được tính từ analysis JSON, không đọc lại từ ảnh cũ.
+
 ### TCP single-flow và retransmission
 
 - `results/analysis/independent-review.json`

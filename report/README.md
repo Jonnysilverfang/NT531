@@ -9,6 +9,18 @@ Báo cáo: **Performance Evaluation of AWS VPC Peering and Transit Gateway**.
 - Không dùng `../legacy/` làm kết quả thực nghiệm.
 - Mapping chi tiết nằm trong `REPORT-SOURCE-MAP.md`.
 
+## Biểu đồ kết quả chính
+
+Ba hình trong `img/chapter3/primary/` được dựng lại trực tiếp từ dữ liệu xác
+nhận mới, không dùng số pilot nhập tay:
+
+- `rtt-confirmation-dashboard.png`: 5 block, 3.000 probe RTT;
+- `application-deadline.png`: deadline 50 ms của 252.000 request;
+- `application-latency-queue.png`: P95 end-to-end, chờ slot và phục vụ.
+
+Chạy lại từ thư mục gốc bằng `tmp/application-venv/Scripts/python.exe
+scripts/plot-report-primary.py`.
+
 ## Build
 
 Với TeX Live có `latexmk` và BibTeX:

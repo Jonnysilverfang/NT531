@@ -6,10 +6,12 @@ HTTP để kiểm tra ảnh hưởng của khả năng phục vụ ứng dụng.
 
 \subsection{RQ1: RTT khác nhau như thế nào?}
 
-Trong môi trường thử nghiệm hiện tại, RTT mean qua Peering là 0,2078 ms và qua
-TGW là 0,5630 ms. Peering thấp hơn 0,3552 ms. Đây là kết quả end-to-end của
-cùng endpoint sau khi đổi route, không phải tuyên bố Peering luôn có latency
-thấp hơn TGW.
+Trong đợt xác nhận mới, TGW có RTT cao hơn Peering trong cả 5/5 block cùng
+cohort. Hiệu ứng ghép cặp TGW trừ Peering là 0,2303--0,4257 ms, trung bình
+0,3119 ms trên 3.000 probe mỗi mode. Baseline lịch sử cũng cho cùng hướng
+chênh lệch (0,2078 ms so với 0,5630 ms), nhưng giá trị baseline không được gộp
+vào thống kê block mới. Kết luận áp dụng cho cấu hình end-to-end đã đo, không
+phải tuyên bố Peering luôn có latency thấp hơn TGW trong mọi môi trường.
 
 \subsection{RQ2: TCP single-flow khác nhau như thế nào?}
 
@@ -62,9 +64,8 @@ chứng TGW có throughput hoặc latency tốt hơn.
 \section{Hạn chế}
 
 \begin{itemize}
-  \item Mỗi bộ dữ liệu chính chỉ có năm lượt trong một phiên.
-  \item Đợt xác nhận dừng ở năm block RTT và ba block ứng dụng do ngân sách;
-        thiết kế 16 block ban đầu chưa hoàn thành.
+  \item Đợt xác nhận có năm block RTT và ba block ứng dụng; số block ứng dụng
+        vẫn nhỏ hơn protocol 16 block ban đầu do ngân sách.
   \item Peering và TGW được đo nối tiếp, chưa counterbalance/randomize đầy đủ.
   \item Burst bandwidth, placement và nhiễu nền của EC2 có thể ảnh hưởng.
   \item Fan-in cộng mean từ các cửa sổ riêng, chưa căn common overlap window.
@@ -87,7 +88,7 @@ Các hạng mục sau là future work, chưa có kết quả thực nghiệm tro
 
 \begin{itemize}
   \item nếu ngân sách cho phép, hoàn thành repeated balanced trials nhiều ngày;
-  \item đo RTT idle và RTT under load, báo cáo P50/P95 và ECDF;
+  \item mở rộng số block RTT và đo RTT under load, báo cáo P50/P95 và ECDF;
   \item phân tích TCP congestion window và RTT theo thời gian;
   \item tính fan-in trên common overlapping window;
   \item thử receiver lớn hơn để kiểm tra giả thuyết endpoint bottleneck;

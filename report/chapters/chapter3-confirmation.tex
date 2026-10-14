@@ -1,17 +1,30 @@
-\section{Kết quả xác nhận RTT cùng cohort}
+\section{Kết quả chính từ đợt đo xác nhận mới}
 
-Đợt xác nhận mới giữ cùng cặp EC2 A/B và đảo thứ tự mode giữa các block.
-Mỗi mode trong một block có ba lượt, mỗi lượt 100 ICMP echo; tổng cộng 3.000
-probe của năm block đều có phản hồi. Với block $j$, hiệu ứng được định nghĩa:
+Phần này là trọng tâm thực nghiệm của báo cáo. Khác với các phiên baseline
+ban đầu, đợt mới giữ nguyên cohort EC2, lưu route snapshot, đảo thứ tự mode
+giữa các block và phân tích trực tiếp raw artifact. Dữ liệu gồm năm block RTT
+và ba block ứng dụng, không trộn với dữ liệu pilot.
+
+\subsection{RTT cùng cohort: 5 block và 3.000 probe}
+
+Mỗi block đo ba lượt cho từng mode, mỗi lượt 100 ICMP echo. Toàn bộ
+3.000/3.000 probe nhận được phản hồi. Hiệu ứng ghép cặp của block $j$ là
 
 \begin{equation}
 \Delta_j=\overline{RTT}_{\mathrm{TGW},j}
 -\overline{RTT}_{\mathrm{Peering},j}.
 \end{equation}
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{img/chapter3/primary/rtt-confirmation-dashboard.png}
+\caption{Kết quả RTT mới: trung bình block, ECDF của 3.000 probe và hiệu ứng ghép cặp}
+\label{fig:rtt-primary}
+\end{figure}
+
 \begin{table}[H]
 \centering
-\caption{RTT trung bình theo block xác nhận}
+\caption{RTT trung bình trong năm block xác nhận}
 \label{tab:rtt-confirmation}
 \begin{tabular}{crrr}
 \toprule
@@ -23,125 +36,112 @@ probe của năm block đều có phản hồi. Với block $j$, hiệu ứng đ
 4 & 0,1243 & 0,4300 & 0,3057 \\
 5 & 0,1343 & 0,4923 & 0,3580 \\
 \midrule
-Mean & -- & -- & 0,3119 \\
-Median & -- & -- & 0,3057 \\
+Trung bình & 0,1733 & 0,4852 & 0,3119 \\
+Trung vị hiệu ứng & -- & -- & 0,3057 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{img/chapter3/confirmation/rtt-blocks.png}
-\caption{Năm block RTT xác nhận; TGW trừ Peering đều dương}
-\label{fig:rtt-confirmation}
-\end{figure}
+TGW có RTT cao hơn Peering trong cả 5/5 block; hiệu ứng nằm trong khoảng
+0,2303--0,4257 ms, trung bình 0,3119 ms. ECDF trong Hình
+\ref{fig:rtt-primary} dùng đủ 1.500 probe mỗi mode, cho thấy hai phân phối tách
+rõ trong cohort này chứ không chỉ khác nhau ở một giá trị mean. Kết luận này
+chỉ áp dụng cho cấu hình đã đo; $\Delta_j$ là chênh lệch end-to-end, không phải
+thời gian xử lý nội bộ của TGW.
 
-Khoảng hiệu ứng từng block là 0,2303--0,4257 ms. Cách phát biểu được phép là:
-trong năm block của cấu hình đã thử, RTT qua TGW cao hơn Peering trung bình
-0,3119 ms. Số này là chênh lệch end-to-end, không phải thời gian xử lý nội bộ
-của TGW. Thiết kế 16 block ban đầu không hoàn tất nên báo cáo không công bố
-p-value hoặc khoảng tin cậy liên block.
+\subsection{Deadline ứng dụng: 252.000 request}
 
-\section{Kết quả workload ứng dụng}
-
-Ba block hợp lệ có đủ tám điều kiện. Tổng cộng có 252.000 request theo lịch,
-tương ứng 504.000 lời gọi worker. Không điều kiện nào ghi nhận HTTP/JSON fail;
-request thành công nhưng quá 50 ms vẫn được tính là không đúng hạn.
-
-\begin{table}[H]
-\centering
-\caption{SLI đúng hạn và khoảng P95 giữa ba block}
-\label{tab:application-confirmation}
-\small
-\begin{tabular}{llrrrr}
-\toprule
-\textbf{Mode} & \textbf{Slots} & \textbf{Rate} & \textbf{Scheduled} &
-\textbf{Đúng hạn} & \textbf{P95 min--max (ms)} \\
-\midrule
-Peering & 8  & 600 & 27.000 & 100,000\% & 12,109--12,684 \\
-Peering & 16 & 600 & 27.000 & 100,000\% & 12,085--12,699 \\
-TGW     & 8  & 600 & 27.000 & 100,000\% & 12,879--13,146 \\
-TGW     & 16 & 600 & 27.000 & 100,000\% & 12,981--13,243 \\
-Peering & 8  & 800 & 36.000 & 3,044\%   & 1.350,096--1.499,226 \\
-Peering & 16 & 800 & 36.000 & 100,000\% & 12,651--12,698 \\
-TGW     & 8  & 800 & 36.000 & 3,272\%   & 1.225,784--1.327,874 \\
-TGW     & 16 & 800 & 36.000 & 100,000\% & 12,875--13,248 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Ba block hợp lệ bao phủ Peering/TGW, 8/16 slots và 600/800 request/s. Tổng
+cộng có 252.000 request theo lịch, tương ứng 504.000 lời gọi worker C/D. Không
+điều kiện nào ghi nhận HTTP/JSON fail; request hoàn thành sau 50 ms vẫn bị tính
+là không đúng hạn.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{img/chapter3/confirmation/slots-blocks.png}
-\caption{Tỷ lệ đúng hạn theo route, tải và số slots}
-\label{fig:slots-confirmation}
+\includegraphics[width=\textwidth]{img/chapter3/primary/application-deadline.png}
+\caption{Tỷ lệ đúng hạn và mức lặp lại của hiệu ứng slots trong ba block mới}
+\label{fig:deadline-primary}
 \end{figure}
 
-Ở 600 request/s, tất cả cấu hình đạt 100\% đúng hạn trong cửa sổ quan sát.
-Ở 800 request/s, 8 slots chỉ đạt 1.096/36.000 request đúng hạn qua Peering và
-1.178/36.000 qua TGW; 16 slots đạt 36.000/36.000 ở cả hai mode. Hiệu ứng 16
-trừ 8 slots tại 800 request/s, trung bình qua hai route và ba block, là
-96,8417 điểm phần trăm; khoảng từng block 96,5458--97,3167 điểm phần trăm.
-Đây là điểm phần trăm, không phải phần trăm nhanh hơn.
+Ở 600 request/s, cả tám cấu hình theo mode và slots đều đạt 100\% đúng hạn
+trong dữ liệu quan sát. Ở 800 request/s, 8 slots chỉ đạt 1.096/36.000 request
+đúng hạn qua Peering và 1.178/36.000 qua TGW, lần lượt 3,0444\% và 3,2722\%.
+Khi tăng lên 16 slots, cả hai mode đạt 36.000/36.000 request đúng hạn.
 
-Kết quả cho thấy route không cứu được workload khi worker vận hành sát công
-suất danh nghĩa của 8 slots. Ngược lại, tăng khả năng phục vụ lên 16 slots làm
-P95 trở lại khoảng 13 ms và toàn bộ request quan sát đáp ứng deadline. Điều này
-không chứng minh 16 slots tối ưu cho mọi ứng dụng hoặc 100\% sẽ lặp lại ở mọi
-phiên tương lai.
+Hiệu ứng $16-8$ slots tại 800 request/s, trung bình qua hai route và ba block,
+là 96,8417 điểm phần trăm; từng block nằm trong khoảng
+96,5458--97,3167 điểm phần trăm. Vì Peering và TGW đều thất bại với 8 slots và
+đều phục hồi với 16 slots, đổi route không giải quyết được giới hạn phục vụ của
+worker trong workload này.
 
-\section{Kiểm tra cơ chế bằng hàng đợi}
+\subsection{Cơ chế: tail latency đến từ hàng đợi}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{img/chapter3/primary/application-latency-queue.png}
+\caption{P95 end-to-end và phân rã P95 chờ/phục vụ tại worker}
+\label{fig:latency-queue-primary}
+\end{figure}
+
+Với 800 request/s và 8 slots, P95 end-to-end nằm trong khoảng
+1.225,784--1.499,226 ms, vượt xa deadline 50 ms. P95 chờ slot vào khoảng
+1,2--1,4 s, trong khi P95 phục vụ vẫn chỉ khoảng 11 ms. Với 16 slots, P95 chờ
+giảm xuống dưới 0,013 ms và P95 end-to-end trở lại khoảng 12,651--13,248 ms.
+Hình \ref{fig:latency-queue-primary} vì vậy cung cấp chuỗi bằng chứng nhất quán:
+tỷ lệ đúng hạn tăng, tail latency giảm, thời gian chờ biến mất, còn thời gian
+phục vụ gần như giữ nguyên.
 
 Ví dụ block 3, worker C, Peering, 800 request/s: với 8 slots,
-$\lambda_C=732{,}2866$ lời gọi/s và $\overline W_q=0{,}7009511$ s, nên
+$\lambda_C=732{,}2866$ lời gọi/s và $\overline W_q=0{,}7009511$ s. Định luật
+Little trên cohort log hữu hạn cho
 
 \begin{equation}
-\overline L_q=732{,}2866\times0{,}7009511\approx513{,}2971
-\quad\text{lời gọi chờ trung bình}.
+\overline L_q=\lambda_C\overline W_q
+=732{,}2866\times0{,}7009511\approx513{,}2971.
 \end{equation}
 
 Với 16 slots ở cùng block/mode/worker, $\lambda_C=799{,}5313$ lời gọi/s,
-$\overline W_q=0{,}000005239$ s và $\overline L_q\approx0{,}004189$. Giá trị
-nhỏ hơn một là hợp lệ vì hàng đợi gần như trống trong phần lớn thời gian.
+$\overline W_q=0{,}000005239$ s và $\overline L_q\approx0{,}004189$. Hai giá
+trị cho thấy backlog hàng trăm lời gọi đã chuyển thành hàng đợi gần như trống.
+Phép tính dùng cùng cửa sổ log và được kiểm tra bằng diện tích occupancy; không
+giả định arrival Poisson hay thời gian phục vụ exponential.
+
+\subsection{OpenTelemetry và Grafana}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.94\textwidth]{img/chapter3/confirmation/queue-block-03.png}
-\caption{Hàng đợi quan sát tại worker trong block ứng dụng thứ ba}
-\label{fig:queue-block3}
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\textwidth]{img/chapter3/observability/grafana-dashboard.jpg}
+  \caption{Dashboard tổng hợp}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.49\textwidth}
+  \includegraphics[width=\textwidth]{img/chapter3/observability/trace-waterfall.jpg}
+  \caption{Waterfall A--B--C/D}
+\end{subfigure}
+\caption{Pipeline OpenTelemetry Collector--Tempo--Grafana dùng để giải thích request path}
+\label{fig:observability-combined}
 \end{figure}
 
-Đây là đẳng thức hữu hạn trên cùng log request, không cần giả định Poisson hay
-thời gian phục vụ exponential. Nó kiểm tra accounting của log và giải thích cơ
-chế backlog; không tạo một thí nghiệm thống kê độc lập mới.
+Pipeline đã replay và kiểm tra 12 trace thật, tổng 120 span. Waterfall cho thấy
+B gọi C/D song song và cho phép phân biệt queue với service. Trace này là smoke
+lịch sử để minh họa cấu trúc request, không phải mẫu benchmark 800 request/s và
+không được dùng để tính P95 chính.
 
-\section{Minh họa trace bằng OpenTelemetry}
+\section{Kết luận trực tiếp từ dữ liệu mới}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.94\textwidth]{img/chapter3/observability/grafana-dashboard.jpg}
-\caption{Dashboard Grafana tổng hợp số liệu đã chốt và trạng thái trace demo}
-\label{fig:grafana-dashboard}
-\end{figure}
+Ba kết quả mới có mức bằng chứng khác nhau nhưng cùng trả lời một câu hỏi rõ:
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.94\textwidth]{img/chapter3/observability/trace-waterfall.jpg}
-\caption{Trace waterfall A--B--C/D của một request smoke lịch sử}
-\label{fig:trace-waterfall}
-\end{figure}
+\begin{enumerate}
+  \item Trong 5/5 block cùng cohort, TGW tăng RTT so với Peering; hiệu ứng ghép
+        cặp trung bình là 0,3119 ms.
+  \item Tại 800 request/s, đổi Peering/TGW không cứu được cấu hình 8 slots;
+        tăng lên 16 slots cải thiện đúng hạn trung bình 96,8417 điểm phần trăm.
+  \item P95 phục vụ giữ quanh 11 ms trong khi P95 chờ thay đổi hơn năm bậc độ
+        lớn. Hàng đợi ứng dụng là cơ chế chính tạo tail latency trong workload
+        này.
+\end{enumerate}
 
-Pipeline Collector--Tempo--Grafana đã replay và kiểm tra 12 trace thật, tổng
-120 span. Waterfall cho thấy gateway gọi C/D song song và phân biệt queue với
-service. Đây là trace smoke lịch sử để giải thích cấu trúc request; không phải
-trace của điều kiện 800 request/s và không được dùng để tính P95 chính.
-
-\section{Tổng hợp mức bằng chứng}
-
-Kết quả mạng lịch sử trả lời RTT, single-flow và fan-in ở các phiên ban đầu.
-Đợt RTT năm block củng cố rằng chênh lệch RTT cùng cohort luôn dương trong các
-block quan sát. Đợt ứng dụng ba block cho thấy hiệu ứng slots lớn hơn nhiều so
-với chênh lệch route đối với deadline ở 800 request/s. Queue log và trace hỗ
-trợ cơ chế, nhưng không làm tăng số block độc lập. Do quyết định ngân sách,
-nghiên cứu dừng ở thống kê mô tả có raw tái tạo, không tuyên bố kiểm định xác
-suất 16 block đã hoàn thành.
+Đây là đóng góp mới của đồ án. Kết quả không tuyên bố Peering hoặc TGW thắng
+mọi workload; nó chỉ ra khi nào chênh lệch đường mạng đáng chú ý và khi nào
+nút thắt ứng dụng lớn đến mức lựa chọn route không còn quyết định SLI.

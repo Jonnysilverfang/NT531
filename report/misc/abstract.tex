@@ -10,8 +10,9 @@ Ba bài đo chính gồm RTT khi mạng rảnh, TCP một luồng từ A tới B
 từ A, C, D tới B. Mỗi bộ dữ liệu có năm lượt; raw data, metadata, CPU và bộ
 đếm ENA được lưu để kiểm chứng lại bằng script.
 
-Trong các phiên đo của nghiên cứu này, RTT trung bình là 0,2078 ms qua
-Peering và 0,5630 ms qua TGW. Receiver goodput TCP một luồng đạt lần lượt
+Trong đợt xác nhận mới, RTT qua TGW cao hơn Peering trong cả 5/5 block cùng
+cohort; chênh lệch trung bình là 0,3119 ms và toàn bộ 3.000 probe đều phản hồi.
+Baseline receiver goodput TCP một luồng đạt lần lượt
 4,7828 và 4,6083 Gbps. Tổng fan-in xấp xỉ đạt 11,6110 và 11,5905 Gbps,
 nhưng cả hai phiên đều ghi nhận bộ đếm network allowance tại máy nhận tăng.
 Kết quả fan-in vì vậy phản ánh đồng thời đường mạng và giới hạn endpoint,
@@ -22,8 +23,8 @@ vi kết luận bị giới hạn bởi số lượt nhỏ, phép đo hai mode n
 burst của EC2 và cửa sổ fan-in chưa đồng bộ tuyệt đối.
 
 Để nối kết metric mạng với chất lượng dịch vụ, nhóm bổ sung workload HTTP mô
-phỏng hai worker được gọi song song. Ở 800 request/s, 8 slots chỉ đạt 3,044\%
-đúng hạn qua Peering và 3,272\% qua TGW; 16 slots đạt 100\% trong ba block quan
+phỏng hai worker được gọi song song. Ở 800 request/s, 8 slots chỉ đạt 3,0444\%
+đúng hạn qua Peering và 3,2722\% qua TGW; 16 slots đạt 100\% trong ba block quan
 sát của mỗi điều kiện. P95 hoàn thành của 8 slots tăng lên khoảng
 1,226--1,499 s, trong khi 16 slots giữ quanh 12,7 ms. Log request còn cho phép
 kiểm tra định luật Little; Grafana/Tempo được dùng để minh họa trace smoke đã

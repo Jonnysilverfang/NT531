@@ -5,7 +5,7 @@
   "teacher": "Đặng Lê Bảo Chương",
   "members": [
     {"name": "Nguyễn Ngọc Minh", "student_id": "24521068"},
-    {"name": "Nguyễn Huy Nhật", "student_id": "24521253"},
+    {"name": "Nguyễn Minh Nhật", "student_id": "24521253"},
     {"name": "Nguyễn Trung Kiên", "student_id": "24520885"}
   ],
   "main_slides": 14,
@@ -13,7 +13,7 @@
     {
       "title": "VPC Peering và Transit Gateway",
       "layout": "cover", "seconds": 25,
-      "script": "Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Huy Nhật và Nguyễn Trung Kiên. Đồ án đánh giá VPC Peering và Transit Gateway trên AWS, đồng thời xem khả năng phục vụ của ứng dụng ảnh hưởng thế nào đến chất lượng dịch vụ. Chúng em trình bày kiến trúc, kết quả đo và cách dùng định luật Little để giải thích hàng đợi.",
+      "script": "Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Minh Nhật và Nguyễn Trung Kiên. Đồ án đánh giá VPC Peering và Transit Gateway trên AWS, đồng thời xem khả năng phục vụ của ứng dụng ảnh hưởng thế nào đến chất lượng dịch vụ. Chúng em trình bày kiến trúc, kết quả đo và cách dùng định luật Little để giải thích hàng đợi.",
       "sources": ["docs/34-bao-cao-tong-hop.md"]
     },
     {

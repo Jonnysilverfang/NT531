@@ -1,6 +1,6 @@
 # Hiểu đồ án và nói theo từng slide
 
-**Dành cho nhóm NT531:** Nguyễn Ngọc Minh – 24521068, Nguyễn Huy Nhật – 24521253, Nguyễn Trung Kiên – 24520885. Giảng viên: Đặng Lê Bảo Chương.
+**Dành cho nhóm NT531:** Nguyễn Ngọc Minh – 24521068, Nguyễn Minh Nhật – 24521253, Nguyễn Trung Kiên – 24520885. Giảng viên: Đặng Lê Bảo Chương.
 
 Tài liệu này ghép đúng **18 trang của [PowerPoint](NT531-thuyet-trinh.pptx)**. Ảnh dưới mỗi tiêu đề là slide tương ứng, không phải bộ slide mới. Phần **“Hiểu trước khi nói”** để học ở nhà. Phần **“Lời nói trên lớp”** có thể dùng làm lời thoại. Phần **“Chỉ vào đâu”** giúp bạn trình bày hình, thay vì đứng đọc chữ. Không đọc hết tài liệu trên lớp. Nếu nói và giải thích đủ 14 trang chính như bản này, nên tập canh khoảng **15–18 phút**. Bản [lời thoại ngắn](Loi-thoai-NT531.md) dùng khi chỉ có 10–12 phút. Thời lượng thực tế cần nhóm tập và điều chỉnh theo thời gian thầy giao.
 
@@ -21,35 +21,36 @@ Nhóm đo hai việc. Đầu tiên, gói ping đi và về mất bao lâu trên 
 
 ## Từ vựng cần biết trước khi mở slide
 
-| Từ trên slide | Hiểu bằng lời đơn giản |
-|---|---|
-| AWS | Nền tảng đám mây nơi nhóm thuê và vận hành hạ tầng |
-| EC2 | Máy tính ảo chạy trên AWS, có hệ điều hành và chương trình của nhóm |
-| VPC | Mạng riêng ảo trên AWS. Nhóm có bốn mạng riêng A/B/C/D |
-| Peering | Kết nối trực tiếp giữa hai VPC, khi định tuyến và quyền mạng phù hợp |
-| TGW | Điểm trung chuyển kết nối các mạng. VPC gắn vào nó qua attachment |
-| Attachment | Liên kết gắn một VPC vào TGW |
-| Route | Quy tắc chọn đường đi tới một mạng đích |
-| Terraform | Công cụ dùng code để mô tả và tạo hạ tầng. Terraform không phải công cụ đo RTT |
-| Private IP | Địa chỉ của máy dùng trong đường mạng riêng, ví dụ A là 10.10.10.212 |
-| Elastic IP | Địa chỉ public cố định phục vụ truy cập quản trị. Các phép đo ở đây dùng private IP |
-| SSH / Termius | Cách truy cập terminal trên EC2. Termius là ứng dụng nhóm dùng để SSH |
-| Request | Một yêu cầu gửi tới ứng dụng. Một request tại A tạo hai lời gọi worker tại C/D |
-| HTTP | Giao thức ứng dụng dùng để gửi yêu cầu và nhận phản hồi |
-| Gateway B | Chương trình trên B nhận yêu cầu rồi gọi C/D. Khác với dịch vụ Transit Gateway của AWS |
-| Worker | Chương trình thực hiện một phần công việc. Ở đây chạy trên C và D |
-| Slot | Một suất phục vụ đồng thời trong chương trình worker. Slot khác với CPU hay máy ảo |
-| Queue / hàng đợi | Các lời gọi đã đến nhưng đang chờ lấy slot |
-| rps | Requests per second, số yêu cầu theo lịch mỗi giây |
-| RTT | Thời gian một gói đi tới đích và phản hồi về nơi gửi |
-| Deadline | Hạn hoàn thành. Nhóm chọn 50 ms cho thí nghiệm ứng dụng |
-| P95 | Mốc phân vị 95% của độ trễ được quan sát, giải thích tại slide 6 |
-| SLI | Chỉ số phản ánh chất lượng dịch vụ. Nhóm dùng tỷ lệ yêu cầu đúng hạn |
-| Block | Một đợt so sánh chứa đủ các điều kiện cần đối chiếu. Đọc kỹ slide 5 |
-| Mode | Đường mạng đang thử: Peering hoặc TGW |
-| Log | Bản ghi sự kiện/số liệu. Nhóm lưu kết quả và các mốc chờ/phục vụ |
-| Trace / span | Trace theo hành trình một yêu cầu. Span là từng phần công việc trong hành trình |
-| ms, µs | 1 ms = 0,001 giây. 1 µs = 0,000001 giây. 1 ms = 1.000 µs |
+
+| Từ trên slide     | Hiểu bằng lời đơn giản                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------- |
+| AWS                 | Nền tảng đám mây nơi nhóm thuê và vận hành hạ tầng                                       |
+| EC2                 | Máy tính ảo chạy trên AWS, có hệ điều hành và chương trình của nhóm                   |
+| VPC                 | Mạng riêng ảo trên AWS. Nhóm có bốn mạng riêng A/B/C/D                                       |
+| Peering             | Kết nối trực tiếp giữa hai VPC, khi định tuyến và quyền mạng phù hợp                     |
+| TGW                 | Điểm trung chuyển kết nối các mạng. VPC gắn vào nó qua attachment                           |
+| Attachment          | Liên kết gắn một VPC vào TGW                                                                     |
+| Route               | Quy tắc chọn đường đi tới một mạng đích                                                    |
+| Terraform           | Công cụ dùng code để mô tả và tạo hạ tầng. Terraform không phải công cụ đo RTT        |
+| Private IP          | Địa chỉ của máy dùng trong đường mạng riêng, ví dụ A là 10.10.10.212                    |
+| Elastic IP          | Địa chỉ public cố định phục vụ truy cập quản trị. Các phép đo ở đây dùng private IP |
+| SSH / Termius       | Cách truy cập terminal trên EC2. Termius là ứng dụng nhóm dùng để SSH                       |
+| Request             | Một yêu cầu gửi tới ứng dụng. Một request tại A tạo hai lời gọi worker tại C/D           |
+| HTTP                | Giao thức ứng dụng dùng để gửi yêu cầu và nhận phản hồi                                  |
+| Gateway B           | Chương trình trên B nhận yêu cầu rồi gọi C/D. Khác với dịch vụ Transit Gateway của AWS  |
+| Worker              | Chương trình thực hiện một phần công việc. Ở đây chạy trên C và D                      |
+| Slot                | Một suất phục vụ đồng thời trong chương trình worker. Slot khác với CPU hay máy ảo      |
+| Queue / hàng đợi | Các lời gọi đã đến nhưng đang chờ lấy slot                                                 |
+| rps                 | Requests per second, số yêu cầu theo lịch mỗi giây                                              |
+| RTT                 | Thời gian một gói đi tới đích và phản hồi về nơi gửi                                     |
+| Deadline            | Hạn hoàn thành. Nhóm chọn 50 ms cho thí nghiệm ứng dụng                                      |
+| P95                 | Mốc phân vị 95% của độ trễ được quan sát, giải thích tại slide 6                        |
+| SLI                 | Chỉ số phản ánh chất lượng dịch vụ. Nhóm dùng tỷ lệ yêu cầu đúng hạn                |
+| Block               | Một đợt so sánh chứa đủ các điều kiện cần đối chiếu. Đọc kỹ slide 5                 |
+| Mode                | Đường mạng đang thử: Peering hoặc TGW                                                          |
+| Log                 | Bản ghi sự kiện/số liệu. Nhóm lưu kết quả và các mốc chờ/phục vụ                       |
+| Trace / span        | Trace theo hành trình một yêu cầu. Span là từng phần công việc trong hành trình           |
+| ms, µs             | 1 ms = 0,001 giây. 1 µs = 0,000001 giây. 1 ms = 1.000 µs                                          |
 
 ---
 
@@ -65,7 +66,7 @@ Tên đề tài là so sánh hai cách kết nối VPC. Phần ứng dụng giú
 
 ### Lời nói trên lớp
 
-“Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Huy Nhật và Nguyễn Trung Kiên. Nhóm thực hiện đồ án đánh giá VPC Peering và Transit Gateway trên AWS.
+“Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Minh Nhật và Nguyễn Trung Kiên. Nhóm thực hiện đồ án đánh giá VPC Peering và Transit Gateway trên AWS.
 
 Nhóm so sánh độ trễ trên cùng hạ tầng, sau đó thử một ứng dụng gọi hai worker song song. Mục đích là xem đường mạng và khả năng phục vụ ảnh hưởng thế nào tới việc hoàn thành yêu cầu đúng hạn. Trong phần trình bày, nhóm sẽ giải thích mô hình, cách đo, kết quả và hàng đợi bằng công thức Little trong bài giảng.”
 
@@ -566,14 +567,15 @@ Thuật toán nearest rank và mô hình công suất danh nghĩa là lựa ch�
 
 ## Sáu số nên thuộc
 
-| Số cần nhớ | Nghĩa |
-|---|---|
-| 4 VPC, 6 Peering, 4 TGW attachment | Kiến trúc, cùng bốn EC2 |
-| 5 block RTT / 3 block ứng dụng | Số đợt hợp lệ đã dùng |
-| +0,3119 ms | Chênh RTT TGW trừ Peering trung bình 5 block |
-| 800 rps, 8/16 slots, deadline 50 ms | Điều kiện ứng dụng có kết quả chính |
-| Khoảng 3% lên 100% | SLI quan sát, không phải tỷ lệ mất gói |
-| +96,84 điểm phần trăm | Hiệu ứng tăng slots trung bình, không phải % tăng tốc |
+
+| Số cần nhớ                       | Nghĩa                                                        |
+| ----------------------------------- | ------------------------------------------------------------- |
+| 4 VPC, 6 Peering, 4 TGW attachment  | Kiến trúc, cùng bốn EC2                                   |
+| 5 block RTT / 3 block ứng dụng    | Số đợt hợp lệ đã dùng                                 |
+| +0,3119 ms                          | Chênh RTT TGW trừ Peering trung bình 5 block               |
+| 800 rps, 8/16 slots, deadline 50 ms | Điều kiện ứng dụng có kết quả chính                  |
+| Khoảng 3% lên 100%                | SLI quan sát, không phải tỷ lệ mất gói                 |
+| +96,84 điểm phần trăm           | Hiệu ứng tăng slots trung bình, không phải % tăng tốc |
 
 ## Cách tập để hiểu, không chỉ học thuộc
 

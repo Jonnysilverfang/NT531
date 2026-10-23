@@ -4,7 +4,7 @@ Nếu chưa hiểu nội dung, đọc [bản giải thích chi tiết ghép đú
 
 Giảng viên: Đặng Lê Bảo Chương.
 24521068 – Nguyễn Ngọc Minh
-24521253 – Nguyễn Huy Nhật
+24521253 – Nguyễn Minh Nhật
 24520885 – Nguyễn Trung Kiên
 
 14 slide chính: khoảng 11 phút. 4 slide phụ lục mở khi hỏi. Lời thoại cũng nằm trong Notes của PowerPoint. Thời lượng gợi ý, nhóm tập nói và điều chỉnh theo lịch môn học.
@@ -15,7 +15,7 @@ Gợi ý phân vai để nhóm tự thống nhất: Minh slide 1–5, Nhật sli
 
 Thời lượng: khoảng 25 giây.
 
-Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Huy Nhật và Nguyễn Trung Kiên. Đồ án đánh giá VPC Peering và Transit Gateway trên AWS, đồng thời xem khả năng phục vụ của ứng dụng ảnh hưởng thế nào đến chất lượng dịch vụ. Chúng em trình bày kiến trúc, kết quả đo và cách dùng định luật Little để giải thích hàng đợi.
+Em chào thầy. Nhóm chúng em gồm Nguyễn Ngọc Minh, Nguyễn Minh Nhật và Nguyễn Trung Kiên. Đồ án đánh giá VPC Peering và Transit Gateway trên AWS, đồng thời xem khả năng phục vụ của ứng dụng ảnh hưởng thế nào đến chất lượng dịch vụ. Chúng em trình bày kiến trúc, kết quả đo và cách dùng định luật Little để giải thích hàng đợi.
 
 ## Slide 2. Câu hỏi nghiên cứu
 

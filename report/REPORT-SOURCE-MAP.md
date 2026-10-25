@@ -23,7 +23,7 @@ một thứ tự duy nhất cho kiến trúc, phương pháp và số liệu.
 ### Thông tin lớp, giảng viên và sinh viên
 
 - Thông tin do nhóm xác nhận trực tiếp: Nguyễn Ngọc Minh -- 24521068; Nguyễn
-  Huy Nhật -- 24521253; Nguyễn Trung Kiên -- 24520885; giảng viên Đặng Lê Bảo
+  Minh Nhật -- 24521253; Nguyễn Trung Kiên -- 24520885; giảng viên Đặng Lê Bảo
   Chương. Mã lớp chưa được cung cấp nên không suy đoán.
 
 `misc/abstract.tex`, `misc/ack.tex` và `misc/council.tex` là front matter tùy
